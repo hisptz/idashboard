@@ -33,7 +33,7 @@
             <img *ngIf="header.icon" [src]="header.icon" alt="" [ngClass]="'search-header-icon'">
             <span
               *ngIf="header.itemCount > 0 && header.name !== 'all'"
-              class="badge search-header-icon-badge bg-success">{{header.itemCount}}</span>
+              class="badge search-header-icon-badge bg-success">{{header.itemCount | kNumber}}</span>
           </a>
         </li>
       </ul>
