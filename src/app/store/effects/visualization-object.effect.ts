@@ -3,21 +3,9 @@ import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action, Store} from '@ngrx/store';
 import {VisualizationObjectService} from '../../dashboard/providers/visualization-object.service';
-import { MERGE_VISUALIZATION_OBJECT_ACTION, SPLIT_VISUALIZATION_OBJECT_ACTION,
-  UpdateVisualizationObjectWithRenderingObjectAction, VISUALIZATION_OBJECT_LAYOUT_CHANGE_ACTION,
-  VisualizationObjectMergedAction,
-  VisualizationObjectSplitedAction
-} from '../actions';
 import * as fromAction from '../actions';
-import {ChartService} from '../../dashboard/providers/chart.service';
-import {GeoFeatureService} from '../../dashboard/providers/geo-feature.service';
-import {MapService} from '../../dashboard/providers/map.service';
-import {TableService} from '../../dashboard/providers/table.service';
 import {ApplicationState} from '../application-state';
-import * as _ from 'lodash';
-import {updateVisualizationWithAnalytics} from '../handlers/updateVisualizationWithAnalytics';
 import {Visualization} from '../../dashboard/model/visualization';
-import {mapFavoriteToLayerSettings} from '../reducers/store-data-reducer';
 import 'rxjs/add/operator/take';
 @Injectable()
 export class VisualizationObjectEffect {
@@ -36,7 +24,7 @@ export class VisualizationObjectEffect {
 
         if (visualizationDetails && visualizationDetails.favorite && visualizationDetails.favorite.id) {
           this.store.dispatch(new fromAction.LoadFavoriteAction({
-            apiRootUrl: store.uiState.systemInfo.apiRootUrl,
+            apiRootUrl: store.uiState.systemInfo.rootUrl + '/api/',
             visualizationObject: visualizationObject
           }))
         }

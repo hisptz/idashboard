@@ -20,7 +20,7 @@ export function updateVisualizationWithSettings(visualization: Visualization, se
       visualizationLayouts = [...visualizationLayouts, {id: view.id, layout: getVisualizationLayout(view)}];
       visualizationInterpretations = [...visualizationInterpretations, {
         id: view.id,
-        interpretations: view.interpretations
+        interpretations: view.interpretations || []
       }];
     });
 
@@ -36,7 +36,7 @@ export function updateVisualizationWithSettings(visualization: Visualization, se
     const newSettings = {...settings};
     visualizationDetails.filters = [{id: settings.id, filters: getVisualizationFilters(settings)}];
     visualizationDetails.layouts = [{id: settings.id, layout: getVisualizationLayout(settings)}];
-    visualizationDetails.interpretations = [{id: settings.id, interpretations: settings.interpretations}];
+    visualizationDetails.interpretations = [{id: settings.id, interpretations: settings.interpretations || []}];
 
     newVisualization.layers = [{settings: newSettings}];
   }

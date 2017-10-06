@@ -31,7 +31,13 @@ export class SystemInfoService {
   }
 
   private _getApiRootUrl(url, currentVersion, maxSupportedVersion) {
-    return currentVersion > maxSupportedVersion ? url + this._getVersionDecimalPart(maxSupportedVersion) + '/' : url + this._getVersionDecimalPart(currentVersion)  + '/';
+    let initialApiVersion = url;
+
+    if (currentVersion > 2.24) {
+      initialApiVersion += currentVersion > maxSupportedVersion ? this._getVersionDecimalPart(maxSupportedVersion) + '/' : this._getVersionDecimalPart(currentVersion)  + '/';
+    }
+
+    return initialApiVersion;
   }
 
   private _getVersionDecimalPart(version: number) {

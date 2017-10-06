@@ -8,9 +8,9 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class MessageService {
-  
+
   constructor(private http: Http) { }
-  private messageUrl = '../../../api/25/messageConversations.json?fields=:all,id,followUp,lastUpdated,userFirstname,userSurname,read,name,subject,userMessages[followUp,read,user[id,displayName]],messageType,externalAccess,lastMessage,priority,status,access,user[id,displayName],messages[id,name,displayName,text,created,lastUpdated,sender[id,name,displayName],externalAccess],userMessages[*]&pageSize=50&page=1';
+  private messageUrl = '../../../api/messageConversations.json?fields=:all,id,followUp,lastUpdated,userFirstname,userSurname,read,name,subject,userMessages[followUp,read,user[id,displayName]],messageType,externalAccess,lastMessage,priority,status,access,user[id,displayName],messages[id,name,displayName,text,created,lastUpdated,sender[id,name,displayName],externalAccess],userMessages[*]&pageSize=50&page=1';
 
   getMessages():Observable<any>{
     return this.http.get(this.messageUrl)

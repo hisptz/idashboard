@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Pulling codes for the main repository"
-git pull
+git pull origin 2.0
 
 echo "Pulling codes for data filter component"
 cd src/app/data-filter

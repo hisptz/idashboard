@@ -240,7 +240,7 @@ export class AnalyticsService {
     let strategies = '';
     strategies += visualizationType === 'EVENT_CHART' ||
     visualizationType === 'EVENT_REPORT' || visualizationType === 'EVENT_MAP' ? '&outputType=EVENT' : '';
-    strategies += '&displayProperty=SHORTNAME';
+    strategies += '&displayProperty=NAME';
     strategies += layerType !== null && layerType === 'event' ? '&coordinatesOnly=true' : '';
     return strategies;
   }
