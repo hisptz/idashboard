@@ -47,6 +47,7 @@ import { ChartLoaderComponent } from './components/chart-loader/chart-loader.com
 import { TableLoaderComponent } from './components/table-loader/table-loader.component';
 import { MapLoaderComponent } from './components/map-loader/map-loader.component';
 import {DataFilterModule} from '../data-filter/data-filter.module';
+import { KNumberPipe } from './pipes/k-number.pipe';
 
 @NgModule({
   imports: [
@@ -101,7 +102,8 @@ import {DataFilterModule} from '../data-filter/data-filter.module';
     DashboardShareComponent,
     ChartLoaderComponent,
     TableLoaderComponent,
-    MapLoaderComponent
+    MapLoaderComponent,
+    KNumberPipe
   ],
   providers: [
   ]

@@ -204,24 +204,29 @@
 }
 
 .interpretation-btn {
+  border-style: none !important;
   border-radius: 50% !important;
-  padding: 3px 5px 3px 5px !important;
+  margin-top: 3px !important;
+  padding: 0px 5px 3px 5px !important;
+}
+
+.interpretation-btn:hover {
+  background-color: transparent !important;
 }
 
 .interpretation-btn img {
-  height: 18px !important;
+  height: 30px !important;
 }
 
 .interpretation-badge {
   position: absolute;
-  top: -4px;
-  left: 34%;
-  right: -5px;
-  background-color: rgba(38, 154, 188, 0.6);
-  color: #FFFFFF;
+  height: 30px;
+  width: 30px;
+  top: 0;
+  padding-top: 7px;
+  background-color: transparent;
+  color: #0078A8;
   text-align: center;
-  padding: 1px 2px 1px 2px;
-  border-radius: 10px;
   font-size: 11px;
 }
 
