@@ -407,46 +407,64 @@ export class VisualizerService {
 
 
   private _getSortableSeries(series, sortOrder) {
-    let newSeries = _.clone(series);
+    let newSeries = [...series];
     let seriesCategories = [];
+
+    /**
+     * Combine all available series for sorting
+     */
+    const combinedSeriesData = [...this._getCombinedSeriesData(_.map(series, seriesObject => seriesObject.data))];
+
     if (sortOrder === 1) {
-      newSeries = _.map(series, (seriesObject, seriesIndex) => {
-        const newSeriesObject = _.clone(seriesObject);
+      seriesCategories = _.map(_.reverse(_.sortBy(combinedSeriesData, ['y'])), seriesData => seriesData.id);
+      newSeries = _.map(newSeries, (seriesObject) => {
+        const newSeriesObject: any = {...seriesObject};
 
-        if (seriesIndex === 0) {
-          newSeriesObject.data = _.assign([], _.reverse(_.sortBy(seriesObject.data, ['y'])));
-
-          /**
-           * Get series categories for the first series
-           */
-          seriesCategories = _.map(newSeriesObject.data, seriesData => seriesData.name)
-        } else {
-          if (seriesCategories) {
-            newSeriesObject.data = _.map(seriesCategories, seriesCategory => _.find(seriesObject.data, ['name', seriesCategory]))
-          }
+        if (seriesCategories.length > 0) {
+          newSeriesObject.data = [..._.map(seriesCategories, seriesCategory => _.find(seriesObject.data, ['id', seriesCategory]))];
         }
 
         return newSeriesObject;
       })
     } else if (sortOrder === -1) {
-      newSeries = _.map(series, (seriesObject, seriesIndex) => {
-        const newSeriesObject = _.clone(seriesObject);
-        if (seriesIndex === 0) {
-          newSeriesObject.data = _.assign([], _.sortBy(seriesObject.data, ['y']));
+      seriesCategories = _.map(_.sortBy(combinedSeriesData, ['y']), seriesData => seriesData.id);
+      newSeries = _.map(series, (seriesObject) => {
 
-          /**
-           * Get series categories for the first series
-           */
-          seriesCategories = _.map(newSeriesObject.data, seriesData => seriesData.name)
-        } else {
-          if (seriesCategories) {
-            newSeriesObject.data = _.map(seriesCategories, seriesCategory => _.find(seriesObject.data, ['name', seriesCategory]))
-          }
+        const newSeriesObject: any = {...seriesObject};
+
+        if (seriesCategories.length > 0) {
+          newSeriesObject.data = [..._.map(seriesCategories, seriesCategory => _.find(seriesObject.data, ['id', seriesCategory]))];
         }
         return newSeriesObject;
       })
     }
     return newSeries;
+  }
+
+  private _getCombinedSeriesData(seriesData: any) {
+    let combinedSeriesData = [];
+    seriesData.forEach(seriesDataArray => {
+      seriesDataArray.forEach(seriesDataObject => {
+        const availableSeriesData = _.find(combinedSeriesData, ['id', seriesDataObject.id]);
+        if (!availableSeriesData) {
+          combinedSeriesData = [
+            ...combinedSeriesData,
+            seriesDataObject
+          ]
+        } else {
+          const seriesDataIndex = _.findIndex(combinedSeriesData, availableSeriesData);
+          const newSeriesObject = {...seriesDataObject};
+          newSeriesObject.y += availableSeriesData.y;
+          combinedSeriesData = [
+            ...combinedSeriesData.slice(0, seriesDataIndex),
+            newSeriesObject,
+            ...combinedSeriesData.slice(seriesDataIndex + 1)
+          ];
+        }
+      })
+    });
+
+    return combinedSeriesData;
   }
 
   private _getChartSeriesNew(analyticsObject: AnalyticsObject,
