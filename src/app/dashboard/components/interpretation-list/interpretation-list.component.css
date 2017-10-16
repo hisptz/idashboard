@@ -1,0 +1,89 @@
+.interpretation-item {
+  display: flex;
+  position: relative;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.interpretation-item-border {
+  border-top: solid 1px #eeeeee;
+}
+
+.interpretation-input {
+  border-style: none;
+  border-bottom: solid 1px #eeeeee;
+  padding: 5px;
+  width: 100%;
+}
+
+.interpretation-input:focus {
+  outline: none;
+}
+
+.interpretation-user {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  padding-top: 8px;
+  padding-left: 7px;
+  font-size: 16px;
+  background-color: #dddddd;
+  color: #777777;
+}
+
+.interpretation-body {
+  padding-left: 10px;
+}
+
+
+.interpretation-like {
+  font-weight: lighter;
+  font-size: 12px;
+}
+
+.interpretation-options {
+  display: flex;
+}
+
+.interpretation-comment-btn {
+  font-size: 12px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+.interpretation-like-btn {
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: lighter;
+
+}
+
+.interpretation-like-btn i {
+  font-size: 9px;
+}
+
+.interpretation-text {
+  padding-bottom: 5px;
+}
+
+.interpretation-more-options {
+  position: absolute;
+  right: 0px;
+}
+
+.interpretation-last-updated {
+  color: #777777;
+  font-size: 12px;
+}
+
+.interpretation-last-updated :hover {
+  display: none;
+}
+
+.interpretation-more-btn {
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.interpretation-more-btn:hover {
+  background-color: #dddddd;
+}

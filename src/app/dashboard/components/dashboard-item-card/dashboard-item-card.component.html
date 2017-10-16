@@ -115,10 +115,10 @@
                 </app-layout>
               </div>
             </li>
-            <li *ngIf="interpretations.length > 0">
+            <li>
               <a
                 class="interpretation-btn"
-                [href]="interpretationLink$ | async"
+                (click)="toggleInterpretationBlock($event)"
                 tooltip="{{interpretations.length}} interpretation{{interpretations.length > 1 ? 's' : ''}} available"
               >
                 <img [src]="'assets/img/interpretation.png'" alt="">
@@ -181,82 +181,99 @@
     </div>
     <div
       [ngClass]="['panel-body', 'dashboard-item-body']"
-      [ngStyle]="{'height': dashboardBlockHeight, 'position': 'relative'}"
       id="{{visualizationObject.id}}"
     >
-      <!--{{visualizationObject.details.filters | json}}-->
-      <!--<app-loader *ngIf="currentVisualizationType == null" [loadingMessage]="'Analysing current dashboard item..'"></app-loader>-->
-      <!--chart block-->
-      <app-chart
-        [visualizationObject]="visualizationObject"
-        (onChartTypeChange)="updateVisualizationWithChartType($event)"
-        *ngIf="currentVisualizationType == 'CHART'"
-      >
-      </app-chart>
-      <!--end of chart  block-->
+      <div class="row">
+        <div
+          [style.max-height]="dashboardBodyHeight"
+             [ngClass]="{
+             'col-md-12': !visualizationObject.details.showInterpretationBlock,
+             'col-md-8' : visualizationObject.details.showInterpretationBlock,
+             'dashboard-item-visualization-area': true
+             }"
+        >
+          <app-chart
+            [visualizationObject]="visualizationObject"
+            (onChartTypeChange)="updateVisualizationWithChartType($event)"
+            *ngIf="currentVisualizationType == 'CHART'"
+          >
+          </app-chart>
+          <!--end of chart  block-->
 
-      <!--table block-->
-      <app-table
-        [visualizationObject]="visualizationObject"
-        *ngIf="currentVisualizationType == 'TABLE'"
-      >
-      </app-table>
-      <!--end of table  block-->
+          <!--table block-->
+          <app-table
+            [visualizationObject]="visualizationObject"
+            *ngIf="currentVisualizationType == 'TABLE'"
+          >
+          </app-table>
+          <!--end of table  block-->
 
-      <!--map block-->
-      <app-map
-        [visualizationObject]="visualizationObject"
-        *ngIf="currentVisualizationType == 'MAP'"
-      ></app-map>
-      <!--end of map block-->
+          <!--map block-->
+          <app-map
+            [visualizationObject]="visualizationObject"
+            *ngIf="currentVisualizationType == 'MAP'"
+          ></app-map>
+          <!--end of map block-->
 
-      <!--user block-->
-      <app-users
-        [visualizationObject]="visualizationObject"
-        *ngIf="currentVisualizationType == 'USERS'"
-      ></app-users>
-      <!--end of user block-->
+          <!--user block-->
+          <app-users
+            [visualizationObject]="visualizationObject"
+            *ngIf="currentVisualizationType == 'USERS'"
+          ></app-users>
+          <!--end of user block-->
 
-      <!--resources block-->
-      <app-resources
-        [visualizationObject]="visualizationObject"
-        *ngIf="currentVisualizationType == 'RESOURCES'"
-      ></app-resources>
-      <!--end of resources block-->
+          <!--resources block-->
+          <app-resources
+            [visualizationObject]="visualizationObject"
+            *ngIf="currentVisualizationType == 'RESOURCES'"
+          ></app-resources>
+          <!--end of resources block-->
 
-      <!--reports block-->
-      <app-reports
-        [visualizationObject]="visualizationObject"
-        *ngIf="currentVisualizationType == 'REPORTS'"
-      ></app-reports>
-      <!--end of report block-->
+          <!--reports block-->
+          <app-reports
+            [visualizationObject]="visualizationObject"
+            *ngIf="currentVisualizationType == 'REPORTS'"
+          ></app-reports>
+          <!--end of report block-->
 
-      <app-metadata-dictionary
-        *ngIf="currentVisualizationType == 'DICTIONARY'"
-        [metadataidentifiers]="metadataIdentifiers"
-      ></app-metadata-dictionary>
+          <app-metadata-dictionary
+            *ngIf="currentVisualizationType == 'DICTIONARY'"
+            [metadataidentifiers]="metadataIdentifiers"
+          ></app-metadata-dictionary>
 
-      <!--app type section-->
-      <app-app
-        [visualizationObject]="visualizationObject"
-        *ngIf="currentVisualizationType == 'APP'"
-      ></app-app>
-      <!--end of app type section-->
+          <!--app type section-->
+          <app-app
+            [visualizationObject]="visualizationObject"
+            *ngIf="currentVisualizationType == 'APP'"
+          ></app-app>
+          <!--end of app type section-->
 
-      <!--message section-->
-      <app-message
-        *ngIf="currentVisualizationType == 'MESSAGES'"
-      ></app-message>
-      <!--end of message section-->
+          <!--message section-->
+          <app-message
+            *ngIf="currentVisualizationType == 'MESSAGES'"
+          ></app-message>
+          <!--end of message section-->
 
-      <app-favorite-settings
-        *ngIf="showFavoriteSettings"
-        [visualizationSettings]="getVisualizationSettings(visualizationObject.layers)"
-        [visualizationType]="currentVisualizationType"
-        (onClose)="showFavoriteSettings = false"
-        (onSettingsUpdate)="updateVisualizationSettings($event)"
-      >
-      </app-favorite-settings>
+          <app-favorite-settings
+            *ngIf="showFavoriteSettings"
+            [visualizationSettings]="getVisualizationSettings(visualizationObject.layers)"
+            [visualizationType]="currentVisualizationType"
+            (onClose)="showFavoriteSettings = false"
+            (onSettingsUpdate)="updateVisualizationSettings($event)"
+          >
+          </app-favorite-settings>
+        </div>
+        <div
+          *ngIf="visualizationObject.details.showInterpretationBlock"
+          [style.max-height]="dashboardBodyHeight"
+          class="col-md-4 interpretation-block">
+          <app-interpretation-list
+            [interpretations]="interpretations"
+          >
+          </app-interpretation-list>
+        </div>
+      </div>
+
     </div>
     <div [ngClass]="['panel-footer','dashboard-card-footer']" *ngIf="cardConfiguration.showCardFooter">
       <div class="row">

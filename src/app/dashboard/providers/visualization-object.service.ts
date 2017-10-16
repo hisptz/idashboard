@@ -37,6 +37,7 @@ export class VisualizationObjectService {
       subtitle: null,
       description: null,
       details: {
+        shape: cardData.hasOwnProperty('shape') ? cardData.shape : 'NORMAL',
         loaded: this._getLoadedStatus(cardData),
         hasError: false,
         errorMessage: '',
@@ -47,7 +48,7 @@ export class VisualizationObjectService {
         showChartOptions: true,
         showFilter: true,
         cardHeight: '490px',
-        itemHeight: '465px',
+        itemHeight: '475px',
         fullScreen: false,
         type: this._getSanitizedCurrentVisualizationType(cardData.hasOwnProperty('type') ? cardData.type : null),
         currentVisualization: this._getSanitizedCurrentVisualizationType(cardData.hasOwnProperty('type') ? cardData.type : null),

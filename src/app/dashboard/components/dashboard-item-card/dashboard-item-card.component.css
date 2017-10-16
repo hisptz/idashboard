@@ -38,7 +38,12 @@
 
 .dashboard-item-body {
   position: relative;
-  padding-bottom: 0px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+
+}
+
+.dashboard-item-visualization-area {
   overflow: auto;
 }
 
@@ -283,3 +288,8 @@
 .hiddenItem {
   display: none;
 }
+
+.interpretation-block {
+  overflow: auto;
+}
+

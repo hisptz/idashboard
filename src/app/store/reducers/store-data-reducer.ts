@@ -354,18 +354,44 @@ export function storeDataReducer(state: StoreData = INITIAL_STORE_DATA, action) 
       return newState;
     }
 
+    case fromAction.INTERPRETATION_BLOCK_TOGGLE_ACTION: {
+      const newState = {...state};
+      const newVisualizationObject: Visualization = {...action.payload};
+
+      /**
+       * Change size of the dashboard item
+       */
+      if (newVisualizationObject.details.showInterpretationBlock) {
+        newVisualizationObject.shape = newVisualizationObject.details.shape;
+      } else {
+        if (newVisualizationObject.shape === 'NORMAL') {
+          newVisualizationObject.shape = 'DOUBLE_WIDTH';
+        } else {
+          newVisualizationObject.shape = 'FULL_WIDTH';
+        }
+      }
+
+      /**
+       * Toggle interpretation block
+       */
+      newVisualizationObject.details.showInterpretationBlock = !newVisualizationObject.details.showInterpretationBlock;
+
+      const visualizationIndex = _.findIndex(newState.visualizationObjects,
+        _.find(newState.visualizationObjects, ['id', newVisualizationObject.id]));
+
+      if (visualizationIndex !== -1) {
+        newState.visualizationObjects = [
+          ...newState.visualizationObjects.slice(0, visualizationIndex),
+          newVisualizationObject,
+          ...newState.visualizationObjects.slice(visualizationIndex + 1)
+        ];
+      }
+      return newState;
+    }
+
     default:
       return state;
   }
-}
-
-export function mapFavoriteToLayerSettings(favoriteObject: any) {
-  if (favoriteObject.mapViews) {
-    return _.map(favoriteObject.mapViews, (view: any) => {
-      return {settings: view}
-    });
-  }
-  return [{settings: favoriteObject}];
 }
 
 function handleIncomingSearchResults(state, action) {

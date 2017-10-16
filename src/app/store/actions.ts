@@ -75,6 +75,7 @@ export const SAVE_VISUALIZATION = 'SAVE_VISUALIZATION';
 export const GLOBAL_FILTER_CHANGE_ACTION = 'GLOBAL_FILTER_CHANGE_ACTION';
 export const LOCAL_FILTER_CHANGE_ACTION = 'LOCAL_FILTER_CHANGE_ACTION';
 export const UPDATE_DASHBOARD_ACTION = 'UPDATE_DASHBOARD_ACTION';
+export const INTERPRETATION_BLOCK_TOGGLE_ACTION = 'INTERPRETATION_BLOCK_TOGGLE_ACTION';
 
 export class LoadSystemInfoAction implements Action {
   readonly type = LOAD_SYSTEM_INFO_ACTION;
@@ -345,4 +346,9 @@ export class LocalFilterChangeAction implements Action {
 export class UpdateDashboardAction implements Action {
   readonly type = UPDATE_DASHBOARD_ACTION;
   constructor(public payload: Dashboard) {}
+}
+
+export class InterpretationBlockToggleAction implements Action {
+  readonly type = INTERPRETATION_BLOCK_TOGGLE_ACTION;
+  constructor(public payload: Visualization) {}
 }

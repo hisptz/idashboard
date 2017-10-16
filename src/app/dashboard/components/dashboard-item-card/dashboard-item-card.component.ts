@@ -34,6 +34,7 @@ export class DashboardItemCardComponent implements OnInit {
   dashboardCardClasses: any[];
   dashboardBlockClasses: any[];
   dashboardBlockHeight: string;
+  dashboardBodyHeight: string;
   showFilter: any;
   layoutModel: any;
   selectedDataItems: any;
@@ -150,6 +151,13 @@ export class DashboardItemCardComponent implements OnInit {
      * @private
      */
     this.dashboardBlockHeight = this.visualizationObject.details.cardHeight;
+
+    /**
+     * Get dashboard body height
+     * @type {string}
+     * @private
+     */
+    this.dashboardBodyHeight = this.visualizationObject.details.itemHeight;
 
     /**
      * Set initial layout model
@@ -271,6 +279,7 @@ export class DashboardItemCardComponent implements OnInit {
       });
     }
     visualizationObject.shape = newShape;
+    visualizationObject.details.shape = newShape;
 
     this.store.dispatch(new fromAction.ResizeDashboardAction({
         id: visualizationObject.id,
@@ -516,6 +525,12 @@ export class DashboardItemCardComponent implements OnInit {
     });
 
     this.store.dispatch(new fromAction.SaveVisualization(visualization));
+
+  }
+
+  toggleInterpretationBlock(e) {
+    e.stopPropagation();
+    this.store.dispatch(new fromAction.InterpretationBlockToggleAction(this.visualizationObject))
 
   }
 }
