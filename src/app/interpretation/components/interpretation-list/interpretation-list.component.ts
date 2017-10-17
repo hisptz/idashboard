@@ -9,11 +9,12 @@ import * as _ from 'lodash';
 export class InterpretationListComponent implements OnInit {
 
   @Input() interpretations: any[];
+  @Input() itemHeight: string;
   interpretationTerm: string;
   constructor() { }
 
   ngOnInit() {
-    console.log(this.interpretations)
+    console.log(this.interpretations);
     if (this.interpretations) {
       this.interpretations = this.interpretations.map((interpretation: any) => {
         const newInterpretation: any = {...interpretation};

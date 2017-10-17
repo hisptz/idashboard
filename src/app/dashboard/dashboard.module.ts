@@ -48,7 +48,7 @@ import { TableLoaderComponent } from './components/table-loader/table-loader.com
 import { MapLoaderComponent } from './components/map-loader/map-loader.component';
 import {DataFilterModule} from '../data-filter/data-filter.module';
 import { KNumberPipe } from './pipes/k-number.pipe';
-import { InterpretationListComponent } from './components/interpretation-list/interpretation-list.component';
+import {InterpretationModule} from '../interpretation/interpretation.module';
 
 @NgModule({
   imports: [
@@ -65,7 +65,8 @@ import { InterpretationListComponent } from './components/interpretation-list/in
     DragulaModule,
     MessageModule,
     PeriodFilterModule,
-    DataFilterModule
+    DataFilterModule,
+    InterpretationModule
   ],
   declarations: [
     DashboardComponent,
@@ -104,8 +105,7 @@ import { InterpretationListComponent } from './components/interpretation-list/in
     ChartLoaderComponent,
     TableLoaderComponent,
     MapLoaderComponent,
-    KNumberPipe,
-    InterpretationListComponent
+    KNumberPipe
   ],
   providers: [
   ]

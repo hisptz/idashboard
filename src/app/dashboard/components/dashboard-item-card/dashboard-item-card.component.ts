@@ -300,7 +300,7 @@ export class DashboardItemCardComponent implements OnInit {
     if (visualizationDetails.showFullScreen) {
       document.getElementsByTagName('body')[0].style.overflow = 'auto';
       visualizationDetails.cardHeight = '490px';
-      visualizationDetails.itemHeight = '465px';
+      visualizationDetails.itemHeight = '476px';
     } else {
       document.getElementsByTagName('body')[0].style.overflow = 'hidden';
       visualizationDetails.cardHeight = '97vh';
