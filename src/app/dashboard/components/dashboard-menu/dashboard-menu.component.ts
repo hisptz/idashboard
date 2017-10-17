@@ -4,11 +4,11 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {DashboardMenuVm} from '../../model/dashboard-menu-vm';
 import {dashboardMenuItemsSelector} from '../../../store/selectors/dashboard-menu-items.selector';
-import {PaginationInstance} from 'ng2-pagination';
 import {apiRootUrlSelector} from '../../../store/selectors/api-root-url.selector';
 import {DeleteDashboardAction, HideDashboardMenuNotificationIcon} from '../../../store/actions';
 import {dashboardPaginationConfigurationSelector} from '../../../store/selectors/dashboard-pagination-configuration.selector';
 import * as _ from 'lodash';
+import {PaginationInstance} from 'ngx-pagination';
 
 export const INITIAL_PAGING_CONFIG: PaginationInstance = {
   itemsPerPage: 8,
@@ -39,7 +39,7 @@ export class DashboardMenuComponent implements OnInit {
   showOrgUnitFilter: boolean;
   private _config: PaginationInstance;
   menuConfig: any = {
-    showDashboardCreateButton: true,
+    showDashboardCreateButton: false,
     showPaginationCounter: true,
     showPaginationButtons: true,
     showMaintenanceOptions: true,

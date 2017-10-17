@@ -61,7 +61,7 @@ export class DashboardItemCardComponent implements OnInit {
   cardConfiguration: any = {
     showCardHeader: false,
     showCardFooter: false,
-    enableDeleteButton: true,
+    enableDeleteButton: false,
     showDeleteButton: false,
     confirmDelete: false,
     defaultHeight: '470px',

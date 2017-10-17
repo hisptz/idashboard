@@ -39,7 +39,7 @@ export class DashboardShareComponent implements OnInit {
     });
 
 
-    this.searchUserGroup().subscribe(result => {
+    this.searchUserGroup().subscribe((result: any) => {
       this.searching = false;
       this.searchTerm$.subscribe(term => {
         if (term.length > 0) {

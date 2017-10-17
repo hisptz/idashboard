@@ -1,18 +1,18 @@
-<!--Header-->
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-3 col-sm-3" *ngIf="dashboardConfig.showName">
-      <h4>{{dashboardName$ | async}}</h4>
-    </div>
-    <div class="col-md-5 col-sm-5" *ngIf="dashboardConfig.showSearch">
-      <app-dashboard-item-search></app-dashboard-item-search>
-    </div>
-    <div class="col-md-4 col-sm-4" *ngIf="dashboardConfig.showNotification">
-      <app-dashboard-notification-area></app-dashboard-notification-area>
-    </div>
-  </div>
-</div>
-<!--End of Header-->
+<!--&lt;!&ndash;Header&ndash;&gt;-->
+<!--<div class="container-fluid">-->
+  <!--<div class="row">-->
+    <!--<div class="col-md-3 col-sm-3" *ngIf="dashboardConfig.showName">-->
+      <!--<h4>{{dashboardName$ | async}}</h4>-->
+    <!--</div>-->
+    <!--<div class="col-md-5 col-sm-5" *ngIf="dashboardConfig.showSearch">-->
+      <!--<app-dashboard-item-search></app-dashboard-item-search>-->
+    <!--</div>-->
+    <!--<div class="col-md-4 col-sm-4" *ngIf="dashboardConfig.showNotification">-->
+      <!--<app-dashboard-notification-area></app-dashboard-notification-area>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;End of Header&ndash;&gt;-->
 
 <!--Dashboard Menus-->
 <app-dashboard-menu
@@ -44,27 +44,38 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="(visualizationObjects$ | async).length === 0" style="margin-top: 70px;">
+  <div class="row" *ngIf="(visualizationObjects$ | async).length === 0">
     <div class="col-md-12">
-      <div class="row" *ngIf="!(dashboardLoaded$ | async)">
-        <div class="col-md-8 col-md-offset-2">
-          <span><img src="assets/img/balls-3.svg" alt="" style="height: 40px;"></span>
-          <span style="font-size: 20px;">Moving interactive visualizations into position</span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="message-container">
-            <div class="message-image">
-              <img [src]="'assets/img/welcome-image.png'" alt="" class="img-responsive">
+      <div class="container-fluid" style="margin-top: 80px">
+        <h1 class="text-center" style="margin-bottom: 30px">WELCOME TO WEB PORTAL</h1>
+
+        <div class="container" style="max-height: 120px;overflow: hidden">
+          <div class="row" style="margin: 50px">
+            <div class="col-sm-2">
+              <img src="assets/img/table.png" alt="tables">
             </div>
-            <div class="message-content">
-              <h2><b>{{welcomingTitle}}</b></h2>
-              <h3 [innerHtml]="welcomingDescription"></h3>
+            <div class="col-sm-2">
+              <img src="assets/img/column.png" alt="column chart">
+            </div>
+            <div class="col-sm-2">
+              <img src="assets/img/line.png" alt="line chart">
+            </div>
+            <div class="col-sm-2">
+              <img src="assets/img/combined.png" alt="combined bar and line chart">
+            </div>
+            <div class="col-sm-2">
+              <img src="assets/img/pie.png" alt="pie chart">
+            </div>
+            <div class="col-sm-2">
+              <img src="assets/img/map.png" alt="maps">
             </div>
           </div>
-
         </div>
+
+        <div class="container">
+          <p class="lead text-center">Loading data please wait...</p>
+        </div>
+
       </div>
     </div>
   </div>

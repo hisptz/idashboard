@@ -17,6 +17,7 @@ export class SystemInfoService {
   load(): Observable<SystemInfo> {
     return Observable.create(observer => {
       this.manifestService.getRootUrl().subscribe((rootUrl: string) => {
+        console.log(rootUrl)
         this.http.get(rootUrl + 'api/system/info')
           .subscribe((systemInfo: any) => {
             observer.next({

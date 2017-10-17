@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -8,20 +8,64 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class HttpClientService {
-  constructor(private http: Http) {}
+  public APIURL = 'https://hmisportal.moh.go.tz/dhis/';
+  settings: any = null;
 
-  createAuthorizationHeader(headers: Headers, options?) {
-    if (options) {
-      for (let key in options) {
-        headers.append(key, options[key]);
-      }
-    }
+  constructor(private http: Http) {
+
   }
 
-  get(url) {
-    return this.http.get(url)
-      .map(this.responseHandler())
-      .catch(this.handleError);
+  createAuthorizationHeader(settings: any) {
+    const username = settings.username;
+    const password = settings.password;
+
+    const token = btoa(username + ':' + password);
+
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic ' + token);
+
+    return headers;
+  }
+
+  getSettings() {
+    return new Observable(observer => {
+      if (!this.settings) {
+        this.http.get('manifest.webapp').map(res => res.json())
+          .subscribe((settings: any) => {
+
+            this.settings = {...settings.activities.dhis};
+            observer.next(settings.activities.dhis);
+            observer.complete();
+          })
+      } else {
+        observer.next(this.settings);
+        observer.complete();
+      }
+    })
+  }
+
+  get(url): Observable<any> {
+    return new Observable(observer => {
+      this.getSettings().subscribe((settings: any) => {
+        const headers: Headers = this.createAuthorizationHeader(settings);
+        this.http.get(url, {
+          headers: headers
+        })
+          .map(this.responseHandler())
+          .catch(this.handleError)
+          .subscribe((data: any) => {
+            observer.next(data);
+            observer.complete();
+          }, error => observer.error(error));
+      })
+    })
+  }
+
+  get1(url) {
+    //
+    // return this.http.get(this.APIURL + url, {
+    //   headers: headers
+    // }).map(this.responseHandler()).catch(this.handleError);
   }
 
   post(url, data, options?) {
@@ -29,6 +73,7 @@ export class HttpClientService {
       .map(this.responseHandler())
       .catch(this.handleError);
   }
+
   put(url, data, options?) {
     return this.http.put(url, data).map(this.responseHandler());
   }
@@ -49,7 +94,7 @@ export class HttpClientService {
     }
   }
 
-  handleError (error: Response | any) {
+  handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {

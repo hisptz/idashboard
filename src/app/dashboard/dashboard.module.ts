@@ -7,7 +7,6 @@ import {DashboardNotificationAreaComponent} from './components/dashboard-notific
 import { DashboardMenuComponent } from './components/dashboard-menu/dashboard-menu.component';
 import { CreateDashboardComponent } from './components/create-dashboard/create-dashboard.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Ng2PaginationModule} from 'ng2-pagination';
 import {ClickOutsideDirective} from './directives/click-outside.directive';
 import {FilterPipe} from './pipes/filter.pipe';
 import { EditDashboardComponent } from './components/edit-dashboard/edit-dashboard.component';
@@ -49,6 +48,7 @@ import { MapLoaderComponent } from './components/map-loader/map-loader.component
 import {DataFilterModule} from '../data-filter/data-filter.module';
 import { KNumberPipe } from './pipes/k-number.pipe';
 import {InterpretationModule} from '../interpretation/interpretation.module';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -56,7 +56,7 @@ import {InterpretationModule} from '../interpretation/interpretation.module';
     FormsModule,
     ReactiveFormsModule,
     DashboardRoutingModule,
-    Ng2PaginationModule,
+    NgxPaginationModule,
     DndModule.forRoot(),
     AccordionModule.forRoot(),
     TreeModule,
