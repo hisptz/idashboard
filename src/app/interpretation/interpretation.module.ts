@@ -4,6 +4,10 @@ import {InterpretationListComponent} from './components/interpretation-list/inte
 import {FormsModule} from '@angular/forms';
 import {AutosizeDirective} from './directives/autosize.directive';
 import {FilterPipe} from './pipes/filter.pipe';
+import {InterpretationService} from './services/interpretation.service';
+import { AddInterpretationComponent } from './components/add-interpretation/add-interpretation.component';
+import { InterpretationCommentComponent } from './components/interpretation-comment/interpretation-comment.component';
+import { AbbreviatePipe } from './pipes/abbreviate.pipe';
 
 @NgModule({
   imports: [
@@ -13,9 +17,13 @@ import {FilterPipe} from './pipes/filter.pipe';
   declarations: [
     InterpretationListComponent,
     AutosizeDirective,
-    FilterPipe
+    FilterPipe,
+    AddInterpretationComponent,
+    InterpretationCommentComponent,
+    AbbreviatePipe
   ],
 
-  exports: [InterpretationListComponent]
+  exports: [InterpretationListComponent],
+  providers: [InterpretationService]
 })
 export class InterpretationModule { }

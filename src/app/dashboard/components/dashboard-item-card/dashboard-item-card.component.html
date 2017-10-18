@@ -270,6 +270,8 @@
           <app-interpretation-list
             [interpretations]="interpretations"
             [itemHeight]="dashboardBodyHeight"
+            [currentUser]="currentUser$ | async"
+            [rootUrl]="apiRootUrl$ | async"
           >
           </app-interpretation-list>
         </div>

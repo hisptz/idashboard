@@ -48,13 +48,15 @@ import {VisualizationObjectEffect} from './store/effects/visualization-object.ef
 import {FavoriteEffect} from './store/effects/favorite.effect';
 import {AnalyticsEffect} from './store/effects/analytics.effect';
 import { storeFreeze } from 'ngrx-store-freeze';
+import {NoWhitespaceDirective} from './directives/no-whitespace.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotificationComponent,
     LoaderComponent,
-    HomeComponent
+    HomeComponent,
+    NoWhitespaceDirective
   ],
   imports: [
     BrowserModule,

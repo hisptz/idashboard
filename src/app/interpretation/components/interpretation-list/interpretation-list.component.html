@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12 interpretation-block" [style.height]="itemHeight">
     <h4>Interpretation</h4>
-    <p>Description will be here</p>
+    <!--<p>Description will be here</p>-->
     <input
       [(ngModel)]="interpretationTerm"
       class="interpretation-input"
@@ -17,6 +17,7 @@
       *ngFor="let interpretation of interpretations  | filterBy: interpretationTerm ; trackBy: interpretation?.id ; let i = index"
       (mouseenter)="toggleInterpretationOptions(interpretation, $event, true)"
       (mouseleave)="toggleInterpretationOptions(interpretation, $event)"
+      (click)="toggleCommentBlock(i, $event)"
       [ngClass]="{
       'interpretation-item': true,
       'interpretation-item-border': i > 0
@@ -24,7 +25,7 @@
     >
       <div class="interpretation-user-block">
         <div class="interpretation-user">
-          {{getAbbreviatedName(interpretation.user.displayName)}}
+          {{interpretation?.user.displayName | abbreviate}}
         </div>
       </div>
       <div class="interpretation-body">
@@ -33,7 +34,12 @@
         </div>
         <div class="interpretation-text">{{interpretation.text}}</div>
         <div class="interpretation-options">
-          <a class="interpretation-comment-btn">COMMENT</a>
+          <a
+            class="interpretation-comment-btn"
+            *ngIf="interpretation.comments.length > 0 && !interpretation.showCommentBlock"
+          >
+            {{ interpretation.comments.length }} comment{{interpretation.comments.length > 1 ? 's' : ''}}
+          </a>
           <a
             class="interpretation-like-btn"
             title="Like this interpretation"
@@ -42,142 +48,49 @@
           </a>
           <div
             class="interpretation-like"
-            *ngIf="interpretation.likes > 0"
-          >{{interpretation.likes}}</div>
+            *ngIf="interpretation.likedBy.length > 0"
+          >
+            {{ getLikeText(interpretation) }}
+          </div>
         </div>
-        <div class="interpretation-comment-container">
-          <div class="interpretation-comment">
-            <div class="interpretation-user-block">
-              <div class="interpretation-user">
-                RM
-              </div>
-            </div>
-            <div class="interpretation-comment-body">
-              <div>
-                <b>Name</b>
-              </div>
-              <div class="interpretation-text">
-                This is the sample test for showing comments on a particular interpretation, and this comment will results to more comments and more until the topic is well understood
-              </div>
-            </div>
-            <div class="interpretation-more-comment-options">
-              <div
-                class="interpretation-last-updated"
-              >
-                13hr
-              </div>
-              <!--<a-->
-              <!--href=""-->
-              <!--class="interpretation-more-btn"-->
-              <!--title="show more options"-->
-              <!--*ngIf="interpretation.showMoreButton"-->
-              <!--&gt;-->
-              <!--<img src="assets/img/more.png" alt="" style="height: 20px;">-->
-              <!--</a>-->
-            </div>
-          </div>
-          <div class="interpretation-comment">
-            <div class="interpretation-user-block">
-              <div class="interpretation-user">
-                RM
-              </div>
-            </div>
-            <div class="interpretation-comment-body">
-              <div>
-                <b>Name</b>
-              </div>
-              <div class="interpretation-text">
-                This is the sample test for showing comments on a particular interpretation, and this comment will results to more comments and more until the topic is well understood
-              </div>
-            </div>
-            <div class="interpretation-more-comment-options">
-              <div
-                class="interpretation-last-updated"
-              >
-                13hr
-              </div>
-              <!--<a-->
-              <!--href=""-->
-              <!--class="interpretation-more-btn"-->
-              <!--title="show more options"-->
-              <!--*ngIf="interpretation.showMoreButton"-->
-              <!--&gt;-->
-              <!--<img src="assets/img/more.png" alt="" style="height: 20px;">-->
-              <!--</a>-->
-            </div>
-          </div>
-          <div class="interpretation-comment">
-            <div class="interpretation-user-block">
-              <div class="interpretation-user">
-                RM
-              </div>
-            </div>
-            <div class="interpretation-comment-body">
-              <div>
-                <b>Name</b>
-              </div>
-              <div class="interpretation-text">
-                This is the sample test for showing comments on a particular interpretation, and this comment will results to more comments and more until the topic is well understood
-              </div>
-            </div>
-            <div class="interpretation-more-comment-options">
-              <div
-                class="interpretation-last-updated"
-              >
-                13hr
-              </div>
-              <!--<a-->
-              <!--href=""-->
-              <!--class="interpretation-more-btn"-->
-              <!--title="show more options"-->
-              <!--*ngIf="interpretation.showMoreButton"-->
-              <!--&gt;-->
-              <!--<img src="assets/img/more.png" alt="" style="height: 20px;">-->
-              <!--</a>-->
-            </div>
-          </div>
-          <div class="interpretation-comment">
-            <div class="interpretation-user-block">
-              <div class="interpretation-user">
-                RM
-              </div>
-            </div>
-            <div class="interpretation-comment-input-block">
-              <textarea
-                type="text"
-                cols="30" rows="1"
-                Autosize
-                autofocus
-                placeholder="Write your comment"
-                class="interpretation-comment-input"
-              ></textarea>
-              <!--<div class="pull-right">-->
-                <!--<a class="comment-btn">CANCEL</a>-->
-                <!--<a class="comment-btn ">POST</a>-->
-              <!--</div>-->
-            </div>
-          </div>
+        <div
+          *ngIf="interpretation.showCommentBlock"
+          class="interpretation-comment-container"
+        >
+          <app-interpretation-comment
+            *ngFor="let comment of interpretation.comments"
+            [comment]="comment"
+          ></app-interpretation-comment>
+          <app-interpretation-comment
+            [showCommentInput]="true"
+            [currentUser]="currentUser"
+          ></app-interpretation-comment>
         </div>
       </div>
       <div class="interpretation-more-options">
         <div
           class="interpretation-last-updated"
-          *ngIf="interpretation.showDate"
+          *ngIf="interpretation.showDate && !interpretation.showDropdownOptions"
         >
           {{interpretation.lastUpdated | date}}
         </div>
-        <a
-          href=""
-          class="interpretation-more-btn"
-          title="show more options"
-          *ngIf="interpretation.showMoreButton"
-        >
-          <img src="assets/img/more.png" alt="" style="height: 20px;">
-        </a>
-        <ul class="interpretation-more-options-dropdown">
-          <li><a href="">Edit</a></li>
-          <li><a href="" class="text-danger">Delete</a></li>
-        </ul>
+        <div>
+          <a
+            class="interpretation-more-btn"
+            title="show more options"
+            (click)="toggleInterpretationDropdownOptions(i, $event)"
+            *ngIf="interpretation.showMoreButton"
+          >
+            <img src="assets/img/more.png" alt="" style="height: 20px;">
+          </a>
+          <ul
+            class="interpretation-more-options-dropdown"
+            *ngIf="interpretation.showDropdownOptions"
+          >
+            <li><a href="">Edit</a></li>
+            <li><a href="" class="text-danger">Delete</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -185,22 +98,15 @@
     <div class="interpretation-write-form">
       <div class="interpretation-user-block">
         <div class="interpretation-user">
-          RM
+          {{ currentUser.displayName | abbreviate }}
         </div>
       </div>
       <div class="interpretation-comment-input-block">
-              <textarea
-                type="text"
-                cols="30" rows="1"
-                Autosize
-                autofocus
-                placeholder="Write new interpretation"
-                class="interpretation-write-input"
-              ></textarea>
-        <!--<div class="pull-right">-->
-        <!--<a class="btn">CANCEL</a>-->
-        <!--<a class="btn ">POST</a>-->
-        <!--</div>-->
+        <app-add-interpretation
+          [visualizationTypeObject]="visualizationTypeObject"
+          [rootUrl]="rootUrl"
+          (onInterpretationCreate)="updateInterpretationList($event)"
+        ></app-add-interpretation>
       </div>
     </div>
   </div>

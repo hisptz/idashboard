@@ -18,6 +18,7 @@ import {
 import {MapComponent} from "../map/map.component";
 import {interpretationLinkSelector} from '../../../store/selectors/interpretation-link.selector';
 import {VisualizationObjectService} from '../../providers/visualization-object.service';
+import {currentUserSelector} from '../../../store/selectors/current-user.selector';
 
 
 @Component({
@@ -31,6 +32,8 @@ export class DashboardItemCardComponent implements OnInit {
   @Input() visualizationObject: Visualization;
   @Input() globalFilters: Observable<any>;
   @Output() onFilterDeactivate: EventEmitter<any> = new EventEmitter<any>();
+  apiRootUrl$: Observable<string>;
+  currentUser$: Observable<any>;
   dashboardCardClasses: any[];
   dashboardBlockClasses: any[];
   dashboardBlockHeight: string;
@@ -91,6 +94,8 @@ export class DashboardItemCardComponent implements OnInit {
     private store: Store<ApplicationState>,
     private visualizationObjectService: VisualizationObjectService
   ) {
+    this.apiRootUrl$ = store.select(apiRootUrlSelector);
+    this.currentUser$ = store.select(currentUserSelector);
     this.showFilter = {
       orgUnit: {
         enabled: true,

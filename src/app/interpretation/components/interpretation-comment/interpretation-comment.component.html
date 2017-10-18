@@ -1,0 +1,58 @@
+<div
+  class="interpretation-comment"
+  *ngIf="!showCommentInput"
+>
+  <div class="interpretation-user-block">
+    <div class="interpretation-user">
+      {{comment?.user.displayName | abbreviate}}
+    </div>
+  </div>
+  <div class="interpretation-comment-body">
+    <div>
+      <b>{{ comment?.user.displayName }}</b>
+    </div>
+    <div class="interpretation-text">
+      {{ comment?.text}}
+    </div>
+  </div>
+  <div class="interpretation-more-comment-options">
+    <div
+      class="interpretation-last-updated"
+    >
+      {{ comment.lastUpdated | date}}
+    </div>
+    <!--<a-->
+    <!--href=""-->
+    <!--class="interpretation-more-btn"-->
+    <!--title="show more options"-->
+    <!--*ngIf="interpretation.showMoreButton"-->
+    <!--&gt;-->
+    <!--<img src="assets/img/more.png" alt="" style="height: 20px;">-->
+    <!--</a>-->
+  </div>
+</div>
+
+<div
+  class="interpretation-comment"
+  *ngIf="showCommentInput"
+>
+  <div class="interpretation-user-block">
+    <div class="interpretation-user">
+      {{ currentUser.displayName | abbreviate }}
+    </div>
+  </div>
+  <div class="interpretation-comment-input-block">
+              <textarea
+                type="text"
+                cols="30" rows="1"
+                Autosize
+                autofocus
+                placeholder="Write your comment"
+                class="interpretation-comment-input"
+              ></textarea>
+    <!--<div class="pull-right">-->
+    <!--<a class="comment-btn">CANCEL</a>-->
+    <!--<a class="comment-btn ">POST</a>-->
+    <!--</div>-->
+  </div>
+</div>
