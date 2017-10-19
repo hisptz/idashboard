@@ -8,6 +8,8 @@ import {InterpretationService} from './services/interpretation.service';
 import { AddInterpretationComponent } from './components/add-interpretation/add-interpretation.component';
 import { InterpretationCommentComponent } from './components/interpretation-comment/interpretation-comment.component';
 import { AbbreviatePipe } from './pipes/abbreviate.pipe';
+import { InterpretationLikeComponent } from './components/interpretation-like/interpretation-like.component';
+import { EditInterpretationComponent } from './components/edit-interpretation/edit-interpretation.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { AbbreviatePipe } from './pipes/abbreviate.pipe';
     FilterPipe,
     AddInterpretationComponent,
     InterpretationCommentComponent,
-    AbbreviatePipe
+    AbbreviatePipe,
+    InterpretationLikeComponent,
+    EditInterpretationComponent
   ],
 
   exports: [InterpretationListComponent],

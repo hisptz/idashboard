@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as _ from 'lodash';
+import {InterpretationService} from '../../services/interpretation.service';
 
 @Component({
   selector: 'app-interpretation-list',
@@ -14,7 +15,7 @@ export class InterpretationListComponent implements OnInit {
   @Input() currentUser: any;
   visualizationTypeObject: any;
   interpretationTerm: string;
-  constructor() { }
+  constructor(private interpretationService: InterpretationService) { }
 
   ngOnInit() {
     if (this.interpretations) {
@@ -81,7 +82,7 @@ export class InterpretationListComponent implements OnInit {
 
   updateInterpretationList(interpretationList) {
     if (interpretationList) {
-      const newInterpretationList = interpretationList.filter((interpretation) => !!_.find(this.interpretations, ['id', interpretation.id]));
+      const newInterpretationList = interpretationList.filter((interpretation) => !_.find(this.interpretations, ['id', interpretation.id]));
 
       this.interpretations = [...newInterpretationList, ...this.interpretations]
         .map((interpretation: any, index: number) => this._sanitizeInterpretation(interpretation, index));
@@ -105,36 +106,103 @@ export class InterpretationListComponent implements OnInit {
     }
   }
 
-  getLikeText(interpretation) {
-    let likeText = '';
-
-    if (interpretation.likedBy.length > 0) {
-      const hasCurrentUserLiked = _.some(interpretation.likedBy, likeByObject => likeByObject.id === this.currentUser.id);
-      if (hasCurrentUserLiked) {
-        likeText += 'You'
+  updateInterpretationLikeStatus(interpretation: any) {
+    this.interpretations = this.interpretations.map((interpretationObject) => {
+      const newInterpretationObject: any = {...interpretationObject};
+      if (interpretationObject.id === interpretation.id) {
+        newInterpretationObject.likes = interpretation.likes;
+        newInterpretationObject.likedBy = [...interpretation.likedBy];
       }
 
-      if (hasCurrentUserLiked && interpretation.likedBy.length > 1) {
-        likeText += ' and ';
+      return newInterpretationObject;
+    });
+  }
 
-        if (interpretation.likedBy.length > 2) {
-          likeText += (interpretation.likedBy.length - 1) + ' other';
-        } else {
-          const otherPerson = interpretation.likedBy.filter((likeObject) => likeObject.id !== this.currentUser.id)[0];
-          likeText += otherPerson.displayName;
-        }
-      } else if (!hasCurrentUserLiked) {
-
-        if (interpretation.likedBy.length === 1) {
-          likeText += interpretation.likedBy[0].displayName;
-        } else {
-          likeText += interpretation.likedBy.length + ' people';
-        }
+  updateInterpretationComment(interpretation: any) {
+    this.interpretations = this.interpretations.map((interpretationObject) => {
+      const newInterpretationObject: any = {...interpretationObject};
+      if (interpretationObject.id === interpretation.id) {
+        newInterpretationObject.comments = interpretation.comments;
       }
-    }
 
-    likeText += ' liked this';
-    return likeText;
+      return newInterpretationObject;
+    });
+  }
+
+  updateInterpretationText(interpretation: any) {
+    this.interpretations = this.interpretations.map((interpretationObject) => {
+      const newInterpretationObject: any = {...interpretationObject};
+      if (interpretationObject.id === interpretation.id) {
+        newInterpretationObject.text = interpretation.text;
+        newInterpretationObject.lastUpdated = interpretation.lastUpdated;
+        newInterpretationObject.showEditForm = false;
+      }
+
+      return newInterpretationObject;
+    });
+  }
+
+  openInterpretationEditForm(interpretation, e) {
+    e.stopPropagation();
+
+    this.interpretations = this.interpretations.map((interpretationObject) => {
+      const newInterpretationObject: any = {...interpretationObject};
+      if (interpretationObject.id === interpretation.id) {
+        newInterpretationObject.showEditForm = true;
+        newInterpretationObject.showDropdownOptions = false;
+      }
+
+      return newInterpretationObject;
+    });
+  }
+
+  toggleDeleteConfirmationDialog(interpretation, e) {
+    e.stopPropagation();
+
+    this.interpretations = this.interpretations.map((interpretationObject) => {
+      const newInterpretationObject: any = {...interpretationObject};
+      if (interpretationObject.id === interpretation.id) {
+        newInterpretationObject.showDeleteDialog = !newInterpretationObject.showDeleteDialog;
+        newInterpretationObject.showDropdownOptions = false;
+      }
+
+      return newInterpretationObject;
+    });
+  }
+
+  deleteInterpretation(interpretation, e) {
+    e.stopPropagation();
+    this.interpretations = this.interpretations.map((interpretationObject) => {
+      const newInterpretationObject: any = {...interpretationObject};
+      if (interpretationObject.id === interpretation.id) {
+        newInterpretationObject.showDeleteDialog = false;
+        newInterpretationObject.deleting = true;
+      }
+
+      return newInterpretationObject;
+    });
+
+    this.interpretationService.delete(interpretation, this.rootUrl).subscribe(() => {
+      const interpretationIndex = _.findIndex(this.interpretations,
+        _.find(this.interpretations, ['id', interpretation.id]));
+
+      if (interpretationIndex !== -1) {
+        this.interpretations = [
+          ...this.interpretations.slice(0, interpretationIndex),
+          ...this.interpretations.slice(interpretationIndex + 1)
+        ];
+      }
+    }, deleteError => {
+      this.interpretations = this.interpretations.map((interpretationObject) => {
+        const newInterpretationObject: any = {...interpretationObject};
+        if (interpretationObject.id === interpretation.id) {
+          newInterpretationObject.deleting = false;
+        }
+
+        return newInterpretationObject;
+      });
+    })
+
   }
 
 }

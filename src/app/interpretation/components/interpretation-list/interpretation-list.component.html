@@ -17,7 +17,6 @@
       *ngFor="let interpretation of interpretations  | filterBy: interpretationTerm ; trackBy: interpretation?.id ; let i = index"
       (mouseenter)="toggleInterpretationOptions(interpretation, $event, true)"
       (mouseleave)="toggleInterpretationOptions(interpretation, $event)"
-      (click)="toggleCommentBlock(i, $event)"
       [ngClass]="{
       'interpretation-item': true,
       'interpretation-item-border': i > 0
@@ -32,39 +31,76 @@
         <div>
           <b>{{interpretation.user.displayName}}</b>
         </div>
-        <div class="interpretation-text">{{interpretation.text}}</div>
+        <div
+          class="interpretation-text"
+          *ngIf="!interpretation.showEditForm && !interpretation.showDeleteDialog && !interpretation.deleting"
+        >{{interpretation.text}}</div>
+
+        <div
+          class="interpretation-delete-block"
+          *ngIf="interpretation.showDeleteDialog"
+        >
+          This interpretation will be deleted, are you sure?
+          <a
+            class="btn btn-xs btn-danger"
+            (click)="deleteInterpretation(interpretation, $event)"
+          >
+            <i class="fa fa-trash-o"></i>
+          </a>
+          <a
+            class="btn btn-xs btn-default"
+            (click)="toggleDeleteConfirmationDialog(interpretation, $event)"
+          >
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div *ngIf="interpretation.deleting">Deleting interpretation</div>
+        <div
+          class="interpretation-edit-input"
+          *ngIf="interpretation.showEditForm"
+        >
+          <app-edit-interpretation
+            [interpretation]="interpretation"
+            [rootUrl]="rootUrl"
+            (onInterpretationEdit)="updateInterpretationText($event)"
+          ></app-edit-interpretation>
+        </div>
         <div class="interpretation-options">
           <a
             class="interpretation-comment-btn"
-            *ngIf="interpretation.comments.length > 0 && !interpretation.showCommentBlock"
+            (click)="toggleCommentBlock(i, $event)"
           >
-            {{ interpretation.comments.length }} comment{{interpretation.comments.length > 1 ? 's' : ''}}
+            <span *ngIf="interpretation.comments.length === 0">Comment</span>
+            <span *ngIf="interpretation.comments.length > 0">
+              {{ interpretation.comments.length }} comment{{interpretation.comments.length > 1 ? 's' : ''}}
+            </span>
           </a>
-          <a
-            class="interpretation-like-btn"
-            title="Like this interpretation"
-          >
-            <i class="fa fa-plus"></i>1
-          </a>
-          <div
-            class="interpretation-like"
-            *ngIf="interpretation.likedBy.length > 0"
-          >
-            {{ getLikeText(interpretation) }}
-          </div>
+          <app-interpretation-like
+            [interpretation]="interpretation"
+            [rootUrl]="rootUrl"
+            [currentUser]="currentUser"
+            (onInterpretationUpdate)="updateInterpretationLikeStatus($event)"
+          ></app-interpretation-like>
         </div>
         <div
           *ngIf="interpretation.showCommentBlock"
           class="interpretation-comment-container"
         >
-          <app-interpretation-comment
-            *ngFor="let comment of interpretation.comments"
-            [comment]="comment"
-          ></app-interpretation-comment>
-          <app-interpretation-comment
-            [showCommentInput]="true"
-            [currentUser]="currentUser"
-          ></app-interpretation-comment>
+          <div class="interpretation-comment-block">
+            <app-interpretation-comment
+              *ngFor="let comment of interpretation.comments"
+              [comment]="comment"
+            ></app-interpretation-comment>
+          </div>
+          <div class="interpretation-comment-input-area">
+            <app-interpretation-comment
+              [showCommentInput]="true"
+              [currentUser]="currentUser"
+              [interpretation]="interpretation"
+              [rootUrl]="rootUrl"
+              (onCommentCreate)="updateInterpretationComment($event)"
+            ></app-interpretation-comment>
+          </div>
         </div>
       </div>
       <div class="interpretation-more-options">
@@ -87,8 +123,8 @@
             class="interpretation-more-options-dropdown"
             *ngIf="interpretation.showDropdownOptions"
           >
-            <li><a href="">Edit</a></li>
-            <li><a href="" class="text-danger">Delete</a></li>
+            <li><a (click)="openInterpretationEditForm(interpretation, $event)">Edit</a></li>
+            <li><a (click)="toggleDeleteConfirmationDialog(interpretation, $event)" class="text-danger">Delete</a></li>
           </ul>
         </div>
       </div>
@@ -101,7 +137,7 @@
           {{ currentUser.displayName | abbreviate }}
         </div>
       </div>
-      <div class="interpretation-comment-input-block">
+      <div class="interpretation-input-block">
         <app-add-interpretation
           [visualizationTypeObject]="visualizationTypeObject"
           [rootUrl]="rootUrl"

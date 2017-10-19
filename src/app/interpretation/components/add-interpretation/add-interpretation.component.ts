@@ -41,4 +41,10 @@ export class AddInterpretationComponent implements OnInit {
       this.onInterpretationCreate.emit(interpretations);
       }, error => console.log(error))
   }
+
+  cancel(e) {
+    e.stopPropagation();
+    this.interpretation.message = '';
+  }
 }
+

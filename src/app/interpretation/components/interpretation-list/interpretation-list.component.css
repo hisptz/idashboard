@@ -1,13 +1,12 @@
 .interpretation-block {
   position: relative;
-  padding-bottom: 50px;
+  padding-bottom: 60px;
   overflow: auto;
 }
 
 
 .interpretation-item {
   display: flex;
-  position: relative;
   margin-top: 10px;
   width: 100%;
   padding-top: 10px;
@@ -45,15 +44,9 @@
 }
 
 .interpretation-body {
-  /*width: 100%;*/
+  position: relative;
+  width: 100%;
   padding-left: 10px;
-}
-
-
-.interpretation-like {
-  font-weight: lighter;
-  padding-left: 3px;
-  font-size: 12px;
 }
 
 .interpretation-options {
@@ -65,16 +58,6 @@
   text-decoration: none;
   margin-right: 10px;
 }
-.interpretation-like-btn {
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: lighter;
-
-}
-
-.interpretation-like-btn i {
-  font-size: 9px;
-}
 
 .interpretation-text {
   padding-bottom: 5px;
@@ -82,7 +65,7 @@
 
 .interpretation-more-options {
   position: absolute;
-  right: 0px;
+  right: 15px;
 }
 
 .interpretation-more-options-dropdown {
@@ -151,6 +134,8 @@
 
 .interpretation-write-form {
   display: flex;
+  padding-top: 5px;
+  padding-left: 5px;
   background-color: rgba(255,255,255,.9);
   position: absolute;
   z-index: 1000;
@@ -161,4 +146,19 @@
 
 .interpretation-comment-container {
   border-left: solid 2px rgba(238, 238, 238, 0.44);
+}
+
+
+.interpretation-input-block {
+  padding-left: 10px;
+  width: 100%;
+}
+
+.interpretation-comment-block {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.interpretation-comment-input-area {
+  background-color: rgba(255,255,255,.9);
 }

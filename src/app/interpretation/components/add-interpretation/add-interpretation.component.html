@@ -10,15 +10,16 @@
   placeholder="Write new interpretation"
   class="interpretation-write-input"
 ></textarea>
-<div class="pull-right" [hidden]="message.invalid">
-<a class="btn" (click)="cancel($event)">CANCEL</a>
-<button
-  class="btn"
-  [ngClass]="{
-  'btn': true,
-  'disabled': creating
-  }"
-  (click)="postInterpretation($event)">
-  {{creating ? 'POSTING' : 'POST'}}
-</button>
+<div class="pull-right" [hidden]="message.invalid || interpretation.message === ''">
+  <button class="btn btn-default add-interpretation-btn" (click)="cancel($event)">CANCEL</button>
+  <button
+    [ngClass]="{
+    'btn': true,
+    'btn-default': true,
+    'add-interpretation-btn': true,
+    'disabled': creating
+    }"
+    (click)="postInterpretation($event)">
+    {{creating ? 'POSTING' : 'POST'}}
+  </button>
 </div>

@@ -1,5 +1,5 @@
 <div
-  class="interpretation-comment"
+  class="interpretation-comment interpretation-comment-item"
   *ngIf="!showCommentInput"
 >
   <div class="interpretation-user-block">
@@ -11,7 +11,7 @@
     <div>
       <b>{{ comment?.user.displayName }}</b>
     </div>
-    <div class="interpretation-text">
+    <div class="interpretation-comment-text">
       {{ comment?.text}}
     </div>
   </div>
@@ -19,7 +19,7 @@
     <div
       class="interpretation-last-updated"
     >
-      {{ comment.lastUpdated | date}}
+      {{ comment?.lastUpdated | date}}
     </div>
     <!--<a-->
     <!--href=""-->
@@ -33,7 +33,7 @@
 </div>
 
 <div
-  class="interpretation-comment"
+  class="interpretation-comment interpretation-comment-input-container"
   *ngIf="showCommentInput"
 >
   <div class="interpretation-user-block">
@@ -44,15 +44,30 @@
   <div class="interpretation-comment-input-block">
               <textarea
                 type="text"
-                cols="30" rows="1"
+                cols="100"
+                rows="1"
                 Autosize
                 autofocus
+                required
+                minlength="10"
+                [(ngModel)]="commentFormData.comment"
+                name="comment"
+                #comment="ngModel"
                 placeholder="Write your comment"
                 class="interpretation-comment-input"
               ></textarea>
-    <!--<div class="pull-right">-->
-    <!--<a class="comment-btn">CANCEL</a>-->
-    <!--<a class="comment-btn ">POST</a>-->
-    <!--</div>-->
+    <div class="pull-right" [hidden]="comment.invalid || commentFormData.comment === ''">
+      <button class="btn btn-default post-comment-btn" (click)="cancel($event)">CANCEL</button>
+      <button
+        [ngClass]="{
+    'btn': true,
+    'btn-default': true,
+    'post-comment-btn': true,
+    'disabled': creating
+    }"
+        (click)="postComment($event)">
+        {{creating ? 'POSTING' : 'POST'}}
+      </button>
+    </div>
   </div>
 </div>
