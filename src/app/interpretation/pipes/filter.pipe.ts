@@ -10,7 +10,7 @@ export class FilterPipe implements PipeTransform {
       // filter users, users which match and return true will be kept, false will be filtered out
       if(value.length !== 0 && name !== null){
         return value.filter((item) => {
-          return (item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1);
+          return (item.text.toLowerCase().indexOf(name.toLowerCase()) !== -1);
         });
       }
 
