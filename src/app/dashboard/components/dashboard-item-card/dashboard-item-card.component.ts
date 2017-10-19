@@ -19,6 +19,7 @@ import {MapComponent} from "../map/map.component";
 import {interpretationLinkSelector} from '../../../store/selectors/interpretation-link.selector';
 import {VisualizationObjectService} from '../../providers/visualization-object.service';
 import {currentUserSelector} from '../../../store/selectors/current-user.selector';
+import {SaveVisualization} from '../../../store/actions';
 
 
 @Component({
@@ -537,5 +538,11 @@ export class DashboardItemCardComponent implements OnInit {
     e.stopPropagation();
     this.store.dispatch(new fromAction.InterpretationBlockToggleAction(this.visualizationObject))
 
+  }
+
+  updateVisualizationWithInterpretation(interpretations: any[]) {
+    this.visualizationObject.details.interpretations[0].interpretations = [...interpretations];
+
+    this.store.dispatch(new SaveVisualization(this.visualizationObject));
   }
 }

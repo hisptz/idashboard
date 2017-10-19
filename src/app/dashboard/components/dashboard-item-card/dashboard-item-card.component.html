@@ -272,6 +272,7 @@
             [itemHeight]="dashboardBodyHeight"
             [currentUser]="currentUser$ | async"
             [rootUrl]="apiRootUrl$ | async"
+            (onInterpretationUpdate)="updateVisualizationWithInterpretation($event)"
           >
           </app-interpretation-list>
         </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import * as _ from 'lodash';
 import {InterpretationService} from '../../services/interpretation.service';
 
@@ -13,6 +13,7 @@ export class InterpretationListComponent implements OnInit {
   @Input() rootUrl: string;
   @Input() itemHeight: string;
   @Input() currentUser: any;
+  @Output() onInterpretationUpdate: EventEmitter<any> = new EventEmitter<any>();
   visualizationTypeObject: any;
   interpretationTerm: string;
   constructor(private interpretationService: InterpretationService) { }
@@ -36,10 +37,22 @@ export class InterpretationListComponent implements OnInit {
 
   private _sanitizeInterpretation(interpretation: any, index) {
     const newInterpretation: any = {...interpretation};
-    newInterpretation.showDate = true;
-    newInterpretation.showMoreButton = false;
-    newInterpretation.showDropdownOptions = false;
-    newInterpretation.showCommentBlock = index === 0 ? true : false;
+    if (!newInterpretation.showDate) {
+      newInterpretation.showDate = true;
+    }
+
+    if (!newInterpretation.showMoreButton) {
+      newInterpretation.showMoreButton = false;
+    }
+
+    if (!newInterpretation.showDropdownOptions) {
+      newInterpretation.showDropdownOptions = false;
+    }
+
+    if (!newInterpretation.showCommentBlock) {
+      newInterpretation.showCommentBlock = index === 0 ? true : false;
+    }
+
     return newInterpretation;
   }
 
@@ -78,6 +91,7 @@ export class InterpretationListComponent implements OnInit {
         ...this.interpretations.slice(interpretationIndex + 1)
       ];
     }
+    this.emitInterpretationUpdates();
   }
 
   updateInterpretationList(interpretationList) {
@@ -87,6 +101,8 @@ export class InterpretationListComponent implements OnInit {
       this.interpretations = [...newInterpretationList, ...this.interpretations]
         .map((interpretation: any, index: number) => this._sanitizeInterpretation(interpretation, index));
     }
+
+    this.emitInterpretationUpdates();
   }
 
   toggleCommentBlock(interpretationIndex, e) {
@@ -104,6 +120,8 @@ export class InterpretationListComponent implements OnInit {
       })
 
     }
+
+    this.emitInterpretationUpdates();
   }
 
   updateInterpretationLikeStatus(interpretation: any) {
@@ -116,6 +134,8 @@ export class InterpretationListComponent implements OnInit {
 
       return newInterpretationObject;
     });
+
+    this.emitInterpretationUpdates();
   }
 
   updateInterpretationComment(interpretation: any) {
@@ -127,6 +147,8 @@ export class InterpretationListComponent implements OnInit {
 
       return newInterpretationObject;
     });
+
+    this.emitInterpretationUpdates()
   }
 
   updateInterpretationText(interpretation: any) {
@@ -140,6 +162,8 @@ export class InterpretationListComponent implements OnInit {
 
       return newInterpretationObject;
     });
+
+    this.emitInterpretationUpdates();
   }
 
   openInterpretationEditForm(interpretation, e) {
@@ -154,6 +178,8 @@ export class InterpretationListComponent implements OnInit {
 
       return newInterpretationObject;
     });
+
+    this.emitInterpretationUpdates();
   }
 
   toggleDeleteConfirmationDialog(interpretation, e) {
@@ -168,6 +194,8 @@ export class InterpretationListComponent implements OnInit {
 
       return newInterpretationObject;
     });
+
+    this.emitInterpretationUpdates();
   }
 
   deleteInterpretation(interpretation, e) {
@@ -192,6 +220,8 @@ export class InterpretationListComponent implements OnInit {
           ...this.interpretations.slice(interpretationIndex + 1)
         ];
       }
+
+      this.emitInterpretationUpdates();
     }, deleteError => {
       this.interpretations = this.interpretations.map((interpretationObject) => {
         const newInterpretationObject: any = {...interpretationObject};
@@ -203,6 +233,10 @@ export class InterpretationListComponent implements OnInit {
       });
     })
 
+  }
+
+  emitInterpretationUpdates() {
+    this.onInterpretationUpdate.emit(this.interpretations);
   }
 
 }
