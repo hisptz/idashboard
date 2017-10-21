@@ -49,6 +49,7 @@ import {DataFilterModule} from '../data-filter/data-filter.module';
 import { KNumberPipe } from './pipes/k-number.pipe';
 import {InterpretationModule} from '../interpretation/interpretation.module';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { FilterByBookmarkPipe } from './pipes/filter-by-bookmark.pipe';
 
 @NgModule({
   imports: [
@@ -105,7 +106,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ChartLoaderComponent,
     TableLoaderComponent,
     MapLoaderComponent,
-    KNumberPipe
+    KNumberPipe,
+    FilterByBookmarkPipe
   ],
   providers: [
   ]

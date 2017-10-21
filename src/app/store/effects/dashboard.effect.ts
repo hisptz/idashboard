@@ -44,11 +44,30 @@ export class DashboardEffect {
 
             const newDashboards: Dashboard[] = dashboardResponse.dashboards;
             this.store.dispatch(new DashboardsLoadedAction(newDashboards));
-
             observer.next(null);
             observer.complete();
           })
       })
+    });
+
+  @Effect({dispatch: false}) dashboardsLoaded$ = this.actions$
+    .ofType(fromAction.DASHBOARDS_LOADED_ACTION)
+    .withLatestFrom(this.store)
+    .switchMap(([action, store]) => {
+      const dashboards: any[] = [...store.storeData.dashboards];
+
+      if (dashboards.length > 0) {
+        dashboards.forEach((dashboard) => {
+          this.dashboardService.loadDashboardOptions(store.uiState.systemInfo.apiRootUrl, dashboard.id)
+            .subscribe((dashboardOptions: any) => {
+              if (dashboardOptions) {
+                const newDashboard = {...dashboard, ...dashboardOptions};
+                this.store.dispatch(new fromAction.UpdateDashboardWithOptionsAction(newDashboard));
+              }
+            })
+        });
+      }
+      return Observable.of(null)
     });
 
   @Effect() predefinedDashboards$: Observable<Action> = this.actions$
@@ -242,7 +261,47 @@ export class DashboardEffect {
   @Effect() deleteVisualizationObject$: Observable<Action> = this.actions$
     .ofType(fromAction.DELETE_VISUALIZATION_OBJECT_ACTION)
     .switchMap(action => this.dashboardService.deleteItem(action.payload))
-    .map((dashboardDetails) => new VisualizationObjectDeletedAction(dashboardDetails));
+    .map((dashboardDetails) => new VisualizationObjectDeletedAction(dashboardDetails))
+
+  @Effect({dispatch: false}) dashboardBookmark$: Observable<Action> = this.actions$
+    .ofType(fromAction.UPDATE_DASHBOARD_BOOKMARK)
+    .withLatestFrom(this.store)
+    .switchMap(([action, store]) => {
+
+      const correspondingDashboard: any = _.find(store.storeData.dashboards, ['id', action.payload.id]);
+
+      if (correspondingDashboard) {
+        let bookmarks = correspondingDashboard.bookmarks || [];
+
+        const currentUserBookmark = _.find(bookmarks, ['user', store.storeData.currentUser.id]);
+
+        if (currentUserBookmark) {
+          const bookmarkIndex = _.findIndex(bookmarks, currentUserBookmark);
+
+          bookmarks = [
+            ...bookmarks.slice(0, bookmarkIndex),
+            ...bookmarks.slice(bookmarkIndex + 1)
+          ]
+        } else {
+          bookmarks = [...bookmarks, {user: store.storeData.currentUser.id}]
+        }
+
+        this.store.dispatch(new fromAction.DashboardBookmarkUpdatedAction({
+          id: action.payload.id,
+          bookmarks: bookmarks
+        }));
+
+        this.dashboardService.updateDashboardBookmark(
+          store.uiState.systemInfo.apiRootUrl,
+          correspondingDashboard.id,
+          bookmarks
+          ).subscribe(() => {});
+
+      }
+
+      console.log()
+      return Observable.of(null);
+    })
 
   @Effect({dispatch: false}) currentDashboard$: Observable<Action> = this.actions$
     .ofType(fromAction.LOAD_CURRENT_DASHBOARD)

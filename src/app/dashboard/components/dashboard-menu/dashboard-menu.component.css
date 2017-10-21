@@ -339,6 +339,12 @@ input[type=number]::-webkit-outer-spin-button {
   height: 16px;
 }
 
+.dashboard-menu-bookmark {
+  top: -3px;
+  cursor: pointer;
+  z-index: 700;
+}
+
 
 
 

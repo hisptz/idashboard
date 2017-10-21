@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ApplicationState} from '../../../store/application-state';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import {apiRootUrlSelector} from '../../../store/selectors/api-root-url.selector
 import {DeleteDashboardAction, HideDashboardMenuNotificationIcon} from '../../../store/actions';
 import {dashboardPaginationConfigurationSelector} from '../../../store/selectors/dashboard-pagination-configuration.selector';
 import {PaginationInstance} from 'ngx-pagination';
+import * as fromAction from '../../../store/actions';
 
 export const INITIAL_PAGING_CONFIG: PaginationInstance = {
   itemsPerPage: 8,
@@ -35,6 +36,7 @@ export class DashboardMenuComponent implements OnInit {
   showDataFilter: boolean;
   showPeriodFilter: boolean;
   showOrgUnitFilter: boolean;
+  showOnlyBookmarked: boolean;
   private _config: PaginationInstance;
   menuConfig: any = {
     showDashboardCreateButton: true,
@@ -73,6 +75,7 @@ export class DashboardMenuComponent implements OnInit {
         shown: false
       }
     };
+    this.showOnlyBookmarked = false;
   }
 
 
@@ -204,6 +207,15 @@ export class DashboardMenuComponent implements OnInit {
     } else {
       this.organizeMenu(window.innerWidth);
     }
+  }
+
+  toggleBookmark(dashboardMenuItem, e) {
+    e.stopPropagation();
+    this.store.dispatch(new fromAction.UpdateDashboardBookmarkAction(dashboardMenuItem))
+  }
+
+  toggleBookmarkShowOption(showOnlyBookmark) {
+    this.showOnlyBookmarked = showOnlyBookmark;
   }
 
 }

@@ -31,6 +31,44 @@ export class DashboardService {
     return this.http.get(rootUrl + 'dashboards/' + id + '.json?fields=id,name,publicAccess,access,externalAccess,userGroupAccesses,dashboardItems[id,type,created,shape,appKey,reports[id,displayName],chart[id,displayName],map[id,displayName],reportTable[id,displayName],eventReport[id,displayName],eventChart[id,displayName],resources[id,displayName],users[id,displayName]]');
   }
 
+  loadDashboardOptions(rootUrl: string, id) {
+    return new Observable(observer => {
+      this.http.get(`${rootUrl}dataStore/dashboards/${id}`)
+        .subscribe((dashboardOptions: any) => {
+          observer.next(dashboardOptions);
+          observer.complete();
+        },() => {
+          observer.next(null);
+          observer.complete();
+        });
+    })
+  }
+
+  updateDashboardBookmark(rootUrl: string, dashboardId: string, dashboardBookmarks: any[]) {
+    return new Observable(observer => {
+      this.loadDashboardOptions(rootUrl, dashboardId)
+        .subscribe((prevOptions) => {
+          const newOptions: any = prevOptions ? {...prevOptions} : {
+            bookmarks: []
+          };
+
+          newOptions.bookmarks = [...dashboardBookmarks];
+
+          const dashboardOptionsPromise = prevOptions ?
+            this.http.put(`${rootUrl}dataStore/dashboards/${dashboardId}`, newOptions) :
+            this.http.post(`${rootUrl}dataStore/dashboards/${dashboardId}`, newOptions);
+
+          dashboardOptionsPromise.subscribe(() => {
+            observer.next(null);
+            observer.complete();
+          }, () => {
+            observer.next(null);
+            observer.complete();
+          });
+        })
+    })
+
+  }
   create(dashboardDetails: any): Observable<Dashboard> {
     const apiRootUrl = dashboardDetails.apiRootUrl;
     const dashboardData: Dashboard = dashboardDetails.dashboardData;

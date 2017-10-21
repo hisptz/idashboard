@@ -14,7 +14,7 @@
       Not found
     </div>
     <div
-      *ngFor="let interpretation of interpretations  | filterBy: interpretationTerm ; trackBy: interpretation?.id ; let i = index"
+      *ngFor="let interpretation of interpretations  | filterBy: interpretationTerm ; let i = index"
       (mouseenter)="toggleInterpretationOptions(interpretation, $event, true)"
       (mouseleave)="toggleInterpretationOptions(interpretation, $event)"
       [ngClass]="{

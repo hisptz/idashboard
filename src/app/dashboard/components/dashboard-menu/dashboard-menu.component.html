@@ -139,8 +139,16 @@
       </ul>
 
       <ul class="nav navbar-nav dashboard-nav" *ngIf="(dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat">
-        <li *ngFor="let dashboardMenuItem of (dashboardMenuObject$ | async).dashboardsMenuItems  | filterBy: dashboardName | paginate: config" class="dashboard-list dropdwon" routerLinkActive="dashboard-active">
+        <li *ngFor="let dashboardMenuItem of (dashboardMenuObject$ | async).dashboardsMenuItems  | filterBy: dashboardName | filterByBookmark: showOnlyBookmarked | paginate: config" class="dashboard-list dropdwon" routerLinkActive="dashboard-active">
           <!--<span *ngIf="dashboardMenuItem.details.editComplete || dashboardMenuItem.details.creationComplete" appClickOutside (clickOutside)="dashboardStatus.id = {}" class="success-badge"><i class="fa fa-check"></i></span>-->
+          <span
+            *ngIf="!dashboardMenuItem.details.showIcon || !dashboardMenuItem.details.showName"
+            title="{{ dashboardMenuItem.details.bookmarked ? 'You have bookmarked this dashboard' : 'Bookmark this dashboard'}}"
+            (click)="toggleBookmark(dashboardMenuItem, $event)"
+            class="dashboard-menu-notification-icon dashboard-menu-bookmark">
+            <img *ngIf="dashboardMenuItem.details.bookmarked" src="assets/img/bookmark.png" alt="">
+            <img *ngIf="!dashboardMenuItem.details.bookmarked" src="assets/img/empty-bookmark.png" alt="">
+          </span>
           <a
             routerLink="/dashboards/{{dashboardMenuItem.id}}"
             (dblclick)="openEditForm(dashboardMenuItem.id)"

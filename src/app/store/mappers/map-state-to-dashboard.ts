@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import {addArrayItem} from '../../utilities/addArrayItem';
-export function mapStateToDashboardObject(dashboardData: any, action = null) {
+export function mapStateToDashboardObject(dashboardData: any, action = null, currentUserId: string = '') {
   switch (action) {
     case 'create': {
       return {
@@ -70,10 +70,21 @@ export function mapStateToDashboardObject(dashboardData: any, action = null) {
       }
     }
 
+    case 'bookmarkUpdate': {
+      const newDashboardData: any = {...dashboardData};
+      const dashboardDetails: any = {...newDashboardData.details};
+
+      dashboardDetails.bookmarked = _.some(dashboardData.bookmarks, (bookmark) => bookmark.user === currentUserId);
+
+      newDashboardData.details = {...dashboardDetails};
+      return newDashboardData;
+    }
+
     default: {
       const newDashboardData = _.clone(dashboardData);
       newDashboardData.details = {
-        showName: true
+        showName: true,
+        bookmarked: _.some(dashboardData.bookmarks, (bookmark) => bookmark.user === currentUserId)
       };
       newDashboardData.dashboardItems = _.assign([], handleDuplicateInDashboardItems(dashboardData.dashboardItems));
       return newDashboardData;

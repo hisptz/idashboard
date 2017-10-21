@@ -29,4 +29,8 @@ export class EditInterpretationComponent implements OnInit {
       }, error => console.log(error))
   }
 
+  cancel(e) {
+    e.stopPropagation();
+  }
+
 }

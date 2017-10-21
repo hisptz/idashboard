@@ -18,7 +18,7 @@ export function storeDataReducer(state: StoreData = INITIAL_STORE_DATA, action) 
       const newState: StoreData = {...state};
 
       newState.dashboards = _.map(action.payload, (dashboard: any) => {
-        return mapStateToDashboardObject(dashboard)
+        return mapStateToDashboardObject(dashboard, null, newState.currentUser.id)
       });
 
       return newState;
@@ -54,6 +54,39 @@ export function storeDataReducer(state: StoreData = INITIAL_STORE_DATA, action) 
         editedDashboard.name = action.payload.name;
         newDashboards[createdDashboardIndex] = mapStateToDashboardObject(editedDashboard, 'update');
         newState.dashboards = _.sortBy(newDashboards, ['name']);
+      }
+      return newState;
+    }
+
+    case fromAction.DASHBOARD_BOOKMARK_UPDATED: {
+      const newState: StoreData = {...state};
+      const editedDashboard = _.find(newState.dashboards, ['id', action.payload.id]);
+      if (editedDashboard) {
+        const editedDashboardIndex = _.findIndex(newState.dashboards, editedDashboard);
+        editedDashboard.bookmarks = action.payload.bookmarks;
+
+        newState.dashboards = [
+          ...newState.dashboards.slice(0, editedDashboardIndex),
+          mapStateToDashboardObject(editedDashboard, 'bookmarkUpdate', newState.currentUser.id),
+          ...newState.dashboards.slice(editedDashboardIndex + 1)
+        ]
+
+      }
+      return newState;
+    }
+
+    case fromAction.UPDATE_DASHBOARD_WITH_OPTIONS: {
+      const newState: StoreData = {...state};
+      const editedDashboard = _.find(newState.dashboards, ['id', action.payload.id]);
+      if (editedDashboard) {
+        const editedDashboardIndex = _.findIndex(newState.dashboards, editedDashboard);
+        editedDashboard.bookmarks = action.payload.bookmarks;
+
+        newState.dashboards = [
+          ...newState.dashboards.slice(0, editedDashboardIndex),
+          mapStateToDashboardObject(editedDashboard, null, newState.currentUser.id),
+          ...newState.dashboards.slice(editedDashboardIndex + 1)
+        ];
       }
       return newState;
     }

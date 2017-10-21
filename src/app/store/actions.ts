@@ -76,6 +76,9 @@ export const GLOBAL_FILTER_CHANGE_ACTION = 'GLOBAL_FILTER_CHANGE_ACTION';
 export const LOCAL_FILTER_CHANGE_ACTION = 'LOCAL_FILTER_CHANGE_ACTION';
 export const UPDATE_DASHBOARD_ACTION = 'UPDATE_DASHBOARD_ACTION';
 export const INTERPRETATION_BLOCK_TOGGLE_ACTION = 'INTERPRETATION_BLOCK_TOGGLE_ACTION';
+export const UPDATE_DASHBOARD_BOOKMARK = 'UPDATE_DASHBOARD_BOOKMARK';
+export const DASHBOARD_BOOKMARK_UPDATED = 'DASHBOARD_BOOKMARK_UPDATED';
+export const UPDATE_DASHBOARD_WITH_OPTIONS = 'UPDATE_DASHBOARD_WITH_OPTIONS';
 
 export class LoadSystemInfoAction implements Action {
   readonly type = LOAD_SYSTEM_INFO_ACTION;
@@ -351,4 +354,19 @@ export class UpdateDashboardAction implements Action {
 export class InterpretationBlockToggleAction implements Action {
   readonly type = INTERPRETATION_BLOCK_TOGGLE_ACTION;
   constructor(public payload: Visualization) {}
+}
+
+export class UpdateDashboardBookmarkAction implements Action {
+  readonly type = UPDATE_DASHBOARD_BOOKMARK;
+  constructor(public payload: any) {}
+}
+
+export class DashboardBookmarkUpdatedAction implements Action {
+  readonly type = DASHBOARD_BOOKMARK_UPDATED;
+  constructor(public payload: any) {}
+}
+
+export class UpdateDashboardWithOptionsAction implements Action {
+  readonly type = UPDATE_DASHBOARD_WITH_OPTIONS;
+  constructor(public payload: any) {}
 }

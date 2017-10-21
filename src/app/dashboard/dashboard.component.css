@@ -29,3 +29,7 @@
 .message-image img {
   height: 100%;
 }
+
+.hidden-item {
+  display: none;
+}

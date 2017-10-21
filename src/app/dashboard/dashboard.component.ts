@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {ApplicationState} from '../store/application-state';
 import {ActivatedRoute} from '@angular/router';
@@ -10,6 +10,7 @@ import {visualizationObjectsSelector} from '../store/selectors/visualization-obj
 import {Subject} from 'rxjs/Subject';
 import {dashboardLoadedSelector} from '../store/selectors/dashboard-loaded.selector';
 import {DragulaService} from 'ng2-dragula';
+import {DashboardMenuComponent} from './components/dashboard-menu/dashboard-menu.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
   dashboardId: string;
   globalFilters: Observable<any>;
   globalFilters$: Subject<any> = new Subject<any>();
+  showBookmarkedDashboards: boolean;
   dashboardConfig: any = {
     showNotification: true,
     showSearch: true,
@@ -31,6 +33,8 @@ export class DashboardComponent implements OnInit {
   };
   welcomingTitle: string;
   welcomingDescription: string;
+  @ViewChild(DashboardMenuComponent)
+    dashboardMenu: DashboardMenuComponent;
   constructor(
     private store: Store<ApplicationState>,
     private route: ActivatedRoute,
@@ -40,6 +44,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardLoaded$ = store.select(dashboardLoadedSelector);
     this.globalFilters$.next(null);
     this.globalFilters = this.globalFilters$.asObservable();
+    this.showBookmarkedDashboards = false;
     this.welcomingTitle = 'Welcome to the most interactive dashboard';
     this.welcomingDescription = 'Enjoy interactive features with support for one click switching between tables, charts and maps, changing data selections as well as layouts'
   }
@@ -59,6 +64,14 @@ export class DashboardComponent implements OnInit {
 
   updateFilters(filterData) {
     this.store.dispatch(new fromAction.GlobalFilterChangeAction({dashboardId: this.dashboardId, filterObject: filterData}));
+  }
+
+  toggleDashboardBookmarkOption(e) {
+    e.stopPropagation();
+    this.showBookmarkedDashboards = !this.showBookmarkedDashboards;
+    if (this.dashboardMenu) {
+      this.dashboardMenu.toggleBookmarkShowOption(this.showBookmarkedDashboards);
+    }
   }
 
 }
