@@ -1,6 +1,8 @@
 <div
   class="interpretation-comment interpretation-comment-item"
   *ngIf="!showCommentInput"
+  (mouseenter)="toggleCommentOptions($event, true)"
+  (mouseleave)="toggleCommentOptions($event)"
 >
   <div class="interpretation-user-block">
     <div class="interpretation-user">
@@ -11,24 +13,61 @@
     <div>
       <b>{{ comment?.user.displayName }}</b>
     </div>
-    <div class="interpretation-comment-text">
+    <div
+      class="interpretation-comment-text"
+      *ngIf="!comment.showEditForm && !comment.showDeleteDialog && !comment.deleting"
+    >
       {{ comment?.text}}
     </div>
+    <div
+      class="interpretation-delete-block"
+      *ngIf="comment?.showDeleteDialog"
+    >
+      This comment will be deleted, are you sure?
+      <a
+        class="btn btn-xs btn-danger"
+        (click)="deleteComment($event)"
+      >
+        <i class="fa fa-trash-o"></i>
+      </a>
+      <a
+        class="btn btn-xs btn-default"
+        (click)="toggleDeleteConfirmationDialog($event)"
+      >
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+    <div *ngIf="comment?.deleting">Deleting comment</div>
   </div>
-  <div class="interpretation-more-comment-options">
+  <div
+    class="interpretation-more-comment-options"
+    *ngIf="!comment?.deleting"
+  >
     <div
       class="interpretation-last-updated"
+      *ngIf="comment?.showDate && !comment?.showDropdownOptions"
     >
       {{ comment?.lastUpdated | date}}
     </div>
-    <!--<a-->
-    <!--href=""-->
-    <!--class="interpretation-more-btn"-->
-    <!--title="show more options"-->
-    <!--*ngIf="interpretation.showMoreButton"-->
-    <!--&gt;-->
-    <!--<img src="assets/img/more.png" alt="" style="height: 20px;">-->
-    <!--</a>-->
+    <a
+      class="interpretation-more-btn"
+      title="show more options"
+      *ngIf="comment?.showMoreButton"
+      (click)="toggleCommentDropdown($event)"
+    >
+      <img src="assets/img/more.png" alt="" style="height: 20px;">
+      <ul
+        class="interpretation-more-options-dropdown"
+        *ngIf="comment?.showDropdownOptions"
+      >
+        <li><a>Edit</a></li>
+        <li>
+          <a
+            class="text-danger"
+            (click)="toggleDeleteConfirmationDialog($event)"
+          >Delete</a></li>
+      </ul>
+    </a>
   </div>
 </div>
 

@@ -148,6 +148,31 @@ export class InterpretationListComponent implements OnInit {
     this.emitInterpretationUpdates()
   }
 
+  deleteInterpretationComment(interpretation, deletedComment) {
+    const correspondinginterpretation: any = _.find(this.interpretations, ['id', interpretation.id]);
+
+    if (correspondinginterpretation) {
+      const interpretationIndex = _.findIndex(this.interpretations, correspondinginterpretation);
+
+      const availableComment = _.find(correspondinginterpretation.comments, ['id', deletedComment.id]);
+
+      if (availableComment) {
+        const deletedCommentIndex = _.findIndex(correspondinginterpretation.comments, availableComment);
+
+        const newComments = [
+          ...correspondinginterpretation.comments.slice(0, deletedCommentIndex),
+          ...correspondinginterpretation.comments.slice(deletedCommentIndex + 1)
+        ];
+
+        this.interpretations = [
+          ...this.interpretations.slice(0, interpretationIndex),
+          {...correspondinginterpretation, comments: newComments},
+          ...this.interpretations.slice(interpretationIndex + 1)
+        ]
+      }
+    }
+  }
+
   updateInterpretationText(interpretation: any) {
     this.interpretations = this.interpretations.map((interpretationObject) => {
       const newInterpretationObject: any = {...interpretationObject};

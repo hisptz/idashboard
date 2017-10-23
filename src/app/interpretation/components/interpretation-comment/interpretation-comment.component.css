@@ -82,3 +82,37 @@
   padding-left: 10px;
   background-color: transparent;
 }
+
+.interpretation-more-options-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 2px;
+  z-index: 1000;
+  float: left;
+  min-width: 90px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #ffffff;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.175);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+.interpretation-more-options-dropdown > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.interpretation-more-options-dropdown > li > a:hover  {
+  background-color: #eeeeee;
+}

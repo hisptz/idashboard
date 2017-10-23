@@ -14,6 +14,7 @@ export class InterpretationCommentComponent implements OnInit {
   @Input() currentUser: any;
   @Input() rootUrl: string;
   @Output() onCommentCreate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onCommentDelete: EventEmitter<any> = new EventEmitter<any>();
   commentFormData: any;
   creating: boolean;
   constructor(private interpretationService: InterpretationService) {
@@ -29,11 +30,34 @@ export class InterpretationCommentComponent implements OnInit {
         comment: ''
       }
     }
+
+    if (this.comment) {
+      this.comment = {...this.comment, showDate: true, showMoreButton: false};
+    }
+
+
   }
 
   cancel(e) {
     e.stopPropagation();
     this.commentFormData.comment = '';
+  }
+
+  toggleCommentOptions(e, mouseEnter:boolean = false) {
+    e.stopPropagation();
+    if (mouseEnter) {
+      this.comment.showDate = false;
+      this.comment.showMoreButton = true;
+    } else {
+      this.comment.showDate = true;
+      this.comment.showMoreButton = false;
+      this.comment.showDropdownOption = false;
+    }
+  }
+
+  toggleCommentDropdown(e) {
+    e.stopPropagation();
+    this.comment.showDropdownOptions = !this.comment.showDropdownOptions;
   }
 
   postComment(e) {
@@ -45,6 +69,20 @@ export class InterpretationCommentComponent implements OnInit {
         this.commentFormData.comment = '';
         this.onCommentCreate.emit(interpretation);
       }, error => console.log(error))
+  }
+
+  toggleDeleteConfirmationDialog(e) {
+    e.stopPropagation();
+    this.comment = {...this.comment, showDeleteDialog: !this.comment.showDeleteDialog, showDropdownOptions: false};
+  }
+
+  deleteComment(e) {
+    e.stopPropagation();
+    this.comment = {...this.comment, showDeleteDialog: false, deleting: true};
+    this.interpretationService.deleteComment(this.rootUrl, this.interpretation.id, this.comment.id)
+      .subscribe(() => this.onCommentDelete.emit(this.comment), () => {
+        this.comment.deleting = false;
+      })
   }
 
 }

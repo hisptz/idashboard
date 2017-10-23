@@ -68,6 +68,10 @@ export class InterpretationService {
     })
   }
 
+  deleteComment(rootUrl: string, interpretationId: string, commentId: string) {
+    return this.httpClient.delete(rootUrl + 'interpretations/' + interpretationId + '/comments/' + commentId);
+  }
+
   getInterpretation(interpretation: any, rootUrl: string) {
     const interpretationUrl = rootUrl + 'interpretations/' + interpretation.id + '.json?fields=id,type,text,lastUpdated,href,' +
       'created,likes,likedBy[id,name,displayName],user[id,name,displayName],comments[id,created,lastUpdated,text,user[id,name,displayName]],' +

@@ -90,6 +90,9 @@
             <app-interpretation-comment
               *ngFor="let comment of interpretation.comments"
               [comment]="comment"
+              [interpretation]="interpretation"
+              (onCommentDelete)="deleteInterpretationComment(interpretation, $event)"
+              [rootUrl]="rootUrl"
             ></app-interpretation-comment>
           </div>
           <div class="interpretation-comment-input-area">
