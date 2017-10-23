@@ -32,6 +32,7 @@ export class DashboardMenuComponent implements OnInit {
   itemToDelete: string = '';
   showShareBlock: boolean;
   config$: Observable<PaginationInstance>;
+  focusedDashboardItem: string;
   private _showFilter: any;
   showDataFilter: boolean;
   showPeriodFilter: boolean;
@@ -56,6 +57,7 @@ export class DashboardMenuComponent implements OnInit {
     this.dashboardMenuObject$ = store.select(dashboardMenuItemsSelector);
     this.config$ = store.select(dashboardPaginationConfigurationSelector);
     this.apiRootUrl$ = this.store.select(apiRootUrlSelector);
+    this.focusedDashboardItem = '';
     this._showFilter = {
       orgUnit: {
         enabled: true,
@@ -217,5 +219,16 @@ export class DashboardMenuComponent implements OnInit {
   toggleBookmarkShowOption(showOnlyBookmark) {
     this.showOnlyBookmarked = showOnlyBookmark;
   }
+
+  showBookmarkOption(dashboardMenuItem, e) {
+    e.stopPropagation();
+    this.focusedDashboardItem = dashboardMenuItem.id;
+  }
+
+  hideBookmarkOption(dashboardMenuItem, e) {
+    e.stopPropagation();
+    this.focusedDashboardItem = '';
+  }
+
 
 }
