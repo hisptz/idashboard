@@ -32,7 +32,12 @@ export class InterpretationCommentComponent implements OnInit {
     }
 
     if (this.comment) {
-      this.comment = {...this.comment, showDate: true, showMoreButton: false};
+      this.comment = {
+        ...this.comment,
+        showDate: true,
+        showMoreButton: false,
+        showDeleteButton: this.comment.user.id === this.currentUser.id
+      };
     }
 
 

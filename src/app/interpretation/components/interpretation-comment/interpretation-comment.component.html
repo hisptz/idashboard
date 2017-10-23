@@ -65,6 +65,7 @@
           <a
             class="text-danger"
             (click)="toggleDeleteConfirmationDialog($event)"
+            *ngIf="comment?.showDeleteButton"
           >Delete</a></li>
       </ul>
     </a>

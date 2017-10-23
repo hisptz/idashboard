@@ -21,7 +21,8 @@ export class InterpretationListComponent implements OnInit {
   ngOnInit() {
     if (this.interpretations) {
 
-      this.interpretations = this.interpretations.map((interpretation: any, index: number) => this._sanitizeInterpretation(interpretation, index))
+      this.interpretations = this.interpretations.map((interpretation: any, index: number) => this._sanitizeInterpretation(interpretation, index));
+      console.log(this.interpretations)
     }
   }
 
@@ -42,6 +43,12 @@ export class InterpretationListComponent implements OnInit {
     if (!newInterpretation.showCommentBlock) {
       newInterpretation.showCommentBlock = index === 0 ? true : false;
     }
+
+    if (!newInterpretation.showDeleteButton) {
+      newInterpretation.showDeleteButton = newInterpretation.user.id === this.currentUser.id;
+    }
+
+
 
     return newInterpretation;
   }

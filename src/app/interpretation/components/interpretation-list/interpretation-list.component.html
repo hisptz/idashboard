@@ -90,6 +90,7 @@
             <app-interpretation-comment
               *ngFor="let comment of interpretation.comments"
               [comment]="comment"
+              [currentUser]="currentUser"
               [interpretation]="interpretation"
               (onCommentDelete)="deleteInterpretationComment(interpretation, $event)"
               [rootUrl]="rootUrl"
@@ -127,7 +128,12 @@
             *ngIf="interpretation.showDropdownOptions"
           >
             <li><a (click)="openInterpretationEditForm(interpretation, $event)">Edit</a></li>
-            <li><a (click)="toggleDeleteConfirmationDialog(interpretation, $event)" class="text-danger">Delete</a></li>
+            <li>
+              <a
+                (click)="toggleDeleteConfirmationDialog(interpretation, $event)"
+                class="text-danger"
+                *ngIf="interpretation.showDeleteButton"
+              >Delete</a></li>
           </ul>
         </div>
       </div>
