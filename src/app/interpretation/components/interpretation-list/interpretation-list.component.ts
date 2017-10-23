@@ -90,6 +90,13 @@ export class InterpretationListComponent implements OnInit {
 
       this.interpretations = [...newInterpretationList, ...this.interpretations]
         .map((interpretation: any, index: number) => this._sanitizeInterpretation(interpretation, index));
+
+      this.interpretations = this.interpretations.map((interpretation) => {
+        if (newInterpretationList[0].id !== interpretation.id) {
+          interpretation.showCommentBlock = false;
+        }
+        return interpretation;
+      })
     }
 
     this.emitInterpretationUpdates();
