@@ -9,15 +9,16 @@
     </div>
     <div class="col-md-4 col-sm-4" *ngIf="dashboardConfig.showNotification">
      <div style="display: flex; justify-content: flex-end">
-       <div style="margin-right: 3px;"><app-dashboard-notification-area></app-dashboard-notification-area></div>
        <a
-          class="btn btn-default"
-          (click)="toggleDashboardBookmarkOption($event)"
-          title="{{ showBookmarkedDashboards ? 'Show all dashboards' : 'Show bookmarked dashboards'}}"
+         class="btn btn-default"
+         style="margin-right: 3px;"
+         (click)="toggleDashboardBookmarkOption($event)"
+         title="{{ showBookmarkedDashboards ? 'Show all dashboards' : 'Show bookmarked dashboards'}}"
        >
          <img [ngClass]="{'hidden-item': !showBookmarkedDashboards}" src="assets/img/bookmark.png" alt="" style="height: 15px;">
          <img [ngClass]="{'hidden-item': showBookmarkedDashboards}" src="assets/img/empty-bookmark.png" alt="" style="height: 15px;">
        </a>
+       <div><app-dashboard-notification-area></app-dashboard-notification-area></div>
      </div>
     </div>
   </div>

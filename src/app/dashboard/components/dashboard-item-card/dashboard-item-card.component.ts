@@ -61,6 +61,7 @@ export class DashboardItemCardComponent implements OnInit {
   showLayout: boolean;
   visualizationWithNoOptions: any[] = VISUALIZATION_WITH_NO_OPTIONS;
   currentVisualizationType: string;
+  visualizationTypeObjectForInterpretation: any;
   interpretations: any[];
   cardConfiguration: any = {
     showCardHeader: false,
@@ -199,6 +200,12 @@ export class DashboardItemCardComponent implements OnInit {
       this.orgUnitModel = this._getSelectedOrganUnitModel(this.getSelectedItems(this.visualizationObject.details.filters, 'ou'));
     }
 
+    if (this.visualizationObject.details.favorite && this.visualizationObject.details.favorite.id) {
+      this.visualizationTypeObjectForInterpretation = {
+        id: this.visualizationObject.details.favorite.id,
+        type: this.visualizationObject.details.favorite.type || _.camelCase(this.visualizationObject.type)
+      }
+    }
 
     if (this.visualizationObject.details.interpretations) {
       this.interpretations = this.visualizationObject.details.interpretations[0].interpretations

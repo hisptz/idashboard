@@ -14,23 +14,13 @@ export class InterpretationListComponent implements OnInit {
   @Input() itemHeight: string;
   @Input() currentUser: any;
   @Output() onInterpretationUpdate: EventEmitter<any> = new EventEmitter<any>();
-  visualizationTypeObject: any;
+  @Input() visualizationTypeObject: any;
   interpretationTerm: string;
   constructor(private interpretationService: InterpretationService) { }
 
   ngOnInit() {
     if (this.interpretations) {
 
-      if (this.interpretations.length > 0) {
-        const visualizationType = _.camelCase(this.interpretations[0].type);
-
-        if (visualizationType) {
-          this.visualizationTypeObject = {
-            type: visualizationType,
-            id: this.interpretations[0][visualizationType].id
-          };
-        }
-      }
       this.interpretations = this.interpretations.map((interpretation: any, index: number) => this._sanitizeInterpretation(interpretation, index))
     }
   }
