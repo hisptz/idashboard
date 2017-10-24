@@ -15,33 +15,27 @@
     </div>
     <div
       class="interpretation-comment-text"
-      *ngIf="!comment.showEditForm && !comment.showDeleteDialog && !comment.deleting"
+      *ngIf="!comment?.showEditForm && !comment?.showDeleteDialog"
     >
       {{ comment?.text}}
     </div>
-    <div
-      class="interpretation-delete-block"
-      *ngIf="comment?.showDeleteDialog"
-    >
-      This comment will be deleted, are you sure?
-      <a
-        class="btn btn-xs btn-danger"
-        (click)="deleteComment($event)"
-      >
-        <i class="fa fa-trash-o"></i>
-      </a>
-      <a
-        class="btn btn-xs btn-default"
-        (click)="toggleDeleteConfirmationDialog($event)"
-      >
-        <i class="fa fa-times"></i>
-      </a>
+    <div *ngIf="comment?.showDeleteDialog">
+      <app-delete-comment
+        [rootUrl]="rootUrl"
+        [interpretationId]="interpretation.id"
+        [comment]="comment"
+        (onCommentDelete)="commentDeleted($event)"
+        (onCommentDeleteCancel)="toggleDeleteConfirmationDialog()"
+        (onCommentDeleteFail)="toggleDeleteConfirmationDialog()"
+      ></app-delete-comment>
     </div>
-    <div *ngIf="comment?.deleting">Deleting comment</div>
+    <div *ngIf="comment.showEditForm">
+      <app-edit-comment></app-edit-comment>
+    </div>
   </div>
   <div
     class="interpretation-more-comment-options"
-    *ngIf="!comment?.deleting"
+    *ngIf="!comment?.showDeleteDialog"
   >
     <div
       class="interpretation-last-updated"
@@ -60,7 +54,11 @@
         class="interpretation-more-options-dropdown"
         *ngIf="comment?.showDropdownOptions"
       >
-        <li><a>Edit</a></li>
+        <li>
+          <a
+            (click)="openCommentEditForm($event)"
+          >Edit</a>
+        </li>
         <li>
           <a
             class="text-danger"
@@ -81,33 +79,11 @@
       {{ currentUser.displayName | abbreviate }}
     </div>
   </div>
-  <div class="interpretation-comment-input-block">
-              <textarea
-                type="text"
-                cols="100"
-                rows="1"
-                Autosize
-                autofocus
-                required
-                minlength="10"
-                [(ngModel)]="commentFormData.comment"
-                name="comment"
-                #comment="ngModel"
-                placeholder="Write your comment"
-                class="interpretation-comment-input"
-              ></textarea>
-    <div class="pull-right" [hidden]="comment.invalid || commentFormData.comment === ''">
-      <button class="btn btn-default post-comment-btn" (click)="cancel($event)">CANCEL</button>
-      <button
-        [ngClass]="{
-    'btn': true,
-    'btn-default': true,
-    'post-comment-btn': true,
-    'disabled': creating
-    }"
-        (click)="postComment($event)">
-        {{creating ? 'POSTING' : 'POST'}}
-      </button>
-    </div>
+  <div>
+    <app-add-comment
+      [interpretation]="interpretation"
+      [rootUrl]="rootUrl"
+      (onCommentCreate)="commentCreated($event)"
+    ></app-add-comment>
   </div>
 </div>

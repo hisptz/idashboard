@@ -102,7 +102,7 @@
               [currentUser]="currentUser"
               [interpretation]="interpretation"
               [rootUrl]="rootUrl"
-              (onCommentCreate)="updateInterpretationComment($event)"
+              (onCommentCreated)="updateInterpretationComment($event)"
             ></app-interpretation-comment>
           </div>
         </div>
@@ -127,7 +127,10 @@
             class="interpretation-more-options-dropdown"
             *ngIf="interpretation.showDropdownOptions"
           >
-            <li><a (click)="openInterpretationEditForm(interpretation, $event)">Edit</a></li>
+            <li>
+              <a (click)="openInterpretationEditForm(interpretation, $event)"
+              >Edit</a>
+            </li>
             <li>
               <a
                 (click)="toggleDeleteConfirmationDialog(interpretation, $event)"

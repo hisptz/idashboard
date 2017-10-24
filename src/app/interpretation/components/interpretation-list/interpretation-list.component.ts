@@ -22,7 +22,6 @@ export class InterpretationListComponent implements OnInit {
     if (this.interpretations) {
 
       this.interpretations = this.interpretations.map((interpretation: any, index: number) => this._sanitizeInterpretation(interpretation, index));
-      console.log(this.interpretations)
     }
   }
 

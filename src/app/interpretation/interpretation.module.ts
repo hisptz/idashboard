@@ -10,6 +10,9 @@ import { InterpretationCommentComponent } from './components/interpretation-comm
 import { AbbreviatePipe } from './pipes/abbreviate.pipe';
 import { InterpretationLikeComponent } from './components/interpretation-like/interpretation-like.component';
 import { EditInterpretationComponent } from './components/edit-interpretation/edit-interpretation.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { DeleteCommentComponent } from './components/delete-comment/delete-comment.component';
+import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 
 @NgModule({
   imports: [
@@ -24,7 +27,10 @@ import { EditInterpretationComponent } from './components/edit-interpretation/ed
     InterpretationCommentComponent,
     AbbreviatePipe,
     InterpretationLikeComponent,
-    EditInterpretationComponent
+    EditInterpretationComponent,
+    AddCommentComponent,
+    DeleteCommentComponent,
+    EditCommentComponent
   ],
 
   exports: [InterpretationListComponent],

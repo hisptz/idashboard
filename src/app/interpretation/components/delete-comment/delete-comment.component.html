@@ -1,0 +1,20 @@
+<div
+  class="interpretation-delete-block"
+>
+  <div *ngIf="!deleting">
+    This comment will be deleted, are you sure?
+    <a
+      class="btn btn-xs btn-danger"
+      (click)="deleteComment($event)"
+    >
+      <i class="fa fa-trash-o"></i>
+    </a>
+    <a
+      class="btn btn-xs btn-default"
+      (click)="cancel($event)"
+    >
+      <i class="fa fa-times"></i>
+    </a>
+  </div>
+  <div *ngIf="deleting">Deleting comment</div>
+</div>

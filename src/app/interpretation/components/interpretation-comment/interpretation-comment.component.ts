@@ -13,23 +13,13 @@ export class InterpretationCommentComponent implements OnInit {
   @Input() interpretation: any;
   @Input() currentUser: any;
   @Input() rootUrl: string;
-  @Output() onCommentCreate: EventEmitter<any> = new EventEmitter<any>();
   @Output() onCommentDelete: EventEmitter<any> = new EventEmitter<any>();
-  commentFormData: any;
-  creating: boolean;
+  @Output() onCommentCreated: EventEmitter<any> = new EventEmitter<any>();
   constructor(private interpretationService: InterpretationService) {
     this.showCommentInput = false;
-    this.creating = false;
   }
 
   ngOnInit() {
-    if (this.interpretation) {
-      this.commentFormData = {
-        id: this.interpretation.id,
-        type: this.interpretation.type,
-        comment: ''
-      }
-    }
 
     if (this.comment) {
       this.comment = {
@@ -41,11 +31,6 @@ export class InterpretationCommentComponent implements OnInit {
     }
 
 
-  }
-
-  cancel(e) {
-    e.stopPropagation();
-    this.commentFormData.comment = '';
   }
 
   toggleCommentOptions(e, mouseEnter:boolean = false) {
@@ -65,29 +50,24 @@ export class InterpretationCommentComponent implements OnInit {
     this.comment.showDropdownOptions = !this.comment.showDropdownOptions;
   }
 
-  postComment(e) {
-    e.stopPropagation();
-    this.creating = true;
-    this.interpretationService.postComment(this.commentFormData, this.rootUrl)
-      .subscribe((interpretation: any[]) => {
-        this.creating = false;
-        this.commentFormData.comment = '';
-        this.onCommentCreate.emit(interpretation);
-      }, error => console.log(error))
-  }
-
-  toggleDeleteConfirmationDialog(e) {
-    e.stopPropagation();
+  toggleDeleteConfirmationDialog(e?) {
+    if (e) {
+      e.stopPropagation();
+    }
     this.comment = {...this.comment, showDeleteDialog: !this.comment.showDeleteDialog, showDropdownOptions: false};
   }
 
-  deleteComment(e) {
+  commentCreated(interpretation: any) {
+    this.onCommentCreated.emit(interpretation)
+  }
+
+  commentDeleted(comment: any) {
+    this.onCommentDelete.emit(comment)
+  }
+
+  openCommentEditForm(e) {
     e.stopPropagation();
-    this.comment = {...this.comment, showDeleteDialog: false, deleting: true};
-    this.interpretationService.deleteComment(this.rootUrl, this.interpretation.id, this.comment.id)
-      .subscribe(() => this.onCommentDelete.emit(this.comment), () => {
-        this.comment.deleting = false;
-      })
+    this.comment = {...this.comment, showEditForm: true};
   }
 
 }
