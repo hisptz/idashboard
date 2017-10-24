@@ -145,7 +145,7 @@ export class InterpretationListComponent implements OnInit {
     this.interpretations = this.interpretations.map((interpretationObject) => {
       const newInterpretationObject: any = {...interpretationObject};
       if (interpretationObject.id === interpretation.id) {
-        newInterpretationObject.comments = interpretation.comments;
+        newInterpretationObject.comments = [...interpretation.comments];
       }
 
       return newInterpretationObject;

@@ -93,6 +93,7 @@
               [currentUser]="currentUser"
               [interpretation]="interpretation"
               (onCommentDelete)="deleteInterpretationComment(interpretation, $event)"
+              (onCommentUpdated)="updateInterpretationComment($event)"
               [rootUrl]="rootUrl"
             ></app-interpretation-comment>
           </div>

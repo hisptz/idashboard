@@ -15,6 +15,7 @@ export class InterpretationCommentComponent implements OnInit {
   @Input() rootUrl: string;
   @Output() onCommentDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() onCommentCreated: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onCommentUpdated: EventEmitter<any> = new EventEmitter<any>();
   constructor(private interpretationService: InterpretationService) {
     this.showCommentInput = false;
   }
@@ -65,9 +66,19 @@ export class InterpretationCommentComponent implements OnInit {
     this.onCommentDelete.emit(comment)
   }
 
-  openCommentEditForm(e) {
-    e.stopPropagation();
-    this.comment = {...this.comment, showEditForm: true};
+  commentUpdated(interpretation) {
+    this.onCommentUpdated.emit(interpretation);
+  }
+
+  toggleCommentEditForm(e?) {
+    if (e) {
+      e.stopPropagation();
+    }
+    this.comment = {
+      ...this.comment,
+      showEditForm: !this.comment.showEditForm,
+      showDropdownOptions: !this.comment.showDropdownOptions
+    };
   }
 
 }

@@ -30,7 +30,14 @@
       ></app-delete-comment>
     </div>
     <div *ngIf="comment.showEditForm">
-      <app-edit-comment></app-edit-comment>
+      <app-edit-comment
+        [rootUrl]="rootUrl"
+        [comment]="comment"
+        [interpretation]="interpretation"
+        (onCommentEditCancel)="toggleCommentEditForm()"
+        (onCommentEditFail)="toggleCommentEditForm()"
+        (onCommentEdit)="commentUpdated($event)"
+      ></app-edit-comment>
     </div>
   </div>
   <div
@@ -56,7 +63,7 @@
       >
         <li>
           <a
-            (click)="openCommentEditForm($event)"
+            (click)="toggleCommentEditForm($event)"
           >Edit</a>
         </li>
         <li>
