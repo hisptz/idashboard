@@ -1,5 +1,18 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-declare var Highcharts: any;
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// declare var Highcharts: any;
+import * as Highcharts from 'highcharts';
+import * as HighchartsExporting from 'highcharts/modules/exporting';
+import * as OfflineHighchartExporting from 'highcharts/modules/offline-exporting.js';
+import * as HighchartsMore from 'highcharts/highcharts-more.js';
+import * as HighchartGauge from 'highcharts/modules/solid-gauge.js';
+import * as HighchartDrilldown from 'highcharts/modules/drilldown.js';
+import * as HighchartGroupedCategories from 'highcharts-grouped-categories/grouped-categories.js'
+HighchartsExporting(Highcharts);
+OfflineHighchartExporting(Highcharts);
+HighchartsMore(Highcharts);
+HighchartGauge(Highcharts);
+HighchartDrilldown(Highcharts);
+HighchartGroupedCategories(Highcharts);
 
 @Component({
   selector: 'app-chart-template',

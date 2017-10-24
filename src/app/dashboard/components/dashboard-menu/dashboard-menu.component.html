@@ -140,9 +140,7 @@
 
       <ul class="nav navbar-nav dashboard-nav" *ngIf="(dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat">
         <li
-          *ngFor="let dashboardMenuItem of (dashboardMenuObject$ | async).dashboardsMenuItems  |
-          filterBy: dashboardName | filterByBookmark: showOnlyBookmarked |
-          paginate: config"
+          *ngFor="let dashboardMenuItem of (dashboardMenuObject$ | async).dashboardsMenuItems  | filterBy: dashboardName | filterByBookmark: showOnlyBookmarked | paginate: config"
           class="dashboard-list dropdwon"
           routerLinkActive="dashboard-active"
           (mouseenter)="showBookmarkOption(dashboardMenuItem, $event)"
@@ -154,7 +152,7 @@
             title="{{ dashboardMenuItem.details.bookmarked ? 'You have bookmarked this dashboard' : 'Bookmark this dashboard'}}"
             (click)="toggleBookmark(dashboardMenuItem, $event)"
             class="dashboard-menu-notification-icon dashboard-menu-bookmark"
-            [ngClass]="{'hide-dashboard-options': dashboardMenuItem.id !== focusedDashboardItem}"
+            [ngClass]="{'hide-dashboard-options': dashboardMenuItem.id !== focusedDashboardItem || !dashboardMenuItem.details.bookmarked}"
           >
             <img *ngIf="dashboardMenuItem.details.bookmarked" src="assets/img/bookmark.png" alt="">
             <img *ngIf="!dashboardMenuItem.details.bookmarked" src="assets/img/empty-bookmark.png" alt="">

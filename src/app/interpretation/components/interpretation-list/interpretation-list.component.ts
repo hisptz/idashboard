@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import {InterpretationService} from '../../services/interpretation.service';
 
 @Component({
@@ -47,7 +48,7 @@ export class InterpretationListComponent implements OnInit {
       newInterpretation.showDeleteButton = newInterpretation.user.id === this.currentUser.id;
     }
 
-
+    newInterpretation.lastUpdated = moment(newInterpretation.lastUpdated).fromNow();
 
     return newInterpretation;
   }
