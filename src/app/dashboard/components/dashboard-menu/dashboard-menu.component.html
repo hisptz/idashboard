@@ -1,21 +1,17 @@
 <nav class="navbar navbar-default dashboard-menu">
   <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="navbar-header">
-      <a
-        class="navbar-toggle collapsed dashboard-collapse-btn"
-      >
-        <i class="fa fa-bars"></i>
+      <a class="navbar-toggle collapsed dashboard-collapse-btn" (click)="toggleMobile()">
+        <i class="fa fa-bars" *ngIf="isMobile"></i>
+        <i class="fa fa-times" *ngIf="!isMobile"></i>
       </a>
     </div>
-    <div
-      class="collapse navbar-collapse dashboard-collapse-body"
-      id="idashboardNavbar"
-    >
+    <div class="collapse navbar-collapse dashboard-collapse-body show" [ngClass]="{show:!isMobile}"  id="idashboardNavbar">
       <ul class="nav navbar-nav dashboard-nav">
-        <li>
+        <li [ngClass]="{'row-slide':!isMobile}">
           <a
             (click)="toggleFilter()"
-            class="navbar-brand"
+            [ngClass]="{'navbar-brand':isMobile}"
           >
             <i class="fa fa-filter"></i>
           </a>
@@ -24,6 +20,7 @@
         <li
           *ngIf="showFilter.data.shown && showFilter.data.enabled"
           appClickOutside (clickOutside)="showDataFilter = false"
+          [ngClass]="{'row-slide':!isMobile}"
         >
           <a
             class="dimension-filter-btn"
@@ -48,6 +45,7 @@
         <li
           *ngIf="showFilter.period.shown && showFilter.period.enabled"
           appClickOutside (clickOutside)="showPeriodFilter = false"
+          [ngClass]="{'row-slide':!isMobile}"
         >
           <a
             class="dimension-filter-btn"
@@ -73,6 +71,7 @@
         <li
           *ngIf="showFilter.orgUnit.shown && showFilter.orgUnit.enabled"
           appClickOutside (clickOutside)="showOrgUnitFilter = false"
+          [ngClass]="{'row-slide':!isMobile}"
         >
           <a
             class="dimension-filter-btn"
@@ -97,6 +96,7 @@
         <!--Settings option area-->
         <li
           *ngIf="showFilter.settings.shown && showFilter.settings.enabled"
+          [ngClass]="{'row-slide':!isMobile}"
         >
           <a
             class="dimension-filter-btn"
@@ -106,7 +106,6 @@
           </a>
         </li>
       </ul>
-
       <ul class="nav navbar-nav dashboard-nav"
           *ngIf="(dashboardMenuObject$ | async) !== null && (dashboardMenuObject$ | async).showInGroupFormat"
           appClickOutside (clickOutside)="currentDashboardGroup = ''"
@@ -114,6 +113,7 @@
         <li
           class="dropdown {{currentDashboardGroup === dashboardGroup ? 'active': ''}}"
           *ngFor="let dashboardGroup of (dashboardMenuObject$ | async).dashboardsMenuItems.groups"
+          [ngClass]="{'row-slide':!isMobile}"
         >
           <a
             (click)="toggleDashboardGroup(dashboardGroup)"
@@ -137,8 +137,8 @@
           </ul>
         </li>
       </ul>
-
-      <ul class="nav navbar-nav dashboard-nav" *ngIf="(dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat">
+      <ul class="nav navbar-nav dashboard-nav"
+          *ngIf="(dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat">
         <li
           *ngFor="let dashboardMenuItem of (dashboardMenuObject$ | async).dashboardsMenuItems  |
           filterBy: dashboardName | filterByBookmark: showOnlyBookmarked |
@@ -147,6 +147,7 @@
           routerLinkActive="dashboard-active"
           (mouseenter)="showBookmarkOption(dashboardMenuItem, $event)"
           (mouseleave)="hideBookmarkOption(dashboardMenuItem, $event)"
+          [ngClass]="{'row-slide':!isMobile}"
         >
           <!--<span *ngIf="dashboardMenuItem.details.editComplete || dashboardMenuItem.details.creationComplete" appClickOutside (clickOutside)="dashboardStatus.id = {}" class="success-badge"><i class="fa fa-check"></i></span>-->
           <span
@@ -191,14 +192,16 @@
           <div *ngIf="itemToDelete === dashboardMenuItem.id" class="dashboard-delete-block">
             <small>Delete?</small>
             <button (click)="itemToDelete = ''" class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-            <button (click)="deleteDashboard(dashboardMenuItem.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
+            <button (click)="deleteDashboard(dashboardMenuItem.id)" class="btn btn-danger btn-xs"><i
+              class="fa fa-trash"></i></button>
           </div>
           <app-edit-dashboard
             *ngIf="activeEditFormId === dashboardMenuItem.id"
             [dashboard]="dashboardMenuItem"
             (onUpdateSuccess)="closeEditForm()"
           ></app-edit-dashboard>
-          <ul [ngClass]="'option-dropdown'" *ngIf="currentRightClicked == dashboardMenuItem.id" appClickOutside (clickOutside)="currentRightClicked = ''">
+          <ul [ngClass]="'option-dropdown'" *ngIf="currentRightClicked == dashboardMenuItem.id" appClickOutside
+              (clickOutside)="currentRightClicked = ''">
             <li>
               <a (click)="openEditForm(dashboardMenuItem.id)">
                 <img [src]="'assets/img/edit.png'" alt="">
@@ -221,18 +224,21 @@
         </li>
       </ul>
       <ul class="nav navbar-nav dashboard-nav">
-        <li *ngIf="showCreateDashboardForm">
+        <li *ngIf="showCreateDashboardForm"  [ngClass]="{'row-slide':!isMobile}">
           <app-create-dashboard (onDashboardCreate)="toggleCreateDashboardForm()"></app-create-dashboard>
         </li>
-        <li *ngIf="menuConfig.showDashboardCreateButton">
+        <li *ngIf="menuConfig.showDashboardCreateButton"  [ngClass]="{'row-slide':!isMobile}">
           <a (click)="toggleCreateDashboardForm()">
             <i class="fa {{showCreateDashboardForm ? 'fa-times' : 'fa-plus'}}"></i>
           </a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right dashboard-right">
-        <li *ngIf="menuConfig.showPaginationButtons && (dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat">
-          <pagination-template *ngIf="(dashboardMenuObject$ | async).dashboardsMenuItems.length > config.itemsPerPage" #nm="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+        <li
+          *ngIf="menuConfig.showPaginationButtons && (dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat"
+          [ngClass]="{'row-slide':!isMobile}">
+          <pagination-template *ngIf="(dashboardMenuObject$ | async).dashboardsMenuItems.length > config.itemsPerPage"
+                               #nm="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
             <ul class="custom-pagination pagination dashboard-pagination">
               <li class="pagination-previous" [class.disabled]="nm.isFirstPage()">
                 <a (click)="nm.previous()" tooltip="previous"> <i class="fa fa-chevron-left"></i> </a>
@@ -246,10 +252,13 @@
         </li>
         <li
           *ngIf="menuConfig.showPaginationCounter && (dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat"
+          [ngClass]="{'row-slide':!isMobile}"
         >
-          <input type="number" [(ngModel)]="config.itemsPerPage" class="dashboard-pagination-input" min="1" max="{{(dashboardMenuObject$ | async).dashboardsMenuItems.length <= 8 ? (dashboardMenuObject$ | async).dashboardsMenuItems.length : 8}}" onkeydown="return false">
+          <input type="number" [(ngModel)]="config.itemsPerPage" class="dashboard-pagination-input" min="1"
+                 max="{{(dashboardMenuObject$ | async).dashboardsMenuItems.length <= 8 ? (dashboardMenuObject$ | async).dashboardsMenuItems.length : 8}}"
+                 onkeydown="return false">
         </li>
-        <li *ngIf="showDashboardSearch">
+        <li *ngIf="showDashboardSearch"  [ngClass]="{'row-slide':!isMobile}">
           <input
             type="text" size="12"
             id="dashboard_menu_search"
@@ -261,29 +270,31 @@
         <li class="dashboard-search-button"
             (click)="toggleDashboardMenuSearch()"
             *ngIf="(dashboardMenuObject$ | async) !== null && !(dashboardMenuObject$ | async).showInGroupFormat"
+            [ngClass]="{'row-slide':!isMobile}"
         >
-          <a tooltip="search dashboard" style="border-right-style: none;"><i class="fa {{showDashboardSearch ? 'fa-times':'fa-search'}}"></i></a>
+          <a tooltip="search dashboard" style="border-right-style: none;"><i
+            class="fa {{showDashboardSearch ? 'fa-times':'fa-search'}}"></i></a>
         </li>
         <!--<li>-->
-          <!--<a-->
-            <!--(click)="showDashboardGroupSettings = !showDashboardGroupSettings"-->
-             <!--class=""-->
-          <!--&gt;-->
-            <!--<i class="fa fa-cog"></i>-->
-            <!--<i class="fa fa-caret-down"></i>-->
-          <!--</a>-->
-          <!--<app-dashboard-group-settings-->
-            <!--*ngIf="showDashboardGroupSettings"-->
-            <!--[dashboardMenuObject]="dashboardMenuObject$ | async"-->
-          <!--&gt;-->
-          <!--</app-dashboard-group-settings>-->
+        <!--<a-->
+        <!--(click)="showDashboardGroupSettings = !showDashboardGroupSettings"-->
+        <!--class=""-->
+        <!--&gt;-->
+        <!--<i class="fa fa-cog"></i>-->
+        <!--<i class="fa fa-caret-down"></i>-->
+        <!--</a>-->
+        <!--<app-dashboard-group-settings-->
+        <!--*ngIf="showDashboardGroupSettings"-->
+        <!--[dashboardMenuObject]="dashboardMenuObject$ | async"-->
+        <!--&gt;-->
+        <!--</app-dashboard-group-settings>-->
         <!--</li>-->
       </ul>
     </div>
   </div>
 </nav>
+
 <app-dashboard-share *ngIf="showShareBlock"
                      [apiRootUrl]="apiRootUrl$ | async"
-                     (onCloseSharing)="showShareBlock = false"
->
+                     (onCloseSharing)="showShareBlock = false">
 </app-dashboard-share>

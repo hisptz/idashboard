@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   globalFilters: Observable<any>;
   globalFilters$: Subject<any> = new Subject<any>();
   showBookmarkedDashboards: boolean;
+  mobileIsDropped = false;
   dashboardConfig: any = {
     showNotification: true,
     showSearch: true,
@@ -66,6 +67,14 @@ export class DashboardComponent implements OnInit {
     this.store.dispatch(new fromAction.GlobalFilterChangeAction({dashboardId: this.dashboardId, filterObject: filterData}));
   }
 
+  triggerMobileMenu(isMobile){
+    console.log(isMobile);
+    if (isMobile){
+      this.mobileIsDropped = true;
+    }else{
+      this.mobileIsDropped = false;
+    }
+  }
   toggleDashboardBookmarkOption(e) {
     e.stopPropagation();
     this.showBookmarkedDashboards = !this.showBookmarkedDashboards;

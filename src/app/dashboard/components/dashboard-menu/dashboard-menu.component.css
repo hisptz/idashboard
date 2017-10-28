@@ -349,6 +349,16 @@ input[type=number]::-webkit-outer-spin-button {
   display: none;
 }
 
+@media only screen and (max-device-width: 480px) {
+  /* define mobile specific styles come here */
+  .row-slide {
+    border-bottom: 1px solid #DFEBFC !important;
+  }
 
+  #idashboardNavbar {
+    background-color: #ffffff !important;
+  }
+
+}
 
 
