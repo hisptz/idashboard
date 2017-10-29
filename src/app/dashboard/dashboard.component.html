@@ -25,18 +25,21 @@
 </div>
 <!--End of Header-->
 
-<!--Dashboard Menus-->
-<app-dashboard-menu
-  (onFilterUpdate)="updateFilters($event)"
-></app-dashboard-menu>
-<!--End of Dashbaord Menus-->
+<div style="z-index: 10000">
+  <!--Dashboard Menus-->
+  <app-dashboard-menu
+    (onFilterUpdate)="updateFilters($event)"
+    (onTriggerMobileMenu)="triggerMobileMenu($event)"
+  ></app-dashboard-menu>
+  <!--End of Dashbaord Menus-->
+</div>
 
 <!--Progress message component-->
 <app-progress></app-progress>
 <!--end of progress message component-->
 
 <!--Dashboard Items-->
-<div class="container-fluid">
+<div class="container-fluid" [ngClass]="{'hide-visualizations':mobileIsDropped,'show-visualizations':!mobileIsDropped}">
   <!--<app-loader *ngIf="loading" [loadingMessage]="'Moving dashboards into position'"></app-loader>-->
   <div
     class="row"

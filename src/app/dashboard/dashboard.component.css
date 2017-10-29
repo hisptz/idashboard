@@ -33,3 +33,12 @@
 .hidden-item {
   display: none;
 }
+
+.hide-visualizations{
+  display: none;
+}
+
+
+.show-visualizations{
+  display: block;
+}

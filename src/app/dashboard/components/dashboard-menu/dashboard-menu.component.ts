@@ -46,6 +46,7 @@ export class DashboardMenuComponent implements OnInit {
     showMaintenanceOptions: true,
     showFilter: false
   };
+  isMobile: boolean = true;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -53,6 +54,8 @@ export class DashboardMenuComponent implements OnInit {
   }
 
   @Output() onFilterUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onTriggerMobileMenu: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private store: Store<ApplicationState>) {
     this.dashboardMenuObject$ = store.select(dashboardMenuItemsSelector);
     this.config$ = store.select(dashboardPaginationConfigurationSelector);
@@ -63,12 +66,12 @@ export class DashboardMenuComponent implements OnInit {
         enabled: true,
         shown: false
       },
-      data:  {
+      data: {
         enabled: false,
         shown: false
       },
 
-      period:  {
+      period: {
         enabled: true,
         shown: false
       },
@@ -97,6 +100,13 @@ export class DashboardMenuComponent implements OnInit {
       }
     })
   }
+
+  toggleMobile() {
+    this.isMobile = !this.isMobile;
+    this.onTriggerMobileMenu.emit(!this.isMobile);
+  }
+
+
 
   openEditForm(id) {
     this.currentRightClicked = '';
@@ -161,7 +171,9 @@ export class DashboardMenuComponent implements OnInit {
 
   organizeMenu(width: number, forceReduce: boolean = false) {
 
-    const filtersShown = [this._showFilter.orgUnit.shown, this._showFilter.data.shown, this._showFilter.period.shown].filter(status => { return status });
+    const filtersShown = [this._showFilter.orgUnit.shown, this._showFilter.data.shown, this._showFilter.period.shown].filter(status => {
+      return status
+    });
     const additionalWidth: number = filtersShown.length > 0 || this.showDashboardSearch || forceReduce ? 800 : 600;
     const approximatedItemsPerPage: number = (width - additionalWidth) / 100;
 
