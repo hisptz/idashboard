@@ -165,6 +165,7 @@
             (dblclick)="openEditForm(dashboardMenuItem.id)"
             (contextmenu)="showOptions(dashboardMenuItem.id)"
             *ngIf="activeEditFormId !== dashboardMenuItem.id && itemToDelete !== dashboardMenuItem.id"
+            (click)="toggleMobile()"
           >
             <a
               tooltip=""

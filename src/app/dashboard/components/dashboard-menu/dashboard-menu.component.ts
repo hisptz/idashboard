@@ -106,6 +106,8 @@ export class DashboardMenuComponent implements OnInit {
     this.onTriggerMobileMenu.emit(!this.isMobile);
   }
 
+
+
   openEditForm(id) {
     this.currentRightClicked = '';
     this.organizeMenu(window.innerWidth, true);
