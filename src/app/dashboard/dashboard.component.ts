@@ -68,7 +68,6 @@ export class DashboardComponent implements OnInit {
   }
 
   triggerMobileMenu(isMobile){
-    console.log(isMobile);
     if (isMobile){
       this.mobileIsDropped = true;
     }else{
