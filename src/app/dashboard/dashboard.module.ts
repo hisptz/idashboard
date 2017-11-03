@@ -18,14 +18,11 @@ import {TreeModule} from 'angular-tree-component';
 import {FilterLevelPipe} from './pipes/filter-level.pipe';
 import { FavoriteSettingsComponent } from './components/favorite-settings/favorite-settings.component';
 import {TruncatePipe} from './pipes/truncate.pipe';
-import { MapComponent } from './components/map/map.component';
-import { MapTemplateComponent } from './components/map-template/map-template.component';
 import { MetadataDictionaryComponent } from './components/metadata-dictionary/metadata-dictionary.component';
 import {AccordionModule, TooltipModule} from 'ngx-bootstrap';
 import { TableComponent } from './components/table/table.component';
 import {ProgressComponent} from '../components/progress/progress.component';
 import { DashboardGroupSettingsComponent } from './components/dashboard-group-settings/dashboard-group-settings.component';
-import {VisualizationLegendComponent} from './components/visualization-legend/visualization-legend.component';
 import { DashboardItemSearchComponent } from './components/dashboard-item-search/dashboard-item-search.component';
 import {ReadableNamePipe} from './pipes/readable-name.pipe';
 import { UsersComponent } from './components/users/users.component';
@@ -34,7 +31,6 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { AppComponent } from './components/app/app.component';
 import {SafePipe} from './pipes/safe.pipe';
 import {ErrorNotifierComponent} from './components/error-notifier/error-notifier.component';
-import {MapTableComponent} from './components/map-table/map-table.component';
 import {DimensionsModule} from '../dimensions/dimensions.module';
 import {LayerFormComponent} from './components/layer-form/layer-form.component';
 import { TableTemplateComponent } from './components/table-template/table-template.component';
@@ -44,12 +40,16 @@ import {MessageModule} from '../message/message.module';
 import {PeriodFilterModule} from '../period-filter/period-filter.module';
 import { ChartLoaderComponent } from './components/chart-loader/chart-loader.component';
 import { TableLoaderComponent } from './components/table-loader/table-loader.component';
-import { MapLoaderComponent } from './components/map-loader/map-loader.component';
 import {DataFilterModule} from '../data-filter/data-filter.module';
 import { KNumberPipe } from './pipes/k-number.pipe';
 import {InterpretationModule} from '../interpretation/interpretation.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { FilterByBookmarkPipe } from './pipes/filter-by-bookmark.pipe';
+import {MapComponent} from "../map/map.component";
+import {MapTemplateComponent} from "../map/components/map-template/map-template.component";
+import {MapTableComponent} from "../map/components/map-table/map-table.component";
+import {MapLoaderComponent} from "../map/components/map-loader/map-loader.component";
+import {VisualizationLegendComponent} from "../map/components/visualization-legend/visualization-legend.component";
 
 @NgModule({
   imports: [
@@ -83,10 +83,6 @@ import { FilterByBookmarkPipe } from './pipes/filter-by-bookmark.pipe';
     FilterLevelPipe,
     FavoriteSettingsComponent,
     TruncatePipe,
-    MapComponent,
-    MapTemplateComponent,
-    VisualizationLegendComponent,
-    MapTableComponent,
     MetadataDictionaryComponent,
     TableComponent,
     ProgressComponent,
@@ -100,14 +96,17 @@ import { FilterByBookmarkPipe } from './pipes/filter-by-bookmark.pipe';
     SafePipe,
     ErrorNotifierComponent,
     LayerFormComponent,
-    MapTableComponent,
     TableTemplateComponent,
     DashboardShareComponent,
     ChartLoaderComponent,
     TableLoaderComponent,
-    MapLoaderComponent,
     KNumberPipe,
-    FilterByBookmarkPipe
+    FilterByBookmarkPipe,
+    MapComponent,
+    MapTemplateComponent,
+    MapTableComponent,
+    MapLoaderComponent,
+    VisualizationLegendComponent
   ],
   providers: [
   ]

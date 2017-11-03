@@ -31,15 +31,10 @@ import {AnalyticsService} from './dashboard/providers/analytics.service';
 import {ChartService} from './dashboard/providers/chart.service';
 import {VisualizationService} from './dashboard/providers/visualization.service';
 import {GeoFeatureService} from './dashboard/providers/geo-feature.service';
-import {LegendSetService} from './dashboard/providers/legend-set.service';
 import {OrgunitGroupSetService} from './dashboard/providers/orgunit-group-set.service';
-import {MapService} from './dashboard/providers/map.service';
-import {MapVisualizationService} from './dashboard/providers/map-visualization.service';
-import {ColorInterpolationService} from './dashboard/providers/color-interpolation.service';
 import {TileLayers} from './dashboard/constants/tile-layers';
 import {TableService} from './dashboard/providers/table.service';
 import {VisualizerService} from './dashboard/providers/visualizer.service';
-import {MapFilesConversion} from './dashboard/providers/map-files-conversion.service';
 import {RelativePeriodService} from './dashboard/providers/relative-period.service';
 import {DimensionsModule} from './dimensions/dimensions.module';
 import {environment} from '../environments/environment';
@@ -49,6 +44,7 @@ import {FavoriteEffect} from './store/effects/favorite.effect';
 import {AnalyticsEffect} from './store/effects/analytics.effect';
 import { storeFreeze } from 'ngrx-store-freeze';
 import {NoWhitespaceDirective} from './directives/no-whitespace.directive';
+import {MapModule} from "./map/map.module";
 
 @NgModule({
   declarations: [
@@ -64,6 +60,7 @@ import {NoWhitespaceDirective} from './directives/no-whitespace.directive';
     HttpModule,
     AppRoutingModule,
     MenuModule,
+    MapModule,
     DimensionsModule,
     StoreModule.provideStore({uiState: uiStateReducer, storeData: storeDataReducer} , INITIAL_APPLICATION_STATE),
     EffectsModule.run(SystemInfoEffect),
@@ -91,16 +88,12 @@ import {NoWhitespaceDirective} from './directives/no-whitespace.directive';
     ChartService,
     VisualizationService,
     GeoFeatureService,
-    LegendSetService,
     OrgunitGroupSetService,
-    MapService,
-    MapVisualizationService,
-    ColorInterpolationService,
     TileLayers,
     TableService,
     VisualizerService,
-    MapFilesConversion,
-    RelativePeriodService
+    RelativePeriodService,
+
   ],
   bootstrap: [AppComponent]
 })
