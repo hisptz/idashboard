@@ -15,11 +15,11 @@ import {
   DASHBOARD_BLOCK_CLASSES, DASHBOARD_SHAPES, NO_BORDER_CLASS,
   VISUALIZATION_WITH_NO_OPTIONS
 } from '../../constants/visualization';
-import {MapComponent} from "../map/map.component";
 import {interpretationLinkSelector} from '../../../store/selectors/interpretation-link.selector';
 import {VisualizationObjectService} from '../../providers/visualization-object.service';
 import {currentUserSelector} from '../../../store/selectors/current-user.selector';
 import {SaveVisualization} from '../../../store/actions';
+import {MapComponent} from "../../../map/map.component";
 
 
 @Component({

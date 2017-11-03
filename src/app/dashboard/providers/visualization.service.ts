@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ChartConfiguration} from '../model/chart-configuration';
 import * as _ from 'lodash';
-import {LegendSetService} from './legend-set.service';
+import {LegendSetService} from "../../map/providers/legend-set.service";
 
 @Injectable()
 export class VisualizationService {
