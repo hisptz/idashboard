@@ -1,12 +1,16 @@
+<div *ngIf="isMobile || !isMobile"><br/></div>
+
 <nav class="navbar navbar-default dashboard-menu">
   <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+
     <div class="navbar-header">
       <a class="navbar-toggle collapsed dashboard-collapse-btn" (click)="toggleMobile()">
         <i class="fa fa-bars" *ngIf="isMobile"></i>
         <i class="fa fa-times" *ngIf="!isMobile"></i>
       </a>
     </div>
-    <div class="collapse navbar-collapse dashboard-collapse-body show" [ngClass]="{show:!isMobile}"  id="idashboardNavbar">
+    <div class="collapse navbar-collapse dashboard-collapse-body show" [ngClass]="{show:!isMobile}"
+         id="idashboardNavbar">
       <ul class="nav navbar-nav dashboard-nav">
         <li [ngClass]="{'row-slide':!isMobile}">
           <a
@@ -225,10 +229,10 @@
         </li>
       </ul>
       <ul class="nav navbar-nav dashboard-nav">
-        <li *ngIf="showCreateDashboardForm"  [ngClass]="{'row-slide':!isMobile}">
+        <li *ngIf="showCreateDashboardForm" [ngClass]="{'row-slide':!isMobile}">
           <app-create-dashboard (onDashboardCreate)="toggleCreateDashboardForm()"></app-create-dashboard>
         </li>
-        <li *ngIf="menuConfig.showDashboardCreateButton"  [ngClass]="{'row-slide':!isMobile}">
+        <li *ngIf="menuConfig.showDashboardCreateButton" [ngClass]="{'row-slide':!isMobile}">
           <a (click)="toggleCreateDashboardForm()">
             <i class="fa {{showCreateDashboardForm ? 'fa-times' : 'fa-plus'}}"></i>
           </a>
@@ -259,7 +263,7 @@
                  max="{{(dashboardMenuObject$ | async).dashboardsMenuItems.length <= 8 ? (dashboardMenuObject$ | async).dashboardsMenuItems.length : 8}}"
                  onkeydown="return false">
         </li>
-        <li *ngIf="showDashboardSearch"  [ngClass]="{'row-slide':!isMobile}">
+        <li *ngIf="showDashboardSearch" [ngClass]="{'row-slide':!isMobile}">
           <input
             type="text" size="12"
             id="dashboard_menu_search"
