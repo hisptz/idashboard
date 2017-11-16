@@ -1,4 +1,18 @@
 #!/usr/bin/env bash
+git submodule init
+git submodule update
+cd src/app/data-filter
+pwd
+git pull origin master
+cd ../../../
+cd src/app/map
+pwd
+git pull origin master
+cd ../../../
+cd src/app/menu
+pwd
+git pull origin master
+cd ../../../
 #echo "Pulling codes for the main repository"
 #git pull origin 2.0
 #

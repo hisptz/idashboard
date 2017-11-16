@@ -420,7 +420,7 @@ export class DashboardItemCardComponent implements OnInit {
 
     if (currentVisualizationType == "MAP")
     {
-      this.mapComponent.downLoadFiles(downloadFormat);
+      // this.mapComponent.downLoadFiles(downloadFormat);
     } else
     {
       if (downloadFormat === 'excel') {

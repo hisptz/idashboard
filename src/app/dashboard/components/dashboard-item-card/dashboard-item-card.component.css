@@ -211,6 +211,7 @@
 .interpretation-btn {
   border-style: none !important;
   border-radius: 50% !important;
+  background-color: transparent !important;
   margin-top: 3px !important;
   padding: 0px 5px 3px 5px !important;
 }
