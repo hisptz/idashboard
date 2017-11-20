@@ -81,6 +81,7 @@ export class DashboardMenuComponent implements OnInit {
       }
     };
     this.showOnlyBookmarked = false;
+    this.isMobileDevice()?this.isMobile=true:this.isMobile=false;
   }
 
 
@@ -102,10 +103,12 @@ export class DashboardMenuComponent implements OnInit {
   }
 
   toggleMobile() {
-    this.isMobile = !this.isMobile;
-    this.onTriggerMobileMenu.emit(!this.isMobile);
-  }
+    if(this.isMobileDevice()){
+      this.isMobile = !this.isMobile;
+      this.onTriggerMobileMenu.emit(!this.isMobile);
+    }
 
+  }
 
 
   openEditForm(id) {
@@ -240,6 +243,20 @@ export class DashboardMenuComponent implements OnInit {
   hideBookmarkOption(dashboardMenuItem, e) {
     e.stopPropagation();
     this.focusedDashboardItem = '';
+  }
+
+
+  isMobileDevice() {
+
+    const testExp = new RegExp('Android|webOS|iPhone|iPad|' +
+      'BlackBerry|Windows Phone|' +
+      'Opera Mini|IEMobile|Mobile',
+      'i');
+
+    if (testExp.test(navigator.userAgent)) {
+      return true;
+    }
+    return false;
   }
 
 
