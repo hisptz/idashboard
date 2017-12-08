@@ -312,12 +312,12 @@ export class DashboardItemCardComponent implements OnInit {
     const visualizationDetails: any = {...this.visualizationObject.details};
     if (visualizationDetails.showFullScreen) {
       document.getElementsByTagName('body')[0].style.overflow = 'auto';
-      visualizationDetails.cardHeight = '490px';
+      visualizationDetails.cardHeight = '478px';
       visualizationDetails.itemHeight = '476px';
     } else {
       document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-      visualizationDetails.cardHeight = '97vh';
-      visualizationDetails.itemHeight = '93vh';
+      visualizationDetails.cardHeight = '98.9vh';
+      visualizationDetails.itemHeight = '100vh';
     }
 
     visualizationDetails.showFullScreen = !visualizationDetails.showFullScreen;

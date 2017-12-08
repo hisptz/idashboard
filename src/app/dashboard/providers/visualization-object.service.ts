@@ -45,7 +45,7 @@ export class VisualizationObjectService {
         showCardFooter: true,
         showChartOptions: true,
         showFilter: true,
-        cardHeight: '490px',
+        cardHeight: '478px',
         itemHeight: '476px',
         fullScreen: false,
         type: this._getSanitizedCurrentVisualizationType(cardData.hasOwnProperty('type') ? cardData.type : null),
