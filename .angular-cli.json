@@ -33,7 +33,8 @@
         "../node_modules/leaflet.markercluster/dist/leaflet.markercluster.js",
         "../node_modules/html2canvas/dist/html2canvas.min.js",
         "../node_modules/leaflet-compass/dist/leaflet-compass.min.js",
-        "../node_modules/shpjs/dist/shp.min.js"
+        "../node_modules/shpjs/dist/shp.min.js",
+        "../node_modules/leaflet-image/leaflet-image.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
