@@ -76,6 +76,7 @@ export class UtilitiesService {
             id: thisMonth,
             dimensionItem: thisMonth,
             displayName: thisMonth,
+            displayAliasName:'',
             dimensionItemType: 'PERIOD'
           };
           return [item]
@@ -90,6 +91,7 @@ export class UtilitiesService {
             id: thisMonth,
             dimensionItem: thisMonth,
             displayName: thisMonth,
+            displayAliasName:'',
             dimensionItemType: 'PERIOD'
           };
           return [item]
@@ -104,6 +106,7 @@ export class UtilitiesService {
               id: year + '' + (month - monthCount),
               dimensionItem: year + '' + (month - monthCount),
               displayName: year + '' + (month - monthCount),
+              displayAliasName:'',
               dimensionItemType: 'PERIOD'
             })
           }
@@ -117,6 +120,7 @@ export class UtilitiesService {
             id: stringYear,
             dimensionItem: stringYear,
             displayName: stringYear,
+            displayAliasName:'',
             dimensionItemType: 'PERIOD'
           };
           return [item]
@@ -135,6 +139,7 @@ export class UtilitiesService {
                 id: workingYear,
                 dimensionItem: workingYear,
                 displayName: workingYear,
+                displayAliasName:'',
                 dimensionItemType: 'PERIOD'
               }
             )
@@ -151,22 +156,19 @@ export class UtilitiesService {
           let monthString = '';
           for (let monthCount = 1; monthCount < 13; monthCount++) {
             if ((month - monthCount) < 10) {
-
               if ((month - monthCount) > 0) {
-                monthString = '0' + (workingMonth - monthCount);
+                  monthString = '0' + (workingMonth - monthCount);
               } else if ((month - monthCount) === 0) {
-                workingMonth = 12;
-                year = year - 1;
-                monthString = workingMonth + '';
+                  workingMonth = 12;
+                  year = year - 1;
+                  monthString = workingMonth + '';
               } else if ((month - monthCount) < 0) {
                 if ((workingMonth + (month - monthCount)) < 10) {
                   monthString = '0' + (workingMonth + (month - monthCount));
                 } else {
                   monthString = workingMonth + (month - monthCount) + '';
                 }
-
               }
-
             } else {
               // monthString = (workingMonth - monthCount) + '';
             }
@@ -174,6 +176,7 @@ export class UtilitiesService {
               id: year + '' + monthString,
               dimensionItem: year + '' + monthString,
               displayName: year + '' + monthString,
+              displayAliasName:'',
               dimensionItemType: 'PERIOD'
             })
           }
@@ -199,6 +202,7 @@ export class UtilitiesService {
                 id: year + '' + quarters[thisQuater],
                 dimensionItem: year + '' + quarters[thisQuater],
                 displayName: year + '' + quarters[thisQuater],
+                displayAliasName:'',
                 dimensionItemType: 'PERIOD'
               }
             )
@@ -218,6 +222,7 @@ export class UtilitiesService {
               id: year + '' + quarters[thisQuater],
               dimensionItem: year + '' + quarters[thisQuater],
               displayName: year + '' + quarters[thisQuater],
+              displayAliasName:'',
               dimensionItemType: 'PERIOD'
             }
           )
@@ -244,6 +249,7 @@ export class UtilitiesService {
                 id: year + '' + quarters[thisQuater],
                 dimensionItem: year + '' + quarters[thisQuater],
                 displayName: year + '' + quarters[thisQuater],
+                displayAliasName:'',
                 dimensionItemType: 'PERIOD'
               }
             )
@@ -266,6 +272,7 @@ export class UtilitiesService {
                 id: workingYear,
                 dimensionItem: workingYear,
                 displayName: workingYear,
+                displayAliasName:'',
                 dimensionItemType: 'PERIOD'
               }
             )

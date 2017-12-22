@@ -587,6 +587,7 @@ export class FavoriteService {
   }
 
   private _getFavoriteName(dimensions: any[]) {
+
     let favoriteName = '';
     if (dimensions) {
       dimensions.forEach(dimensionItem => {
@@ -594,6 +595,7 @@ export class FavoriteService {
 
         if (dataArray) {
           dataArray.items.forEach(item => {
+
             favoriteName += item.displayName;
           })
         }
@@ -605,7 +607,8 @@ export class FavoriteService {
 
         if (periodArray) {
           periodArray.items.forEach(item => {
-            favoriteName += favoriteName !== '' ? ' - ' + item.displayName : item.displayName;
+            const itemDisplayName = this._preparePeriodShortName(item);
+            favoriteName = favoriteName !== '' ? itemDisplayName + ' - ' + favoriteName: itemDisplayName;
           })
         }
 
@@ -613,6 +616,10 @@ export class FavoriteService {
     }
 
     return favoriteName;
+  }
+
+  private _preparePeriodShortName(periodDimensionItem){
+    return periodDimensionItem.displayAliasName;
   }
 
   splitDimensionLayout(layoutDetailsArray, criteria) {

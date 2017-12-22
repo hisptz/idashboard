@@ -12,7 +12,7 @@ export class RelativePeriodService {
 
   getISOFormatFromRelativePeriod(favourite): Array<string> {
     let isoFormat = [];
-    let periodDimension:any = undefined;
+    let periodDimension: any = undefined;
     let newPeriodDimension = {dimension: 'pe', items: []};
     let periodIndex = null;
     let parentdimension = null;
@@ -78,6 +78,7 @@ export class RelativePeriodService {
       id: '',
       dimensionItem: '',
       displayName: '',
+      displayAliasName: '',
       dimensionItemType: 'PERIOD'
     }
     const periodFunctions = this._getExecutingPeriodFunctions();
@@ -124,6 +125,7 @@ export class RelativePeriodService {
               id: currentYear + '0' + month,
               dimensionItem: currentYear + '0' + month,
               displayName: currentYear + '0' + month,
+              displayAliasName: this._getAliasName(currentYear, month, 'month'),
               dimensionItemType: 'PERIOD'
             });
           } else {
@@ -135,6 +137,7 @@ export class RelativePeriodService {
               id: currentYear + '' + month,
               dimensionItem: currentYear + '' + month,
               displayName: currentYear + '' + month,
+              displayAliasName: this._getAliasName(currentYear, month, 'month'),
               dimensionItemType: 'PERIOD'
             });
           }
@@ -159,6 +162,7 @@ export class RelativePeriodService {
             id: currentYear + 'Q' + nthQuarter,
             dimensionItem: currentYear + 'Q' + nthQuarter,
             displayName: currentYear + 'Q' + nthQuarter,
+            displayAliasName: this._getAliasName(currentYear, nthQuarter, 'quarter'),
             dimensionItemType: 'PERIOD'
           });
 
@@ -174,6 +178,7 @@ export class RelativePeriodService {
             id: nthYear + '',
             dimensionItem: nthYear + '',
             displayName: nthYear + '',
+            displayAliasName: nthYear,
             dimensionItemType: 'PERIOD'
           };
         }));
@@ -194,6 +199,7 @@ export class RelativePeriodService {
             id: currentYear + '0' + nthBimonth + 'B',
             dimensionItem: currentYear + '0' + nthBimonth + 'B',
             displayName: currentYear + '0' + nthBimonth + 'B',
+            displayAliasName: this._getAliasName(currentYear, nthBimonth, 'bimonth'),
             dimensionItemType: 'PERIOD'
           });
 
@@ -217,6 +223,7 @@ export class RelativePeriodService {
             id: currentYear + 'S' + nthSixmonth,
             dimensionItem: currentYear + 'S' + nthSixmonth,
             displayName: currentYear + 'S' + nthSixmonth,
+            displayAliasName: this._getAliasName(currentYear, nthSixmonth, 'sixthmonth'),
             dimensionItemType: 'PERIOD'
           });
         });
@@ -238,6 +245,7 @@ export class RelativePeriodService {
             id: currentYear + 'S' + nthSixmonth,
             dimensionItem: currentYear + 'S' + nthSixmonth,
             displayName: currentYear + 'S' + nthSixmonth,
+            displayAliasName: this._getAliasName(currentYear, nthSixmonth, 'sixthmonth'),
             dimensionItemType: 'PERIOD'
           });
         });
@@ -259,6 +267,7 @@ export class RelativePeriodService {
             id: currentYear + 'W' + nthLastWeek,
             dimensionItem: currentYear + 'W' + nthLastWeek,
             displayName: currentYear + 'W' + nthLastWeek,
+            displayAliasName: nthLastWeek + 'W ' + currentYear,
             dimensionItemType: 'PERIOD'
           });
 
@@ -277,6 +286,7 @@ export class RelativePeriodService {
               id: currentYear + 'Oct',
               dimensionItem: currentYear + 'Oct',
               displayName: currentYear + 'Oct',
+              displayAliasName: 'Oct ' + currentYear,
               dimensionItemType: 'PERIOD'
             });
           }
@@ -287,12 +297,43 @@ export class RelativePeriodService {
             id: currentYear + 'Oct',
             dimensionItem: currentYear + 'Oct',
             displayName: currentYear + 'Oct',
+            displayAliasName: 'Oct ' + currentYear,
             dimensionItemType: 'PERIOD'
           });
         }
         return _.reverse(nthFinancialYears);
       }
     }
+  }
+
+  /**
+   * Function that get alias name for particular period generated
+   * */
+  private _getAliasName(currentYear, periodNumber, periodType) {
+
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const QUARTERS = ['Jan - Mar', 'Apr - Jun', 'Jul - Sept', 'Oct - Dec'];
+    const BIMONTHS = ['Jan - Feb', 'Mar - Apr', 'May - Jun', 'Jul - Aug', 'Sep - Oct', 'Nov - Dec'];
+    const SIXTHMONTHS = ['Jan - Jun', 'Jul - Dec'];
+
+    let alias = "";
+    if (periodType === 'month') {
+      alias = MONTHS[periodNumber - 1] + ' ' + currentYear;
+    }
+
+    if (periodType === 'quarter') {
+      alias = QUARTERS[periodNumber - 1] + ' ' + currentYear;
+    }
+
+    if (periodType === 'bimonth') {
+      alias = BIMONTHS[periodNumber - 1] + ' ' + currentYear;
+    }
+
+    if (periodType === 'sixthmonth') {
+      alias = SIXTHMONTHS[periodNumber - 1] + ' ' + currentYear;
+    }
+
+    return alias;
   }
 
   /**
@@ -330,7 +371,7 @@ export class RelativePeriodService {
   private _getPeriods(current, tense, counts, endingValue) {
     const periods = [];
     if (tense === 'LAST') {
-      let iterator =   current - 1;
+      let iterator = current - 1;
       periods.push(iterator);
       for (let counter = 1; counter <= counts - 1; counter++) {
         if (iterator === 1) {
@@ -352,7 +393,7 @@ export class RelativePeriodService {
   private _getLastQuarters(current, tense, counts) {
     const lastQuarters = [];
     if (tense === 'LAST') {
-      let iterator =   current - 1;
+      let iterator = current - 1;
       lastQuarters.push(iterator);
       for (let counter = 1; counter <= counts - 1; counter++) {
         if (iterator === 1) {
@@ -374,7 +415,7 @@ export class RelativePeriodService {
   _getLastWeeks(current, tense, counts) {
     const lastWeeks = [];
     if (tense === 'LAST') {
-      let iterator =   current - 1;
+      let iterator = current - 1;
       lastWeeks.push(iterator);
       for (let counter = 1; counter <= counts - 1; counter++) {
         if (iterator === 1) {
@@ -396,7 +437,7 @@ export class RelativePeriodService {
   _getLastYears(current, tense, counts) {
     const lastYears = [];
     if (tense === 'LAST') {
-      let iterator =   current - 1;
+      let iterator = current - 1;
       lastYears.push(iterator);
       for (let counter = 1; counter <= counts - 1; counter++) {
         if (iterator === 1) {
