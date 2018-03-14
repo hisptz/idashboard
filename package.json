@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve / --proxy proxy-config.json",
+    "start": "ng serve --aot --prod --proxy proxy-config.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -50,7 +50,8 @@
     "ng2-dragula": "^1.5.0",
     "ng2-pagination": "^2.0.2",
     "ngx-bootstrap": "^1.9.3",
-    "rxjs": "^5.1.0",
+    "ngx-pagination": "^3.0.3",
+    "rxjs": "^5.5.4",
     "shpjs": "^3.4.0",
     "zone.js": "^0.8.4"
   },

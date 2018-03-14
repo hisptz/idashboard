@@ -11,6 +11,7 @@ export class InterpretationListComponent implements OnInit {
   @Input() interpretations: any[];
   @Input() itemHeight: string;
   interpretationTerm: string;
+  interpretation
   constructor() { }
 
   ngOnInit() {

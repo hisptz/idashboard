@@ -15,9 +15,9 @@
     "default_locale": "en",
     "activities": {
         "dhis": {
-            "username": "some-username",
-             "password": "some-password",
-            "href": "some-url"
+            "username": "webuser",
+             "password": "We!1425Bakshsfa",
+            "href": ""
         }
     }
 }

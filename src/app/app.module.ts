@@ -48,13 +48,25 @@ import {VisualizationObjectEffect} from './store/effects/visualization-object.ef
 import {FavoriteEffect} from './store/effects/favorite.effect';
 import {AnalyticsEffect} from './store/effects/analytics.effect';
 import { storeFreeze } from 'ngrx-store-freeze';
+import {VisualizationLegendComponent} from "./map/components/visualization-legend/visualization-legend.component";
+import {MapTemplateComponent} from "./map/components/map-template/map-template.component";
+import {MapComponent} from "./map/map.component";
+import {MapLoaderComponent} from "./map/components/map-loader/map-loader.component";
+import {MapTableComponent} from "./map/components/map-table/map-table.component";
+import {ClickOutsideDirective} from "./map/directives/click-outside.directive";
 
 @NgModule({
   declarations: [
     AppComponent,
     NotificationComponent,
     LoaderComponent,
-    HomeComponent
+    HomeComponent,
+    VisualizationLegendComponent,
+    MapTemplateComponent,
+    MapComponent,
+    MapLoaderComponent,
+    MapTableComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

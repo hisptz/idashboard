@@ -15,6 +15,15 @@
 <!--&lt;!&ndash;End of Header&ndash;&gt;-->
 
 <!--Dashboard Menus-->
+<div _ngcontent-c0="" class="container-fluid">
+  <div class="navbar navbar-default dashboard-menu" style="height: 120px;background-size: contain;background-image: url('assets/img/top_background.png');">
+    <img _ngcontent-c0="" class="pull-right" src="assets/img/who.png" style="width:300px;margin-right: 15px;margin-top: 10px;">
+    <div _ngcontent-c0="" class="navbar-header">
+      <h4 _ngcontent-c0="" style="color:white;font-size: 40px;font-weight:bold;line-height: 90px;">NATIONAL HEALTH WORKFORCE ACCOUNTS
+        ONLINE PORTAL</h4>
+    </div>
+  </div>
+</div>
 <app-dashboard-menu
   (onFilterUpdate)="updateFilters($event)"
 ></app-dashboard-menu>
@@ -47,7 +56,7 @@
   <div class="row" *ngIf="(visualizationObjects$ | async).length === 0">
     <div class="col-md-12">
       <div class="container-fluid" style="margin-top: 80px">
-        <h1 class="text-center" style="margin-bottom: 30px">WELCOME TO WEB PORTAL</h1>
+        <h1 class="text-center" style="margin-bottom: 30px">WELCOME TO NHWA PORTAL</h1>
 
         <div class="container" style="max-height: 120px;overflow: hidden">
           <div class="row" style="margin: 50px">
@@ -80,6 +89,15 @@
     </div>
   </div>
 </div>
+<div _ngcontent-c0="" class="container-fluid">
+  <nav _ngcontent-c0="" class="navbar navbar-default" style="height: 150px;background-size: contain;margin-top: 20px;background-image: url('https://extranet.who.int/dhis2/api/documents/eNxEJ3GIYHf/data');">
+    <div _ngcontent-c0="" class="container-fluid">
+      <div _ngcontent-c0="" class="pull-right" style="font-size: 20px;font-weight:bold;margin-top: 120px;">Source: WHO NHWA Data Platform pulled on  06/12/2017
+      </div>
+    </div>
+  </nav>
+</div>
+
 <!--End of Dashboard Items-->
 
 
