@@ -18,6 +18,7 @@ import {
 import {MapComponent} from "../map/map.component";
 import {interpretationLinkSelector} from '../../../store/selectors/interpretation-link.selector';
 import {VisualizationObjectService} from '../../providers/visualization-object.service';
+import {TableComponent} from "../table/table.component";
 
 
 @Component({
@@ -81,6 +82,8 @@ export class DashboardItemCardComponent implements OnInit {
   };
   @ViewChild(ChartComponent)
   chartComponent: ChartComponent;
+  @ViewChild(TableComponent)
+  tableComponent: TableComponent;
   @ViewChild(MapComponent)
   mapComponent: MapComponent;
   showFavoriteSettings: boolean = false;
