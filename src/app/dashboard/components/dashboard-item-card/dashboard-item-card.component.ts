@@ -411,6 +411,10 @@ export class DashboardItemCardComponent implements OnInit {
     if (currentVisualizationType == "MAP")
     {
       this.mapComponent.downLoadFiles(downloadFormat);
+    }
+    else if (currentVisualizationType == "TABLE")
+    {
+      this.tableComponent.download();
     } else
     {
       if (downloadFormat === 'excel') {

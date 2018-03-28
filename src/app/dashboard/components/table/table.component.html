@@ -16,7 +16,7 @@
     <div *ngIf="tableObject" style="padding: 3px">
       <!--<h4 *ngIf="tableObject.rows.length != 0" class="text-center" style="margin-bottom: 0px">{{tableObject?.title}}</h4>-->
       <table class="table table-bordered table-responsive table-condensed custom-table"
-             *ngIf="tableObject.rows.length != 0">
+             *ngIf="tableObject.rows.length != 0" #table>
         <thead>
         <!--title-->
         <tr class="table-title">
