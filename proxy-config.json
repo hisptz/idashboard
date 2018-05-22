@@ -1,16 +1,16 @@
 {
   "/api": {
-    "target": "https://play.dhis2.org/2.29/",
+    "target": "https://wpdm.maji.go.tz/training/",
     "target1": "http://localhost:8081",
     "secure": "false",
-    "auth": "admin:district",
+    "auth": "bmakonda:Makonda@2018",
     "changeOrigin": "true"
   },
   "/": {
-    "target": "https://play.dhis2.org/2.29/",
+    "target": "https://wpdm.maji.go.tz/training/",
     "target1": "http://localhost:8081",
     "secure": "false",
-    "auth": "admin:district",
+    "auth": "bmakonda:Makonda@2018",
     "changeOrigin": "true"
   }
 }
