@@ -51,9 +51,7 @@ export class VisualizationLegendComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sticky$ = this.store.select(
-      fromStore.isVisualizationLegendPinned(this.mapVisualizationObject.componentId)
-    );
+    this.sticky$ = this.store.select(fromStore.isVisualizationLegendPinned(this.mapVisualizationObject.componentId));
     this.isFilterSectionOpen$ = this.store.select(
       fromStore.isVisualizationLegendFilterSectionOpen(this.mapVisualizationObject.componentId)
     );
@@ -63,10 +61,8 @@ export class VisualizationLegendComponent implements OnInit, OnDestroy {
       .select(fromStore.getCurrentLegendSets(this.mapVisualizationObject.componentId))
       .subscribe(visualizationLengends => {
         if (visualizationLengends) {
-          this.visualizationLegends = Object.keys(visualizationLengends).map(
-            key => visualizationLengends[key]
-          );
-          this.activeLayer = 0;
+          this.visualizationLegends = Object.keys(visualizationLengends).map(key => visualizationLengends[key]);
+          this.activeLayer = this.activeLayer >= 0 ? this.activeLayer : 0;
         }
       });
 
@@ -153,32 +149,23 @@ export class VisualizationLegendComponent implements OnInit, OnDestroy {
 
   stickLegendContainer(e) {
     e.stopPropagation();
-    this.store.dispatch(
-      new fromStore.TogglePinVisualizationLegend(this.mapVisualizationObject.componentId)
-    );
+    this.store.dispatch(new fromStore.TogglePinVisualizationLegend(this.mapVisualizationObject.componentId));
   }
 
   closeLegendContainer(e) {
     e.stopPropagation();
-    this.store.dispatch(
-      new fromStore.CloseVisualizationLegend(this.mapVisualizationObject.componentId)
-    );
+    this.store.dispatch(new fromStore.CloseVisualizationLegend(this.mapVisualizationObject.componentId));
   }
 
   openFilters(e) {
     e.stopPropagation();
-    this.stickLegendContainer(e);
     this.showFilterContainer = true;
-    this.store.dispatch(
-      new fromStore.ToggleVisualizationLegendFilterSection(this.mapVisualizationObject.componentId)
-    );
+    this.store.dispatch(new fromStore.ToggleVisualizationLegendFilterSection(this.mapVisualizationObject.componentId));
   }
 
   closeFilters() {
     this.showFilterContainer = false;
-    this.store.dispatch(
-      new fromStore.CloseVisualizationLegendFilterSection(this.mapVisualizationObject.componentId)
-    );
+    this.store.dispatch(new fromStore.CloseVisualizationLegendFilterSection(this.mapVisualizationObject.componentId));
   }
 
   toggleLayerView(index, e) {

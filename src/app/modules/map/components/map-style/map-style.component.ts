@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Input,
-  Output,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { colorBrewer } from '../../utils/colorBrewer';
 
 @Component({
@@ -43,9 +36,7 @@ export class MapStyleComponent implements OnInit {
     this.fontWeightActive = !(this.displaySettings.labelFontWeight === 'normal');
     if (this.legendProperties.classes) {
       this.default_color = Object.keys(colorBrewer).filter(
-        key =>
-          colorBrewer[key][this.legendProperties.classes].join(',') ===
-          this.legendProperties.colorScale
+        key => colorBrewer[key][this.legendProperties.classes].join(',') === this.legendProperties.colorScale
       )[0];
     }
   }
@@ -89,7 +80,7 @@ export class MapStyleComponent implements OnInit {
   }
 
   getNumberFromFontSize(fontSize) {
-    return fontSize.split('px')[0];
+    return fontSize ? fontSize.split('px')[0] : fontSize;
   }
 
   onSubmit(e) {

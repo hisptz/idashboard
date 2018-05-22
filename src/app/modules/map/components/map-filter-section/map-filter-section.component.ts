@@ -78,9 +78,7 @@ export class MapFilterSectionComponent implements OnInit, OnDestroy {
   toggleFilters(e) {
     e.stopPropagation();
     this.showFilters = !this.showFilters;
-    this.store.dispatch(
-      new fromStore.ToggleVisualizationLegendFilterSection(this.mapVisualizationObject.componentId)
-    );
+    this.store.dispatch(new fromStore.ToggleVisualizationLegendFilterSection(this.mapVisualizationObject.componentId));
   }
 
   toggleCurrentFilter(e, selectedFilter) {
@@ -159,18 +157,12 @@ export class MapFilterSectionComponent implements OnInit, OnDestroy {
   onStyleFilterUpdate({ layer }) {
     const activeLayerIndex = this.activeLayer;
     const { layers, componentId } = this.mapVisualizationObject;
-    const updatedLayers = layers.map(
-      (_layer, index) => (index === activeLayerIndex ? layer : _layer)
-    );
-    this.store.dispatch(
-      new fromStore.UpdateLayerStyle({ ...this.mapVisualizationObject, layers: updatedLayers })
-    );
+    const updatedLayers = layers.map((_layer, index) => (index === activeLayerIndex ? layer : _layer));
+    this.store.dispatch(new fromStore.UpdateLayerStyle({ ...this.mapVisualizationObject, layers: updatedLayers }));
   }
 
   onFilterClose(event) {
-    this.store.dispatch(
-      new fromStore.CloseVisualizationLegendFilterSection(this.mapVisualizationObject.componentId)
-    );
+    this.store.dispatch(new fromStore.CloseVisualizationLegendFilterSection(this.mapVisualizationObject.componentId));
   }
 
   getSelectedFilters(dataSelections) {
@@ -204,14 +196,14 @@ export class MapFilterSectionComponent implements OnInit, OnDestroy {
         };
         selectedOrgUnits = [...selectedOrgUnits, orgUnit];
       }
-      if (orgunit.dimensionItem.indexOf('LEVEL') !== -1) {
+      if (orgunit.dimensionItem && orgunit.dimensionItem.indexOf('LEVEL') !== -1) {
         const level = {
           level: orgunit.dimensionItem.split('-')[1]
         };
         selectedLevels = [...selectedLevels, level];
       }
 
-      if (orgunit.dimensionItem.indexOf('OU_GROUP') !== -1) {
+      if (orgunit.dimensionItem && orgunit.dimensionItem.indexOf('OU_GROUP') !== -1) {
         selectedGroups = [
           ...selectedGroups,
           {
@@ -220,7 +212,7 @@ export class MapFilterSectionComponent implements OnInit, OnDestroy {
           }
         ];
       }
-      if (orgunit.dimensionItem.indexOf('USER') !== -1) {
+      if (orgunit.dimensionItem && orgunit.dimensionItem.indexOf('USER') !== -1) {
         selectedUserOrgUnits = [
           ...selectedUserOrgUnits,
           {
@@ -241,8 +233,6 @@ export class MapFilterSectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(
-      new fromStore.CloseVisualizationLegendFilterSection(this.mapVisualizationObject.componentId)
-    );
+    this.store.dispatch(new fromStore.CloseVisualizationLegendFilterSection(this.mapVisualizationObject.componentId));
   }
 }
