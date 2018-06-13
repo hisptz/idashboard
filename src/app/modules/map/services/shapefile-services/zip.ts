@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 import {GeoJson} from './geojson';
 import {prj} from './constants';
 import {Writer} from './write';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 // declare var JSzip;
 @Injectable()
 export class Zip {

@@ -24,3 +24,9 @@ export const isDataTableOpen = id =>
 
 export const isVisualizationLegendFilterSectionOpen = id =>
   createSelector(getAllVisualizationLegendEntities, entities => entities[id].filterSectionOpen);
+
+export const isVisualizationLegendFilterSectionLoding = id =>
+  createSelector(getAllVisualizationLegendEntities, entities => entities[id].filterSectionLoading);
+
+export const isVisualizationLegendFilterSectionJustUpdated = id =>
+  createSelector(getAllVisualizationLegendEntities, entities => entities[id].filterSectionJustUpdated);

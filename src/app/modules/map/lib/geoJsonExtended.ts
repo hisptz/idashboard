@@ -51,8 +51,8 @@ export const GeoJson = L.GeoJSON.extend({
     const labelStyle = L.extend(prop.labelStyle || {}, this.options.labelStyle);
     const latlng = this._getLabelLatlng(geometry);
 
-    if (prop.style && prop.style.color) {
-      labelStyle.color = prop.style.color;
+    if (labelStyle && labelStyle.fontColor) {
+      labelStyle.color = labelStyle.fontColor;
     }
 
     layer._label = label(latlng, {

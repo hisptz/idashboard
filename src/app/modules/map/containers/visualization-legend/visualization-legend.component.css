@@ -20,6 +20,13 @@
 }
 
 .map-legend-header {
+  padding: 5px 10px 5px 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.map-legend-header-base_layer {
   padding: 5px 10px 5px 10px;
   cursor: pointer;
   display: flex;
@@ -83,23 +90,34 @@
 }
 
 .tile-layers-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  list-style-type: none;
+  padding: 0;
 }
 
 .tile-layer-item {
-  margin: 5px;
+  margin-top: 1px;
+  height: 28px;
+  display: flex;
 }
 
 .map-tile-layer-icon {
-  border: solid thin #cdd2d4;
+  border: solid 1px #cdd2d4;
   cursor: pointer;
 }
 
 .map-tile-layer-icon img {
-  height: 60px;
-  width: 60px;
+  height: 25px;
+  width: 36%;
+}
+
+.tile_name {
+  width: 74%;
+  font-size: 64%;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-overflow: ellipsis;
 }
 
 .map-legend-footer {
@@ -311,7 +329,7 @@ table.tiles-table tr td {
 .rowActive {
   color: #337ab7;
   border-color: #337ab7;
-  outline: 3px solid #337ab7;
+  outline: 1px solid #337ab7;
   text-decoration: none;
 }
 
@@ -569,14 +587,13 @@ table.legend-button-table tr td {
   border-style: none;
   cursor: pointer;
   background-color: hsla(0, 0%, 100%, 0.85);
-  height: 34px;
+  height: 35px;
   width: 34px;
   border-radius: 0 50% 50% 0;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .visualization-btn img {
@@ -591,6 +608,7 @@ table.legend-button-table tr td {
 
 .filter__button {
   position: absolute;
+  margin-top: -5px;
   right: -34px;
   text-align: center;
 }
@@ -649,4 +667,8 @@ input[type='range']::-webkit-slider-thumb:active {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+}
+
+.map-legend-item.active-legend {
+  background-color: white;
 }

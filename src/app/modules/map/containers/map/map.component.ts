@@ -1,123 +1,82 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject } from 'rxjs';
 import * as fromStore from '../../store';
 import { Layer } from '../../models/layer.model';
 import * as fromUtils from '../../utils';
-import { getTileLayer } from '../../constants/tile-layer.constant';
 import { VisualizationObject } from '../../models/visualization-object.model';
-import { MapConfiguration } from '../../models/map-configuration.model';
-import { GeoFeature } from '../../models/geo-feature.model';
-import * as fromLib from '../../lib';
-import { Map, LatLngExpression, control, LatLngBoundsExpression } from 'leaflet';
-import { getSplitedVisualization } from '../../../../store/visualization/helpers';
-
-import { of } from 'rxjs/observable/of';
-import { interval } from 'rxjs/observable/interval';
-import { map, filter, tap, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./map.component.css'],
-  styles: [
-    `:host {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  }`
-  ]
+  templateUrl: './map.component.html'
 })
-export class MapComponent implements OnInit {
-  public currentMapLayers$: Observable<Layer[]>;
-  public isLoaded$: Observable<boolean>;
-  public isLoading$: Observable<boolean>;
+export class MapComponent implements OnChanges {
+  @Input() favourite;
+  @Input() vizObject;
+  visualizationObject: VisualizationObject;
+  componentId: string;
+  displayConfigurations: any;
   public visualizationObject$: Observable<VisualizationObject>;
-  public visualizationObjectEntities$: Observable<any>;
-  public visualizationLegendIsOpen$: Observable<boolean>;
-  private mapConfiguration: MapConfiguration;
-  private Layers: Layer[] = [];
-  private visObject: VisualizationObject;
-  public loading: boolean = true;
-  public hasError: boolean = false;
-  public errorMessage: string;
-  public legendIsOpen: boolean = false;
-  public mapWidth: any = '100%';
-  public map: any = {};
-  public centeringLayer: any;
-  public mapLegend: any;
-  public legendMarginRight = '25px';
-  public legendMarginLeft = '200px';
-  private cardHeight: string = '490px';
-  private itemHeight: string = '91.5vh';
-  public subtitle: string = '';
-  public pinned: boolean = false;
-  public operatingLayers: Array<any> = [];
-  public isFullScreen: boolean = false;
-  public hideTable: boolean = true;
-  public showCenterButton: boolean = false;
-  public mapOptions: any;
-  public visualizationObject: any;
-  public componentId = 'RBoGyrUJDOu';
-  public mapHeight: string;
-  public displayConfigurations: any = {};
-  private _data$ = new BehaviorSubject<any>({});
-  private _vizObject$ = new BehaviorSubject<any>({});
-
-  @Input() vizObject: any;
-
   constructor(private store: Store<fromStore.MapState>) {
-    this.isLoaded$ = this.store.select(fromStore.isVisualizationObjectsLoaded);
-    this.isLoading$ = this.store.select(fromStore.isVisualizationObjectsLoading);
     this.store.dispatch(new fromStore.LoadAllLegendSet());
+    this.store.dispatch(new fromStore.AddContectPath());
   }
 
-  ngOnInit() {
-    this.store.dispatch(new fromStore.AddContectPath());
-    if (this.vizObject) {
-      this.componentId = this.vizObject.id;
-      this.itemHeight = this.vizObject.details.cardHeight;
+  ngOnChanges(changes: SimpleChanges) {
+    const { favourite, vizObject } = changes;
+    if (favourite && !favourite.firstChange) {
+      const { id } = favourite.currentValue;
+      this.componentId = id;
+      this.transhformFavourites(favourite.currentValue);
+      this.displayConfigurations = {
+        itemHeight: '100vh',
+        mapWidth: '100%'
+      };
+      this.store.dispatch(new fromStore.InitiealizeVisualizationLegend(id));
+    }
+
+    if (vizObject) {
+      const { id } = vizObject.currentValue;
+      this.componentId = id;
       this.displayConfigurations = {
         itemHeight: this.vizObject.details.cardHeight,
         mapWidth: '100%'
       };
-      this.store.dispatch(new fromStore.InitiealizeVisualizationLegend(this.vizObject.id));
-      this.visualizationLegendIsOpen$ = this.store.select(
-        fromStore.isVisualizationLegendOpen(this.vizObject.id)
-      );
-      this.transformVisualizationObject(this.vizObject);
-      this.visualizationObject$ = this.store.select(
-        fromStore.getCurrentVisualizationObject(this.vizObject.id)
-      );
+      this.store.dispatch(new fromStore.InitiealizeVisualizationLegend(id));
+      this.transformVisualizationObject(vizObject.currentValue);
+      this.visualizationObject$ = this.store.select(fromStore.getCurrentVisualizationObject(id));
     }
   }
 
-  transhformFavourites(data) {
-    const { visObject, Layers } = fromUtils.transformFavourites(data);
-    this.visObject = {
-      ...this.visObject,
+  getVisualizationObject() {
+    this.visualizationObject$ = this.store.select(fromStore.getCurrentVisualizationObject(this.componentId));
+  }
+
+  transhformFavourites(favourite) {
+    const { visObject } = fromUtils.transformFavourites(favourite);
+    this.visualizationObject = {
+      ...this.visualizationObject,
       componentId: this.componentId,
-      mapConfiguration: visObject['mapConfiguration'],
-      layers: Layers
+      ...visObject
     };
 
-    if (Layers.length) {
-      this.store.dispatch(new fromStore.CreateVisualizationObject(this.visObject));
+    if (visObject['layers'].length) {
+      this.store.dispatch(new fromStore.CreateVisualizationObject(this.visualizationObject));
+      this.getVisualizationObject();
     }
   }
 
   transformVisualizationObject(data) {
     // TODO FIND A WAY TO GET GEO FEATURES HERE
-    const newData = getSplitedVisualization(data);
-    const { visObject } = fromUtils.transformVisualizationObject(newData);
-    this.visObject = {
-      ...this.visObject,
+    const { visObject } = fromUtils.transformVisualizationObject(data);
+    this.visualizationObject = {
+      ...this.visualizationObject,
       componentId: this.componentId,
       ...visObject
     };
-    this.store.dispatch(new fromStore.AddVisualizationObjectComplete(this.visObject));
+    this.store.dispatch(new fromStore.AddVisualizationObjectComplete(this.visualizationObject));
   }
 
   toggleLegendContainerView() {

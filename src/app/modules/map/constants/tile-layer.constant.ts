@@ -16,8 +16,7 @@ export const TILE_LAYERS = {
     type: 'tileLayer',
     label: 'Esri WorldStreetMap',
     maxZoom: 18,
-    url:
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
     attribution: '&copy; Esri',
     image: 'assets/img/map-tiles/esri_street_map.png',
     baseLayer: true,
@@ -29,8 +28,7 @@ export const TILE_LAYERS = {
     type: 'tileLayer',
     label: 'Earth Imagery',
     maxZoom: 18,
-    url:
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     attribution: '&copy; Esri',
     image: 'assets/img/map-tiles/esri_world_imagery.png',
     baseLayer: true,

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  throwError } from 'rxjs';
 import { ManifestService } from './manifest.service';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Injectable()
@@ -24,9 +23,7 @@ export class HttpClientService {
     const rootUrlPromise = useRootUrl ? this._getRootUrl() : this._getApiRootUrl();
 
     return rootUrlPromise.pipe(
-      mergeMap(rootUrl =>
-        this.httpClient.post(rootUrl + url, data).pipe(catchError(this._handleError))
-      )
+      mergeMap(rootUrl => this.httpClient.post(rootUrl + url, data).pipe(catchError(this._handleError)))
     );
   }
 
@@ -34,9 +31,7 @@ export class HttpClientService {
     const rootUrlPromise = useRootUrl ? this._getRootUrl() : this._getApiRootUrl();
 
     return rootUrlPromise.pipe(
-      mergeMap(rootUrl =>
-        this.httpClient.put(rootUrl + url, data).pipe(catchError(this._handleError))
-      )
+      mergeMap(rootUrl => this.httpClient.put(rootUrl + url, data).pipe(catchError(this._handleError)))
     );
   }
 
@@ -68,7 +63,7 @@ export class HttpClientService {
         statusText: err.statusText
       };
     }
-    return new ErrorObservable(error);
+    return throwError(error);
   }
 
   /**

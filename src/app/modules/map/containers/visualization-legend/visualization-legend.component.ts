@@ -1,13 +1,11 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject, SubscriptionLike as ISubscription } from 'rxjs';
 import * as _ from 'lodash';
 
 import { TILE_LAYERS } from '../../constants/tile-layer.constant';
 import * as fromStore from '../../store';
 import { LegendSet } from '../../models/Legend-set.model';
-import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-visualization-legend',
@@ -52,6 +50,7 @@ export class VisualizationLegendComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sticky$ = this.store.select(fromStore.isVisualizationLegendPinned(this.mapVisualizationObject.componentId));
+
     this.isFilterSectionOpen$ = this.store.select(
       fromStore.isVisualizationLegendFilterSectionOpen(this.mapVisualizationObject.componentId)
     );
@@ -243,6 +242,18 @@ export class VisualizationLegendComponent implements OnInit, OnDestroy {
   toggleDataTableView(event) {
     event.stopPropagation();
     this.store.dispatch(new fromStore.ToggleDataTable(this.mapVisualizationObject.componentId));
+  }
+
+  dragged(event) {
+    this.activeLayer = -2;
+  }
+
+  dropped(event) {
+    const orderedLayers = this.visualizationLegends.map(({ layer }) => layer);
+    const { layers } = this.mapVisualizationObject;
+    const newLayers = orderedLayers.map(layerId => layers.filter(layer => layer.id === layerId)[0]);
+    const vizObject = { ...this.mapVisualizationObject, layers: newLayers };
+    this.store.dispatch(new fromStore.UpdateVisualizationObjectSuccess(vizObject));
   }
 
   ngOnDestroy() {

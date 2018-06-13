@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs/observable/of';
+import { of ,  Observable } from 'rxjs';
 import { Layer } from '../models/layer.model';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class LayerService {

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import * as _ from 'lodash';
 import {saveAs} from 'file-saver';
 import * as shapeWrite from 'shp-write';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {hasOwnProperty} from 'tslint/lib/utils';
 import {ShapeFileService} from './shapefile-services/shape-file.service';
 @Injectable()

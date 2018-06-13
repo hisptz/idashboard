@@ -1,10 +1,8 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { DataFilterService } from './services/data-filter.service';
 import * as _ from 'lodash';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription, Observable, of } from 'rxjs';
 import { DATA_FILTER_OPTIONS } from './data-filter.model';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-data-filter',
@@ -15,13 +13,16 @@ export class DataFilterComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   availableItems: any[] = [];
   dataGroups: any[] = [];
-  selectedGroup: any = {id: 'ALL', name: 'All'};
+  selectedGroup: any = { id: 'ALL', name: '[ All ]' };
 
   @Output() onDataUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDataFilterClose: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() selectedItems: any[] = [];
   @Input() functionMappings: any[] = [];
   @Input() hiddenDataElements: any[] = [];
+  @Input() singleSelection: boolean = false;
+  @Input() isloading: boolean = false;
+  @Input() justUpdated: boolean = false;
   private _selectedItems: any[];
   selectedItems$: Observable<any>;
   querystring: string = null;
@@ -37,11 +38,11 @@ export class DataFilterComponent implements OnInit, OnDestroy {
     programs: [],
     programIndicators: [],
     dataSetGroups: [
-      {id: '', name: 'Reporting Rate'},
-      {id: '.REPORTING_RATE_ON_TIME', name: 'Reporting Rate on time'},
-      {id: '.ACTUAL_REPORTS', name: 'Actual Reports Submitted'},
-      {id: '.ACTUAL_REPORTS_ON_TIME', name: 'Reports Submitted on time'},
-      {id: '.EXPECTED_REPORTS', name: 'Expected Reports'}
+      { id: '', name: 'Reporting Rate' },
+      { id: '.REPORTING_RATE_ON_TIME', name: 'Reporting Rate on time' },
+      { id: '.ACTUAL_REPORTS', name: 'Actual Reports Submitted' },
+      { id: '.ACTUAL_REPORTS_ON_TIME', name: 'Reports Submitted on time' },
+      { id: '.EXPECTED_REPORTS', name: 'Expected Reports' }
     ]
   };
   loading: boolean;
@@ -87,12 +88,13 @@ export class DataFilterComponent implements OnInit, OnDestroy {
           dataSets: items[4],
           programs: items[6],
           programIndicators: items[7],
+          functions: items[8],
           dataSetGroups: [
-            {id: '', name: 'Reporting Rate'},
-            {id: '.REPORTING_RATE_ON_TIME', name: 'Reporting Rate on time'},
-            {id: '.ACTUAL_REPORTS', name: 'Actual Reports Submitted'},
-            {id: '.ACTUAL_REPORTS_ON_TIME', name: 'Reports Submitted on time'},
-            {id: '.EXPECTED_REPORTS', name: 'Expected Reports'}
+            { id: '', name: 'Reporting Rate' },
+            { id: '.REPORTING_RATE_ON_TIME', name: 'Reporting Rate on time' },
+            { id: '.ACTUAL_REPORTS', name: 'Actual Reports Submitted' },
+            { id: '.ACTUAL_REPORTS_ON_TIME', name: 'Reports Submitted on time' },
+            { id: '.EXPECTED_REPORTS', name: 'Expected Reports' }
           ]
         }
       );
@@ -110,7 +112,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
   setSelectedGroup(group, listArea, event) {
     event.stopPropagation();
     this.listchanges = '';
-    this.selectedGroup = {...group};
+    this.selectedGroup = { ...group };
     this.availableItems = this.dataItemList(this._selectedItems, group);
     this.showGroups = false;
     this.p = 1;
@@ -137,7 +139,22 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       de: dataElements,
       in: this.dataItems.indicators,
       ds: this.dataItems.dataSets,
-      pi: this.dataItems.programIndicators
+      pi: this.dataItems.programIndicators,
+      rl: _.flatten(
+        _.map(this.dataItems.functions, functionObject =>
+          _.map(functionObject.rules || [], (rule: any) => {
+            return {
+              id: rule.id,
+              name: rule.name,
+              functionObject: {
+                functionString: functionObject.function,
+                ruleDefinition: rule
+              },
+              type: 'FUNCTION_RULE'
+            };
+          })
+        )
+      )
     };
   }
 
@@ -229,14 +246,14 @@ export class DataFilterComponent implements OnInit, OnDestroy {
         this.dataItems.dataSetGroups.forEach(groupObject => {
           currentList.push(
             ...data.ds.map(datacv => {
-              return {id: datacv.id + groupObject.id, name: groupObject.name + ' ' + datacv.name};
+              return { id: datacv.id + groupObject.id, name: groupObject.name + ' ' + datacv.name };
             })
           );
         });
       } else if (!group.hasOwnProperty('indicators') && !group.hasOwnProperty('dataElements')) {
         currentList.push(
           ...data.ds.map(datacv => {
-            return {id: datacv.id + group.id, name: group.name + ' ' + datacv.name};
+            return { id: datacv.id + group.id, name: group.name + ' ' + datacv.name };
           })
         );
       }
@@ -249,6 +266,19 @@ export class DataFilterComponent implements OnInit, OnDestroy {
         if (group.hasOwnProperty('programIndicators')) {
           const newArray = _.filter(data.pi, indicator => {
             return _.includes(_.map(group.programIndicators, 'id'), indicator['id']);
+          });
+          currentList.push(...newArray);
+        }
+      }
+    }
+
+    if (_.includes(selectedOptions, 'ALL') || _.includes(selectedOptions, 'fn')) {
+      if (group.id === 'ALL') {
+        currentList.push(...data.rl);
+      } else {
+        if (group.hasOwnProperty('rules')) {
+          const newArray = _.filter(data.rl, functionRule => {
+            return _.includes(_.map(group.rules, 'id'), functionRule['id']);
           });
           currentList.push(...newArray);
         }
@@ -271,7 +301,6 @@ export class DataFilterComponent implements OnInit, OnDestroy {
     const options = this.getSelectedOption();
     const data = this.getData();
 
-    // currentGroupList.push(...[{id:'ALL',name:'All Tables'}]);
     if (_.includes(options, 'ALL') || _.includes(options, 'de')) {
       currentGroupList.push(...data.dx);
     }
@@ -308,11 +337,14 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       this.need_groups = false;
     }
 
-    return _.sortBy(currentGroupList, ['name']);
+    return [{ id: 'ALL', name: '[ All ]' }, ..._.sortBy(currentGroupList, ['name'])];
   }
 
   // this will add a selected item in a list function
   addSelected(item, event) {
+    if (this.singleSelection) {
+      this.deselectAllItems(event);
+    }
     event.stopPropagation();
     const itemIndex = _.findIndex(this.availableItems, item);
 
@@ -356,7 +388,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       this.functionMappings.forEach(mappedItem => {
         const mappedId = mappedItem.split('_');
         if (dataElementId[0] === mappedId[0]) {
-          mappings.push({id: value.id, func: mappedId[1]});
+          mappings.push({ id: value.id, func: mappedId[1] });
         }
       });
     });
@@ -420,7 +452,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       itemList: this._selectedItems,
       need_functions: this.getFunctions(this._selectedItems),
       auto_growing: this.getAutogrowingTables(this._selectedItems),
-      selectedData: {name: 'dx', value: this.getDataForAnalytics(this._selectedItems)},
+      selectedData: { name: 'dx', value: this.getDataForAnalytics(this._selectedItems) },
       hideQuarter: this.hideQuarter,
       hideMonth: this.hideMonth
     });
@@ -504,7 +536,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
     const multipleSelection = event.ctrlKey ? true : false;
 
     this.dataFilterOptions = this.dataFilterOptions.map(option => {
-      const newOption: any = {...option};
+      const newOption: any = { ...option };
 
       if (toggledOption.prefix === 'ALL') {
         if (newOption.prefix !== 'ALL') {
@@ -535,7 +567,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       return newOption;
     });
 
-    this.selectedGroup = {id: 'ALL', name: 'All'};
+    this.selectedGroup = { id: 'ALL', name: '[ All ]' };
     this.dataGroups = this.groupList();
 
     this.availableItems = this.dataItemList(this._selectedItems, this.selectedGroup);

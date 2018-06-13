@@ -5,11 +5,11 @@ export function refineHeight(mapHeight) {
   if (mapHeight.indexOf('vh') >= 0) {
     const splitMap = mapHeight.split('vh');
     height = +splitMap[0] + 2 + 'vh';
-  }
-
-  if (mapHeight.indexOf('px') >= 0) {
+  } else if (mapHeight.indexOf('px') >= 0) {
     const splitMap = mapHeight.split('px');
     height = +splitMap[0] + 15 + 'px';
+  } else {
+    height = mapHeight;
   }
   return height;
 }

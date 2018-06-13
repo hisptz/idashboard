@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { iterator } from 'rxjs/symbol/iterator';
 
 @Injectable()
 export class RelativePeriodService {
@@ -456,8 +455,7 @@ export class RelativePeriodService {
     d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
 
     const week = new Date(d.getFullYear(), 0, 4);
-    let thisWeek =
-      1 + Math.round(((d.getTime() - week.getTime()) / 86400000 - 3 + (week.getDay() + 6) % 7) / 7);
+    let thisWeek = 1 + Math.round(((d.getTime() - week.getTime()) / 86400000 - 3 + (week.getDay() + 6) % 7) / 7);
 
     return thisWeek;
   }

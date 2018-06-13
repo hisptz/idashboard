@@ -64,15 +64,15 @@ export function transformVisualizationObject(visualizationObject) {
       method: settings.method || 2
     };
 
-    const displaySettings = _.pick(settings, [
-      'labelFontColor',
-      'labelFontSize',
-      'labelFontStyle',
-      'labelFontWeight',
-      'labels',
-      'hideTitle',
-      'hideSubtitle'
-    ]);
+    const { labelFontColor, labelFontSize, labelFontStyle, labels, hideTitle, hideSubtitle } = settings;
+    const displaySettings = {
+      labelFontColor: isColor(labelFontColor) ? labelFontColor : '#000000',
+      labelFontSize,
+      labelFontStyle,
+      labels,
+      hideSubtitle,
+      hideTitle
+    };
 
     const dataSelections = _.pick(settings, [
       'config',
@@ -129,3 +129,4 @@ const defaultScaleKey = 'YlOrBr';
 const defaultClasses = 5;
 const isVersionGreater = Number(localStorage.getItem('version')) >= 2.28;
 const defaultColorScale = getColorScale(defaultScaleKey, defaultClasses);
+const isColor = color => /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color);

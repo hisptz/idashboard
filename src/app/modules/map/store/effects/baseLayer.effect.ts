@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
+import { of ,  Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as baseLayerAction from '../actions/base-layer.action';
 import * as fromServices from '../../services';
-import { tap } from 'rxjs/operators/tap';
-import { map, switchMap, catchError, combineLatest } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/combineLatest';
+import { tap ,  map, switchMap, catchError, combineLatest } from 'rxjs/operators';
+
 
 @Injectable()
 export class BaseLayerEffects {

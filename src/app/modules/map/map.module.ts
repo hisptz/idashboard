@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { reducers, effects } from './store';
 // containers
 import * as fromContainers from './containers';
@@ -12,26 +14,20 @@ import * as fromComponents from './components';
 
 import * as fromServices from './services';
 
-import { DragulaModule } from 'ng2-dragula';
-
 import { NgxPaginationModule } from 'ngx-pagination';
 
-import { VirtualScrollModule } from 'angular2-virtual-scroll';
+import { NgxDnDModule } from '@swimlane/ngx-dnd';
 
 // Filters Modules
-import { OrgUnitFilterModule } from '../org-unit-filter/org-unit-filter.module';
-import { PeriodFilterModule } from '../period-filter/period-filter.module';
-import { DataFilterModule } from '../data-filter/data-filter.module';
+import * as Filters from './modules';
 
 @NgModule({
   imports: [
     CommonModule,
-    DragulaModule,
     NgxPaginationModule,
-    OrgUnitFilterModule,
-    PeriodFilterModule,
-    DataFilterModule,
-    VirtualScrollModule,
+    ColorPickerModule,
+    NgxDnDModule,
+    ...Filters.modules,
     StoreModule.forFeature('map', reducers),
     EffectsModule.forFeature(effects)
   ],

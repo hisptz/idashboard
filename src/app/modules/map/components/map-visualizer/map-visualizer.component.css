@@ -96,7 +96,7 @@ img[title] {
   background: transparent;
   top: 3%;
   position: absolute;
-  z-index: 800;
+  z-index: 401;
   align-items: center;
   width: 100%;
   font-weight: 500;
@@ -112,4 +112,8 @@ img[title] {
   height: 50%;
   background: #fff;
   z-index: 701;
+}
+
+.leaflet-bottom .leaflet-control-scale {
+  margin-bottom: 36px;
 }

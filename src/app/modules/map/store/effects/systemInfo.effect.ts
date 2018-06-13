@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, switchMap, catchError ,  tap } from 'rxjs/operators';
 
 import * as systemInfoActions from '../actions/system-info.action';
 import * as fromServices from '../../services';
-import { tap } from 'rxjs/operators/tap';
 
 @Injectable()
 export class SystemInfoEffects {

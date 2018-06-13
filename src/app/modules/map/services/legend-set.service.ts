@@ -1,8 +1,7 @@
+import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
-import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class LegendSetService {
@@ -21,9 +20,7 @@ export class LegendSetService {
     ];
     const url = `../../../api/legendSets/${legendId}.json?fields=${fields.join(',')}`;
 
-    return this.httpClient
-      .get(url)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+    return this.httpClient.get(url).pipe(catchError((error: any) => observableThrowError(error.json())));
   }
 
   getAllLegendSets() {
@@ -38,8 +35,6 @@ export class LegendSetService {
       '!userGroupAccesses'
     ];
     const url = `../../../api/legendSets.json?fields=${fields.join(',')}&paging=false`;
-    return this.httpClient
-      .get(url)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+    return this.httpClient.get(url).pipe(catchError((error: any) => observableThrowError(error.json())));
   }
 }

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { VisualizationObject } from '../../models/visualization-object.model';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 
 @Component({
@@ -55,9 +55,7 @@ export class ContainerMapComponent implements OnChanges {
     const { componentId } = visualizationObject;
 
     // Detect if visualizationLegend is Open;
-    this.visualizationLegendIsOpen$ = this.store.select(
-      fromStore.isVisualizationLegendOpen(componentId)
-    );
+    this.visualizationLegendIsOpen$ = this.store.select(fromStore.isVisualizationLegendOpen(componentId));
 
     // Detect if DataTable is Open;
     this.isDataTableOpen$ = this.store.select(fromStore.isDataTableOpen(componentId));

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import * as layersActions from '../actions/layers.action';
