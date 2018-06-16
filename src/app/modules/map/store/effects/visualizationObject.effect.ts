@@ -1,4 +1,4 @@
-import { zip as observableZip, combineLatest as observableCombineLatest, of, Observable, forkJoin } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -10,7 +10,7 @@ import * as layerActions from '../actions/layers.action';
 import * as fromServices from '../../services';
 import * as fromStore from '../../store';
 import { Layer } from '../../models/layer.model';
-import { toGeoJson } from '../../utils/layers';
+import { toGeoJson, getPeriodFromFilters } from '../../utils';
 import { timeFormat } from 'd3-time-format';
 
 @Injectable()
@@ -232,6 +232,7 @@ export class VisualizationObjectEffects {
       ...layer.dataSelections.filters
     ];
     const dimensions = [];
+    const period = getPeriodFromFilters(requestParams);
 
     requestParams.map(param => {
       const dimension = `dimension=${param.dimension}`;
@@ -246,10 +247,10 @@ export class VisualizationObjectEffects {
     let url = `${layer.dataSelections.program.id}.json?stage=${layer.dataSelections.programStage.id}&${dimensions.join(
       '&'
     )}`;
-    if (layer.dataSelections.endDate) {
+    if (layer.dataSelections.endDate && !period) {
       url += `&endDate=${layer.dataSelections.endDate.split('T')[0]}`;
     }
-    if (layer.dataSelections.startDate) {
+    if (layer.dataSelections.startDate && !period) {
       url += `&startDate=${layer.dataSelections.startDate.split('T')[0]}`;
     }
     return url;

@@ -5,3 +5,4 @@ export * from './transformFavourites';
 export * from './layers';
 export * from './colorBrewer';
 export * from './standardize-incoming-analytics';
+export * from './analytics';
