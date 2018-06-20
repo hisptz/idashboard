@@ -16,6 +16,7 @@ export enum DashboardActions {
   CHANGE_CURRENT_PAGE = '[Dashboard] Change current dashboard page',
   CREATE = '[Dashboard] Create new dashboard',
   CREATE_SUCCESS = '[Dashboard] Dashboard create success',
+  CREATE_FAIL = '[Dashboard] Dashboard create fail',
   RENAME = '[Dashboard] Rename dashboard',
   RENAME_SUCCESS = '[Dashboard] Dashboard rename success',
   DELETE = '[Dashboard] Delete dashboard',
@@ -92,6 +93,13 @@ export class CreateSuccessAction implements Action {
   readonly type = DashboardActions.CREATE_SUCCESS;
 
   constructor(public payload: Dashboard) {
+  }
+}
+
+export class CreateFailAction implements Action {
+  readonly type = DashboardActions.CREATE_FAIL;
+
+  constructor(public payload: any) {
   }
 }
 
@@ -271,6 +279,7 @@ export type DashboardAction =
   | ChangeCurrentPageAction
   | CreateAction
   | CreateSuccessAction
+  | CreateFailAction
   | RenameAction
   | RenameSuccessAction
   | DeleteAction

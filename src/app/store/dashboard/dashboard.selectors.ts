@@ -6,6 +6,24 @@ import { sortDashboardMenuItemsByBookmark } from './helpers/sort-dashboard-menu-
 
 const dashboardState = (state: AppState) => state.dashboard;
 
+export const getDashboardLoading = createSelector(dashboardState, (dashboardObject: DashboardState) =>
+  dashboardObject.dashboardLoading);
+
+export const getDashboardLoaded = createSelector(dashboardState, (dashboardObject: DashboardState) =>
+  dashboardObject.dashboardsLoaded);
+
+export const getDashboardLoadingHasError = createSelector(dashboardState, (dashboardObject: DashboardState) =>
+  dashboardObject.dashboardLoadingHasError);
+
+export const getDashboardLoadingError = createSelector(dashboardState, (dashboardObject: DashboardState) =>
+  dashboardObject.dashboardLoadingError);
+
+export const getDashboardCreateStatus = createSelector(dashboardState, (dashboardObject: DashboardState) =>
+  dashboardObject.creatingDashboard);
+
+export const getAllDashboardCount = createSelector(dashboardState, (dashboardObject: DashboardState) =>
+  dashboardObject.dashboards.length);
+
 export const getCurrentDashboardPage = createSelector(dashboardState, (dashboardObject: DashboardState) =>
   dashboardObject.currentDashboardPage);
 
@@ -26,12 +44,12 @@ export const getCurrentDashboardSharing = createSelector(dashboardState,
 
 export const getDashboardMenuItems = createSelector(dashboardState,
   (dashboardObject: DashboardState) => dashboardObject.activeDashboards.length > 0 ?
-                                       sortDashboardMenuItemsByBookmark(dashboardObject.activeDashboards.slice(
-                                         getStartItemIndex(dashboardObject.currentDashboardPage,
-                                           dashboardObject.dashboardPerPage),
-                                         getEndItemIndex(dashboardObject.currentDashboardPage,
-                                           dashboardObject.dashboardPerPage) + 1).
-                                         map((dashboard: Dashboard) => mapStateToDashboardMenu(dashboard))) :
+    sortDashboardMenuItemsByBookmark(dashboardObject.activeDashboards.slice(
+      getStartItemIndex(dashboardObject.currentDashboardPage,
+        dashboardObject.dashboardPerPage),
+      getEndItemIndex(dashboardObject.currentDashboardPage,
+        dashboardObject.dashboardPerPage) + 1).
+      map((dashboard: Dashboard) => mapStateToDashboardMenu(dashboard))) :
     []);
 
 export const getAllDashboardMenuItems = createSelector(dashboardState,

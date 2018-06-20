@@ -25,7 +25,7 @@ import { SharingEntity } from '../../modules/sharing-filter/models/sharing-entit
 import { switchMap } from 'rxjs/operators/switchMap';
 import {
   map,
-  catchError,tap
+  catchError, tap
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -334,26 +334,8 @@ export class DashboardEffects {
     resources[id,displayName],users[id,displayName]]&paging=false`
       ).subscribe(
         (dashboardResponse: any) => {
-          const dashboards: any[] = dashboardResponse.dashboards;
-          if (dashboards.length > 0) {
-            observer.next(dashboards);
-            observer.complete();
-          } else {
-            this._create('Untitled').subscribe((dashboardObject: any) => {
-              observer.next([
-                {
-                  ...dashboardObject,
-                  details: {
-                    isFixture: true
-                  }
-                }
-              ]);
-              observer.complete();
-            }, () => {
-              observer.next([]);
-              observer.complete();
-            });
-          }
+          observer.next(dashboardResponse.dashboards || []);
+          observer.complete();
         },
         dashboardError => {
           console.warn(dashboardError);
@@ -440,8 +422,8 @@ export class DashboardEffects {
             ...dashboardOption,
             bookmarks: bookmarked
               ? dashboardOption.bookmarks.indexOf(currentUserId) === -1
-                         ? [...dashboardOption.bookmarks, currentUserId]
-                         : [...dashboardOption.bookmarks]
+                ? [...dashboardOption.bookmarks, currentUserId]
+                : [...dashboardOption.bookmarks]
               : _.filter(
                 dashboardOption.bookmarks,
                 bookmark => bookmark !== currentUserId

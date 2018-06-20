@@ -29,7 +29,11 @@ export interface DashboardState {
   dashboardPageNumber: number;
   dashboardPerPage: number;
   currentDashboard: string;
+  creatingDashboard: boolean;
   dashboardsLoaded: boolean;
+  dashboardLoading: boolean;
+  dashboardLoadingHasError: boolean;
+  dashboardLoadingError: any;
   dashboards: Dashboard[];
   activeDashboards: Dashboard[];
   dashboardSharing: {[id: string]: DashboardSharing};
@@ -120,6 +124,10 @@ export const INITIAL_DASHBOARD_STATE: DashboardState = {
   dashboardPerPage: 8,
   currentDashboard: undefined,
   dashboardsLoaded: false,
+  dashboardLoading: true,
+  creatingDashboard: false,
+  dashboardLoadingHasError: false,
+  dashboardLoadingError: null,
   dashboards: [],
   dashboardSharing: null,
   showBookmarked: false,

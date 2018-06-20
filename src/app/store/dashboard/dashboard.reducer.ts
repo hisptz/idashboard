@@ -1,13 +1,19 @@
 import * as _ from 'lodash';
 import * as dashboard from './dashboard.state';
-import {DashboardAction, DashboardActions} from './dashboard.actions';
+import { DashboardAction, DashboardActions } from './dashboard.actions';
 import * as dashboardHelpers from './helpers/index';
-import {Dashboard, DashboardSharing} from './dashboard.state';
-import {updateWithHeaderSelectionCriterias} from './helpers/map-state-to-dashboard-search-items.helper';
+import { Dashboard, DashboardSharing } from './dashboard.state';
+import { updateWithHeaderSelectionCriterias } from './helpers/map-state-to-dashboard-search-items.helper';
 
 export function dashboardReducer(state: dashboard.DashboardState = dashboard.INITIAL_DASHBOARD_STATE,
-                                 action: DashboardAction) {
+  action: DashboardAction) {
   switch (action.type) {
+    case DashboardActions.LOAD: {
+      return {
+        ...state, dashboardLoading: true, dashboardLoaded: false, dashboardLoadingHasError: false,
+        dashboardLoadingError: null
+      };
+    }
     case DashboardActions.LOAD_SUCCESS: {
       const newDashboards: Dashboard[] = _.map(
         action.payload.dashboards,
@@ -23,6 +29,8 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
 
       return {
         ...state,
+        dashboardsLoaded: true,
+        dashboardLoading: false,
         dashboards: [...newDashboards],
         activeDashboards: [...filteredDashboards],
         dashboardPageNumber: Math.ceil(
@@ -30,6 +38,10 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
         )
       };
 
+    }
+
+    case DashboardActions.LOAD_FAIL: {
+      return {...state, dashboardLoadingHasError: true, dashboardLoading: false, dashboardLoadingError: action.payload};
     }
 
     case DashboardActions.LOAD_OPTIONS_SUCCESS: {
@@ -99,10 +111,12 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
         )
       ];
 
-      const filteredDashboards = dashboardHelpers.getFilteredDashboards(newDashboardsWithToBeCreated, state.showBookmarked);
+      const filteredDashboards = dashboardHelpers.getFilteredDashboards(newDashboardsWithToBeCreated,
+        state.showBookmarked);
       return {
         ...state,
         dashboards: [...newDashboardsWithToBeCreated],
+        creatingDashboard: true,
         activeDashboards: [...filteredDashboards],
         currentDashboardPage: dashboardHelpers.getCurrentPage(
           filteredDashboards,
@@ -135,8 +149,13 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
       return {
         ...state,
         dashboards: [...newDashboardsWithCreated],
+        creatingDashboard: false,
         activeDashboards: [...filteredDashboards]
       };
+    }
+
+    case DashboardActions.CREATE_FAIL: {
+      return {...state, creatingDashboard: false};
     }
 
     case DashboardActions.RENAME: {
@@ -161,7 +180,8 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
           ]
           : state.dashboards;
 
-      const filteredDashboards = dashboardHelpers.getFilteredDashboards(newDashboardsWithToBeUpdated, state.showBookmarked);
+      const filteredDashboards = dashboardHelpers.getFilteredDashboards(newDashboardsWithToBeUpdated,
+        state.showBookmarked);
 
       return {
         ...state,
@@ -246,7 +266,9 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
       return {
         ...state,
         dashboards: [...newDashboardWithDeletedRemoved],
-        activeDashboards: [...dashboardHelpers.getFilteredDashboards(newDashboardWithDeletedRemoved, state.showBookmarked)]
+        activeDashboards: [
+          ...dashboardHelpers.getFilteredDashboards(newDashboardWithDeletedRemoved, state.showBookmarked)
+        ]
       };
     }
 
@@ -290,7 +312,8 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
           ...state,
           dashboards: [...newDashboardsWithHiddenNotification],
           activeDashboards: [
-            ...dashboardHelpers.getFilteredDashboards(newDashboardsWithHiddenNotification, state.showBookmarked)]
+            ...dashboardHelpers.getFilteredDashboards(newDashboardsWithHiddenNotification, state.showBookmarked)
+          ]
         }
         : {
           ...state
@@ -441,7 +464,8 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
         ...state.dashboards.slice(dashboardIndex + 1)
       ];
 
-      const filteredDashboards = dashboardHelpers.getFilteredDashboards(newDashboardWithBookmarked, state.showBookmarked);
+      const filteredDashboards = dashboardHelpers.getFilteredDashboards(newDashboardWithBookmarked,
+        state.showBookmarked);
 
       return dashboardIndex !== -1
         ? {
@@ -476,7 +500,8 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
     }
 
     case DashboardActions.SET_SEARCH_TERM: {
-      const filteredDashboards = dashboardHelpers.getFilteredDashboards(state.dashboards, state.showBookmarked, action.payload);
+      const filteredDashboards = dashboardHelpers.getFilteredDashboards(state.dashboards, state.showBookmarked,
+        action.payload);
       return {
         ...state,
         dashboardSearchTerm: action.payload,
