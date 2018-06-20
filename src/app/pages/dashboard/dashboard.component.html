@@ -25,18 +25,23 @@
       ></app-visualization-list>
     </div>
   </div>
-  <div class="row welcoming-block" *ngIf="(visualizationObjects$ | async).length === 0">
-    <div class="col-md-4 offset-md-4 col-sm-8 offset-sm-2">
-      <img src="assets/img/welcome.png" class="img-fluid" alt="">
-    </div>
-    <div class="col-md-6 offset-md-3" *ngIf="visualizationLoading$ | async">
-      <div style="height: 10px;">
-        <app-progress-loader></app-progress-loader>
+  <div class="welcoming-block" *ngIf="(visualizationObjects$ | async).length === 0">
+    <div>
+      <!--Welcoming image-->
+      <div class="welcome-img-block">
+        <img src="assets/img/welcome.png" class="img-fluid welcome-img" alt="">
       </div>
-    </div>
-    <div class="col-md-8 offset-md-2">
-      <h2 class="text-center"><b>{{welcomingTitle}}</b></h2>
-      <h3 class="text-center" [innerHtml]="welcomingDescription"></h3>
+      <!--end of welcoming image-->
+      <div class="col-md-6 offset-md-3" *ngIf="visualizationLoading$ | async">
+        <div class="loading-progress">
+          <app-progress-loader></app-progress-loader>
+        </div>
+      </div>
+      <div class="col-md-8 offset-md-2">
+        <h4 class="text-center"><b>{{welcomingTitle | translate}}</b></h4>
+        <h5 *ngIf="visualizationLoading$ | async" class="text-center" [innerHtml]="welcomingDescription | translate"></h5>
+        <h5 *ngIf="!(visualizationLoading$ | async)" class="text-muted text-center">{{emptyVisualizationMessage | translate}}</h5>
+      </div>
     </div>
   </div>
 </div>
