@@ -6,6 +6,7 @@ import {
 } from './visualization.actions';
 import { Visualization } from './visualization.state';
 import * as visualizationHelpers from './helpers/index';
+import { deduceVisualizationSubtitle } from './helpers/deduce-visualization-subtitle.helper';
 
 export function visualizationReducer(state: visualization.VisualizationState = visualization.INITIAL_VISUALIZATION_STATE,
   action: VisualizationAction) {
@@ -31,19 +32,37 @@ export function visualizationReducer(state: visualization.VisualizationState = v
         ])
       );
 
+      const newVisualizationObject = {
+        ...action.payload.visualizationObject,
+        layers: _.map(action.payload.visualizationObject.layers, (layer: any) => {
+          const visualizationFilter = _.find(action.payload.visualizationObject.details ?
+            action.payload.visualizationObject.details.filters : [], ['id', layer.settings.id]);
+          const visualizationLayout = _.find(action.payload.visualizationObject.details ?
+            action.payload.visualizationObject.details.layouts : [], ['id', layer.settings.id]);
+          const filterDimensions = _.map(
+            visualizationLayout && visualizationLayout.layout ? visualizationLayout.layout.filters : [],
+            filter => filter.value);
+          const visualizationFilters = _.filter(visualizationFilter ? visualizationFilter.filters : [],
+            filter => filterDimensions.indexOf(filter.name) !== -1);
+          return {
+            ...layer, settings: {...layer.settings, subtitle: deduceVisualizationSubtitle(visualizationFilters)}
+          };
+        })
+      };
+
       return visualizationIndex !== -1
         ? {
           ...state,
           visualizationObjects:
             action.payload.placementPreference === 'first'
               ? [
-                action.payload.visualizationObject,
+                newVisualizationObject,
                 ...state.visualizationObjects.slice(0, visualizationIndex),
                 ...state.visualizationObjects.slice(visualizationIndex + 1)
               ]
               : [
                 ...state.visualizationObjects.slice(0, visualizationIndex),
-                action.payload.visualizationObject,
+                newVisualizationObject,
                 ...state.visualizationObjects.slice(visualizationIndex + 1)
               ]
         }
@@ -52,12 +71,12 @@ export function visualizationReducer(state: visualization.VisualizationState = v
           visualizationObjects:
             action.payload.placementPreference === 'first'
               ? [
-                action.payload.visualizationObject,
+                newVisualizationObject,
                 ...state.visualizationObjects
               ]
               : [
                 ...state.visualizationObjects,
-                action.payload.visualizationObject
+                newVisualizationObject
               ]
         };
 
@@ -109,8 +128,8 @@ export function visualizationReducer(state: visualization.VisualizationState = v
 
       const newShape = visualizationObject
         ? visualizationObject.details.showInterpretationBlock
-                         ? visualizationObject.details.shape
-                         : visualizationObject.shape === 'NORMAL'
+          ? visualizationObject.details.shape
+          : visualizationObject.shape === 'NORMAL'
             ? 'DOUBLE_WIDTH'
             : 'FULL_WIDTH'
         : '';
