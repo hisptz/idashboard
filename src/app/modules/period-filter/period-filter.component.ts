@@ -43,9 +43,10 @@ export class PeriodFilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.selectedPeriodType === '') {
-      this.selectedPeriodType = 'Monthly';
+    if (!this.selectedPeriodType || this.selectedPeriodType === '') {
+      this.selectedPeriodType = this.periodService.deduceSelectedPeriodType(this.selectedPeriods);
     }
+
     this._periods = this.getPeriods(
       this.selectedPeriodType,
       this.selectedYear,
