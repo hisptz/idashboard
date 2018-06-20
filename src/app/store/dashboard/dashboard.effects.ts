@@ -334,26 +334,8 @@ export class DashboardEffects {
     resources[id,displayName],users[id,displayName]]&paging=false`
       ).subscribe(
         (dashboardResponse: any) => {
-          const dashboards: any[] = dashboardResponse.dashboards;
-          if (dashboards.length > 0) {
-            observer.next(dashboards);
-            observer.complete();
-          } else {
-            this._create('Untitled').subscribe((dashboardObject: any) => {
-              observer.next([
-                {
-                  ...dashboardObject,
-                  details: {
-                    isFixture: true
-                  }
-                }
-              ]);
-              observer.complete();
-            }, () => {
-              observer.next([]);
-              observer.complete();
-            });
-          }
+          observer.next(dashboardResponse.dashboards || []);
+          observer.complete();
         },
         dashboardError => {
           console.warn(dashboardError);

@@ -1,4 +1,11 @@
 import {Component, OnInit} from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/app.reducers';
+import { Observable } from 'rxjs';
+import {
+  getAllDashboardCount, getDashboardLoaded,
+  getDashboardLoading
+} from '../../store/dashboard/dashboard.selectors';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +17,14 @@ export class HomeComponent implements OnInit {
   welcomingMessage: {title: string, description: string};
   welcomingMessageObject: {[id: number]: {title: string, description: string}};
 
-  constructor() {
+  dashboardsLoading$: Observable<boolean>;
+  dashboardsLoaded$: Observable<boolean>;
+  dashboardsCount$: Observable<number>;
+
+  constructor(private store: Store<AppState>) {
+    this.dashboardsLoading$ = store.select(getDashboardLoading);
+    this.dashboardsLoaded$ = store.select(getDashboardLoaded);
+    this.dashboardsCount$ = store.select(getAllDashboardCount);
     this.welcomingMessageObject = {
       0: {
         title: 'Intuitive design patterns',

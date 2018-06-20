@@ -1,3 +1,26 @@
 .welcoming-block {
-  margin-top: 140px;
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid thin #eeeeee;
+  border-radius: 3px;
+  padding: 20px;
+}
+
+.welcome-img-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-img {
+  height: 400px;
+}
+
+.loading-progress {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 7px;
+  border-radius: 2px;
 }
