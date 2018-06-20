@@ -116,6 +116,7 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
       return {
         ...state,
         dashboards: [...newDashboardsWithToBeCreated],
+        creatingDashboard: true,
         activeDashboards: [...filteredDashboards],
         currentDashboardPage: dashboardHelpers.getCurrentPage(
           filteredDashboards,
@@ -148,8 +149,13 @@ export function dashboardReducer(state: dashboard.DashboardState = dashboard.INI
       return {
         ...state,
         dashboards: [...newDashboardsWithCreated],
+        creatingDashboard: false,
         activeDashboards: [...filteredDashboards]
       };
+    }
+
+    case DashboardActions.CREATE_FAIL: {
+      return {...state, creatingDashboard: false};
     }
 
     case DashboardActions.RENAME: {

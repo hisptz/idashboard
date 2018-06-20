@@ -25,7 +25,7 @@ import { SharingEntity } from '../../modules/sharing-filter/models/sharing-entit
 import { switchMap } from 'rxjs/operators/switchMap';
 import {
   map,
-  catchError,tap
+  catchError, tap
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -422,8 +422,8 @@ export class DashboardEffects {
             ...dashboardOption,
             bookmarks: bookmarked
               ? dashboardOption.bookmarks.indexOf(currentUserId) === -1
-                         ? [...dashboardOption.bookmarks, currentUserId]
-                         : [...dashboardOption.bookmarks]
+                ? [...dashboardOption.bookmarks, currentUserId]
+                : [...dashboardOption.bookmarks]
               : _.filter(
                 dashboardOption.bookmarks,
                 bookmark => bookmark !== currentUserId

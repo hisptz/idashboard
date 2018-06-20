@@ -1,16 +1,34 @@
 <div class="container">
   <div class="welcoming-block">
     <div>
+      <!--Welcoming image-->
       <div class="welcome-img-block">
         <img src="assets/img/welcome.png" class="img-fluid welcome-img" alt="">
       </div>
+      <!--end of welcoming image-->
+
+      <!--Loading block-->
       <div class="loading-block" *ngIf="dashboardsLoading$ | async">
         <div class="loading-progress">
           <app-progress-loader></app-progress-loader>
         </div>
-        <h4 class="text-center"><b>{{welcomingMessage.title}}</b></h4>
-        <h6 class="text-center" [innerHtml]="welcomingMessage.description"></h6>
+        <h4 class="text-center"><b>{{welcomingMessage.title | translate}}</b></h4>
+        <h5 class="text-center" [innerHtml]="welcomingMessage.description | translate"></h5>
       </div>
+      <!--end of loading block-->
+
+      <!--dashboard place holder-->
+      <div class="dashboard-placeholder" *ngIf="dashboardsLoaded$ | async">
+        <h4><b>{{welcomingTitle | translate}}</b></h4>
+        <h5>{{welcomingDescription | translate}}</h5>
+        <button
+          (click)="onCreateDashboard($event)"
+          [disabled]="dashboardsCreating$ | async"
+          class="btn btn-primary btn-lg">{{((dashboardsCreating$ | async) ? 'Creating dashboard...':
+          'Create a dashboard to get started') | translate}}
+        </button>
+      </div>
+      <!--end of dashboard place holder-->
     </div>
   </div>
 </div>

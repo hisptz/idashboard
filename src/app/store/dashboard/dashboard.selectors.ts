@@ -18,6 +18,9 @@ export const getDashboardLoadingHasError = createSelector(dashboardState, (dashb
 export const getDashboardLoadingError = createSelector(dashboardState, (dashboardObject: DashboardState) =>
   dashboardObject.dashboardLoadingError);
 
+export const getDashboardCreateStatus = createSelector(dashboardState, (dashboardObject: DashboardState) =>
+  dashboardObject.creatingDashboard);
+
 export const getAllDashboardCount = createSelector(dashboardState, (dashboardObject: DashboardState) =>
   dashboardObject.dashboards.length);
 

@@ -1,5 +1,5 @@
 .welcoming-block {
-  margin-top: 150px;
+  margin-top: 15vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,8 +19,13 @@
 }
 
 .loading-progress {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   height: 7px;
   border-radius: 2px;
+}
+
+.dashboard-placeholder {
+  text-align: center;
+  padding: 15px;
 }
