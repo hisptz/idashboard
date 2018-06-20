@@ -22,8 +22,6 @@
 
 .no-borders {
   box-shadow: none;
-  width: 30px;
-  padding-right: 7px;
 }
 
 .no-borders img {
@@ -88,4 +86,8 @@
   .visualization-filter-body {
     width: 95%;
   }
+}
+
+.arrow-up {
+  transform: rotate(180deg);
 }
