@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+
 export function getDimensionValues(dimensionArray: any, dataDimensions) {
   const dimensionValues: any[] = [];
   const newDataDimensions: any[] = _.map(dataDimensions, dataDimension => dataDimension.dataElement);
@@ -29,7 +30,11 @@ export function getDimensionValues(dimensionArray: any, dataDimensions) {
         /**
          * Get dimension items
          */
-        dimensionValue.items = dimensionObject.items;
+        dimensionValue.items = _.map(dimensionObject.items, item => {
+          return {...item, displayName: dimensionName === 'pe' || dimensionName === 'ou' ?
+            _.map(item.displayName.split('_'), nameSection => _.capitalize(nameSection)).join(' ') : item.displayName
+          };
+        });
 
         /**
          * Get dimension value

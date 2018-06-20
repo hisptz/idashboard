@@ -173,7 +173,6 @@ export class OrgUnitFilterComponent implements OnInit, OnDestroy {
                 this.subscription = this.orgunitService.getInitialOrgunitsForTree(orgunits).subscribe(
                   (initial_data) => {
                     this.organisationunits = initial_data;
-                    this.orgUnitTreeConfig.loading = false;
                     // a hack to make sure the user orgunit is not triggered on the first time
                     this.initial_usr_orgunit = [{id: 'USER_ORGUNIT', name: 'User Org unit'}];
                     // after done loading initial organisation units now load all organisation units
@@ -203,7 +202,7 @@ export class OrgUnitFilterComponent implements OnInit, OnDestroy {
 
 
                         // this.prepareOrganisationUnitTree(this.organisationunits, 'parent');
-
+                        this.orgUnitTreeConfig.loading = false;
                         /**
                          * Detect changes manually
                          */

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 export const INITIAL_FILTER_CONFIG = {
   showLayout: true,
@@ -38,12 +38,13 @@ export class VisualizationFilterSectionComponent implements OnInit {
   @Input() filterConfig: any;
   @Input() showFilters: boolean;
   @Output() onFilterUpdate: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onLayoutUpdate:  EventEmitter<any> = new EventEmitter<any>();
+  @Output() onLayoutUpdate: EventEmitter<any> = new EventEmitter<any>();
   selectedFilter: string;
 
   constructor() {
     this.showFilters = false;
     this.filterConfig = INITIAL_FILTER_CONFIG;
+    this.selectedFilter = 'PERIOD';
   }
 
   ngOnInit() {

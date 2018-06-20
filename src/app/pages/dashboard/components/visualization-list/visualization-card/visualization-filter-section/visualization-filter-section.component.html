@@ -2,8 +2,8 @@
   <div class="visualization-filter-buttons">
     <button class="dashboard-btn visualization-filter-btn {{filterConfig.hideButtonBorders ? 'no-borders' : ''}}" title="Filter by different dimensions"
       [disabled]="!loaded" (click)="toggleFilters($event)">
-      <img *ngIf="!showFilters" src="assets/icons/filter.png" alt="">
-      <img *ngIf="showFilters" src="assets/icons/close.png" alt="">
+      <img src="assets/icons/filter.png" alt="">
+      <img *ngIf="!filterConfig.hideButtonBorders" src="assets/icons/{{showFilters ? 'arrow-left.png' : 'arrow-right.png'}}" alt="">
     </button>
     <div *ngIf="showFilters" class="visualization-filter-list" [@open]>
       <button class="dashboard-btn data-filter-btn" *ngIf="filterConfig.showData" [ngClass]="{'active-filter': selectedFilter === 'DATA'}"
@@ -26,7 +26,7 @@
 
     </div>
   </div>
-  <div class="visualization-filter-body dashboard-border" [@open] *ngIf="selectedFilter">
+  <div class="visualization-filter-body dashboard-border" [@open] *ngIf="selectedFilter && showFilters">
     <!--org unit filter-->
     <app-org-unit-filter *ngIf="selectedFilter === 'ORG_UNIT'" [orgUnitModel]="selectedDimensions?.orgUnitModel" (onOrgUnitClose)="selectedFilter = undefined"
       (onOrgUnitUpdate)="onFilterUpdateAction($event, 'ORG_UNIT')"></app-org-unit-filter>

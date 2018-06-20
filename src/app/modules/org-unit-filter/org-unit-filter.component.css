@@ -441,3 +441,12 @@ table * {
   display: flex;
   justify-content: space-between;
 }
+
+.org-unit-filter-loading {
+  display: flex;
+  align-items: center;
+}
+
+.org-unit-filter-loading img {
+  height: 30px;
+}
