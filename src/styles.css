@@ -45,6 +45,10 @@
   opacity: 0.4;
 }
 
+.arrow-up {
+  transform: rotate(180deg);
+}
+
 .dashboard-input {
   border-style: none;
   -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
@@ -62,6 +66,20 @@
 
 .dashboard-input:focus {
   outline: none;
+}
+
+.visualization-filter-btn {
+  display: flex;
+  justify-content: space-between;
+  width: 50px;
+  border-radius: 15px;
+  padding-right: 2px;
+}
+
+.visualization-filter-btn img {
+  display: block;
+  margin: auto;
+  height: 13px;
 }
 
 ::-webkit-scrollbar {

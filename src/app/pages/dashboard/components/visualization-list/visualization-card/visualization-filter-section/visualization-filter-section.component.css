@@ -6,24 +6,8 @@
   display: flex;
 }
 
-.visualization-filter-btn {
-  display: flex;
-  justify-content: space-between;
-  width: 50px;
-  border-radius: 15px;
-  padding-right: 2px;
-}
-
-.visualization-filter-btn img {
-  display: block;
-  margin: auto;
-  height: 13px;
-}
-
 .no-borders {
   box-shadow: none;
-  width: 30px;
-  padding-right: 7px;
 }
 
 .no-borders img {
