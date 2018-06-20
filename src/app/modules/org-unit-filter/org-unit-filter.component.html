@@ -1,10 +1,10 @@
 <div class="panel panel-default org-unit-filter-panel">
-    <div class="panel-heading" style="background-color: #ffffff;padding-bottom: 5px;padding-top: 5px;padding-left: 3px">
-        <div class="" (click)="displayOrgTree()">
+    <div *ngIf="!orgUnitTreeConfig.loading" class="panel-heading" style="background-color: #ffffff;padding-bottom: 5px;padding-top: 5px;padding-left: 3px">
+        <div class="" (click)="displayOrgTree()" *ngIf="!orgUnitTreeConfig.loading">
             <span *ngIf="!orgUnitTreeConfig.loading">
               {{  getProperPreOrgunitName() }}
           </span>
-            <span *ngIf="orgUnitModel.selectedOrgUnits.length > 10 && orgUnitModel.selectedUserOrgUnits.length == 0">
+            <span *ngIf="orgUnitModel.selectedOrgUnits.length > 3 && orgUnitModel.selectedUserOrgUnits.length == 0">
             <span class="selected-item">
               {{ orgUnitModel.selectedOrgUnits[0].name }}
               <a (click)="deActivateNode(orgUnitModel.selectedOrgUnits[0].id,orgtree,$event)" class="removeorgunit" >x</a>
@@ -17,7 +17,7 @@
               &nbsp; and {{ orgUnitModel.selectedOrgUnits.length - 2 }} more
             </span>
             </span>
-            <span *ngIf="orgUnitModel.selectedOrgUnits.length <= 10 && orgUnitModel.selectedUserOrgUnits.length == 0">
+            <span *ngIf="orgUnitModel.selectedOrgUnits.length <= 3 && orgUnitModel.selectedUserOrgUnits.length == 0">
              <span *ngFor="let item of orgUnitModel.selectedOrgUnits" class="selected-item ng-binding ng-scope">
               {{ item.name }}
                <a (click)="deActivateNode(item.id,orgtree,$event)" class="removeorgunit">x</a>
@@ -27,13 +27,15 @@
             <span *ngIf="orgUnitModel.selectedOrgUnits.length > 0" class="pull-right">
         <span class="selected-item" style="cursor: pointer" (click)="clearAll()" style="opacity: 0.7">X clear all</span>
             </span>
-            <span *ngIf="orgUnitTreeConfig.loading">{{ orgUnitTreeConfig.loading_message }}</span>
         </div>
+      <div *ngIf="orgUnitTreeConfig.loading">
+        <span >{{ orgUnitTreeConfig.loading_message }}</span>
+      </div>
     </div>
 </div>
 <div class="panel-body org-unit-filter-body" style="padding: 3px;" [ngClass]="{'hiddenTree':showOrgTree}">
-    <div class="" [ngClass]="{'hiddenTree':showOrgTree}" id="tree_view">
-        <div class="org-unit-selection-options">
+    <div class="" id="tree_view">
+        <div *ngIf="!orgUnitTreeConfig.loading" class="org-unit-selection-options">
             <div appClickOutside (clickOutside)="showOrgUnitSettings = false" style="position:relative;">
                 <button type="button" class="btn btn-sm btn-outline-secondary" (click)="toggleOrgUnitSettings($event)">
         Options
@@ -83,7 +85,10 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="orgUnitTreeConfig.loading">{{ orgUnitTreeConfig.loading_message }}</div>
+        <div class="org-unit-filter-loading" *ngIf="orgUnitTreeConfig.loading">
+          <img src="assets/icons/balls-3.svg" alt="">
+          {{ orgUnitTreeConfig.loading_message }}
+        </div>
         <div class="tree-area" [ngClass]="{'someclass': orgUnitModel.selectedUserOrgUnits.length != 0}">
             <tree-root #orgtree [nodes]="organisationunits" [focused]="true" [options]="customTemplateStringOrgunitOptions" (activate)="activateOrg($event)" (deactivate)="deactivateOrg($event)">
                 <ng-template #treeNodeTemplate let-node>
@@ -94,7 +99,7 @@
 
     </div>
 
-    <div class="org-unit-actions float-right">
+    <div *ngIf="!orgUnitTreeConfig.loading" class="org-unit-actions float-right">
         <button (click)="close($event)" class="btn btn-sm btn-outline-secondary">Cancel</button>
         <button
           (click)="emit($event)"
