@@ -24,8 +24,8 @@
         <button
           (click)="onCreateDashboard($event)"
           [disabled]="dashboardsCreating$ | async"
-          class="btn btn-primary btn-lg">{{((dashboardsCreating$ | async) ? 'Creating dashboard...':
-          'Create a dashboard to get started') | translate}}
+          class="btn btn-primary btn-lg">{{((dashboardsCreating$ | async) ? 'Adding Dashboard...':
+          'Add Dashboard') | translate}}
         </button>
       </div>
       <!--end of dashboard place holder-->
