@@ -5,7 +5,10 @@
         [currentDashboardTitle]="(currentDashboard$ | async)?.name"></app-current-dashboard-title>
     </div>
     <div class="dashboard-options">
-      <div class="current-dashboard-share-button">
+      <div
+        class="current-dashboard-share-button"
+        *ngIf="(currentDashboard$ | async)?.access.manage"
+      >
         <app-current-dashboard-share-section></app-current-dashboard-share-section>
       </div>
 
