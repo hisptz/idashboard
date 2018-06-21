@@ -1,14 +1,15 @@
-import {Component, Input, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
-import {Visualization} from '../../../../../store/visualization/visualization.state';
-import {Store} from '@ngrx/store';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Visualization } from '../../../../../store/visualization/visualization.state';
+import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import {AppState} from '../../../../../store/app.reducers';
+import { AppState } from '../../../../../store/app.reducers';
 import * as visualization from '../../../../../store/visualization/visualization.actions';
-import {CurrentUserState} from '../../../../../store/current-user/current-user.state';
-import {ChartListComponent} from '../../../../../modules/chart/components/chart-list/chart-list.component';
-import {TableListComponent} from '../../../../../modules/table/components/table-list/table-list.component';
+import { CurrentUserState } from '../../../../../store/current-user/current-user.state';
+import { ChartListComponent } from '../../../../../modules/chart/components/chart-list/chart-list.component';
+import { TableListComponent } from '../../../../../modules/table/components/table-list/table-list.component';
 import * as fromMapStore from '../../../../../modules/map/store';
-import {VisualizationObject} from '../../../../../modules/map/models/visualization-object.model';
+import { VisualizationObject } from '../../../../../modules/map/models/visualization-object.model';
+import { DashboardAccess } from '../../../../../store/dashboard/dashboard.state';
 
 @Component({
   selector: 'app-visualization-card',
@@ -16,9 +17,17 @@ import {VisualizationObject} from '../../../../../modules/map/models/visualizati
   styleUrls: ['./visualization-card.component.css']
 })
 export class VisualizationCardComponent implements OnInit {
-  @Input() visualizationObject: Visualization;
-  @Input() currentUser: CurrentUserState;
-  @Input() mapVisualizationObject: VisualizationObject;
+  @Input()
+  visualizationObject: Visualization;
+
+  @Input()
+  currentUser: CurrentUserState;
+
+  @Input()
+  mapVisualizationObject: VisualizationObject;
+
+  @Input()
+  dashboardAccess: DashboardAccess;
 
   isCardFocused: boolean;
   selectedDimensions: any;
@@ -210,9 +219,8 @@ export class VisualizationCardComponent implements OnInit {
       ).subscribe((visualizationObject) => {
         let mapLegends = null;
         this.mapVisualizationObject = visualizationObject;
-        this.store
-          .select(fromMapStore.getCurrentLegendSets(visualizationObject.componentId))
-          .subscribe(visualizationLengends => {
+        this.store.select(fromMapStore.getCurrentLegendSets(visualizationObject.componentId)).
+          subscribe(visualizationLengends => {
             if (visualizationLengends) {
               mapLegends = Object.keys(visualizationLengends).map(
                 key => visualizationLengends[key]

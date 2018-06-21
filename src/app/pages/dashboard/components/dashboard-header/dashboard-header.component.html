@@ -5,7 +5,10 @@
         [currentDashboardTitle]="(currentDashboard$ | async)?.name"></app-current-dashboard-title>
     </div>
     <div class="dashboard-options">
-      <div class="current-dashboard-share-button">
+      <div
+        class="current-dashboard-share-button"
+        *ngIf="(currentDashboard$ | async)?.access.manage"
+      >
         <app-current-dashboard-share-section></app-current-dashboard-share-section>
       </div>
 
@@ -23,6 +26,6 @@
     <app-dashboard-notification></app-dashboard-notification>
   </div>
   <div class="dashboard-search-block no-print">
-    <app-dashboard-item-search></app-dashboard-item-search>
+    <app-dashboard-item-search [dashboardAccess]="(currentDashboard$ | async)?.access"></app-dashboard-item-search>
   </div>
 </div>

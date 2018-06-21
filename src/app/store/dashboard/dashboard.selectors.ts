@@ -73,6 +73,7 @@ function mapStateToDashboardMenu(dashboard: Dashboard): DashboardMenuItem {
   return {
     id: dashboard.id,
     name: dashboard.name,
+    access: dashboard.access,
     details: dashboard.details
   };
 }

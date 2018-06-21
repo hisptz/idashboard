@@ -22,6 +22,7 @@
       <app-visualization-list
         [visualizationObjects]="visualizationObjects$ | async"
         [currentUser]="currentUser$ | async"
+        [dashboardAccess]="(currentDashboard$ | async)?.access"
       ></app-visualization-list>
     </div>
   </div>

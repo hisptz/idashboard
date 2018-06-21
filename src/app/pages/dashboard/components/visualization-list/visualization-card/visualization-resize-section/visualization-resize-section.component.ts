@@ -3,6 +3,7 @@ import {AppState} from '../../../../../../store/app.reducers';
 import {Store} from '@ngrx/store';
 import * as visualizationActions from '../../../../../../store/visualization/visualization.actions';
 import * as visualizationHelpers from '../../../../../../store/visualization/helpers/index';
+import { DashboardAccess } from '../../../../../../store/dashboard/dashboard.state';
 
 @Component({
   selector: 'app-visualization-resize-section',
@@ -11,11 +12,20 @@ import * as visualizationHelpers from '../../../../../../store/visualization/hel
 })
 export class VisualizationResizeSectionComponent implements OnInit {
 
-  @Input() dashboardId: string;
-  @Input() visualizationId: string;
-  @Input() loaded: boolean;
-  @Input() showResizeButton: boolean;
-  @Input() visualizationShape: string;
+  @Input()
+  dashboardId: string;
+
+  @Input()
+  visualizationId: string;
+
+  @Input()
+  loaded: boolean;
+
+  @Input()
+  showResizeButton: boolean;
+
+  @Input()
+  visualizationShape: string;
 
   constructor(private store: Store<AppState>) {
   }
