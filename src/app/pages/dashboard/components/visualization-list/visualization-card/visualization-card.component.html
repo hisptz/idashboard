@@ -101,7 +101,10 @@
     </div>
     <div class="visualization-card-footer-right">
       <!--visualization delete section-->
-      <div class="visualization-delete-block" *ngIf="loaded && isCardFocused && !showDeleteDialog" (click)="onShowDeleteDialog($event)">
+      <div
+        class="visualization-delete-block"
+        *ngIf="loaded && isCardFocused && !showDeleteDialog && dashboardAccess?.manage"
+        (click)="onShowDeleteDialog($event)">
         <button class="dashboard-btn" title="remove this item">
           <img src="assets/icons/trash.png" alt="">
         </button>
