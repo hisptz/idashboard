@@ -66,8 +66,10 @@ export class DashboardMenuItemDesktopComponent implements OnInit {
       e.stopPropagation();
     }
 
-    this.showEditForm = !this.showEditForm;
-    this.showDashboardItemDropdown = false;
+    if (this.dashboardMenuItem.access.manage) {
+      this.showEditForm = !this.showEditForm;
+      this.showDashboardItemDropdown = false;
+    }
   }
 
   showDropdown(e) {
