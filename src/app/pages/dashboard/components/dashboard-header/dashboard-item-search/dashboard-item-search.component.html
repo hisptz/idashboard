@@ -87,6 +87,7 @@
             <button
               title="Add to dashboard"
               class="dashboard-btn search-result-btn"
+              *ngIf="dashboardAccess?.manage"
               (click)="addDashboardItem({
               type: dashboardItemTypes[result.type],
               id: result.type == 'apps' ? result.key : result.id}, $event)"

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {AppState} from '../../../../../store/app.reducers';
 import * as dashboardActions from '../../../../../store/dashboard/dashboard.actions';
 import * as dashboardSelectors from '../../../../../store/dashboard/dashboard.selectors';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import {DASHBOARD_TYPES, DashboardSearchItem} from '../../../../../store/dashboard/dashboard.state';
+import {
+  Dashboard, DASHBOARD_TYPES, DashboardAccess,
+  DashboardSearchItem
+} from '../../../../../store/dashboard/dashboard.state';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -33,6 +36,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class DashboardItemSearchComponent implements OnInit {
 
+  @Input()
+  dashboardAccess: DashboardAccess;
   searchTerm: string;
   showBody: boolean;
   dashboardSearchItems$: Observable<DashboardSearchItem>;

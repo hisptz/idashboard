@@ -15,6 +15,7 @@ export function mapStateToDashboardObject(
           creationComplete: false,
           showName: false
         },
+        access: dashboardData.access,
         name: dashboardData.name,
         dashboardItems: []
       };
@@ -29,6 +30,7 @@ export function mapStateToDashboardObject(
           showIcon: true,
           showName: true
         },
+        access: dashboardData.access,
         name: dashboardData.name,
         dashboardItems: _.assign([], dashboardData.dashboardItems)
       };
@@ -43,6 +45,7 @@ export function mapStateToDashboardObject(
           showName: false
         },
         name: dashboardData.name,
+        access: dashboardData.access,
         dashboardItems: _.assign([], dashboardData.dashboardItems)
       };
     }
@@ -65,6 +68,7 @@ export function mapStateToDashboardObject(
           showName: true
         },
         name: dashboardData.name,
+        access: dashboardData.access,
         dashboardItems: _.assign([], dashboardData.dashboardItems)
       };
     }
@@ -77,6 +81,7 @@ export function mapStateToDashboardObject(
           showName: false
         },
         name: dashboardData.name,
+        access: dashboardData.access,
         dashboardItems: _.assign([], dashboardData.dashboardItems)
       };
     }
@@ -223,7 +228,6 @@ export function mergeRelatedItems(dashboardItems) {
 }
 
 function mergeTypeItems(currentItemArray, newItemArray) {
-  console.log(currentItemArray)
   const mergedTypeItems: any[] = [];
 
   /**

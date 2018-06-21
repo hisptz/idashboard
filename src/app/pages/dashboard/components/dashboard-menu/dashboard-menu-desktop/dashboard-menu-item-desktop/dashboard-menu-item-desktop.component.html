@@ -1,6 +1,17 @@
-<div class="dashboard-menu-item-desktop" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" appClickOutside (clickOutside)="hideDashboardNotificationIcon()">
+<div
+  class="dashboard-menu-item-desktop"
+  (mouseenter)="onMouseEnter($event)"
+  (mouseleave)="onMouseLeave($event)"
+  appClickOutside
+  (clickOutside)="hideDashboardNotificationIcon()">
     <!--name block-->
-    <a *ngIf="showName" class="dashboard-menu-name-desktop" routerLinkActive="active-dashboard" [routerLink]="['/dashboards', dashboardMenuItem.id]" (dblclick)="toggleEditForm($event)" (contextmenu)="showDropdown($event)">
+    <a
+      *ngIf="showName"
+      class="dashboard-menu-name-desktop"
+      routerLinkActive="active-dashboard"
+      [routerLink]="['/dashboards', dashboardMenuItem.id]"
+      (dblclick)="toggleEditForm($event)"
+      (contextmenu)="showDropdown($event)">
     {{ dashboardMenuItem.name}}
   </a>
     <!--end of name block-->
@@ -48,7 +59,7 @@
 
     <!--dashboard item dropdown-->
     <ul class="dashboard-item-dropdown dashboard-border" [@open] *ngIf="showDashboardItemDropdown" appClickOutside (clickOutside)="showDashboardItemDropdown = false">
-        <li>
+        <li *ngIf="dashboardMenuItem.access.update">
             <a (click)="toggleEditForm($event)">
                 <img [src]="'assets/icons/edit.png'" alt="">
                 <span>Rename</span>
@@ -60,7 +71,7 @@
                 <!--<span>Share</span>-->
             <!--</a>-->
         <!--</li>-->
-        <li>
+        <li *ngIf="dashboardMenuItem.access.delete">
             <a (click)="toggleDeleteForm($event)">
                 <img [src]="'assets/icons/trash.png'" alt="">
                 <span>Delete</span>
