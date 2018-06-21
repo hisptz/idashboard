@@ -1,27 +1,33 @@
 <div class="visualization-filter-section" appClickOutside (clickOutside)="selectedFilter = undefined">
   <div class="visualization-filter-buttons">
-    <button class="dashboard-btn visualization-filter-btn {{filterConfig.hideButtonBorders ? 'no-borders' : ''}}" title="Filter by different dimensions"
+    <button
+      class="dashboard-btn visualization-filter-btn {{filterConfig.hideButtonBorders ? 'no-borders' : ''}}"
+      [title]="'Filter by different dimensions' | translate"
       [disabled]="!loaded" (click)="toggleFilters($event)">
       <img src="assets/icons/filter.png" alt="">
-      <img *ngIf="!filterConfig.hideButtonBorders" src="assets/icons/{{showFilters ? 'arrow-left.png' : 'arrow-right.png'}}" alt="">
+      <img src="assets/icons/{{showFilters ? 'arrow-left.png' : 'arrow-right.png'}}" alt="">
     </button>
     <div *ngIf="showFilters" class="visualization-filter-list" [@open]>
       <button class="dashboard-btn data-filter-btn" *ngIf="filterConfig.showData" [ngClass]="{'active-filter': selectedFilter === 'DATA'}"
         title="Filter by data" (click)="toggleCurrentFilter($event, 'DATA')">
-        <img src="assets/icons/data.png" alt="">&nbsp;Data
+        <img src="assets/icons/data.png" alt="">&nbsp;{{'Data' | translate}}
+        <img [ngClass]="{'arrow-up': selectedFilter === 'DATA'}" src="assets/icons/arrow-down.png" alt="">
       </button>
       <button class="dashboard-btn period-filter-btn" [ngClass]="{'active-filter': selectedFilter === 'PERIOD'}" title="Filter by period"
         (click)="toggleCurrentFilter($event, 'PERIOD')">
-        <img src="assets/icons/period.png" alt="">&nbsp;Period
+        <img src="assets/icons/period.png" alt="">&nbsp;{{'Period' | translate}}
+        <img [ngClass]="{'arrow-up': selectedFilter === 'PERIOD'}" src="assets/icons/arrow-down.png" alt="">
       </button>
       <button class="dashboard-btn org-unit-filter-btn" [ngClass]="{'active-filter': selectedFilter === 'ORG_UNIT'}" title="Filter by organisation unit"
         (click)="toggleCurrentFilter($event, 'ORG_UNIT')">
-        <img src="assets/icons/tree.png" alt="">&nbsp;Org-Unit
+        <img src="assets/icons/tree.png" alt="">&nbsp;{{'Org-Unit' | translate}}
+        <img [ngClass]="{'arrow-up': selectedFilter === 'ORG_UNIT'}" src="assets/icons/arrow-down.png" alt="">
       </button>
 
       <button class="dashboard-btn layout-filter-btn" *ngIf="filterConfig.showLayout" [ngClass]="{'active-filter': selectedFilter === 'LAYOUT'}"
         title="Change layout" (click)="toggleCurrentFilter($event, 'LAYOUT')">
-        <img src="assets/icons/layout.png" alt="">&nbsp;Layout
+        <img src="assets/icons/layout.png" alt="">&nbsp;{{'Layout' | translate}}
+        <img [ngClass]="{'arrow-up': selectedFilter === 'LAYOUT'}" src="assets/icons/arrow-down.png" alt="">
       </button>
 
     </div>

@@ -59,7 +59,11 @@ export class VisualizationFilterSectionComponent implements OnInit {
 
   toggleCurrentFilter(e, selectedFilter) {
     e.stopPropagation();
-    this.selectedFilter = selectedFilter;
+    if (this.selectedFilter === selectedFilter) {
+      this.selectedFilter = '';
+    } else {
+      this.selectedFilter = selectedFilter;
+    }
   }
 
   onFilterUpdateAction(filterValue: any, filterType: string) {
