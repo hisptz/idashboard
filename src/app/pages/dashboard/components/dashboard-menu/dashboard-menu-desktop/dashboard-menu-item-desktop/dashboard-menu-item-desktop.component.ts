@@ -72,7 +72,9 @@ export class DashboardMenuItemDesktopComponent implements OnInit {
 
   showDropdown(e) {
     e.stopPropagation();
-    this.showDashboardItemDropdown = true;
+    if (this.dashboardMenuItem.access.manage) {
+      this.showDashboardItemDropdown = true;
+    }
     return false;
   }
 

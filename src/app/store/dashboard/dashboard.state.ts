@@ -9,6 +9,15 @@ export interface DashboardSharing {
   sharingEntity: SharingEntity;
 }
 
+export interface DashboardAccess {
+  read: boolean;
+  update: boolean;
+  externalize: boolean;
+  delete: boolean;
+  write: boolean;
+  manage: boolean;
+}
+
 export interface Dashboard {
   id: string;
   name: string;
@@ -16,11 +25,13 @@ export interface Dashboard {
   group?: string;
   details: any;
   dashboardItems: any[];
+  access: DashboardAccess;
 }
 
 export interface DashboardMenuItem {
   id: string;
   name: string;
+  access: DashboardAccess;
   details: any;
 }
 
