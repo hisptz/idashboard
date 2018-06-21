@@ -7,6 +7,8 @@ import { getCurrentUser } from '../../store/current-user/current-user.selectors'
 import { Observable } from 'rxjs/Observable';
 import { Visualization } from '../../store/visualization/visualization.state';
 import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
+import { Dashboard } from '../../store/dashboard/dashboard.state';
+import { getCurrentDashboard } from '../../store/dashboard/dashboard.selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
   visualizationObjects$: Observable<Visualization[]>;
   currentUser$: Observable<CurrentUserState>;
   visualizationLoading$: Observable<boolean>;
+  currentDashboard$: Observable<Dashboard>;
   welcomingTitle: string;
   welcomingDescription: string;
   emptyVisualizationMessage: string;
@@ -27,6 +30,7 @@ export class DashboardComponent implements OnInit {
     );
     this.currentUser$ = store.select(getCurrentUser);
     this.visualizationLoading$ = store.select(visualizationSelectors.getVisualizationLoadingState);
+    this.currentDashboard$ = store.select(getCurrentDashboard);
     this.welcomingTitle = WELCOMING_TITLE;
     this.welcomingDescription = WELCOMING_DESCRIPTION;
     this.emptyVisualizationMessage =
