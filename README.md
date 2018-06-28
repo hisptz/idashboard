@@ -23,14 +23,12 @@ This command will require proxy-config.json file available in the root of your s
 {
   "/api": {
     "target": "https://play.dhis2.org/2.29/",
-    "target1": "http://localhost:8081",
     "secure": "false",
     "auth": "admin:district",
     "changeOrigin": "true"
   },
   "/": {
     "target": "https://play.dhis2.org/2.29/",
-    "target1": "http://localhost:8081",
     "secure": "false",
     "auth": "admin:district",
     "changeOrigin": "true"
