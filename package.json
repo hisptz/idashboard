@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
     "@angular/service-worker": "^5.2.7",
-    "@hisptz/ngx-dhis2-menu": "^1.0.3",
     "@mapbox/geojson-area": "^0.2.2",
     "@ngrx/effects": "^5.1.0",
     "@ngrx/entity": "^5.1.0",
