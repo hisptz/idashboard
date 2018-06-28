@@ -2,7 +2,7 @@ import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetecto
 import {TreeComponent, TREE_ACTIONS, IActionMapping} from 'angular-tree-component';
 import {OrgUnitService} from './org-unit.service';
 import {MultiselectComponent} from './multiselect/multiselect.component';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({

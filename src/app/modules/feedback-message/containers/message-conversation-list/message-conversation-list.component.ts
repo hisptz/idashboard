@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as fromStore from '../../store';
 import { Store } from '@ngrx/store';
 import { MessageConversation } from '../../models/message-conversation';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-message-conversation-list',

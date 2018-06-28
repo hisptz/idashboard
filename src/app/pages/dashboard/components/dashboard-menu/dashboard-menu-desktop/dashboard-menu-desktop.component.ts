@@ -3,7 +3,7 @@ import * as dashboard from '../../../../../store/dashboard/dashboard.actions';
 import * as dashboardSelectors from '../../../../../store/dashboard/dashboard.selectors';
 import {AppState} from '../../../../../store/app.reducers';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {DashboardMenuItem} from '../../../../../store/dashboard/dashboard.state';
 
 @Component({

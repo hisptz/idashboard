@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { of } from 'rxjs/observable/of';
+import { Observable ,  forkJoin ,  of } from 'rxjs';
 import * as _ from 'lodash';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
@@ -45,49 +43,48 @@ export class DataFilterService {
   }
 
   getIndicators(): Observable<Indicator[]> {
-    return this.http.get('indicators.json?fields=id,name,dataSets[periodType]&paging=false').
-      map(res => res.indicators || []);
+    return this.http.get('indicators.json?fields=id,name,dataSets[periodType]&paging=false')
+      .pipe(map(res => res.indicators || []));
   }
 
   getDataElements(): Observable<DataElement[]> {
     return this.http.get('dataElements.json?fields=,id,name,valueType,categoryCombo&paging=false&filter=' +
-      'domainType:eq:AGGREGATE&filter=valueType:ne:TEXT&filter=valueType:ne:LONG_TEXT').
-      map(res => res.dataElements || []);
+      'domainType:eq:AGGREGATE&filter=valueType:ne:TEXT&filter=valueType:ne:LONG_TEXT').pipe(map(res => res.dataElements || []));
   }
 
   getDataSets(): Observable<DataSet[]> {
-    return this.http.get('dataSets.json?paging=false&fields=id,name').map(res => res.dataSets || []);
+    return this.http.get('dataSets.json?paging=false&fields=id,name').pipe(map(res => res.dataSets || []));
   }
 
   getCategoryCombos(): Observable<CategoryCombo[]> {
     return this.http.get('categoryCombos.json?fields=id,name,categoryOptionCombos[id,name]&paging=false').
-      map(res => res.categoryCombos || []);
+      pipe(map(res => res.categoryCombos || []));
 
   }
 
   getOrganisationUnits(): Observable<any[]> {
     return this.http.get('organisationUnits.json?fields=id,name,children,parent,path&paging=false').
-      map(res => res.organisationUnits || []);
+      pipe(map(res => res.organisationUnits || []));
   }
 
   getDataElementGroups(): Observable<DataelementGroup[]> {
     return this.http.get('dataElementGroups.json?paging=false&fields=id,name,dataElements[id,name,categoryCombo]').
-      map(res => res.dataElementGroups || []);
+      pipe(map(res => res.dataElementGroups || []));
   }
 
   getIndicatorGroups(): Observable<IndicatorGroup[]> {
     return this.http.get('indicatorGroups.json?paging=false&fields=id,name,indicators[id,name]').
-      map(res => res.indicatorGroups || []);
+      pipe(map(res => res.indicatorGroups || []));
   }
 
   getPrograms(): Observable<any[]> {
     return this.http.get('programs.json?paging=false&fields=id,name,programType,programIndicators[id,name').
-      map(res => res.programs || []);
+      pipe(map(res => res.programs || []));
 
   }
 
   getProgramIndicators(): Observable<any[]> {
-    return this.http.get('programIndicators.json?paging=false&fields=id,name').map(res => res.programIndicators || []);
+    return this.http.get('programIndicators.json?paging=false&fields=id,name').pipe(map(res => res.programIndicators || []));
   }
 
   getFunctions(): Observable<any> {
@@ -135,7 +132,7 @@ export class DataFilterService {
    */
   getDataFromLocalDatabase(key: string): Observable<any> {
     return Observable.create(observer => {
-      let dataStream$ = Observable.of(null);
+      let dataStream$ = of(null);
       switch (key) {
         case DATAELEMENT_KEY:
           dataStream$ = this.getDataElements();

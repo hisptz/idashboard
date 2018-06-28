@@ -1,25 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as _ from 'lodash';
 import * as DictionaryActions from './dictionary.actions';
-import { mergeMap, map, tap, catchError } from 'rxjs/operators';
-import { from } from 'rxjs/observable/from';
+import { mergeMap, map, tap, catchError, withLatestFrom } from 'rxjs/operators';
+import { from ,  Observable ,  of ,  forkJoin} from 'rxjs';
 import { HttpClientService } from '../../../services/http-client.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.reducers';
-import { Observable } from 'rxjs/Observable';
 import { DatePipe } from '@angular/common';
-import { of } from 'rxjs/observable/of';
-import { forkJoin} from 'rxjs/observable/forkJoin';
 
 
 @Injectable()
 export class DictionaryEffects {
 
   @Effect({dispatch: false})
-  initializeDictionary$ = this.actions$.ofType<DictionaryActions.InitializeAction>(
-    DictionaryActions.DictionaryActions.INITIALIZE).withLatestFrom(this.store).pipe(
-    map(([action, state]: [any, AppState]) =>
+  initializeDictionary$ = this.actions$.pipe(ofType<DictionaryActions.InitializeAction>(
+    DictionaryActions.DictionaryActions.INITIALIZE), withLatestFrom(this.store), map(([action, state]: [any, AppState]) =>
       _.filter(action.payload, (identifier) => !_.find(state.metadataDictionary, ['id', identifier]))),
     tap((identifiers) => {
       /**
@@ -73,8 +69,7 @@ export class DictionaryEffects {
           }
         }
       });
-    })
-  );
+    }));
 
   constructor(private actions$: Actions,
     private store: Store<AppState>,

@@ -2,12 +2,11 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {HttpClientService} from '../../services/http-client.service';
 import * as currentUser from './current-user.actions';
-import 'rxjs/add/operator/switchMap';
-import {Observable} from 'rxjs/Observable';
+
+import {Observable, of} from 'rxjs';
 import {CurrentUserState} from './current-user.state';
-import 'rxjs/add/operator/map';
+
 import {catchError, map, switchMap} from 'rxjs/operators';
-import {of} from 'rxjs/observable/of';
 
 @Injectable()
 export class CurrentUserEffects {
