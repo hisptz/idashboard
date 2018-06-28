@@ -9,7 +9,8 @@
     "build": "ng build --prod --aot --output-hashing all --sourcemaps false --named-chunks false --build-optimizer --vendor-chunk  && cd dist && zip -r -D idashboard-21.zip .",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docs": "./node_modules/.bin/compodoc -p src/tsconfig.app.json -w -s"
   },
   "private": true,
   "dependencies": {
