@@ -38,6 +38,12 @@ This command will require proxy-config.json file available in the root of your s
 ```
 We have provided `proxy-config.example.json` file as an example, make a copy and rename to `proxy-config.json`
 
+## Code documentation
+
+To automatically generate documentation for the codes, run `npm run docs`, this will generate documentation pages and put them in documentation folder.
+
+To view the documentation locally go to `http://localhost:8080`
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
