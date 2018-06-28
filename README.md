@@ -11,7 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Setup
 
-Run 'npm run setup' to install all required dependencies for the app
+Run `npm run setup` to install all required dependencies for the app
 
 ## Development server
 
