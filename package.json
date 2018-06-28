@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "doc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json"
+    "docs": "./node_modules/.bin/compodoc -p src/tsconfig.app.json -w -s"
   },
   "private": true,
   "dependencies": {

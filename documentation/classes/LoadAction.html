@@ -4204,7 +4204,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/store/current-user/current-user.actions.ts</code>
+            <code>src/app/store/dashboard/dashboard.actions.ts</code>
         </p>
 
 
@@ -4274,12 +4274,12 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>CurrentUserActions.LOAD</code>
+                            <i>Default value : </i><code>DashboardActions.LOAD</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/store/current-user/current-user.actions.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/store/dashboard/dashboard.actions.ts:50</a></div>
                             </td>
                         </tr>
 
@@ -4299,31 +4299,314 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Action} from &#x27;@ngrx/store&#x27;;
-import {CurrentUserState} from &#x27;./current-user.state&#x27;;
+import {
+  Dashboard,
+  DashboardMenuItem,
+  DashboardSharing
+} from &#x27;./dashboard.state&#x27;;
+import {CurrentUserState} from &#x27;../current-user/current-user.state&#x27;;
+import {Observable} from &#x27;rxjs&#x27;;
+import {SharingEntity} from &#x27;../../modules/sharing-filter/models/sharing-entity&#x27;;
 
-export enum CurrentUserActions {
-  LOAD &#x3D; &#x27;[Current User] Load current user&#x27;,
-  LOAD_SUCCESS &#x3D; &#x27;[Current User] Load current user success&#x27;,
-  LOAD_FAIL &#x3D; &#x27;[Current User] Load current user fail&#x27;
+export enum DashboardActions {
+  LOAD &#x3D; &#x27;[Dashboard] Load dashboards&#x27;,
+  LOAD_SUCCESS &#x3D; &#x27;[Dashboard] Load dashboards success&#x27;,
+  LOAD_FAIL &#x3D; &#x27;[Dashboard] Load dashboards fail&#x27;,
+  SET_CURRENT &#x3D; &#x27;[Dashboard] Set current dashboard&#x27;,
+  CHANGE_CURRENT_PAGE &#x3D; &#x27;[Dashboard] Change current dashboard page&#x27;,
+  CREATE &#x3D; &#x27;[Dashboard] Create new dashboard&#x27;,
+  CREATE_SUCCESS &#x3D; &#x27;[Dashboard] Dashboard create success&#x27;,
+  CREATE_FAIL &#x3D; &#x27;[Dashboard] Dashboard create fail&#x27;,
+  RENAME &#x3D; &#x27;[Dashboard] Rename dashboard&#x27;,
+  RENAME_SUCCESS &#x3D; &#x27;[Dashboard] Dashboard rename success&#x27;,
+  DELETE &#x3D; &#x27;[Dashboard] Delete dashboard&#x27;,
+  DELETE_SUCCESS &#x3D; &#x27;[Dashboard] Dashboard delete success&#x27;,
+  COMMIT_DELETE &#x3D; &#x27;[Dashboard] Permanently remove dashboard from the list&#x27;,
+  CHANGE_PAGE_ITEMS &#x3D; &#x27;[Dashboard] Change number of item per dashboard pages in the menu&#x27;,
+  HIDE_MENU_NOTIFICATION_ICON &#x3D; &#x27;[Dashboard] Hide menu notification icons&#x27;,
+  SEARCH_ITEMS &#x3D; &#x27;[Dashboard] Search dashboard items&#x27;,
+  UPDATE_SEARCH_RESULT &#x3D; &#x27;[Dashboard] Update search results&#x27;,
+  CHANGE_SEARCH_HEADER &#x3D; &#x27;[Dashboard] Change search header&#x27;,
+  ADD_ITEM &#x3D; &#x27;[Dashboard] Add dashboard item&#x27;,
+  ADD_ITEM_SUCCESS &#x3D; &#x27;[Dashboard] Add dashboard item success&#x27;,
+  LOAD_SHARING_DATA &#x3D; &#x27;[Dashboard] Load dashboard sharing data&#x27;,
+  LOAD_SHARING_DATA_SUCCESS &#x3D; &#x27;[Dashboard] Load dashboard sharing data success&#x27;,
+  UPDATE_SHARING_DATA &#x3D; &#x27;[Dashboard] Update dashboard sharing data&#x27;,
+  DELETE_ITEM_SUCCESS &#x3D; &#x27;[Dashboard] Delete dashboard item success&#x27;,
+  LOAD_OPTIONS &#x3D; &#x27;[Dashboard] Load dashboard options&#x27;,
+  LOAD_OPTIONS_SUCCESS &#x3D; &#x27;[Dashboard] Load dashboard options success&#x27;,
+  LOAD_OPTIONS_FAIL &#x3D; &#x27;[Dashboard] Load dashboard options fail&#x27;,
+  BOOKMARK_DASHBOARD &#x3D; &#x27;[Dashboard] Bookmark dashboard&#x27;,
+  BOOKMARK_DASHBOARD_SUCCESS &#x3D; &#x27;[Dashboard] Bookmark dashboard success&#x27;,
+  BOOKMARK_DASHBOARD_FAIL &#x3D; &#x27;[Dashboard] Bookmark dashboard fail&#x27;,
+  TOGGLE_BOOKMARKED &#x3D; &#x27;[Dashboard] Bookmark dashboard fail&#x27;,
+  SET_SEARCH_TERM &#x3D; &#x27;[Dashboard] Set dashboard search term&#x27;,
+  LOAD_NOTIFACATION &#x3D; &#x27;[Dashboard] Load dashboard notification&#x27;,
+  LOAD_NOTIFACATION_SUCCESS &#x3D; &#x27;[Dashboard] Load dashboard notification success&#x27;,
+  LOAD_NOTIFACATION_FAIL &#x3D; &#x27;[Dashboard] Load dashboard notification fail&#x27;,
 }
 
 export class LoadAction implements Action {
-  readonly type &#x3D; CurrentUserActions.LOAD;
+  readonly type &#x3D; DashboardActions.LOAD;
 }
 
 export class LoadSuccessAction implements Action {
-  readonly type &#x3D; CurrentUserActions.LOAD_SUCCESS;
+  readonly type &#x3D; DashboardActions.LOAD_SUCCESS;
 
-  constructor(public payload: CurrentUserState) {
+  constructor(public payload: {
+    dashboards: Dashboard[];
+    url: string;
+    currentUser: CurrentUserState;
+  }) {
   }
 }
 
 export class LoadFailAction implements Action {
-  readonly type &#x3D; CurrentUserActions.LOAD_FAIL;
+  readonly type &#x3D; DashboardActions.LOAD_FAIL;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class SetCurrentAction implements Action {
+  readonly type &#x3D; DashboardActions.SET_CURRENT;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class ChangeCurrentPageAction implements Action {
+  readonly type &#x3D; DashboardActions.CHANGE_CURRENT_PAGE;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class CreateAction implements Action {
+  readonly type &#x3D; DashboardActions.CREATE;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class CreateSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.CREATE_SUCCESS;
+
+  constructor(public payload: Dashboard) {
+  }
+}
+
+export class CreateFailAction implements Action {
+  readonly type &#x3D; DashboardActions.CREATE_FAIL;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class RenameAction implements Action {
+  readonly type &#x3D; DashboardActions.RENAME;
+
+  constructor(public payload: { id: string; name: string }) {
+  }
+}
+
+export class RenameSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.RENAME_SUCCESS;
+
+  constructor(public payload: Dashboard) {
+  }
+}
+
+export class DeleteAction implements Action {
+  readonly type &#x3D; DashboardActions.DELETE;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class DeleteSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.DELETE_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class CommitDeleteAction implements Action {
+  readonly type &#x3D; DashboardActions.COMMIT_DELETE;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class ChangePageItemsAction implements Action {
+  readonly type &#x3D; DashboardActions.CHANGE_PAGE_ITEMS;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class HideMenuNotificationIconAction implements Action {
+  readonly type &#x3D; DashboardActions.HIDE_MENU_NOTIFICATION_ICON;
+
+  constructor(public payload: DashboardMenuItem) {
+  }
+}
+
+export class SearchItemsAction implements Action {
+  readonly type &#x3D; DashboardActions.SEARCH_ITEMS;
+
+  constructor(public payload: Observable&lt;string&gt;) {
+  }
+}
+
+export class UpdateSearchResultAction implements Action {
+  readonly type &#x3D; DashboardActions.UPDATE_SEARCH_RESULT;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class ChangeSearchHeaderAction implements Action {
+  readonly type &#x3D; DashboardActions.CHANGE_SEARCH_HEADER;
+
+  constructor(public payload: { header: any; multipleSelection: boolean }) {
+  }
+}
+
+export class AddItemAction implements Action {
+  readonly type &#x3D; DashboardActions.ADD_ITEM;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class AddItemSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.ADD_ITEM_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class LoadSharingDataAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_SHARING_DATA;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class LoadSharingDataSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_SHARING_DATA_SUCCESS;
+
+  constructor(public payload: DashboardSharing) {
+  }
+}
+
+export class UpdateSharingDataAction implements Action {
+  readonly type &#x3D; DashboardActions.UPDATE_SHARING_DATA;
+
+  constructor(public payload: SharingEntity) {
+  }
+}
+
+export class DeleteItemSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.DELETE_ITEM_SUCCESS;
+
+  constructor(public payload: { dashboardId: string; visualizationId: string }) {
+  }
+}
+
+export class LoadOptionsAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_OPTIONS;
+}
+
+export class LoadOptionsSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_OPTIONS_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class LoadOptionsFailAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_OPTIONS_FAIL;
+}
+
+export class BookmarkDashboardAction implements Action {
+  readonly type &#x3D; DashboardActions.BOOKMARK_DASHBOARD;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class BookmarkDashboardSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.BOOKMARK_DASHBOARD_SUCCESS;
+  // constructor(public payload: any) {}
+}
+
+export class BookmarkDashboardFailAction implements Action {
+  readonly type &#x3D; DashboardActions.BOOKMARK_DASHBOARD_FAIL;
+  // constructor(public payload: any) {}
+}
+
+export class ToggleBookmarkedAction implements Action {
+  readonly type &#x3D; DashboardActions.TOGGLE_BOOKMARKED;
+}
+
+export class SetSearchTermAction implements Action {
+  readonly type &#x3D; DashboardActions.SET_SEARCH_TERM;
+
+  constructor(public payload: string) {
+  }
+}
+export class LoadDashboardNotificationAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_NOTIFACATION;
+}
+
+export class LoadDashboardNotificationSuccessAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_NOTIFACATION_SUCCESS;
   constructor(public payload: any) {}
 }
 
-export type CurrentUserAction &#x3D; LoadAction | LoadSuccessAction | LoadFailAction;
+export class LoadDashboardNotificationFailAction implements Action {
+  readonly type &#x3D; DashboardActions.LOAD_NOTIFACATION_FAIL;
+  constructor(public payload: any) {}
+}
+
+export type DashboardAction &#x3D;
+  | LoadAction
+  | LoadSuccessAction
+  | LoadFailAction
+  | SetCurrentAction
+  | ChangeCurrentPageAction
+  | CreateAction
+  | CreateSuccessAction
+  | CreateFailAction
+  | RenameAction
+  | RenameSuccessAction
+  | DeleteAction
+  | DeleteSuccessAction
+  | CommitDeleteAction
+  | ChangePageItemsAction
+  | HideMenuNotificationIconAction
+  | SearchItemsAction
+  | UpdateSearchResultAction
+  | ChangeSearchHeaderAction
+  | AddItemAction
+  | AddItemSuccessAction
+  | LoadSharingDataAction
+  | LoadSharingDataSuccessAction
+  | UpdateSharingDataAction
+  | DeleteItemSuccessAction
+  | LoadOptionsAction
+  | LoadOptionsSuccessAction
+  | LoadOptionsFailAction
+  | BookmarkDashboardAction
+  | BookmarkDashboardSuccessAction
+  | BookmarkDashboardFailAction
+  | ToggleBookmarkedAction
+  | SetSearchTermAction
+  | LoadDashboardNotificationAction
+  | LoadDashboardNotificationSuccessAction
+  | LoadDashboardNotificationFailAction;
 </code></pre>
     </div>
 </div>
