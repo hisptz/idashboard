@@ -1,3 +1,5 @@
+
+import {take} from 'rxjs/operators';
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AppState} from '../../store/app.reducers';
@@ -6,7 +8,7 @@ import * as dashboardSelectors from '../../store/dashboard/dashboard.selectors';
 import * as visualizationSelectors from '../../store/visualization/visualization.selectors';
 import * as visualizationActions from '../../store/visualization/visualization.actions';
 import {Dashboard} from '../../store/dashboard/dashboard.state';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Visualization} from '../../store/visualization/visualization.state';
 import {CurrentUserState} from '../../store/current-user/current-user.state';
 import {getCurrentUser} from '../../store/current-user/current-user.selectors';
@@ -32,8 +34,8 @@ export class FullScreenDashboardItemViewComponent implements OnInit {
   closeDashboardItem(e) {
     e.stopPropagation();
     this.store.dispatch(new visualizationActions.UnSetCurrentAction());
-    this.store.select(dashboardSelectors.getCurrentDashboard)
-      .take(1)
+    this.store.select(dashboardSelectors.getCurrentDashboard).pipe(
+      take(1))
       .subscribe((currentDashboard: Dashboard) => {
         this.router.navigate([`/dashboards/${currentDashboard.id}`]);
       });

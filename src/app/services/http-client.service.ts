@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { ManifestService } from './manifest.service';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class HttpClientService {

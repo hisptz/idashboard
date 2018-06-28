@@ -4,7 +4,7 @@ import { AppState } from '../../store/app.reducers';
 import * as visualizationSelectors from '../../store/visualization/visualization.selectors';
 import { CurrentUserState } from '../../store/current-user/current-user.state';
 import { getCurrentUser } from '../../store/current-user/current-user.selectors';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Visualization } from '../../store/visualization/visualization.state';
 import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
 import { Dashboard } from '../../store/dashboard/dashboard.state';

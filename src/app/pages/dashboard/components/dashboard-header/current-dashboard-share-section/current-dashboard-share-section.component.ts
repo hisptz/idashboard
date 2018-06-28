@@ -9,7 +9,7 @@ import {
 } from '@angular/animations';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../store/app.reducers';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DashboardSharing } from '../../../../../store/dashboard/dashboard.state';
 import * as dashboardSelectors from '../../../../../store/dashboard/dashboard.selectors';
 import * as dashboardActions from '../../../../../store/dashboard/dashboard.actions';

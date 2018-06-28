@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import * as fromRoot from '../reducers';
 import * as fromActions from '../actions';
 import { MessageConversationService } from '../../services/message-conversation.service';
 import { MessageConversation } from '../../models/message-conversation';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 @Injectable()
 export class MessageConversationEffects {
@@ -16,17 +16,17 @@ export class MessageConversationEffects {
   }
 
   @Effect({dispatch: false})
-  initializeMessageConvsersation$ = this.actions$.ofType(
-    fromActions.MessageConversationActionTypes.INITIALIZE_MESSAGE_CONVERSATION).withLatestFrom(this.store).
-    pipe(tap(([action, state]: [fromActions.InitializeMessageConversationAction, fromRoot.State]) => {
+  initializeMessageConvsersation$ = this.actions$.pipe(ofType(
+    fromActions.MessageConversationActionTypes.INITIALIZE_MESSAGE_CONVERSATION), withLatestFrom(this.store),
+    tap(([action, state]: [fromActions.InitializeMessageConversationAction, fromRoot.State]) => {
       if (!state.messageConversation || !state.messageConversation.loading || !state.messageConversation.loaded) {
         this.store.dispatch(new fromActions.LoadMessageConversationAction());
       }
     }));
 
   @Effect()
-  loadMessageConversations$ = this.actions$.ofType(
-    fromActions.MessageConversationActionTypes.LOAD_MESSAGE_CONVERSATION).pipe(
+  loadMessageConversations$ = this.actions$.pipe(ofType(
+    fromActions.MessageConversationActionTypes.LOAD_MESSAGE_CONVERSATION),
     switchMap(() => this.messageConversationService.loadAll().pipe(
       map(
         (messageConversations: MessageConversation[]) => new fromActions.LoadMessageConversationSuccessAction(

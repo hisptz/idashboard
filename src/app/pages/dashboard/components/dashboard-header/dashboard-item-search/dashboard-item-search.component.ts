@@ -3,7 +3,7 @@ import {AppState} from '../../../../../store/app.reducers';
 import * as dashboardActions from '../../../../../store/dashboard/dashboard.actions';
 import * as dashboardSelectors from '../../../../../store/dashboard/dashboard.selectors';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {
   Dashboard, DASHBOARD_TYPES, DashboardAccess,
   DashboardSearchItem
@@ -55,7 +55,7 @@ export class DashboardItemSearchComponent implements OnInit {
     this.searchTerm = e.target.value;
     if (this.searchTerm.trim() !== '') {
       this.showBody = true;
-      this.store.dispatch(new dashboardActions.SearchItemsAction(Observable.of(this.searchTerm)));
+      this.store.dispatch(new dashboardActions.SearchItemsAction(of(this.searchTerm)));
     } else {
       this.showBody = false;
     }

@@ -5,11 +5,10 @@ import {
   SharingEntity,
   SharingItem
 } from './models/sharing-entity';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable ,  BehaviorSubject } from 'rxjs';
 import { SharingService } from './services/sharing.service';
 import { debounceTime } from 'rxjs/operators';
-import 'rxjs/add/observable/from';
+
 import {
   trigger,
   state,

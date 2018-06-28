@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {DictionaryStoreService} from '../../services/dictionary-store.service';
-import {Observable} from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import {DictionaryState} from '../../store/dictionary.state';
 
 @Component({
@@ -16,7 +16,7 @@ export class DictionaryListComponent implements OnInit {
   activeItem: number;
 
   constructor(private dictionaryStoreService: DictionaryStoreService) {
-    this.dictionaryList$ = Observable.of([]);
+    this.dictionaryList$ = of([]);
     this.activeItem = 0;
   }
 

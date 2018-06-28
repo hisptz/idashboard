@@ -1,14 +1,14 @@
-import { mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClientService } from '../../../services/http-client.service';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin} from 'rxjs/observable/forkJoin';
+import { Observable, forkJoin } from 'rxjs';
 import * as _ from 'lodash';
 
 @Injectable()
 export class SharingService {
   private _searchList: any[];
   private _searchListLoaded: boolean;
+
   constructor(private httpClient: HttpClientService) {
     this._searchList = [];
     this._searchListLoaded = false;
@@ -40,31 +40,27 @@ export class SharingService {
   }
 
   getUserList(): Observable<any> {
-    return this.httpClient
-      .get('users.json?fields=id,name,displayName&paging=false')
-      .map(res => res.users || [])
-      .map((userResponse: any[]) => {
+    return this.httpClient.get('users.json?fields=id,name,displayName&paging=false').
+      pipe(map((res: any) => res.users || []),map((userResponse: any[]) => {
         return _.map(userResponse, (user: any) => {
           return {
             ...user,
             type: 'user'
           };
         });
-      });
+      }));
   }
 
   getUserGroupList(): Observable<any> {
-    return this.httpClient
-      .get('userGroups.json?fields=id,name,displayName&paging=false')
-      .map((res: any) => res.userGroups || [])
-      .map((userGroupResponse: any[]) => {
+    return this.httpClient.get('userGroups.json?fields=id,name,displayName&paging=false').
+      pipe(map((res: any) => res.userGroups || []), map((userGroupResponse: any[]) => {
         return _.map(userGroupResponse, (userGroup: any) => {
           return {
             ...userGroup,
             type: 'userGroup'
           };
         });
-      });
+      }));
   }
 
   saveSharingResults(sharingObject: any, sharingType: string, sharingId: string) {
