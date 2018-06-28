@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Dashboard, DashboardMenuItem} from '../../../../../store/dashboard/dashboard.state';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../../store/app.reducers';

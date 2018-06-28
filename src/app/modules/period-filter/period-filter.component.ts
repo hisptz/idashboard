@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as fromPeriodFilterModel from './period-filter.model';
 import * as _ from 'lodash';
 import { PeriodService } from './period.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-period-filter',
@@ -37,7 +36,7 @@ export class PeriodFilterComponent implements OnInit {
     this._periods = [];
     this.periods$.asObservable().subscribe((periods: any) => {
       this.selectedPeriods = periods.filter((period: any) => period.selected);
-      this.selectedPeriods$ = Observable.of(this.selectedPeriods);
+      this.selectedPeriods$ = of(this.selectedPeriods);
       this.availablePeriods = periods.filter((period: any) => !period.selected);
     });
   }

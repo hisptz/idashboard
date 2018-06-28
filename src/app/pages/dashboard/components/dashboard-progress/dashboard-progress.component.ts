@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AppState} from '../../../../store/app.reducers';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {getVisualizationObjectsLoadingProgress} from '../../../../store/visualization/visualization.selectors';
 
 @Component({

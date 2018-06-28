@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../store/app.reducers';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { getDashboardNotification } from '../../../../../store/dashboard/dashboard.selectors';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 

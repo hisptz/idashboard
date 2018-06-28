@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as _ from 'lodash';
 import {createSelector, Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {DictionaryState} from '../store/dictionary.state';
 import {AppState} from '../../../store/app.reducers';
 import * as DictionaryActions from '../store/dictionary.actions';

@@ -5,7 +5,7 @@ import {
   DashboardSharing
 } from './dashboard.state';
 import {CurrentUserState} from '../current-user/current-user.state';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SharingEntity} from '../../modules/sharing-filter/models/sharing-entity';
 
 export enum DashboardActions {

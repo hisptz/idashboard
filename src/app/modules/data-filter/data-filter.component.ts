@@ -8,8 +8,7 @@ import {
 } from '@angular/core';
 import { DataFilterService } from './services/data-filter.service';
 import * as _ from 'lodash';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription, Observable, of } from 'rxjs';
 import { DATA_FILTER_OPTIONS } from './data-filter.model';
 
 @Component({
@@ -73,7 +72,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
     // TODO revamp period filter to accomodate more data dimensions criterion
     this.initiateData();
     this._selectedItems = [...this.selectedItems];
-    this.selectedItems$ = Observable.of(this._selectedItems);
+    this.selectedItems$ = of(this._selectedItems);
   }
 
   // trigger this to reset pagination pointer when search change
@@ -367,7 +366,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       this._selectedItems = [...this._selectedItems, item];
     }
 
-    this.selectedItems$ = Observable.of(this._selectedItems);
+    this.selectedItems$ = of(this._selectedItems);
   }
 
   // Remove selected Item
@@ -384,7 +383,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       this.availableItems = [...this.availableItems, item];
     }
 
-    this.selectedItems$ = Observable.of(this._selectedItems);
+    this.selectedItems$ = of(this._selectedItems);
   }
 
   getAutogrowingTables(selections) {
@@ -423,7 +422,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
 
     this.availableItems = [];
 
-    this.selectedItems$ = Observable.of(this._selectedItems);
+    this.selectedItems$ = of(this._selectedItems);
   }
 
   // selecting all items
@@ -437,7 +436,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
 
     this._selectedItems = [];
 
-    this.selectedItems$ = Observable.of(this._selectedItems);
+    this.selectedItems$ = of(this._selectedItems);
   }
 
   // Check if item is in selected list
@@ -494,7 +493,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.selectedItems$ = Observable.of(this._selectedItems);
+    this.selectedItems$ = of(this._selectedItems);
   }
 
   // Helper method to insert Data in new position after drag drop event
@@ -508,7 +507,7 @@ export class DataFilterComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.selectedItems$ = Observable.of(this._selectedItems);
+    this.selectedItems$ = of(this._selectedItems);
   }
 
   // check if orgunit already exist in the orgunit display list
