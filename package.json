@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "setup": "npm install && sh scripts/update-submodules.sh",
-    "start": "ng serve --aot / --proxy proxy-config.json",
+    "start": "ng serve --aot --port 4207 --proxy proxy-config.json",
     "build": "ng build --prod --aot --output-hashing all --sourcemaps false --named-chunks false --build-optimizer --vendor-chunk  && cd dist && zip -r -D idashboard-21.zip .",
     "test": "ng test",
     "lint": "ng lint",
@@ -66,6 +66,7 @@
     "ngx-color-picker": "^6.3.3",
     "ngx-pagination": "^3.0.3",
     "polylabel": "^1.0.2",
+    "popper.js": "^1.14.3",
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "shp-write": "^0.3.2",

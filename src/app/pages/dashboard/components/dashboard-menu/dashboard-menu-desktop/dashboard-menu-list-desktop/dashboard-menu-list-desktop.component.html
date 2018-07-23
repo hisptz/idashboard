@@ -1,14 +1,18 @@
-<div
-  id="dashboard-menu-list-container-desktop"
-  class="animated"
->
-  <div
-    class="dashboard-menu-item-block-desktop"
-    *ngFor="let dashboardMenuItem of dashboardMenuItems"
-  >
-    <app-dashboard-menu-item-desktop
-      [dashboardMenuItem]="dashboardMenuItem"
-    >
-    </app-dashboard-menu-item-desktop>
+<div class="" *ngIf="allDashboardMenus && menuApiUrl">
+  <div class="dropdown dashboard-menu-item-block-desktop" *ngFor="let menu of allDashboardMenus">
+    <button class="dropbtn" title="{{ menu.description }}" routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]">{{ menu.name }}<i *ngIf="menu.category == 'parent'" style="background-color: transparent; margin-left: 10px"><img src="assets/icons/dropdown.png" height="15px" width="15px"></i></button>
+    <!--<button class="dropbtn" *ngIf="menu.category == 'parent'">{{ menu.name }}</button>-->
+    <div class="dropdown-content">
+      <div
+        class="dashboard-menu-item-block-desktop"
+        *ngFor="let subMenu of menu.subMenu"
+      >
+        <app-dashboard-menu-item-desktop
+          [dashboardMenuItem]="subMenu"
+        >
+        </app-dashboard-menu-item-desktop>
+      </div>
+    </div>
   </div>
 </div>
+

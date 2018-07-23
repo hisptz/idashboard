@@ -1,10 +1,11 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import * as dashboard from '../../../../../store/dashboard/dashboard.actions';
 import * as dashboardSelectors from '../../../../../store/dashboard/dashboard.selectors';
 import {AppState} from '../../../../../store/app.reducers';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {DashboardMenuItem} from '../../../../../store/dashboard/dashboard.state';
+import {ManifestService} from '../../../../../modules/map/services';
 
 @Component({
   selector: 'app-dashboard-menu-desktop',
@@ -13,25 +14,36 @@ import {DashboardMenuItem} from '../../../../../store/dashboard/dashboard.state'
 })
 export class DashboardMenuDesktopComponent implements OnInit {
 
+  @Input() theMenus: any;
   currentDashboardPage$: Observable<number>;
   dashboardPages$: Observable<number>;
   dashboardMenuItems$: Observable<DashboardMenuItem[]>;
   showBookmarked$: Observable<boolean>;
   searchTerm: string;
+  showBookMark: boolean;
+  public priority: string;
+  public menuUrl: string;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.organizeMenu(event.target.innerWidth);
   }
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private manifestService: ManifestService) {
     this.showBookmarked$ = store.select(dashboardSelectors.getShowBookmarkedStatus);
     this.dashboardMenuItems$ = this.store.select(dashboardSelectors.getDashboardMenuItems);
     this.currentDashboardPage$ = store.select(dashboardSelectors.getCurrentDashboardPage);
     this.dashboardPages$ = store.select(dashboardSelectors.getDashboardPages);
     this.organizeMenu(window.innerWidth);
+    this.showBookMark = false;
   }
 
   ngOnInit() {
+    this.showBookMark = false;
+    this.priority = 'first';
+    this.manifestService.getRootUrl().subscribe((rootUrl) => {
+      // this.menuUrl = '../../../' + rootUrl.split('/')[3] + '/api/25/dataStore/observatory/dashboardMenu.json?';
+      this.menuUrl = `api/25/dataStore/observatory/dashboardMenu.json?`;
+    });
   }
 
   getPreviousPage(e) {
@@ -50,7 +62,7 @@ export class DashboardMenuDesktopComponent implements OnInit {
   }
 
   organizeMenu(width: number, forceReduce: boolean = false) {
-    let itemsPerPage = 8;
+    let itemsPerPage = 12;
     const additionalWidth =  800;
     const approximatedItemsPerPage: number = (width - additionalWidth) / 100;
 

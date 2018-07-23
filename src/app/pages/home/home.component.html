@@ -21,12 +21,6 @@
       <div class="dashboard-placeholder" *ngIf="dashboardsLoaded$ | async">
         <h4><b>{{welcomingTitle | translate}}</b></h4>
         <h5>{{welcomingDescription | translate}}</h5>
-        <button
-          (click)="onCreateDashboard($event)"
-          [disabled]="dashboardsCreating$ | async"
-          class="btn btn-primary btn-lg">{{((dashboardsCreating$ | async) ? 'Adding Dashboard...':
-          'Add Dashboard') | translate}}
-        </button>
       </div>
       <!--end of dashboard place holder-->
     </div>

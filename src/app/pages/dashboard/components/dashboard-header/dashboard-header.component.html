@@ -5,25 +5,26 @@
         [currentDashboardTitle]="(currentDashboard$ | async)?.name"></app-current-dashboard-title>
     </div>
     <div class="dashboard-options">
-      <div
-        class="current-dashboard-share-button"
-        *ngIf="(currentDashboard$ | async)?.access.manage"
-      >
-        <app-current-dashboard-share-section></app-current-dashboard-share-section>
-      </div>
+      <!--<div-->
+      <!--class="current-dashboard-share-button"-->
+      <!--*ngIf="(currentDashboard$ | async)?.access.manage"-->
+      <!--&gt;-->
+      <!--<app-current-dashboard-share-section></app-current-dashboard-share-section>-->
+      <!--</div>-->
 
-      <div class="current-dashboard-bookmark-button">
-        <app-current-dashboard-bookmark-button
-          [currentDashboard]="(currentDashboard$ | async)"></app-current-dashboard-bookmark-button>
-      </div>
+      <!--<div class="current-dashboard-bookmark-button">-->
+      <!--<app-current-dashboard-bookmark-button-->
+      <!--[currentDashboard]="(currentDashboard$ | async)"></app-current-dashboard-bookmark-button>-->
+      <!--</div>-->
       <div class="current-dashboard-global-filter">
         <app-dashboard-global-filter
           [currentDashboardId]="(currentDashboard$ | async)?.id"></app-dashboard-global-filter>
       </div>
     </div>
   </div>
-
-  <div class="dashboard-search-block no-print">
-    <app-dashboard-item-search [dashboardAccess]="(currentDashboard$ | async)?.access"></app-dashboard-item-search>
+  <div class="">
+    <div style="display: inline-block">
+      <b>{{ message }}</b><span (mouseover)="setMessage()" (dblclick)="unsetMessage"><img height="20" (click)="setMessage" (dblclick)="unsetMessage()" class="pull-right img-responsive" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAShSURBVFhH3VhNbxNHGF4JjuVnFCohQf8Blza2Y2NOlUBUYFUqPfKZcACJC4m9a4cDhwRaQgVHDm1R+DjwFSDIu2sQggjyJaUhIQQiUEh2bRRiZ3gfM9Ya+7W9a2848EiPtN55Z+bxzsz7Mco3i5+1oR9DavpwJJW5HkkZU0FNzwYS6TyI50jK/B9t9PtQUEtvkd3WFlF1aEMooXeGU+ZM9FTG2ndx4sPxK/NCvbMkTqeXRW8mXySe8e4Ytf1BNtGejIU+7arese3Ene/kcP6BBl0fTOhHQpphxc6PZrtvvhdnHhZcs4/Ydeu9iJ0bsUOabgW09CGMKYdvDW1dD35o14yJ3WeHrdQ9mxXghcm7ttjVN2yFk8ZoQB3aJKdpDu2avoPEWZ3/vSpwk7VCjBlSdTugpqNyOm8IxvXfwikjm7i9xE7gB+O3F0U4aeZCcX2PnNYdil8uaWT9WNJGxJJjLtdfUu45q/vWIjvgWhBzkUir4Z7EyYokzfGjl+dc77k/HxXE/Rer4o0txErhM/GMd2jj+nCkPZmngzNS93TDleC0cgNwvPikIF5boibmqA02XF+Ou/qeWkFVPyjlfAk4UFraJbf77i/6Ou9yUkkdvCUbt18S+zGUNJagRcpyEFSNo3DCXEeOg1OrUoIQBXq8R0v69+NCkXepDe9KgC03BsfYuVGbQuURKcsBrf8MvD3XiePMoqNgaLpaAN6VME22le212EVRirS8kLI+oy2ub432PLQQkrhOHD/m5eyEfvpqle3n6V0Jy2Rb2V6L0IDYHUgYm6U8RUFWgqDOdajFcnDtzQoEf78wkaMDe0DKU5TIqcx1ZCWccS2Wg2sfGHOWeD7rTSCyoO0p86qURwIpd0sM+hfScMJxekswZ93vQRDhldKzSSkPS6xnT+vLrLFXniVxkwvO14Pj9uILQeSTSMukPEVBFtxr5lljrxx7W+ZfCHA/nF099porghz2ipTnn0CEt3I8euVdHFgl0I8lRrTIfpTKCM/mmxMHVi0x5WQtH5KBcefrLXxwH944Vh0SuBkcbc7YLcsjx/Cb5r8eeGygws0046grqb90BD6ea00gHDVp2i/llUKdaXsJdZX0SyA0bO/J2F+EOoAC9DQCNdfpa/LkjQVBgWNKynKAFCfWP2pznb4m91Lt3EZbTspygCQRRxtJI9exEa9NrAqb3AyIZ86mEbVBi9xLjYQVQMWPoprr3Ij2styABIueOZt6xN7b2feECqeyw1EJFCzkE8c6/531XKi3KrDjn9li0fTLpUvrpBweKP1Q8XstO4tLTMIg7io5bc6mFjEX5gx1GxuljPpAEY1iutn96IWeC/cSggljL64l1rKARw0U1sxcMJ7+VU7rDW3qgwiVonZHE3uyHnEgaMw8bjACcT0sp2sOP6np77F5UVQnB1tfco2WdCeNFUkazzG2nKY14HSj4kdRHesfsRFxvIRF2CJCwAljDLgSjCmH9w9woLjGRShCaYigjiwI6VHxCpiSXhDPeIe2fRfGc8UrYErpcLVS0wn7DQRzlIZIiyKpzGTxMlJeotOfsOlPTKINNlWB/9uBonwC8xIsVE9HJzMAAAAASUVORK5CYII="></span>
+    </div>
   </div>
 </div>

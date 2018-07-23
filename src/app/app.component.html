@@ -1,4 +1,57 @@
-<div class="no-print"><app-menu></app-menu></div>
+<div class="no-print" *ngIf="pageToDisplay">
+  <div [innerHtml]="pageToDisplay | safeHtml"></div>
+  <div class="col-md-12" style="background-color: #E9F2F1">
+    <div style="text-align: center;">
+      <div>
+        <button class="btn">
+          <div class="dropdown" *ngFor="let page of pages">
+            <a class="dropbtn" routerLinkActive="active-btn" (click)="setActiveClass(page.id)" id="{{page.id}}" routerLink="{{ page.routeUrl }}">{{ page.name }}<i *ngIf="page.category === 'parent'" style="background-color: transparent; margin-left: 10px"><img src="assets/icons/arrow-down.png" height="20px" width="20px"></i></a>
+            <div class="dropdown-content" *ngIf="page.category == 'parent'">
+              <div
+                class="dropdown-list"
+                *ngFor="let submenu of page.subMenu"
+              >
+                <div routerLink="{{ submenu.routeUrl }}">{{ submenu.name }}</div>
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
 <section id="page-container">
   <router-outlet></router-outlet>
 </section>
+<div *ngIf="footer" class="footer" [innerHtml]="footer | safeHtml"></div>
+<!--<footer *ngIf="pageToDisplay" class="footer footer-big footer-color-black" style="margin-top: 15px; background-color: #76818d; color: #ffffff">-->
+<!--<div class="container-footer" style="padding: 6px">-->
+<!--<div class="row footer-details">-->
+<!--<div class="col-md-8">-->
+<!--<ul class="">-->
+<!--<h4 class="text-left">Ministry of Health Tanzania (MoHCDGEC)</h4>-->
+<!--<h5>University of Dodoma, Faculty of Social Science in Community Development, Building No. 11</h5>-->
+
+<!--<address style="font-size: 1.1em;">P.O.BOX  743 <br>-->
+
+<!--40478 Dodoma <br>-->
+
+<!--Tel: +255-22-2342000/5 <br>-->
+<!--Email: ps@moh.go.tz <br>-->
+<!--Web: <a href="http://www.moh.go.tz/" target="_blank">www.moh.go.tz</a>-->
+<!--</address>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<div class="col-md-4">-->
+<!--<ul class="">-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--<hr>-->
+<!--<div class="copyright">-->
+<!--© <script> document.write(new Date().getFullYear()) </script>-->
+<!--<a routerLiink=""><img src="assets/img/logo.png" alt="" height="30"></a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</footer>-->

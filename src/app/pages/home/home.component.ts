@@ -33,16 +33,8 @@ export class HomeComponent implements OnInit {
     this.dashboardsCreating$ = store.select(getDashboardCreateStatus);
     this.welcomingMessageObject = {
       0: {
-        title: 'Intuitive design patterns',
+        title: 'Welcome to Tanzania Health Observatory',
         description: 'Enjoy simple, elegant and improved look and feel'
-      },
-      1: {
-        title: 'Impressive data visualizations',
-        description: 'Interactively visualize you data in charts, table and maps'
-      },
-      2: {
-        title: 'Impressive data dictionary',
-        description: 'Do not just look on your data, know more about your data'
       }
     };
 

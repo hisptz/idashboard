@@ -1,20 +1,21 @@
-import {
-  switchMap, withLatestFrom, take,
-  map,
-  catchError, tap, debounceTime, distinctUntilChanged
-} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable, of, forkJoin } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Dashboard, DashboardSharing } from './dashboard.state';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-
-
+import { Actions, Effect } from '@ngrx/effects';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/withLatestFrom';
+import { Location } from '@angular/common';
 import { HttpClientService } from '../../services/http-client.service';
 import * as dashboard from './dashboard.actions';
 import * as dashboardHelpers from './helpers/index';
 import * as visualization from '../visualization/visualization.actions';
 import * as visualizationHelpers from '../visualization/helpers/index';
 import * as currentUser from '../current-user/current-user.actions';
+import * as pages from '../pages/page.actions';
 import { AppState } from '../app.reducers';
 import { Store } from '@ngrx/store';
 import { CurrentUserState } from '../current-user/current-user.state';
@@ -23,40 +24,56 @@ import { Router } from '@angular/router';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { Visualization } from '../visualization/visualization.state';
 import { SharingEntity } from '../../modules/sharing-filter/models/sharing-entity';
+import { switchMap } from 'rxjs/operators/switchMap';
+import {
+  map,
+  catchError, tap
+} from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import {PageState} from '../pages/page.state';
 
 @Injectable()
 export class DashboardEffects {
   @Effect({dispatch: false})
-  currentUserLoaded$ = this.actions$.ofType<currentUser.LoadSuccessAction>(
-    currentUser.CurrentUserActions.LOAD_SUCCESS
+  pageLoaded$ = this.actions$.ofType<pages.LoadSuccessAction>(
+    pages.PageActions.LOAD_SUCCESS
   ).pipe(tap(() => {
     this.store.dispatch(new dashboard.LoadAction());
     this.store.dispatch(new dashboard.LoadDashboardNotificationAction());
   }));
+  @Effect({dispatch: false})
+  currentUserLoaded$ = this.actions$.ofType<currentUser.LoadSuccessAction>(
+    currentUser.CurrentUserActions.LOAD_SUCCESS
+  ).pipe(tap(() => {
+    this.store.dispatch(new pages.LoadAction());
+    this.store.dispatch(new dashboard.LoadDashboardNotificationAction());
+  }));
 
   @Effect()
-  loadDashboard$ = this.actions$.ofType<dashboard.LoadAction>(dashboard.DashboardActions.LOAD).pipe(take(1),
-    withLatestFrom(this.store)).pipe(
-    switchMap(([action, state]: [any, AppState]) =>
-      this._loadAll().pipe(
-        map((dashboards: any) => {
-          return {
-            dashboards: dashboards,
-            currentUser: state.currentUser,
-            url: state.route.state.url
-          };
-        }),
-        map((dashboardResponse: any) =>
-          new dashboard.LoadSuccessAction(dashboardResponse)),
-        catchError((error) => of(new dashboard.LoadFailAction(error)))
+  loadDashboard$ = this.actions$.ofType<dashboard.LoadAction>(dashboard.DashboardActions.LOAD).take(1).
+    withLatestFrom(this.store).pipe(
+      switchMap(([action, state]: [any, AppState]) =>
+        this._loadAll().pipe(
+          map((dashboards: any) => {
+            return {
+              dashboards: dashboards,
+              currentUser: state.currentUser,
+              page: state.page,
+              url: state.route.state.url
+            };
+          }),
+          map((dashboardResponse: any) =>
+            new dashboard.LoadSuccessAction(dashboardResponse)),
+          catchError((error) => of(new dashboard.LoadFailAction(error)))
+        )
       )
-    )
-  );
+    );
 
   @Effect({dispatch: false})
   dashboardsLoaded$ = this.actions$.ofType<dashboard.LoadSuccessAction>(
     dashboard.DashboardActions.LOAD_SUCCESS
-  ).pipe(tap((action: any) => {
+  ).switchMap((action: any) => {
     // TODO refactor this code
     this.store.dispatch(new dashboard.LoadOptionsAction());
     this.store.dispatch(new visualization.LoadSuccessAction());
@@ -66,14 +83,24 @@ export class DashboardEffects {
       action.payload.currentUser
     );
 
+    const pageId = action.payload.page.id;
+
     const currentVisualization = action.payload.url.split('/')[4];
 
-    if (currentDashboardId) {
+    if (this.location.path().indexOf('page') >= 0) {
+      this.router.navigate([this.location.path()]);
+    } else if (pageId && currentDashboardId) {
+      if (pageId.indexOf('dashboards') >= 0) {
+        this.router.navigate([pageId]);
+      } else {
+        this.router.navigate([pageId]);
+      }
+    } else if (currentDashboardId) {
       /**
        * Navigate to the particular dashboard if comes from home
        */
       if (action.payload.url.indexOf('dashboards') === -1) {
-        this.router.navigate(['/dashboards/' + currentDashboardId]);
+        this.router.navigate(['/dashboards/' + currentDashboardId ]);
       } else {
         if (currentVisualization) {
           this.store.dispatch(
@@ -91,41 +118,43 @@ export class DashboardEffects {
     } else {
       this.router.navigate(['/']);
     }
-  }));
+
+    return Observable.of(null);
+  });
 
   @Effect()
-  createDashboard$ = this.actions$.pipe(ofType<dashboard.CreateAction>(dashboard.DashboardActions.CREATE),
-    switchMap((action: any) => this._create(action.payload).pipe(map(
+  createDashboard$ = this.actions$.ofType<dashboard.CreateAction>(dashboard.DashboardActions.CREATE).
+    switchMap((action: any) => this._create(action.payload)).map(
       (dashboardObject: any) =>
         new dashboard.CreateSuccessAction(dashboardObject)
-    ))));
+    );
   // TODO deal with errors when dashboard creation fails
 
   @Effect()
-  renameDashboard$ = this.actions$.pipe(
-    ofType<dashboard.RenameAction>(dashboard.DashboardActions.RENAME),
-    switchMap((action: any) => this._rename(action.payload).pipe(map(
+  renameDashboard$ = this.actions$.ofType<dashboard.RenameAction>(dashboard.DashboardActions.RENAME).
+    switchMap((action: any) => this._rename(action.payload)).map(
       (dashboardObject: any) =>
         new dashboard.RenameSuccessAction(dashboardObject)
-    ))));
+    );
 
   @Effect({dispatch: false})
-  dashboardCreated$ = this.actions$.pipe(ofType<dashboard.CreateSuccessAction>(
+  dashboardCreated$ = this.actions$.ofType<dashboard.CreateSuccessAction>(
     dashboard.DashboardActions.CREATE_SUCCESS
-  ), tap((action: any) => {
+  ).switchMap((action: any) => {
     this.router.navigate([`/dashboards/${action.payload.id}`]);
-  }));
+    return Observable.of(null);
+  });
 
   @Effect()
-  deleteDashboard$ = this.actions$.pipe(
-    ofType<dashboard.DeleteAction>(dashboard.DashboardActions.DELETE),
-    switchMap((action: any) => this._delete(action.payload).pipe(map(
-      (dashboardId: string) => new dashboard.DeleteSuccessAction(dashboardId)))));
+  deleteDashboard$ = this.actions$.ofType<dashboard.DeleteAction>(dashboard.DashboardActions.DELETE).
+    switchMap((action: any) => this._delete(action.payload)).map(
+      (dashboardId: string) => new dashboard.DeleteSuccessAction(dashboardId)
+    );
 
   @Effect({dispatch: false})
-  dashboardDeleted$ = this.actions$.pipe(ofType<dashboard.DeleteSuccessAction>(
+  dashboardDeleted$ = this.actions$.ofType<dashboard.DeleteSuccessAction>(
     dashboard.DashboardActions.DELETE_SUCCESS
-  ), withLatestFrom(this.store), tap(([action, store]: [dashboard.DeleteSuccessAction, AppState]) => {
+  ).withLatestFrom(this.store).switchMap(([action, store]: [any, AppState]) => {
     const dashboardIndex = _.findIndex(
       store.dashboard.dashboards,
       _.find(store.dashboard.dashboards, ['id', action.payload])
@@ -147,11 +176,13 @@ export class DashboardEffects {
         this.router.navigate(['/']);
       }
     }
-  }));
+
+    return Observable.of(null);
+  });
 
   @Effect({dispatch: false})
-  route$ = this.actions$.pipe(ofType(ROUTER_NAVIGATION), withLatestFrom(this.store),
-    tap(([action, state]: [any, AppState]) => {
+  route$ = this.actions$.ofType(ROUTER_NAVIGATION).withLatestFrom(this.store).
+    switchMap(([action, state]: [any, AppState]) => {
       const currentDashboardId = state.route.state.url.split('/')[2];
       if (currentDashboardId) {
         /**
@@ -183,36 +214,36 @@ export class DashboardEffects {
           );
         }
       }
-    }));
+      return Observable.of(null);
+    });
 
   @Effect()
-  searchItem$ = this.actions$.pipe(ofType<dashboard.SearchItemsAction>(
+  searchItem$ = this.actions$.ofType<dashboard.SearchItemsAction>(
     dashboard.DashboardActions.SEARCH_ITEMS
-  ), switchMap((action: any) =>
-    action.payload.pipe(debounceTime(400), distinctUntilChanged(), switchMap((term: string) => this._searchItems(term).pipe(map(
-      (searchResult: any) =>
-        new dashboard.UpdateSearchResultAction(searchResult)
-    ))))
-  ));
+  ).switchMap((action: any) =>
+    action.payload.debounceTime(400).distinctUntilChanged().switchMap((term: string) => this._searchItems(term))
+  ).map(
+    (searchResult: any) =>
+      new dashboard.UpdateSearchResultAction(searchResult)
+  );
 
   @Effect()
-  addDashboardItemAction$ = this.actions$.pipe(
-    ofType<dashboard.AddItemAction>(dashboard.DashboardActions.ADD_ITEM),
-    withLatestFrom(this.store), switchMap(([action, store]) =>
+  addDashboardItemAction$ = this.actions$.ofType<dashboard.AddItemAction>(dashboard.DashboardActions.ADD_ITEM).
+    withLatestFrom(this.store).switchMap(([action, store]) =>
       this._addItem(
         store.dashboard.currentDashboard,
         action.payload.id,
         action.payload.type
-      ).pipe(map(
-        (dashboardItems: any[]) =>
-          new dashboard.AddItemSuccessAction(dashboardItems)
-      ))
-    ));
+      )
+    ).map(
+      (dashboardItems: any[]) =>
+        new dashboard.AddItemSuccessAction(dashboardItems)
+    );
 
   @Effect({dispatch: false})
-  dashboardItemAddedAction$ = this.actions$.pipe(ofType<dashboard.AddItemSuccessAction>(
+  dashboardItemAddedAction$ = this.actions$.ofType<dashboard.AddItemSuccessAction>(
     dashboard.DashboardActions.ADD_ITEM_SUCCESS
-  ), withLatestFrom(this.store), tap(([action, state]: [any, AppState]) => {
+  ).withLatestFrom(this.store).switchMap(([action, state]: [any, AppState]) => {
     const currentDashboard: Dashboard = _.find(state.dashboard.dashboards, [
       'id',
       state.dashboard.currentDashboard
@@ -241,46 +272,54 @@ export class DashboardEffects {
         new visualization.LoadFavoriteAction(initialVisualization)
       );
     }
-  }));
+
+    return Observable.of(null);
+  });
 
   @Effect({dispatch: false})
-  loadDashboardSharing = this.actions$.pipe(ofType<dashboard.LoadSharingDataAction>(
+  loadDashboardSharing = this.actions$.ofType<dashboard.LoadSharingDataAction>(
     dashboard.DashboardActions.LOAD_SHARING_DATA
-  ), withLatestFrom(this.store), tap(([action, state]: [any, AppState]) => {
-    if (
-      !state.dashboard.dashboardSharing ||
-      !state.dashboard.dashboardSharing[action.payload]
-    ) {
-      this._loadSharingInfo(action.payload).subscribe(
-        (sharingInfo: DashboardSharing) => {
-          this.store.dispatch(
-            new dashboard.LoadSharingDataSuccessAction(sharingInfo)
-          );
-        }
-      );
-    }
-  }));
+  ).withLatestFrom(this.store).pipe(
+    tap(([action, state]: [any, AppState]) => {
+      if (
+        !state.dashboard.dashboardSharing ||
+        !state.dashboard.dashboardSharing[action.payload]
+      ) {
+        this._loadSharingInfo(action.payload).subscribe(
+          (sharingInfo: DashboardSharing) => {
+            this.store.dispatch(
+              new dashboard.LoadSharingDataSuccessAction(sharingInfo)
+            );
+          }
+        );
+      }
+    })
+  );
 
   @Effect()
-  loadOptions$ = this.actions$.pipe(ofType<dashboard.LoadOptionsAction>(
+  loadOptions$ = this.actions$.ofType<dashboard.LoadOptionsAction>(
     dashboard.DashboardActions.LOAD_OPTIONS
-  ), take(1), withLatestFrom(this.store), switchMap(([action, state]: [dashboard.LoadOptionsAction, AppState]) =>
-    this._loadOptions().pipe(
-      map(
-        (dashboardOptions: any) =>
-          new dashboard.LoadOptionsSuccessAction({
-            dashboardOptions,
-            currentUser: state.currentUser
-          })
-      ),
-      catchError(() => of(new dashboard.LoadOptionsFailAction()))
+  ).take(1).withLatestFrom(this.store).pipe(
+    switchMap(([action, state]: [dashboard.LoadOptionsAction, AppState]) =>
+      this._loadOptions().pipe(
+        map(
+          (dashboardOptions: any) =>
+            new dashboard.LoadOptionsSuccessAction({
+              dashboardOptions,
+              currentUser: state.currentUser,
+              page: state.page
+            })
+        ),
+        catchError(() => of(new dashboard.LoadOptionsFailAction()))
+      )
     )
-  ));
+  );
 
   @Effect()
-  bookmarkDashboard$ = this.actions$.pipe(ofType<dashboard.BookmarkDashboardAction>(
+  bookmarkDashboard$ = this.actions$.ofType<dashboard.BookmarkDashboardAction>(
     dashboard.DashboardActions.BOOKMARK_DASHBOARD
-    ), withLatestFrom(this.store), map(([action, state]: [any, AppState]) => {
+  ).withLatestFrom(this.store).pipe(
+    map(([action, state]: [any, AppState]) => {
       return {
         dashboardId: action.payload.dashboardId,
         bookmarked: action.payload.bookmarked,
@@ -292,11 +331,11 @@ export class DashboardEffects {
         map(() => new dashboard.BookmarkDashboardSuccessAction()),
         catchError(() => of(new dashboard.BookmarkDashboardFailAction()))
       )
-    ));
+    )
+  );
 
   @Effect()
-  loadDashboardNotification$ = this.actions$.pipe(
-    ofType(dashboard.DashboardActions.LOAD_NOTIFACATION),
+  loadDashboardNotification$ = this.actions$.ofType(dashboard.DashboardActions.LOAD_NOTIFACATION).pipe(
     switchMap(() => this.httpClient.get('me/dashboard.json').pipe(
       map((response: any) => new dashboard.LoadDashboardNotificationSuccessAction(response)),
       catchError((error) => of(new dashboard.LoadDashboardNotificationFailAction(error)))))
@@ -305,6 +344,7 @@ export class DashboardEffects {
   constructor(private actions$: Actions,
     private store: Store<AppState>,
     private router: Router,
+    private location: Location,
     private httpClient: HttpClientService) {
   }
 
@@ -581,7 +621,7 @@ export class DashboardEffects {
   }
 
   private _loadSharingInfo(dashboardId: string): Observable<DashboardSharing> {
-    return this.httpClient.get('sharing?type=dashboard&id=' + dashboardId).pipe(map((sharingResponse: any) => {
+    return this.httpClient.get('sharing?type=dashboard&id=' + dashboardId).map((sharingResponse: any) => {
       return sharingResponse && sharingResponse.object
         ? {
           id: dashboardId,
@@ -589,7 +629,7 @@ export class DashboardEffects {
           sharingEntity: this._deduceSharingEntities(sharingResponse.object)
         }
         : null;
-    }));
+    });
   }
 
   private _deduceSharingEntities(sharingObject: any): SharingEntity {

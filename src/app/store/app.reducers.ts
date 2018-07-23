@@ -11,11 +11,14 @@ import {VisualizationState} from './visualization/visualization.state';
 import {visualizationReducer} from './visualization/visualization.reducer';
 import {DictionaryState} from '../modules/dictionary/store/dictionary.state';
 import {dictionaryReducer} from '../modules/dictionary/store/dictionary.reducer';
+import {PageState} from './pages/page.state';
+import {pageReducer} from './pages/page.reducer';
 
 export interface AppState {
   route: RouterReducerState;
   currentUser: CurrentUserState;
   dashboard: DashboardState;
+  page: PageState;
   visualization: VisualizationState;
   metadataDictionary: DictionaryState[];
 }
@@ -23,6 +26,7 @@ export interface AppState {
 export const reducers: ActionReducerMap<AppState> = {
   route: RouterReducer.routerReducer,
   currentUser: currentUserReducer,
+  page: pageReducer,
   dashboard: dashboardReducer,
   visualization: visualizationReducer,
   metadataDictionary: dictionaryReducer
