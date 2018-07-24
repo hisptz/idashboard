@@ -145,7 +145,6 @@ export class OrgUnitFilterComponent implements OnInit, OnDestroy {
            */
           this.orgUnitModel.selectedLevels = this.orgUnitModel.selectedLevels.map((selectedLevel) => {
             const newSelectedLevel = _.find(this.orgUnitModel.orgUnitLevels, ['level', parseInt(selectedLevel.level, 10)]);
-
             return newSelectedLevel ? newSelectedLevel : {
               level: selectedLevel.level,
               name: 'Level ' + selectedLevel.level
