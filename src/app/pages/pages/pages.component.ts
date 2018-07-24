@@ -30,6 +30,7 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
   _htmlMarkup: SafeHtml;
   hasScriptSet: boolean;
+  hasHtmlSet: boolean;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
     this.page$ = store.select(getPage);
@@ -37,18 +38,30 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.hasScriptSet = false;
+    this.hasHtmlSet = false;
     if (this.page$) {
       this.page$.subscribe((thePage) => {
         if (thePage) {
           thePage.pages.forEach((page) => {
             this.route.params.forEach((params: Params) => {
               if (page.id === params['id'] && page.category === 'leaf') {
-                console.log('page', page);
                 this.pageToDisplay = page.pageContent;
                 try {
                   this._htmlMarkup = this.sanitizer.bypassSecurityTrustHtml(
                     this.pageToDisplay
                   );
+                  this.hasHtmlSet = true;
+                } catch (e) {
+                  console.log(JSON.stringify(e));
+                }
+              } if (page.category === '' && page.id === params['id']) {
+                // here get the statistics page or page with no header button
+                this.pageToDisplay = page.pageContent;
+                try {
+                  this._htmlMarkup = this.sanitizer.bypassSecurityTrustHtml(
+                    this.pageToDisplay
+                  );
+                  this.hasHtmlSet = true;
                 } catch (e) {
                   console.log(JSON.stringify(e));
                 }
@@ -58,6 +71,7 @@ export class PagesComponent implements OnInit, AfterViewInit {
                   this._htmlMarkup = this.sanitizer.bypassSecurityTrustHtml(
                     this.pageToDisplay
                   );
+                  this.hasHtmlSet = true;
                 } catch (e) {
                   console.log(JSON.stringify(e));
                 }
@@ -83,7 +97,7 @@ export class PagesComponent implements OnInit, AfterViewInit {
       /<style[^>]*>([\w|\W]*)<\/style>/im
     );
     return matchedScriptArray && matchedScriptArray.length > 0
-      ? matchedScriptArray[1].replace(/(<([^>]+)>)/gi, ':separator:').split(':separator:').filter(content => content.length > 0)
+      ? matchedScriptArray[0].replace(/(<([^>]+)>)/gi, ':separator:').split(':separator:').filter(content => content.length > 0)
       : [];
   }
 
@@ -91,8 +105,12 @@ export class PagesComponent implements OnInit, AfterViewInit {
     const matchedScriptArray = html.match(
       /<script[^>]*>([\w|\W]*)<\/script>/im
     );
-    console.log('html test', matchedScriptArray);
-    return matchedScriptArray;
+    if (matchedScriptArray.length > 1) {
+      console.log('html test', matchedScriptArray);
+      return matchedScriptArray;
+    } else {
+      return matchedScriptArray;
+    }
   }
 
   setStylesOnHtmlContent(stylesContentsArray) {
@@ -106,10 +124,8 @@ export class PagesComponent implements OnInit, AfterViewInit {
   setScriptsOnHtmlContent(scriptsContentsArray) {
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    console.log(scriptsContentsArray[1])
-    script.innerHTML = scriptsContentsArray[1];
-    console.log(script);
-    this.elementRef.nativeElement.appendChild(script);
+    // script.innerHTML = scriptsContentsArray[0];
+    this.elementRef.nativeElement.appendChild(scriptsContentsArray[0]);
     this.hasScriptSet = true;
   }
 

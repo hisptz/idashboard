@@ -37,5 +37,138 @@
     <h5 style="">Get the data, interactively from different data sources such as national health management information system, census, surveys (DHS, THMIS, SARA, TSPA, etc)</h5>
   </div>
 </app-root>
+<script>
+  function showThisStatisticsPage(DataId, menuId) {
+    var elems = document.getElementsByClassName('container-summary-contents');
+    var btnElems = document.getElementsByClassName('menu-list-item');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== DataId) {
+        elems[i].style.display = 'none';
+      } else {
+        elems[i].style.display = 'block';
+      }
+    }
+
+    for (var i=0;i<btnElems.length;i+=1){
+      if (btnElems[i].id !== menuId) {
+        btnElems[i].style.backgroundColor = 'transparent';
+      } else {
+        btnElems[i].style.backgroundColor = '#337ab7';
+      }
+    }
+  }
+</script>
+
+<script>
+  function showThisPage(selectedId, btnId) {
+    var elems = document.getElementsByClassName('from-drive');
+    var btnElems = document.getElementsByClassName('menu-list');
+    console.log(btnElems);
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== selectedId) {
+        elems[i].style.display = 'none';
+      } else {
+        elems[i].style.display = 'block';
+      }
+    }
+
+    for (var i=0;i<btnElems.length;i+=1){
+      if (btnElems[i].id !== btnId) {
+        btnElems[i].style.backgroundColor = 'transparent';
+      } else {
+        btnElems[i].style.backgroundColor = '#337ab7';
+      }
+    }
+  }
+
+  function getDataForThisYear(yearId, dataId) {
+    var elems = document.getElementsByClassName('years');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== yearId) {
+        elems[i].style.backgroundColor = '#fafafa';
+        elems[i].style.border = 'none';
+        elems[i].style.borderBottom = 'solid 1px #999';
+      } else {
+        elems[i].style.backgroundColor = '#fff';
+        elems[i].style.border = 'solid 1px #999';
+        elems[i].style.borderBottom = 'none';
+      }
+    }
+
+    var elemsData = document.getElementsByClassName('data-by-year');
+    for (var i=0;i<elemsData.length;i+=1){
+      if (elemsData[i].id !== dataId) {
+        elemsData[i].style.display = 'none';
+      } else {
+        elemsData[i].style.display = 'block';
+      }
+    }
+  }
+
+  function showDownloadType(dataId, selectedTopMenu) {
+    var elems = document.getElementsByClassName('downloads-menu-list');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== selectedTopMenu) {
+        elems[i].style.backgroundColor = '#fafafa';
+      } else {
+        elems[i].style.backgroundColor = '#e1efee';
+      }
+    }
+
+    var elemsData = document.getElementsByClassName('downloads');
+    for (var i=0;i<elemsData.length;i+=1){
+      if (elemsData[i].id !== dataId) {
+        elemsData[i].style.display = 'none';
+      } else {
+        elemsData[i].style.display = 'block';
+        elemsData[i].style.display = 'flex';
+      }
+    }
+  }
+
+  function showScorecards(dataId, btnId) {
+    var elems = document.getElementsByClassName('menu-list');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== btnId) {
+        elems[i].style.backgroundColor = 'transparent';
+      } else {
+        elems[i].style.backgroundColor = '#337ab7';
+      }
+    }
+
+    var elemsData = document.getElementsByClassName('scorecards');
+    for (var i=0;i<elemsData.length;i+=1){
+      if (elemsData[i].id !== dataId) {
+        elemsData[i].style.display = 'none';
+      } else {
+        elemsData[i].style.display = 'block';
+      }
+    }
+  }
+
+  function getDataForThisProgram(btnId, dataId) {
+    var elems = document.getElementsByClassName('programs');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== btnId) {
+        elems[i].style.backgroundColor = '#fafafa';
+        elems[i].style.border = 'none';
+        elems[i].style.borderBottom = 'solid 1px #999';
+      } else {
+        elems[i].style.backgroundColor = '#fff';
+        elems[i].style.border = 'solid 1px #999';
+        elems[i].style.borderBottom = 'none';
+      }
+    }
+
+    var elemsData = document.getElementsByClassName('data-by-program');
+    for (var i=0;i<elemsData.length;i+=1){
+      if (elemsData[i].id !== dataId) {
+        elemsData[i].style.display = 'none';
+      } else {
+        elemsData[i].style.display = 'block';
+      }
+    }
+  }
+</script>
 </body>
 </html>
