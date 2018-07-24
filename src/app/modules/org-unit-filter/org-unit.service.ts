@@ -129,7 +129,7 @@ export class OrgUnitService {
   // Generate Organisation unit url based on the level needed
   generateUrlBasedOnLevels(level) {
     let childrenLevels = '[]';
-    for (let i = 1; i < level + 1; i++) {
+    for (let i = 1; i < level; i++) {
       childrenLevels = childrenLevels.replace('[]', '[id,name,level,children[]]');
     }
     let new_string = childrenLevels.substring(1);
