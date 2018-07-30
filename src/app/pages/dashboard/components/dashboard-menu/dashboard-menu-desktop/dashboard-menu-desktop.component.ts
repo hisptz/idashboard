@@ -41,8 +41,8 @@ export class DashboardMenuDesktopComponent implements OnInit {
     this.showBookMark = false;
     this.priority = 'first';
     this.manifestService.getRootUrl().subscribe((rootUrl) => {
-      // this.menuUrl = '../../../' + rootUrl.split('/')[3] + '/api/25/dataStore/observatory/dashboardMenu.json?';
-      this.menuUrl = `api/25/dataStore/observatory/dashboardMenu.json?`;
+      this.menuUrl = '../../../' + rootUrl.split('/')[3] + '/api/25/dataStore/observatory/dashboardMenu.json?';
+      // this.menuUrl = `api/25/dataStore/observatory/dashboardMenu.json?`;
     });
   }
 

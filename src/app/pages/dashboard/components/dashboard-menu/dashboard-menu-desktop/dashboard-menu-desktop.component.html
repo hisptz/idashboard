@@ -9,7 +9,7 @@
       <app-dashboard-menu-list-desktop
         [dashboardMenuItems]="dashboardMenuItems$ | async"
         [priority]="priority"
-        [menuApiUrl]="menuUrl"
+        [menuApiUrl]="menuUrl | createAbsoluteUrl"
         [menus]="theMenus"
       ></app-dashboard-menu-list-desktop>
     </div>
