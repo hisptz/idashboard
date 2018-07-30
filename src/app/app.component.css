@@ -4,7 +4,7 @@
 
 .no-print {
   /*border-bottom: 3px solid #000;*/
-  background-color: #598aaf
+  background-color: #133C9B;
 }
 
 @media print {
@@ -25,7 +25,7 @@
   padding: 10px;
   border: solid 1px #fff;
   border-radius: 15px 15px 0px 0px;
-  background-color: #E9F2F1;
+  background-color: #133C9B;
   text-decoration: none;
 }
 
@@ -79,8 +79,8 @@
 }
 
 .dropbtn {
-  background-color: #E9F2F1;
-  color: #000000;
+  background-color: #133C9B;
+  color: #ffffff;
   padding: 10px;
   border-radius: 4px 4px 0px 0px;
   /*font-size: 16px;*/

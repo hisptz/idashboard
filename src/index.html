@@ -170,5 +170,36 @@
     }
   }
 </script>
+<script>
+  var startdelay 	= 2;var scrollspeed	= 0.8;var scrollwind= 1;var speedjump= 30;var nextdelay		= 0;var topspace	= "2px";var frameheight	= 176;
+  current = (scrollspeed);
+  function HeightData(){
+    AreaHeight=dataobj.offsetHeight
+    if (AreaHeight===0){
+      setTimeout("HeightData()",( startdelay * 1000 ))
+    }
+    else {
+      ScrollNewsDiv()
+    }}
+  function NewsScrollStart(){
+    console.log('Executed');
+    dataobj=document.all? document.all.NewsDiv : document.getElementById("NewsDiv")
+    dataobj.style.top=topspace
+    setTimeout("HeightData()",( startdelay * 1000 ))
+  }
+
+  function ScrollNewsDiv(){
+    dataobj.style.top=scrollwind+'px';
+    // dataobj.style.top='20px';
+    scrollwind-=scrollspeed;
+    if (parseInt(dataobj.style.top)<AreaHeight*(-1)) {
+      dataobj.style.top=frameheight+'px';
+      scrollwind=frameheight;
+      setTimeout("ScrollNewsDiv()",( nextdelay * 1000 ))
+    }
+    else {
+      setTimeout("ScrollNewsDiv()",speedjump)
+    }}
+</script>
 </body>
 </html>

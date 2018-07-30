@@ -11,6 +11,10 @@ export const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'page/:parentId/:id',
+    component: PagesComponent
+  },
+  {
     path: 'page/:id',
     component: PagesComponent
   },
