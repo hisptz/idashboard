@@ -1,3 +1,6 @@
+<div class="loading-block" *ngIf="!_htmlMarkup">
+  <img src="assets/icons/balls-3.svg">
+</div>
 <div class="container-fluid" style="padding-left: 0px;" *ngIf="_htmlMarkup">
   <div class="row">
     <div class="col-md-12" *ngIf="hasHtmlSet" [innerHtml]="_htmlMarkup"></div>

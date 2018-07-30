@@ -171,12 +171,12 @@
   }
 </script>
 <script>
-  var startdelay 	= 2;var scrollspeed	= 0.8;var scrollwind= 1;var speedjump= 30;var nextdelay		= 0;var topspace	= "2px";var frameheight	= 176;
+  var startdelay 	= 2;var scrollspeed	= 0.3;var scrollwind= 0.5;var speedjump= 20;var nextdelay		= 2;var topspace	= "2px";var frameheight	= 176;
   current = (scrollspeed);
   function HeightData(){
     AreaHeight=dataobj.offsetHeight
     if (AreaHeight===0){
-      setTimeout("HeightData()",( startdelay * 1000 ))
+      setTimeout("HeightData()",( startdelay * 200 ))
     }
     else {
       ScrollNewsDiv()
@@ -185,7 +185,7 @@
     console.log('Executed');
     dataobj=document.all? document.all.NewsDiv : document.getElementById("NewsDiv")
     dataobj.style.top=topspace
-    setTimeout("HeightData()",( startdelay * 1000 ))
+    setTimeout("HeightData()",( startdelay * 200 ))
   }
 
   function ScrollNewsDiv(){
@@ -200,6 +200,27 @@
     else {
       setTimeout("ScrollNewsDiv()",speedjump)
     }}
+</script>
+<script>
+  function newsController(newsClass, contentsClass, newsId, newsContentsId) {
+    var elems = document.getElementsByClassName(newsClass);
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== newsId) {
+        elems[i].style.color = '#000';
+      } else {
+        elems[i].style.color = '#3779B6';
+      }
+    }
+
+    var elemsData = document.getElementsByClassName(contentsClass);
+    for (var i=0;i<elemsData.length;i+=1){
+      if (elemsData[i].id !== newsContentsId) {
+        elemsData[i].style.display = 'none';
+      } else {
+        elemsData[i].style.display = 'block';
+      }
+    }
+  }
 </script>
 </body>
 </html>
