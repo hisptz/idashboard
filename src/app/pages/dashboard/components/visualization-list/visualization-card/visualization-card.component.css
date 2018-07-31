@@ -138,3 +138,7 @@
   height: 100%;
   padding: 10px;
 }
+
+.col-7, .col-5 {
+  padding: 2px;
+}
