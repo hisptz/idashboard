@@ -16,6 +16,8 @@ import * as $ from 'jquery';
 import {PageState} from '../../store/pages/page.state';
 import {AppState} from '../../store/app.reducers';
 import {getPage} from '../../store/pages/page.selectors';
+import {HttpClient} from '@angular/common/http';
+import {HttpClientService} from '../../services/http-client.service';
 
 
 @Component({
@@ -32,7 +34,7 @@ export class PagesComponent implements OnInit, AfterViewInit {
   hasScriptSet: boolean;
   hasHtmlSet: boolean;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
+  constructor(private store: Store<AppState>, private httpClientService: HttpClientService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
     this.page$ = store.select(getPage);
   }
 

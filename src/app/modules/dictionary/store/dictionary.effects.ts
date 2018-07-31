@@ -399,7 +399,7 @@ export class DictionaryEffects {
             indicatorDescription +=
               '<div><p>This indicator was <strong> first created </strong> in the system on <strong>' +
               this.datePipe.transform(
-                indicator.created) + '</strong> by <strong>' + indicator.user.name + '</strong></p></div>';
+                indicator.created) + '.';
           }
 
           this.store.dispatch(new DictionaryActions.UpdateAction({

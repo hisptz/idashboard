@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
       }
     };
 
-    this.welcomingMessage = this.welcomingMessageObject[this.getRandomInt(0, 2)];
+    this.welcomingMessage = this.welcomingMessageObject[this.getRandomInt(0, 0)];
     this.welcomingDescription = WELCOMING_DESCRIPTION;
     this.welcomingTitle = WELCOMING_TITLE;
   }

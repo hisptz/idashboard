@@ -40,7 +40,6 @@ export class DashboardEffects {
     pages.PageActions.LOAD_SUCCESS
   ).pipe(tap(() => {
     this.store.dispatch(new dashboard.LoadAction());
-    this.store.dispatch(new dashboard.LoadDashboardNotificationAction());
   }));
   @Effect({dispatch: false})
   currentUserLoaded$ = this.actions$.ofType<currentUser.LoadSuccessAction>(

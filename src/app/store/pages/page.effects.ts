@@ -28,6 +28,6 @@ export class PageEffects {
   }
 
   private _load(): Observable<any> {
-    return this.httpClient.get(`25/dataStore/observatory/pages.json`);
+    return this.httpClient.get(`dataStore/observatory/pages.json`);
   }
 }

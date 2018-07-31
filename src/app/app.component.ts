@@ -31,6 +31,12 @@ export class AppComponent implements OnInit {
     if (this.page$) {
       this.page$.subscribe((thePage) => {
         if (thePage) {
+          console.log(thePage);
+          this.pageToDisplay = thePage.headerContents;
+          this.footer = thePage.footerContents;
+          this.pages = thePage.pages;
+        }
+        if (thePage) {
           const pagesArr = []; const subMenus = [];
           if (thePage.id.indexOf('dashboards') >= 0) {
             thePage.pages.forEach((page) => {

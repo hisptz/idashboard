@@ -22,7 +22,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientService } from './services/http-client.service';
 import { ManifestService } from './services/manifest.service';
-import { MenuModule } from './modules/menu/menu.module';
 import { VisualizationListComponent } from './pages/dashboard/components/visualization-list/visualization-list.component';
 import { VisualizationCardComponent } from './pages/dashboard/components/visualization-list/visualization-card/visualization-card.component';
 import { DashboardMenuComponent } from './pages/dashboard/components/dashboard-menu/dashboard-menu.component';
@@ -79,7 +78,6 @@ import { DashboardNotificationComponent } from './pages/dashboard/components/das
 import { FeedbackMessageModule } from './modules/feedback-message/feedback-message.module';
 
 // service worker module
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { VisualizationExportService } from './services/visualization-export.service';
 import { VisualizationErrorNotifierComponent } from './pages/dashboard/components/visualization-list/visualization-card/visualization-error-notifier/visualization-error-notifier.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
@@ -147,7 +145,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    MenuModule,
     ChartModule,
     TableModule,
     DictionaryModule,
