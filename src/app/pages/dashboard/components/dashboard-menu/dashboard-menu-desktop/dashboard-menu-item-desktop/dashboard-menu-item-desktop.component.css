@@ -11,13 +11,13 @@
   font-size: 13px;
   height: 100%;
   text-decoration: none;
-  color: #555;
+  color: #337ab7;
 }
 
 .active-dashboard,
 .dashboard-menu-name-desktop:hover {
   background: #f1f1f1;
-  color: #222;
+  color: #337ab7;
 }
 
 .dashboard-item-dropdown-desktop {

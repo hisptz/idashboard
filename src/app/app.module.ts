@@ -83,6 +83,7 @@ import { VisualizationErrorNotifierComponent } from './pages/dashboard/component
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { PagesComponent } from './pages/pages/pages.component';
 import { CreateAbsoluteUrlPipe } from './pipes/create-absolute-url.pipe';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -160,7 +161,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ResourcesModule,
     ReportsModule,
     // TODO: We need to look and revisit to see. what is causing service worker not to be registered.
-    // ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
+    ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     FeedbackMessageModule,
     TranslateModule.forRoot({
       loader: {

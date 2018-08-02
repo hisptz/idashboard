@@ -16,6 +16,7 @@ export class DashboardHeaderComponent implements OnInit {
   message: string;
   constructor(private store: Store<AppState>) {
     this.currentDashboard$ = this.store.select(dashboardSelectors.getCurrentDashboard);
+    this.message = '';
   }
 
   ngOnInit() {
