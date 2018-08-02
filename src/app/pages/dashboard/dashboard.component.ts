@@ -9,6 +9,8 @@ import { Visualization } from '../../store/visualization/visualization.state';
 import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
 import { Dashboard } from '../../store/dashboard/dashboard.state';
 import { getCurrentDashboard } from '../../store/dashboard/dashboard.selectors';
+import {getPage} from '../../store/pages/page.selectors';
+import {PageState} from '../../store/pages/page.state';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,8 +25,10 @@ export class DashboardComponent implements OnInit {
   welcomingTitle: string;
   welcomingDescription: string;
   emptyVisualizationMessage: string;
+  page$: Observable<PageState>;
 
   constructor(private store: Store<AppState>) {
+    this.page$ = store.select(getPage);
     this.visualizationObjects$ = store.select(
       visualizationSelectors.getCurrentDashboardVisualizationObjects
     );

@@ -10,15 +10,19 @@ export class HttpClientService {
   private _rootUrl: string;
   private _apiRootUrl: string;
   private _systemInfo: string;
-
+  private httpOptions: any;
+  private username = 'portalobservatory';
+  private password = 'DHIS2017';
+  private token: string;
   constructor(private httpClient: HttpClient, private manifestService: ManifestService) {
+    this.token = btoa(this.username + ':' + this.password);
   }
+
 
   get(url: string, preferPreviousApiVersion: boolean = false, useRootUrl: boolean = false): Observable<any> {
     const rootUrlPromise = useRootUrl ? this._getRootUrl() : this._getApiRootUrl(preferPreviousApiVersion);
-
     return rootUrlPromise.pipe(
-      mergeMap(rootUrl => this.httpClient.get(rootUrl + url).pipe(catchError(this._handleError)))
+      mergeMap(rootUrl => this.httpClient.get(rootUrl + url, {headers: { 'Authorization': 'Basic ' + this.token, 'Content-Type': 'application/json'}}).pipe(catchError(this._handleError)))
     );
   }
 
@@ -27,7 +31,7 @@ export class HttpClientService {
     const rootUrlPromise = useRootUrl ? this._getRootUrl() : this._getApiRootUrl(preferPreviousApiVersion);
     return rootUrlPromise.pipe(
       mergeMap(rootUrl =>
-        this.httpClient.post(rootUrl + url, data).
+        this.httpClient.post(rootUrl + url, data, {headers: { 'Authorization': 'Basic ' + this.token, 'Content-Type': 'application/json'}}).
           pipe(catchError(this._handleError))
       )
     );
@@ -35,25 +39,23 @@ export class HttpClientService {
 
   put(url: string, data: any, preferPreviousApiVersion: boolean = false, useRootUrl: boolean = false) {
     const rootUrlPromise = useRootUrl ? this._getRootUrl() : this._getApiRootUrl(preferPreviousApiVersion);
-
     return rootUrlPromise.pipe(
       mergeMap(rootUrl =>
-        this.httpClient.put(rootUrl + url, data).pipe(catchError(this._handleError))
+        this.httpClient.put(rootUrl + url, data, {headers: { 'Authorization': 'Basic ' + this.token, 'Content-Type': 'application/json'}}).pipe(catchError(this._handleError))
       )
     );
   }
 
   delete(url: string, preferPreviousApiVersion: boolean = false, useRootUrl: boolean = false) {
     const rootUrlPromise = useRootUrl ? this._getRootUrl() : this._getApiRootUrl(preferPreviousApiVersion);
-
     return rootUrlPromise.pipe(
-      mergeMap(rootUrl => this.httpClient.delete(rootUrl + url).pipe(catchError(this._handleError)))
+      mergeMap(rootUrl => this.httpClient.delete(rootUrl + url, {headers: { 'Authorization': 'Basic ' + this.token, 'Content-Type': 'application/json'}}).pipe(catchError(this._handleError)))
     );
   }
 
   getSystemInfo() {
     return this._systemInfo ? of(this._systemInfo) :
-      this._getRootUrl().pipe(switchMap((rootUrl: string) => this.httpClient.get(`${rootUrl}api/system/info`).
+      this._getRootUrl().pipe(switchMap((rootUrl: string) => this.httpClient.get(`${rootUrl}api/system/info`, {headers: { 'Authorization': 'Basic ' + this.token, 'Content-Type': 'application/json'}}).
         pipe(tap((systemInfo: any) => this._systemInfo = systemInfo))));
   }
 
