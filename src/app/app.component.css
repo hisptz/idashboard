@@ -4,7 +4,7 @@
 
 .no-print {
   /*border-bottom: 3px solid #000;*/
-  background-color: #133C9B;
+  background-color: #1d49af;
 }
 
 @media print {
@@ -22,10 +22,10 @@
 .btn {
   color: #ffffff;
   text-align: center;
-  padding: 10px;
+  padding: 2px;
   border: solid 1px #fff;
   border-radius: 15px 15px 0px 0px;
-  background-color: #133C9B;
+  background-color: #1d49af;
   text-decoration: none;
 }
 
@@ -38,18 +38,10 @@
   text-align: left;
 }
 
-.dropbtn {
-  background-color: #fff;
-  color: #FFFFFF;
-  padding: 4px;
-  font-size: 20px;
-  text-decoration: none;
-  border: none;
-}
-
 .dropdown {
   position: relative;
-  width: 150px;
+  width: 140px;
+  border-right: solid 1px #3c56a1;
   display: inline-block;
 }
 
@@ -79,10 +71,12 @@
 }
 
 .dropbtn {
-  background-color: #133C9B;
+  background-color: #1d49af;
   color: #ffffff;
-  padding: 10px;
+  padding: 2px;
+  text-decoration: none;
   border-radius: 4px 4px 0px 0px;
+  font-size: 20px;
   /*font-size: 16px;*/
 }
 
