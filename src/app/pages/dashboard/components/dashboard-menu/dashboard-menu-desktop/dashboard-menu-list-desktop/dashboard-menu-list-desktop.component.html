@@ -1,7 +1,7 @@
 <div class="" *ngIf="allDashboardMenus && menuApiUrl">
   <div class="dropdown dashboard-menu-item-block-desktop" *ngFor="let menu of allDashboardMenus">
-    <button class="dropbtn" title="{{ menu.description }}" routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]">{{ menu.name }}<i *ngIf="menu.category == 'parent'" style="background-color: transparent; margin-left: 10px"><img src="assets/icons/dropdown.png" height="15px" width="15px"></i></button>
-    <!--<button class="dropbtn" *ngIf="menu.category == 'parent'">{{ menu.name }}</button>-->
+    <button class="dropbtn menu-btn"  *ngIf="menu.category !== 'parent'" (click)="setActiveClass(menu.id)" id="{{menu.id}}" title="{{ menu.description }}" routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]">{{ menu.name }}</button>
+    <button disabled="disabled" id="{{ menu.name }}" class="dropbtn main-menu-btn" *ngIf="menu.category == 'parent'">{{ menu.name }}<i><img src="assets/icons/dropdown.png" height="15px" width="15px"></i></button>
     <div class="dropdown-content">
       <div
         class="dashboard-menu-item-block-desktop"
@@ -9,6 +9,8 @@
       >
         <app-dashboard-menu-item-desktop
           [dashboardMenuItem]="subMenu"
+          [menu]="menu"
+          (mainMenuId)="setStylesMainMenu($event)"
         >
         </app-dashboard-menu-item-desktop>
       </div>

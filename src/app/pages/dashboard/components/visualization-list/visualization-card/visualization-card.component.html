@@ -98,7 +98,7 @@
     </div>
     <!--end of interpretation section-->
   </div>
-  <div class="visualization-card-footer" *ngIf="loaded && !visualizationObject.details.hasError">
+  <div class="visualization-card-footer" *ngIf="loaded && isCardFocused && !visualizationObject.details.hasError">
     <div *ngIf="visualizationObject.details.nonVisualizable">&nbsp;</div>
     <div class="visualization-card-footer-left animated fadeInLeft" *ngIf="!visualizationObject.details.nonVisualizable">
       <app-visualization-types-section [currentVisualization]="currentVisualization" (onCurrentVisualizationChange)="currentVisualizationChange($event)"></app-visualization-types-section>

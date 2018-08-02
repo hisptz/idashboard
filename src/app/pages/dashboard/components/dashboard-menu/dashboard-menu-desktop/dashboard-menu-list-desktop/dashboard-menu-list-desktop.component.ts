@@ -5,6 +5,7 @@ import {AppState} from '../../../../../../store/app.reducers';
 import {Store} from '@ngrx/store';
 import * as dashboardSelectors from '../../../../../../store/dashboard/dashboard.selectors';
 import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-menu-list-desktop',
@@ -19,7 +20,7 @@ export class DashboardMenuListDesktopComponent implements OnInit {
   @Input() dashboardMenuItems: DashboardMenuItem[];
   @Input() menus: any;
   public allDashboardMenus: any;
-  constructor(private store: Store<AppState>, private http: HttpClient) {
+  constructor(private store: Store<AppState>, private http: HttpClient, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -44,7 +45,59 @@ export class DashboardMenuListDesktopComponent implements OnInit {
           });
         });
         this.allDashboardMenus = menuData['dashboardMenus'];
+        this.route.params.forEach((params: Params) => {
+          const id = params['id'];
+          console.log('params', id);
+          const items = document.getElementsByClassName('menu-btn');
+          for (let count = 0; count < items.length; count++) {
+            if (items[count].id !== '') {
+              document.getElementById(items[count].id).style.backgroundColor = '#FFF';
+              document.getElementById(items[count].id).style.color = '#3779B6';
+            }
+          }
+          document.getElementById(id).style.backgroundColor = '#3779B6';
+          document.getElementById(id).style.color = '#FFF';
+        });
       });
     }
+  }
+
+  setActiveClass(id) {
+        const items = document.getElementsByClassName('menu-btn');
+        for (let count = 0; count < items.length; count++) {
+          if (items[count].id !== '') {
+            document.getElementById(items[count].id).style.backgroundColor = '#FFF';
+            document.getElementById(items[count].id).style.color = '#3779B6';
+          }
+        }
+
+    const mainMenuItems = document.getElementsByClassName('main-menu-btn');
+    for (let count = 0; count < mainMenuItems.length; count++) {
+      if (items[count].id !== '') {
+        document.getElementById(mainMenuItems[count].id).style.backgroundColor = '#FFF';
+        document.getElementById(mainMenuItems[count].id).style.color = '#3779B6';
+      }
+    }
+        document.getElementById(id).style.backgroundColor = '#3779B6';
+        document.getElementById(id).style.color = '#FFF';
+  }
+
+  setStylesMainMenu(id) {
+    const mainMenuItems = document.getElementsByClassName('main-menu-btn');
+    for (let count = 0; count < mainMenuItems.length; count++) {
+      if (mainMenuItems[count].id !== '') {
+        document.getElementById(mainMenuItems[count].id).style.backgroundColor = '#FFF';
+        document.getElementById(mainMenuItems[count].id).style.color = '#3779B6';
+      }
+    }
+    const items = document.getElementsByClassName('menu-btn');
+    for (let count = 0; count < items.length; count++) {
+      if (items[count].id !== '') {
+        document.getElementById(items[count].id).style.backgroundColor = '#FFF';
+        document.getElementById(items[count].id).style.color = '#3779B6';
+      }
+    }
+    document.getElementById(id).style.backgroundColor = '#3779B6';
+    document.getElementById(id).style.color = '#FFF';
   }
 }

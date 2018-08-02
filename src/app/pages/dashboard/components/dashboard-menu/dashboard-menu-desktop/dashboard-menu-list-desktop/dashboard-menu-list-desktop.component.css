@@ -9,7 +9,6 @@
 }
 
 .dropbtn {
-  background-color: #4CAF50;
   color: #FFFFFF;
   padding: 4px;
   font-size: 12px;
@@ -39,14 +38,18 @@
   font-size: 16px;
 }
 
-.dropdown-content :hover {background-color: #f1f1f1}
+.dropdown-content :hover {
+  background-color: #3779B6;
+  color: #ffffff;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
 .dropdown:hover .dropbtn {
-  background-color: #f1f1f1;
+  background-color: #3779B6;
+  color: #ffffff;
 }
 
 .dropbtn {
@@ -55,4 +58,9 @@
   border-left: solid 1px #e2e2e2;
   padding: 2px 8px;
   font-size: 14px;
+}
+
+#gdeaYoJncPv {
+  background-color: #3779B6;
+  color: #ffffff;
 }

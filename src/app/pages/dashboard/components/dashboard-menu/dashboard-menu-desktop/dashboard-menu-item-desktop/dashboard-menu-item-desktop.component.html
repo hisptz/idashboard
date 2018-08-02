@@ -1,6 +1,6 @@
-<div class="dashboard-menu-item-desktop" routerLinkActive="active-dashboard" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)">
+<div *ngIf="dashboardMenuItem.id" class="dashboard-menu-item-desktop dropbtn-div" id="{{ dashboardMenuItem.id }}" routerLinkActive="active-dashboard"  [routerLink]="['/dashboards', dashboardMenuItem.id]" (click)="setActiveClass(dashboardMenuItem.id)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)">
   <!--name block-->
-  <a *ngIf="dashboardMenuItem.id"  class="dashboard-menu-name-desktop" routerLinkActive="active-dashboard" [routerLink]="['/dashboards', dashboardMenuItem.id]" (click)="showVisualization()" (contextmenu)="showDropdown($event)">
+  <a  class="dashboard-menu-name-desktop" routerLinkActive="active-dashboard" (contextmenu)="showDropdown($event)">
     {{ dashboardMenuItem.displayName}}
   </a>
   <!-- end of dashboard item dropdown-->

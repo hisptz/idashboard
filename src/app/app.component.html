@@ -5,7 +5,7 @@
       <div>
         <button class="btn">
           <div class="dropdown" *ngFor="let page of pages">
-            <a class="dropbtn" routerLinkActive="active-btn" (click)="setActiveClass(page.id)" id="{{page.id}}" routerLink="{{ page.routeUrl }}">{{ page.name }}<i *ngIf="page.category === 'parent'" style="background-color: transparent; margin-left: 10px"><img src="assets/icons/arrow-down.png" height="20px" width="20px"></i></a>
+            <a class="dropbtn top-btn" routerLinkActive="active-btn" (click)="setActiveClass(page.id)" id="{{page.id}}" routerLink="{{ page.routeUrl }}">{{ page.name }}<i *ngIf="page.category === 'parent'" style="background-color: transparent; margin-left: 10px"><img src="assets/icons/arrow-down.png" height="20px" width="20px"></i></a>
             <div class="dropdown-content" *ngIf="page.category == 'parent'">
               <div
                 class="dropdown-list"

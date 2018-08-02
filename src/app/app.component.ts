@@ -110,6 +110,10 @@ export class AppComponent implements OnInit {
   }
 
   setActiveClass(id) {
-    // $('.dropdown a').addClass('active').find('> #home:eq(0)').addClass('current');
+    const items = document.getElementsByClassName('top-btn');
+    for (let count = 0; count < items.length; count++) {
+      document.getElementById(items[count].id).style.backgroundColor = '#133C9B';
+    }
+    document.getElementById(id).style.backgroundColor = '#3779B6';
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../../store/app.reducers';
 import * as dashboardActions from '../../../../../../store/dashboard/dashboard.actions';
@@ -40,6 +40,9 @@ import {
 })
 export class DashboardMenuItemDesktopComponent implements OnInit {
   @Input() dashboardMenuItem: any;
+  @Input() menu: any;
+  @Output() mainMenuId = new EventEmitter<string>();
+  mainMenu: string;
   showEditForm: boolean;
   showDashboardItemDropdown: boolean;
   showDeleteBlock: boolean;
@@ -126,5 +129,20 @@ export class DashboardMenuItemDesktopComponent implements OnInit {
         bookmarked: !this.dashboardMenuItem.details.bookmarked
       })
     );
+  }
+
+  setActiveClass(id) {
+    this.mainMenu = this.menu.name;
+    console.log(this.menu);
+    this.mainMenuId.emit(this.menu.name);
+    const items = document.getElementsByClassName('dropbtn-div');
+    for (let count = 0; count < items.length; count++) {
+      if (items[count].id !== '') {
+        document.getElementById(items[count].id).style.backgroundColor = 'transparent';
+        document.getElementById(items[count].id).style.color = '#3779B6';
+      }
+    }
+    document.getElementById(id).style.backgroundColor = '#3779B6';
+    document.getElementById(id).style.color = '#FFF';
   }
 }
