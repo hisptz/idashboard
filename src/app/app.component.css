@@ -87,3 +87,11 @@
 .active-btn:hover {
   background-color: #3779B6;
 }
+
+/* Progress bar*/
+.loading-progress {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 7px;
+  border-radius: 2px;
+}

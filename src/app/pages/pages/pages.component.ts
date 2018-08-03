@@ -16,9 +16,9 @@ import * as $ from 'jquery';
 import {PageState} from '../../store/pages/page.state';
 import {AppState} from '../../store/app.reducers';
 import {getPage} from '../../store/pages/page.selectors';
-import {HttpClient} from '@angular/common/http';
 import {HttpClientService} from '../../services/http-client.service';
-
+import {TimerObservable} from 'rxjs-compat/observable/TimerObservable';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-pages',
@@ -33,12 +33,29 @@ export class PagesComponent implements OnInit, AfterViewInit {
   _htmlMarkup: SafeHtml;
   hasScriptSet: boolean;
   hasHtmlSet: boolean;
+  timeOut: boolean;
+  activeTime = 0;
+  timerStatus: boolean;
+  private subscription: Subscription;
 
   constructor(private store: Store<AppState>, private httpClientService: HttpClientService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
     this.page$ = store.select(getPage);
+    this.timeOut = false;
+    this.timerStatus = true;
   }
 
   ngOnInit() {
+    const timer = TimerObservable.create(2000, 2000);
+    this.subscription = timer.subscribe(t => {
+      this.activeTime = t;
+      const elem = document.getElementById('progress-bar');
+      elem.style.width = (this.activeTime * 10) + '%';
+      if (this.activeTime > 10) {
+        this.timeOut = true;
+        this.activeTime = 0;
+      }
+    });
+
     this.hasScriptSet = false;
     this.hasHtmlSet = false;
     if (this.page$) {
@@ -83,6 +100,28 @@ export class PagesComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+
+  stopTimer (time) {
+    this.activeTime = time;
+    this.timerStatus = false;
+    this.subscription.unsubscribe();
+  }
+
+  startTimer(time) {
+    this.timerStatus = true;
+    const timer = TimerObservable.create(2000, 2000);
+    this.subscription = timer.subscribe(t  => {
+      this.activeTime = t + time + 1;
+      const elem = document.getElementById('progress-bar');
+      elem.style.width = (this.activeTime * 10) + '%';
+      if (this.activeTime > 10) {
+        this.timeOut = true;
+        this.activeTime = 0;
+      }
+    });
+  }
+  OnDestroy() {
   }
 
   ngAfterViewInit() {

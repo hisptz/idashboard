@@ -1,3 +1,6 @@
+<div *ngIf="!pageToDisplay" class="loading-progress">
+  <app-progress-loader></app-progress-loader>
+</div>
 <div class="no-print" *ngIf="pageToDisplay">
   <div [innerHtml]="pageToDisplay | safeHtml"></div>
   <div class="col-md-12" style="background-color: #1d49af">
