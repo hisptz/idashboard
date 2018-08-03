@@ -8,6 +8,9 @@ import {
 } from '../../store/dashboard/dashboard.selectors';
 import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
 import { CreateAction } from '../../store/dashboard/dashboard.actions';
+import {TimerObservable} from 'rxjs-compat/observable/TimerObservable';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +29,12 @@ export class HomeComponent implements OnInit {
   dashboardsCount$: Observable<number>;
   dashboardsCreating$: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) {
+  timeOut: boolean;
+  activeTime = 0;
+  timerStatus: boolean;
+  private subscription: Subscription;
+
+  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {
     this.dashboardsLoading$ = store.select(getDashboardLoading);
     this.dashboardsLoaded$ = store.select(getDashboardLoaded);
     this.dashboardsCount$ = store.select(getAllDashboardCount);
@@ -41,10 +49,47 @@ export class HomeComponent implements OnInit {
     this.welcomingMessage = this.welcomingMessageObject[this.getRandomInt(0, 0)];
     this.welcomingDescription = WELCOMING_DESCRIPTION;
     this.welcomingTitle = WELCOMING_TITLE;
+    this.timeOut = false;
+    this.timerStatus = true;
   }
 
 
   ngOnInit() {
+    this.route.params.forEach((params: Params) => {});
+    const timer = TimerObservable.create(2000, 2000);
+    this.subscription = timer.subscribe(t => {
+      this.activeTime = t;
+      const elem = document.getElementById('progress-bar');
+      elem.style.width = (this.activeTime * 20) + '%';
+      if (this.activeTime > 5) {
+        this.timeOut = true;
+        this.router.navigate(['/page/home' ]);
+        this.activeTime = 0;
+      }
+    });
+  }
+
+  stopTimer (time) {
+    this.activeTime = time;
+    this.timerStatus = false;
+    this.subscription.unsubscribe();
+  }
+
+  startTimer(time) {
+    this.timerStatus = true;
+    const timer = TimerObservable.create(2000, 2000);
+    this.subscription = timer.subscribe(t  => {
+      this.activeTime = t + time + 1;
+      const elem = document.getElementById('progress-bar');
+      elem.style.width = (this.activeTime * 20) + '%';
+      if (this.activeTime > 5) {
+        this.timeOut = true;
+        this.router.navigate(['/page/home' ]);
+        this.activeTime = 0;
+      }
+    });
+  }
+  OnDestroy() {
   }
 
   getRandomInt(min, max) {

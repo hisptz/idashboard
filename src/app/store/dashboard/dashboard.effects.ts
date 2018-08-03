@@ -86,37 +86,7 @@ export class DashboardEffects {
 
     const currentVisualization = action.payload.url.split('/')[4];
 
-    if (this.location.path().indexOf('page') >= 0) {
-      this.router.navigate([this.location.path()]);
-    } else if (pageId && currentDashboardId) {
-      if (pageId.indexOf('dashboards') >= 0) {
-        this.router.navigate([pageId]);
-      } else {
-        this.router.navigate([pageId]);
-      }
-    } else if (currentDashboardId) {
-      /**
-       * Navigate to the particular dashboard if comes from home
-       */
-      if (action.payload.url.indexOf('dashboards') === -1) {
-        this.router.navigate(['/dashboards/' + currentDashboardId ]);
-      } else {
-        if (currentVisualization) {
-          this.store.dispatch(
-            new visualization.SetCurrentAction(currentVisualization)
-          );
-        } else {
-          this.store.dispatch(
-            new dashboard.SetCurrentAction(currentDashboardId)
-          );
-          this.store.dispatch(
-            new dashboard.LoadSharingDataAction(currentDashboardId)
-          );
-        }
-      }
-    } else {
-      this.router.navigate(['/']);
-    }
+    this.router.navigate(['/' ]);
 
     return Observable.of(null);
   });

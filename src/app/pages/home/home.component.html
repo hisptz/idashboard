@@ -1,4 +1,13 @@
-
+<div class="loading-block" *ngIf="!timeOut">
+  <h2><b *ngIf="!timerStatus">Stopped before </b><b>{{5 - activeTime}}</b> <b *ngIf="!timerStatus">seconds</b> <b *ngIf="timerStatus">seconds to go</b></h2>
+  <div class="progress-div">
+    <div id="progress-bar"></div>
+  </div>
+  <h3 style="text-align: center">
+    <a *ngIf="timerStatus" class="time-control-btn" (click)="stopTimer(activeTime);">click here to stay on this page</a>
+    <a *ngIf="!timerStatus" class="time-control-btn" (click)="startTimer(activeTime)" >click to continue</a>
+  </h3>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-12">

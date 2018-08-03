@@ -1,15 +1,4 @@
-<div class="loading-block" *ngIf="!timeOut">
-  <h2><b *ngIf="!timerStatus">Stopped before </b><b>{{10 - activeTime}}</b> <b *ngIf="!timerStatus">seconds</b> <b *ngIf="timerStatus">seconds to go</b></h2>
-  <div class="progress-div">
-    <div id="progress-bar"></div>
-  </div>
-  <h3 style="text-align: center">
-    <a *ngIf="timerStatus" class="time-control-btn" (click)="stopTimer(activeTime);">click here to stay on this page</a>
-    <a *ngIf="!timerStatus" class="time-control-btn" (click)="startTimer(activeTime)" >click to continue</a>
-  </h3>
-  <app-home></app-home>
-</div>
-<div class="container-fluid" style="padding-left: 0px;" *ngIf="_htmlMarkup && timeOut">
+<div class="container-fluid" style="padding-left: 0px;" *ngIf="_htmlMarkup">
   <div class="row">
     <div class="col-md-12" *ngIf="hasHtmlSet" [innerHtml]="_htmlMarkup"></div>
   </div>
