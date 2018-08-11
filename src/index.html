@@ -8,9 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
     @font-face{font-family:Scorecard-Averta;font-style:normal;font-weight:400;src:url(assets/fonts/averta-regular.woff2) format('woff2')}
     @font-face{font-family:Scorecard-Averta;font-style:normal;font-weight:700;src:url(assets/fonts/averta-bold.woff2) format('woff2')}
@@ -27,17 +24,247 @@
         background-color: #ffffff;
       }
     }
+
+
+    .card-summary {
+      padding-left:auto;
+      padding-right:auto;
+      text-decoration: none;
+      box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.10), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
+      -webkit-transition: .25s box-shadow;
+      transition: .25s box-shadow;
+    }
+    .card-summary:focus, .card-summary:hover {
+      box-shadow: 0 5px 11px 1px rgba(0, 0, 0, 0.18), 0 4px 5px 0 rgba(0, 0, 0, 0.15);
+      text-decoration: none;
+    }
+
+    .card-summary a:hover {
+      text-decoration: none;
+    }
+    .col-md-4 {
+      margin-top: 10px;
+    }
+    .card-summary h5 {
+      font-weight: 600;
+    }
+
+    .card-summary h5, p {
+      color: #000000;
+    }
+
+    .card-block {
+      padding: 10px;
+    }
+
+  .card-title {
+      margin-bottom: 0.75rem;
+      font-size: 1.8em;
+  }
+    .separator-line {
+      border-bottom: solid 2px #e1e1e1; margin-bottom: 10px;
+    }
+
+    .top-welcome {
+      text-align: center;
+    }
+    #intro-body {
+      padding-top: 1%; text-align: center;
+    }
+    h3 {font-weight: 500}
+
+
+    .card-text {
+      font-size: 1.4em;
+      line-height: 2em;
+      text-align: left;
+    }
+
+    .top-welcome p {
+      font-size: 1.4em;
+      line-height: 2em;
+    }
+
+    .top-welcome h3 {
+      color: #244AAE;
+    }
+
+    .list-group-item {
+      position: relative;
+      color: #000;
+      display: block;
+      padding: 0.35rem 0.65rem;
+      margin-bottom: -1px;
+      background-color: transparent;
+      text-align: left;
+      border: none;
+      /*border: 1px solid rgba(0, 0, 0, 0.125);*/
+    }
+
+
+
+    .loading-block {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+
+    #progress-div {
+      width: 100%;
+      background-color: #ddd;
+      padding: 10px;
+    }
+
+    #progress-bar {
+      width: 0.2%;
+      height: 20px;
+      background-color: #244AAE;
+      background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+      background-size: 1rem 1rem;
+    }
+
+    .time-control-btn {
+      font-size: 0.8em;
+      text-decoration: none;
+      color: #244AAE;
+    }
+
+    .loading-block b {
+      font-weight: 400;
+    }
   </style>
 </head>
 <body class="body-wrapper">
-<app-root>
-  <div style="padding-top: 15%; text-align: center;">
-    <img src="assets/icons/balls-5.svg" alt="">
-    <h4 style="margin-top: 50px;">Welcome to the Tanzania national health observatory</h4>
-    <h5 style="">Get the data, interactively from different data sources such as national health management information system, census, surveys (DHS, THMIS, SARA, TSPA, etc)</h5>
+  <div id="intro-body">
+    <!--<img src="assets/icons/balls-5.svg" alt="">-->
+    <h3 style="margin-top: 50px;">Welcome to the Tanzania national health observatory</h3>
+    <!--<h5 style="">Get the data, interactively from different data sources such as national health management information system, census, surveys (DHS, THMIS, SARA, TSPA, etc)</h5>-->
+
+    <div class="loading-block">
+      <div style="display: inline-block">
+        <input value="0" id="current-timer" style="border: none; text-align: center; width: 0.5px;">
+        <h2><b></b><b id="seconds-to-go"></b> <b>seconds</b> <b>to go</b></h2>
+      </div>
+      <div class="progress-div">
+        <div id="progress-bar"></div>
+      </div>
+      <h3 style="text-align: center">
+        <a class="time-control-btn" onclick="stopTimer();" id="stay">click here to stay on this page</a>
+        <a class="time-control-btn" onclick="startTimer()" id="continue" style="display: none">click to continue</a>
+      </h3>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <!--Welcoming html-->
+          <div class="top-welcome">
+            <p>The tanzania national health observatory enables you to browse the data coming from different sources including HMIS routine collected event and aggregate data,
+              programs reports, survey reports e.t.c</p>
+            <h3>What is in here</h3>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="card-summary">
+                <a routerLink="/page/home">
+                  <div class="card-block">
+                    <h5 class="card-title">Observatory themes</h5>
+                    <div class="separator-line"></div>
+                    <p class="card-text">This is where you can get data about different health themes in summary and you can drill
+                      down to more details in the respective theme. Some are listed below</p>
+                    <ul class="list-group">
+                      <li class="list-group-item">1. Health performance.</li>
+                      <li class="list-group-item">2. Reproductive health.</li>
+                      <li class="list-group-item">3. Nutrition. </li>
+                      <li class="list-group-item">4. HIV and AIDS.</li>
+                      <li class="list-group-item">5. TB and Leprosy.</li>
+                    </ul>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="card-summary">
+                <a routerLink="/dashboards/gdeaYoJncPv">
+                  <div class="card-block">
+                    <h5 class="card-title">Data statistics</h5>
+                    <div class="separator-line"></div>
+                    <p class="card-text">This component provide interactive data analysis and comprehensive description of indicators with different data download formats (excel, pdf, images etc) at easy.
+                      You can define the data, period and organisation unit interactively and decide the type of data presentation between graphs, maps and table at different layouts</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="card-summary">
+                <a>
+                  <div class="card-block">
+                    <h5 class="card-title">Downloads</h5>
+                    <div class="separator-line"></div>
+                    <p class="card-text">You can download scorecards for HMIS, RMNCAH, BUSKET FUNDS etc and data from programs reports, census and surveys</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</app-root>
+  <div id="app-root" style="display: none">
+    <app-root></app-root>
+  </div>
+  <script>
+    var theCurrentInterval;
+
+    theCurrentInterval = setInterval(() => {
+         setTimeout(function () {
+           var counter = document.getElementById('current-timer').value;
+           document.getElementById('current-timer').value = parseInt(counter) + 1;
+           const elem = document.getElementById('progress-bar');
+           elem.style.width = (parseInt(counter) * 10) + '%';
+           document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
+           if (counter >=10) {
+             document.getElementById('app-root').style.display = 'block';
+             document.getElementById('intro-body').style.display = 'none';
+           }
+         }, 1000);
+     }, 1000);
+
+    function stopTimer() {
+      document.getElementById('continue').style.display = 'block';
+      document.getElementById('stay').style.display = 'none';
+      clearInterval(theCurrentInterval);
+      var counter = document.getElementById('current-timer').value;
+      document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
+      document.getElementById('current-timer').value = parseInt(counter) + 1;
+      const elem = document.getElementById('progress-bar');
+      elem.style.width = (parseInt(counter) * 10) + '%';
+    }
+
+    function startTimer() {
+      var counter = document.getElementById('current-timer').value;
+      document.getElementById('continue').style.display = 'none';
+      document.getElementById('stay').style.display = 'block';
+      console.log(counter);
+
+      theCurrentInterval = setInterval(() => {
+        setTimeout(function () {
+          var counter = document.getElementById('current-timer').value;
+          document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
+          document.getElementById('current-timer').value = parseInt(counter) + 1;
+          const elem = document.getElementById('progress-bar');
+          elem.style.width = (parseInt(counter) * 10) + '%';
+          if (counter >=10) {
+            document.getElementById('app-root').style.display = 'block';
+            document.getElementById('intro-body').style.display = 'none';
+          }
+        }, 1000);
+      }, 1000);
+    }
+  </script>
 <script>
+
   function showThisStatisticsPage(DataId, menuId) {
     var elems = document.getElementsByClassName('container-summary-contents');
     var btnElems = document.getElementsByClassName('menu-list-item');

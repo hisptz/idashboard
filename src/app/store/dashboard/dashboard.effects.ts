@@ -84,9 +84,11 @@ export class DashboardEffects {
 
     const pageId = action.payload.page.id;
 
-    const currentVisualization = action.payload.url.split('/')[4];
+    if (pageId) {
+      this.router.navigate([pageId]);
+    }
 
-    this.router.navigate(['/' ]);
+    const currentVisualization = action.payload.url.split('/')[4];
 
     return Observable.of(null);
   });

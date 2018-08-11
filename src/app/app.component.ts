@@ -116,4 +116,13 @@ export class AppComponent implements OnInit {
     }
     document.getElementById(id).style.backgroundColor = '#3779B6';
   }
+
+  executeForNavigation () {
+    const x = document.getElementById('myTopnav');
+    if (x.className === 'topnav') {
+      x.className += ' responsive';
+    } else {
+      x.className = 'topnav';
+    }
+  }
 }

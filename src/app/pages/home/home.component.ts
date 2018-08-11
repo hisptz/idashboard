@@ -55,40 +55,40 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.params.forEach((params: Params) => {});
-    const timer = TimerObservable.create(2000, 2000);
-    this.subscription = timer.subscribe(t => {
-      this.activeTime = t;
-      const elem = document.getElementById('progress-bar');
-      elem.style.width = (this.activeTime * 20) + '%';
-      if (this.activeTime > 5) {
-        this.timeOut = true;
-        this.router.navigate(['/page/home' ]);
-        this.activeTime = 0;
-      }
-    });
+    // this.route.params.forEach((params: Params) => {});
+    // const timer = TimerObservable.create(2000, 2000);
+    // this.subscription = timer.subscribe(t => {
+    //   this.activeTime = t;
+    //   const elem = document.getElementById('progress-bar');
+    //   elem.style.width = (this.activeTime * 20) + '%';
+    //   if (this.activeTime > 5) {
+    //     this.timeOut = true;
+    //     this.router.navigate(['/page/home' ]);
+    //     this.activeTime = 0;
+    //   }
+    // });
   }
 
-  stopTimer (time) {
-    this.activeTime = time;
-    this.timerStatus = false;
-    this.subscription.unsubscribe();
-  }
+  // stopTimer (time) {
+  //   this.activeTime = time;
+  //   this.timerStatus = false;
+  //   this.subscription.unsubscribe();
+  // }
 
-  startTimer(time) {
-    this.timerStatus = true;
-    const timer = TimerObservable.create(2000, 2000);
-    this.subscription = timer.subscribe(t  => {
-      this.activeTime = t + time + 1;
-      const elem = document.getElementById('progress-bar');
-      elem.style.width = (this.activeTime * 20) + '%';
-      if (this.activeTime > 5) {
-        this.timeOut = true;
-        this.router.navigate(['/page/home' ]);
-        this.activeTime = 0;
-      }
-    });
-  }
+  // startTimer(time) {
+  //   this.timerStatus = true;
+  //   const timer = TimerObservable.create(2000, 2000);
+  //   this.subscription = timer.subscribe(t  => {
+  //     this.activeTime = t + time + 1;
+  //     const elem = document.getElementById('progress-bar');
+  //     elem.style.width = (this.activeTime * 20) + '%';
+  //     if (this.activeTime > 5) {
+  //       this.timeOut = true;
+  //       this.router.navigate(['/page/home' ]);
+  //       this.activeTime = 0;
+  //     }
+  //   });
+  // }
   OnDestroy() {
   }
 

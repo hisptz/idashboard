@@ -91,26 +91,6 @@ export class PagesComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
-  stopTimer (time) {
-    this.activeTime = time;
-    this.timerStatus = false;
-    this.subscription.unsubscribe();
-  }
-
-  startTimer(time) {
-    this.timerStatus = true;
-    const timer = TimerObservable.create(2000, 2000);
-    this.subscription = timer.subscribe(t  => {
-      this.activeTime = t + time + 1;
-      const elem = document.getElementById('progress-bar');
-      elem.style.width = (this.activeTime * 10) + '%';
-      if (this.activeTime > 10) {
-        this.timeOut = true;
-        this.activeTime = 0;
-      }
-    });
-  }
   OnDestroy() {
   }
 
