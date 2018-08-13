@@ -34,15 +34,12 @@
   >
     <img src="assets/icons/map.png" alt="">
   </button>
-  <!--<button-->
-    <!--class="dashboard-btn visualization-type-btn"-->
-    <!--[ngClass]="{-->
-    <!--'active-visualization': currentVisualization === 'INFO'-->
-    <!--}"-->
-    <!--[disabled]="currentVisualization === 'INFO'"-->
-    <!--title="View Information"-->
-    <!--(click)="onVisualizationSelect($event, 'INFO')"-->
-  <!--&gt;-->
-    <!--<img src="assets/icons/info.png" alt="">-->
-  <!--</button>-->
+  <button
+    class="dashboard-btn visualization-type-btn"
+    title="View Information"
+    (click)="onShowInfoSelect($event, true)"
+    (dblclick)="onShowInfoSelect($event, false)"
+  >
+    <img src="assets/icons/info.png" alt="">
+  </button>
 </div>

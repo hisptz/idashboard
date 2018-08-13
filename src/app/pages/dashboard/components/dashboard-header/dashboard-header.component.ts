@@ -21,13 +21,4 @@ export class DashboardHeaderComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  setMessage() {
-    console.log('set message');
-    this.message = 'To download a chart, table, map etc. use the buttons seen at the bottom when your cursor is on top of the item';
-  }
-  unsetMessage () {
-    console.log('unset message')
-    this.message = '';
-  }
 }

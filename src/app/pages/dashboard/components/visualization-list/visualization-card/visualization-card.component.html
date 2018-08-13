@@ -35,8 +35,8 @@
     <div class="visualization-block" [style.flex]="'2'">
       <!--chart block-->
       <div class="row">
-        <div class="col-7">
-          <div class="chart-container" *ngIf="currentVisualization === 'CHART'">
+        <div [ngClass]="showInfo === true ? 'col-7' : 'col-12'">
+          <div class="chart-container" *ngIf="currentVisualization === 'CHART' ">
             <app-chart-list [visualizationLayers]="visualizationObject.layers" [visualizationId]="visualizationObject.id" [chartHeight]="visualizationObject.details.itemHeight"></app-chart-list>
           </div>
           <!--end of chart block-->
@@ -83,7 +83,7 @@
           </div>
           <!-- end of app block -->
         </div>
-        <div class="col-5">
+        <div [ngClass]="showInfo === true ? 'col-5' : 'col-0'">
           <!--dictionary block-->
           <div class="dictionary-container" [style.height]="visualizationObject.details.cardHeight">
             <app-dictionary-list [metadataIdentifiers]="visualizationObject.details.metadataIdentifiers"></app-dictionary-list>
@@ -101,7 +101,7 @@
   <div class="visualization-card-footer" *ngIf="loaded && isCardFocused && !visualizationObject.details.hasError">
     <div *ngIf="visualizationObject.details.nonVisualizable">&nbsp;</div>
     <div class="visualization-card-footer-left animated fadeInLeft" *ngIf="!visualizationObject.details.nonVisualizable">
-      <app-visualization-types-section [currentVisualization]="currentVisualization" (onCurrentVisualizationChange)="currentVisualizationChange($event)"></app-visualization-types-section>
+      <app-visualization-types-section [currentVisualization]="currentVisualization" (onCurrentVisualizationChange)="currentVisualizationChange($event)" (onShowInfoChange)="setInfoStatus($event)"></app-visualization-types-section>
       <app-visualization-download-section [visualizationType]="currentVisualization" (downloadVisualization)="onDownload($event)"></app-visualization-download-section>
     </div>
     <div class="visualization-card-footer-right">

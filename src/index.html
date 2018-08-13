@@ -7,6 +7,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <style>
     @font-face{font-family:Scorecard-Averta;font-style:normal;font-weight:400;src:url(assets/fonts/averta-regular.woff2) format('woff2')}
@@ -26,7 +28,7 @@
     }
 
 
-    .card-summary {
+    .the-card-summary {
       padding-left:auto;
       padding-right:auto;
       text-decoration: none;
@@ -34,22 +36,22 @@
       -webkit-transition: .25s box-shadow;
       transition: .25s box-shadow;
     }
-    .card-summary:focus, .card-summary:hover {
+    .the-card-summary:focus, .the-card-summary:hover {
       box-shadow: 0 5px 11px 1px rgba(0, 0, 0, 0.18), 0 4px 5px 0 rgba(0, 0, 0, 0.15);
       text-decoration: none;
     }
 
-    .card-summary a:hover {
+    .the-card-summary a:hover {
       text-decoration: none;
     }
     .col-md-4 {
       margin-top: 10px;
     }
-    .card-summary h5 {
+    .the-card-summary h5 {
       font-weight: 600;
     }
 
-    .card-summary h5, p {
+    .the-card-summary h5, p {
       color: #000000;
     }
 
@@ -57,7 +59,7 @@
       padding: 10px;
     }
 
-  .card-title {
+  .the-card-title {
       margin-bottom: 0.75rem;
       font-size: 1.8em;
   }
@@ -74,7 +76,7 @@
     h3 {font-weight: 500}
 
 
-    .card-text {
+    .the-card-text {
       font-size: 1.4em;
       line-height: 2em;
       text-align: left;
@@ -165,12 +167,12 @@
           </div>
           <div class="row">
             <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="card-summary">
+              <div class="the-card-summary">
                 <a routerLink="/page/home">
                   <div class="card-block">
-                    <h5 class="card-title">Observatory themes</h5>
+                    <h5 class="the-card-title">Observatory themes</h5>
                     <div class="separator-line"></div>
-                    <p class="card-text">This is where you can get data about different health themes in summary and you can drill
+                    <p class="the-card-text">This is where you can get data about different health themes in summary and you can drill
                       down to more details in the respective theme. Some are listed below</p>
                     <ul class="list-group">
                       <li class="list-group-item">1. Health performance.</li>
@@ -184,24 +186,24 @@
               </div>
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="card-summary">
+              <div class="the-card-summary">
                 <a routerLink="/dashboards/gdeaYoJncPv">
                   <div class="card-block">
-                    <h5 class="card-title">Data statistics</h5>
+                    <h5 class="the-card-title">Data statistics</h5>
                     <div class="separator-line"></div>
-                    <p class="card-text">This component provide interactive data analysis and comprehensive description of indicators with different data download formats (excel, pdf, images etc) at easy.
+                    <p class="the-card-text">This component provide interactive data analysis and comprehensive description of indicators with different data download formats (excel, pdf, images etc) at easy.
                       You can define the data, period and organisation unit interactively and decide the type of data presentation between graphs, maps and table at different layouts</p>
                   </div>
                 </a>
               </div>
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="card-summary">
+              <div class="the-card-summary">
                 <a>
                   <div class="card-block">
-                    <h5 class="card-title">Downloads</h5>
+                    <h5 class="the-card-title">Downloads</h5>
                     <div class="separator-line"></div>
-                    <p class="card-text">You can download scorecards for HMIS, RMNCAH, BUSKET FUNDS etc and data from programs reports, census and surveys</p>
+                    <p class="the-card-text">You can download scorecards for HMIS, RMNCAH, BUSKET FUNDS etc and data from programs reports, census and surveys</p>
                   </div>
                 </a>
               </div>
@@ -398,12 +400,12 @@
   }
 </script>
 <script>
-  var startdelay 	= 2;var scrollspeed	= 0.3;var scrollwind= 0.5;var speedjump= 20;var nextdelay		= 2;var topspace	= "2px";var frameheight	= 176;
+  var startdelay 	= 2;var scrollspeed	= 0.3;var scrollwind= 0.8;var speedjump= 20;var nextdelay		= 1;var topspace	= "2px";var frameheight	= 80;
   current = (scrollspeed);
   function HeightData(){
     AreaHeight=dataobj.offsetHeight
     if (AreaHeight===0){
-      setTimeout("HeightData()",( startdelay * 200 ))
+      setTimeout("HeightData()",( startdelay * 2000 ))
     }
     else {
       ScrollNewsDiv()
@@ -412,17 +414,19 @@
     console.log('Executed');
     dataobj=document.all? document.all.NewsDiv : document.getElementById("NewsDiv")
     dataobj.style.top=topspace
-    setTimeout("HeightData()",( startdelay * 200 ))
+    setTimeout("HeightData()",( startdelay * 2000 ))
   }
 
   function ScrollNewsDiv(){
     dataobj.style.top=scrollwind+'px';
+    console.log('scrollwind', scrollwind);
     // dataobj.style.top='20px';
     scrollwind-=scrollspeed;
     if (parseInt(dataobj.style.top)<AreaHeight*(-1)) {
       dataobj.style.top=frameheight+'px';
       scrollwind=frameheight;
-      setTimeout("ScrollNewsDiv()",( nextdelay * 1000 ))
+      console.log('frameheight', frameheight);
+      setTimeout("ScrollNewsDiv()",( nextdelay * 4000 ))
     }
     else {
       setTimeout("ScrollNewsDiv()",speedjump)
