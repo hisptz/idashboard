@@ -29,6 +29,7 @@
     "@hisptz/ngx-dhis2-menu": "^1.0.3",
     "@hisptz/ngx-dhis2-selection-filters": "^1.0.2",
     "@hisptz/ngx-dhis2-table": "^1.0.0",
+    "@hisptz/ngx-dhis2-visualization": "^1.0.2",
     "@mapbox/geojson-area": "^0.2.2",
     "@ngrx/effects": "^6.0.1",
     "@ngrx/entity": "^6.0.1",

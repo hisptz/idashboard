@@ -21,11 +21,8 @@ import { UpdateVisualizationObjectAction } from '../actions/visualization-object
 import { AnalyticsService } from '../../services/analytics.service';
 
 // helpers
-import {
-  getStandardizedAnalyticsObject,
-  getSanitizedAnalytics
-} from '../../helpers';
-import { getVisualizationObjectById } from '@hisptz/ngx-dhis2-visualization';
+import { getStandardizedAnalyticsObject, getSanitizedAnalytics } from '../../helpers';
+import { getVisualizationObjectById } from '../selectors';
 import { Visualization } from '../../models';
 
 @Injectable()
@@ -69,19 +66,13 @@ export class VisualizationLayerEffects {
                 // Save visualizations layers
                 _.each(analyticsResponse, (analytics, analyticsIndex) => {
                   this.store.dispatch(
-                    new LoadVisualizationAnalyticsSuccessAction(
-                      action.visualizationLayers[analyticsIndex].id,
-                      {
-                        analytics: getSanitizedAnalytics(
-                          getStandardizedAnalyticsObject(analytics, true),
-                          action.visualizationLayers[analyticsIndex]
-                            .dataSelections
-                        ),
-                        dataSelections:
-                          action.visualizationLayers[analyticsIndex]
-                            .dataSelections
-                      }
-                    )
+                    new LoadVisualizationAnalyticsSuccessAction(action.visualizationLayers[analyticsIndex].id, {
+                      analytics: getSanitizedAnalytics(
+                        getStandardizedAnalyticsObject(analytics, true),
+                        action.visualizationLayers[analyticsIndex].dataSelections
+                      ),
+                      dataSelections: action.visualizationLayers[analyticsIndex].dataSelections
+                    })
                   );
                 });
                 // Update visualization object

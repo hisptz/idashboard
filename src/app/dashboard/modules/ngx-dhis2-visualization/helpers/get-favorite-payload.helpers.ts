@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { VisualizationLayer } from '../models';
 import { getStandardizedVisualizationType } from './get-standardized-visualization-type.helper';
-import { VisualizationDataSelection } from '@hisptz/ngx-dhis2-visualization';
+import { VisualizationDataSelection } from '../models';
 export function getFavoritePayload(
   visualizationLayers: VisualizationLayer[],
   originalType: string,
