@@ -2,7 +2,7 @@ export interface DataElement {
   id: string;
   name: string;
   categoryCombo: {
-    id: string
-  },
+    id: string;
+  };
   dataSetElements: any[];
 }
