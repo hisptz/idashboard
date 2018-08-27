@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { Subscription, Observable, of } from 'rxjs';
 import { LIST_ICON, ARROW_LEFT_ICON, ARROW_RIGHT_ICON } from '../../icons';
 import { FunctionRule, DataElement } from '../../../../../../../models';
+import { MappingGroup } from '../../model/mapping-group';
 
 @Component({
   selector: 'app-data-mapping-container',
@@ -17,7 +18,8 @@ export class DataMappingContainerComponent implements OnInit {
   @Input()
   selectedItems;
 
-  selectedRules: FunctionRule[];
+  mappingGroups: MappingGroup[];
+  selectedFuctionRule: FunctionRule[];
 
   selectedItems$: Observable<any>;
   _selectedItems: any[];
@@ -37,6 +39,7 @@ export class DataMappingContainerComponent implements OnInit {
 
   constructor() {
     this.showGroupingPanel = true;
+    this.mappingGroups = [];
     this._selectedItems = [];
     this.dataGroups = [];
     this.availablePagenator = 1;
@@ -44,17 +47,53 @@ export class DataMappingContainerComponent implements OnInit {
     this.listIcon = LIST_ICON;
     this.arrowLeftIcon = ARROW_LEFT_ICON;
     this.arrowRightIcon = ARROW_RIGHT_ICON;
+    this.selectedFuctionRule = [];
   }
 
   ngOnInit() {
-    this._selectedItems = [];
+    // @todo adding support of data elements groups
+    this.dataGroups = [{ id: 'ALL', name: '[ All ]' }];
     this.selectedItems$ = of(this._selectedItems);
-    if (this.dataElements && this.functionRules && this.selectedItems) {
-      const ruleIds = this.selectedItems.map(selectedItem => selectedItem.id);
-      this.selectedRules = this.getSectedRules(this.functionRules, ruleIds);
-      // @todo adding support of data elements groups
-      this.dataGroups = [{ id: 'ALL', name: '[ All ]' }];
-    }
+    const ruleIds = this.selectedItems.map(selectedItem => selectedItem.id);
+    // deduce groups and seleted function rules
+    const selectedFuctionRule = this.getSectedRules(
+      this.functionRules,
+      ruleIds
+    );
+    this.mappingGroups = this.getMappingGroups(selectedFuctionRule);
+    this.selectedFuctionRule = selectedFuctionRule;
+  }
+
+  getMappingGroups(selectedRules: FunctionRule[]) {
+    let groups: MappingGroup[] = [];
+    selectedRules.map(rule => {
+      const { json } = rule;
+      if (json) {
+        const { expressionMapping } = json;
+        const { namesMapping } = json;
+        Object.keys(namesMapping).map(groupId => {
+          const group: MappingGroup = {
+            id: groupId,
+            name: namesMapping[groupId],
+            member: []
+          };
+          if (expressionMapping && expressionMapping[groupId]) {
+            const memberId = expressionMapping[groupId];
+            const dataElement: any = _.find(this.dataElements, {
+              id: memberId
+            });
+            if (dataElement && dataElement.id) {
+              group.member.push({
+                id: dataElement.id,
+                name: dataElement.name
+              });
+            }
+          }
+          groups = _.concat(groups, group);
+        });
+      }
+    });
+    return groups;
   }
 
   getSectedRules(rules: FunctionRule[], rulesIds: string[]) {
@@ -62,10 +101,9 @@ export class DataMappingContainerComponent implements OnInit {
     rulesIds.map(id => {
       const rule = _.find(rules, { id: id });
       if (rule && rule.json) {
-        try {
+        if (typeof rule.json === 'string') {
           rule.json = JSON.parse(rule.json);
-        } catch (e) {}
-        console.log(rule);
+        }
         selectedRules = _.concat(selectedRules, rule);
       }
     });
@@ -132,14 +170,22 @@ export class DataMappingContainerComponent implements OnInit {
     this.showGroupingPanel = !this.showGroupingPanel;
   }
 
-  // emit(e) {
-  //   e.stopPropagation();
-  //   this.dataFilterUpdate.emit({
-  //     items: this._selectedItems,
-  //     groups: this.selectedGroups,
-  //     dimension: 'dx'
-  //   });
-  // }
+  close(e) {
+    e.stopPropagation();
+    // this.dataFilterClose.emit({
+    //   items: this._selectedItems,
+    //   groups: this.selectedGroups,
+    //   dimension: 'dx'
+    // });
+  }
+  emit(e) {
+    e.stopPropagation();
+    // this.dataFilterUpdate.emit({
+    //   items: this._selectedItems,
+    //   groups: this.selectedGroups,
+    //   dimension: 'dx'
+    // });
+  }
 
   searchChanged() {
     this.availablePagenator = 1;

@@ -78,9 +78,16 @@
   </div>
   <!-- data filter groups -->
   <div class="data-filter-groups-container" *ngIf="showGroupingPanel">
-    {{ selectedRules |json}}
+    {{ mappingGroups |json}}
     <!-- <app-data-filter-groups [dataGroups]="selectedGroups" [selectedGroupId]="selectedGroupId" [selectedItems]="selectedItems$ | async"
         (dataGroupsUpdate)="onDataGroupsUpdate($event)" (selectedGroupUpdate)="onSelectedGroupUpdate($event)"></app-data-filter-groups> -->
   </div>
   <!-- end of data filter groups -->
+</div>
+
+<div class="data-filter-btns">
+  <div>
+    <button class="btn btn-outline-secondary btn-sm" (click)="close($event)">Close</button>
+    <button class="btn btn-outline-secondary btn-sm" [disabled]="(selectedItems$ | async).length === 0" (click)="emit($event)">Update</button>
+  </div>
 </div>
