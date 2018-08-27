@@ -39,7 +39,7 @@
         'selection-filter-btn': true,
         'active-filter': selectedFilter === 'LAYOUT'
         }" [title]="'Layout' | translate" (click)="toggleCurrentFilter($event, 'LAYOUT')">
-        <img [src]="orgUnitcon" alt="">&nbsp;{{'Layout' | translate}}&nbsp;
+        <img [src]="orgUnitIcon" alt="">&nbsp;{{'Layout' | translate}}&nbsp;
         <img [ngClass]="{'arrow-up': selectedFilter === 'LAYOUT'}" [src]="arrowDownIcon" alt="">
       </button>
       <!--end of org unit filter button-->
@@ -59,7 +59,8 @@
   <!--selection filter body-->
   <div class="selection-filter-body" *ngIf="selectedFilter !== '' && showFilterBody">
     <!--data filter-->
-    <app-data-mapping *ngIf="selectedFilter === 'DATA'"></app-data-mapping>
+    <app-data-mapping *ngIf="selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
+      (dataFilterUpdate)="onFilterUpdate($event, 'DATA')"></app-data-mapping>
 
     <!-- <app-data-filter *ngIf="selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
       (dataFilterUpdate)="onFilterUpdate($event, 'DATA')"></app-data-filter> -->
