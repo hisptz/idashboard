@@ -6,6 +6,7 @@ import { DashboardEffects } from './dashboard.effects';
 import { DashboardVisualizationEffects } from './dashboard-visualization.effects';
 import { DashboardGroupsEffects } from './dashboard-groups.effects';
 import { LegendSetEffects } from './legend-set.effects';
+import { DataElementEffects } from './data-elements.effects';
 
 export const effects: any[] = [
   RouterEffects,
@@ -15,5 +16,6 @@ export const effects: any[] = [
   LegendSetEffects,
   DashboardEffects,
   DashboardVisualizationEffects,
-  DashboardGroupsEffects
+  DashboardGroupsEffects,
+  DataElementEffects
 ];
