@@ -2,7 +2,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { DataElement } from '../../models/data-element';
 import { DataElementActions, DataElementActionTypes } from '../actions';
 
-export interface DataElementSetState extends EntityState<DataElement> {
+export interface DataElementState extends EntityState<DataElement> {
   loading: boolean;
   loaded: boolean;
 }
@@ -11,7 +11,7 @@ export const DataElementAdapter: EntityAdapter<
   DataElement
 > = createEntityAdapter<DataElement>();
 
-const initialState: DataElementSetState = DataElementAdapter.getInitialState({
+const initialState: DataElementState = DataElementAdapter.getInitialState({
   // additional entity state properties
   loading: false,
   loaded: false
@@ -20,7 +20,7 @@ const initialState: DataElementSetState = DataElementAdapter.getInitialState({
 export function dataElementReducer(
   state = initialState,
   action: DataElementActions
-): DataElementSetState {
+): DataElementState {
   switch (action.type) {
     case DataElementActionTypes.LoadDataElements: {
       return { ...state, loading: true };
@@ -29,7 +29,7 @@ export function dataElementReducer(
       return DataElementAdapter.addMany(action.payload, {
         ...state,
         loaded: true,
-        loading: true
+        loading: false
       });
     }
     case DataElementActionTypes.LoadDataElementsFail: {
