@@ -14,45 +14,92 @@ import {
 } from '../actions/dashboard-groups.action';
 import { getCurrentDashboardId } from '../selectors';
 import { SetCurrentDashboardAction } from '../actions/dashboard.actions';
-import { map, catchError, switchMap, withLatestFrom } from 'rxjs/operators';
+import {
+  map,
+  catchError,
+  switchMap,
+  withLatestFrom,
+  tap
+} from 'rxjs/operators';
 
 const GROUPS_PAYLOAD = [
   {
     id: 'Xm4TNggmC8J',
-    name: 'Malaria Burden Reduction Bulletin',
-    dashboards: ['who-malaria_sLldHZZgnFx', 'who-malaria_zMdUF7qxNEt', 'who-malaria_QT4gSejEGCE']
+    name: 'Uncomplicated Malaria Diagnosis (OPD)',
+    dashboards: ['nmcp-malaria_tFidynXMnDn']
   },
   {
-    id: 'bxI7Q1agaN5',
-    name: 'Malaria Elimination Bulletin',
-    dashboards: ['who-malaria_b8F1kKlV9Fk', 'who-malaria_aBVHnhMvdEO']
+    id: 'kquEMGaUMyn',
+    name: 'Malaria Testing',
+    dashboards: []
+  },
+  {
+    id: 'HOzTDHYZwiE',
+    name: 'Malaria Commodities (Pharm)',
+    dashboards: []
+  },
+  {
+    id: 'AKVXOZUiE12',
+    name: 'Severe Malaria Morbidity and Mortality (IPD)',
+    dashboards: []
+  },
+  {
+    id: 'dCBBM28wKfV',
+    name: 'Preventive services (RCH)',
+    dashboards: []
+  },
+  {
+    id: 'BXEq47PU58f',
+    name: 'Accountability Tool',
+    dashboards: []
+  },
+  {
+    id: 'DoSVwKTsNvZ',
+    name: 'MSDQI',
+    dashboards: []
   }
 ];
 
 @Injectable()
 export class DashboardGroupsEffects {
-  @Effect()
-  setCurrentDashBoard$: Observable<Action> = this.actions$.pipe(
-    ofType<SetActiveDashboardGroupsAction>(DashboardGroupsActionTypes.SetActiveDashboardGroup),
-    withLatestFrom(this.store.select(getCurrentDashboardId)),
-    map(
-      ([action, dashboardId]: [SetActiveDashboardGroupsAction, string]) =>
-        new SetCurrentDashboardAction(
-          action.activeGroup.dashboards.includes(dashboardId) ? dashboardId : action.activeGroup.dashboards[0]
-        )
+  @Effect({ dispatch: false })
+  setCurrentDashboardGroup$: Observable<any> = this.actions$.pipe(
+    ofType<SetActiveDashboardGroupsAction>(
+      DashboardGroupsActionTypes.SetActiveDashboardGroup
     ),
-    catchError(error => of(new SetActiveDashboardGroupsActionFail(error)))
+    withLatestFrom(this.store.select(getCurrentDashboardId)),
+    tap(([action, dashboardId]: [SetActiveDashboardGroupsAction, string]) => {
+      const currentDashboardId = action.activeGroup.dashboards.includes(
+        dashboardId
+      )
+        ? dashboardId
+        : action.activeGroup.dashboards[0];
+      if (currentDashboardId) {
+        this.store.dispatch(new SetCurrentDashboardAction(currentDashboardId));
+      }
+    })
   );
 
   @Effect()
-  initializeDashboardGroups$: Observable<DashboardGroupsActions> = this.actions$.pipe(
-    ofType<InitializeDashboardGroupsAction>(DashboardGroupsActionTypes.InitializeDashboardGroups),
-    switchMap(() => [new InitializeDashboardGroupsActionSuccess(GROUPS_PAYLOAD, GROUPS_PAYLOAD[0].id)]),
+  initializeDashboardGroups$: Observable<
+    DashboardGroupsActions
+  > = this.actions$.pipe(
+    ofType<InitializeDashboardGroupsAction>(
+      DashboardGroupsActionTypes.InitializeDashboardGroups
+    ),
+    switchMap(() => [
+      new InitializeDashboardGroupsActionSuccess(
+        GROUPS_PAYLOAD,
+        GROUPS_PAYLOAD[0].id
+      )
+    ]),
     catchError(error => of(new SetActiveDashboardGroupsActionFail(error)))
   );
 
   // remember to put this at the end of all effects
   @Effect()
-  init$: Observable<Action> = defer(() => of(new InitializeDashboardGroupsAction()));
+  init$: Observable<Action> = defer(() =>
+    of(new InitializeDashboardGroupsAction())
+  );
   constructor(private actions$: Actions, private store: Store<State>) {}
 }
