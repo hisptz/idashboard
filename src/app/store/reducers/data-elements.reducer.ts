@@ -40,9 +40,3 @@ export function dataElementReducer(
     }
   }
 }
-
-const {
-  selectIds: getDataElementIds,
-  selectEntities: getDataElementEntitiesState,
-  selectAll: getAllDataElements
-} = DataElementAdapter.getSelectors();
