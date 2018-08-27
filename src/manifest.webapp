@@ -1,8 +1,8 @@
 
 {
-    "version": "1.0-alpha.1",
-    "name": "WHO Malaria Dashboard",
-    "description": "WHO Malaria Dashboard",
+    "version": "2.0.0-alpha.1",
+    "name": "Malaria Dashboard",
+    "description": "Malaria Dashboard",
     "appType": "APP",
     "launch_path": "index.html",
     "icons": {
