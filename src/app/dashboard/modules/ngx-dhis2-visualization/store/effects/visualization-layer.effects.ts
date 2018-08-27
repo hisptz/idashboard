@@ -104,7 +104,7 @@ export class VisualizationLayerEffects {
                       statusCode: error.status,
                       statusText: 'Error',
                       percent: 100,
-                      message: error.error
+                      message: error.message
                     }
                   })
                 );
