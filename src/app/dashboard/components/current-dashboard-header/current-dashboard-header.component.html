@@ -4,7 +4,7 @@
       <div *ngIf="dashboardLoading" style="height: 34px; width: 200px;">
         <app-dashboard-progress [borderRadius]="'3px'"></app-dashboard-progress>
       </div>
-      <app-current-dashboard-title *ngIf="dashboardLoaded" [currentDashboardTitle]="currentDashboard?.name"></app-current-dashboard-title>
+      <app-current-dashboard-title *ngIf="dashboardLoaded" [currentDashboardTitle]="currentDashboard?.name" [currentDashboardGroupName]="currentDashboardGroup?.name"></app-current-dashboard-title>
     </div>
     <div class="dashboard-options">
       <div *ngIf="dashboardLoading" style="display: flex;">

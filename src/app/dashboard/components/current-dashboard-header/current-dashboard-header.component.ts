@@ -7,7 +7,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import * as _ from 'lodash';
-import { Dashboard } from '../../models';
+import { Dashboard, DashboardGroups } from '../../models';
 import { Observable } from 'rxjs';
 import { User } from '../../../models';
 import { SelectionFilterConfig } from '../../modules/ngx-dhis2-data-selection-filter/models/selected-filter-config.model';
@@ -22,6 +22,9 @@ import { generateUid } from '../../../helpers/generate-uid.helper';
 export class CurrentDashboardHeaderComponent implements OnInit {
   @Input()
   currentDashboard: Dashboard;
+
+  @Input()
+  currentDashboardGroup: DashboardGroups;
   @Input()
   currentUser: User;
 

@@ -12,7 +12,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurrentDashboardTitleComponent implements OnInit {
-  @Input() currentDashboardTitle: string;
+  @Input()
+  currentDashboardTitle: string;
+  @Input()
+  currentDashboardGroupName: string;
   constructor() {}
 
   ngOnInit() {}

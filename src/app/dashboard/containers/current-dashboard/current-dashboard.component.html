@@ -1,9 +1,10 @@
 <div class="current-dashboard-container">
   <!-- current dashboard header -->
   <div class="current-dashboard-header-block">
-    <app-current-dashboard-header [currentDashboard]="currentDashboard$ | async" [currentUser]="currentUser$ | async" (toggleCurrentDashboardBookmark)="onToggleCurrentDashboardBookmark($event)"
-      (addDashboardItem)="onAddDashboardItem($event)" (createFavoriteForCurrentDashboard)="onCreateFavoriteForCurrentDashboard($event)"
-      (globalFilterChange)="onGlobalFilterChange($event)" [dashboardLoading]="dashboardLoading$ | async" [dashboardLoaded]="dashboardLoaded$ | async"></app-current-dashboard-header>
+    <app-current-dashboard-header [currentDashboard]="currentDashboard$ | async" [currentDashboardGroup]="currentDashboardGroup$ | async"
+      [currentUser]="currentUser$ | async" (toggleCurrentDashboardBookmark)="onToggleCurrentDashboardBookmark($event)" (addDashboardItem)="onAddDashboardItem($event)"
+      (createFavoriteForCurrentDashboard)="onCreateFavoriteForCurrentDashboard($event)" (globalFilterChange)="onGlobalFilterChange($event)"
+      [dashboardLoading]="dashboardLoading$ | async" [dashboardLoaded]="dashboardLoaded$ | async"></app-current-dashboard-header>
   </div>
   <!-- end of current dashboard header -->
 

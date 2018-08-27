@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { Dashboard } from '../../models';
+import { Dashboard, DashboardGroups } from '../../models';
 import {
   getCurrentUser,
   State,
@@ -18,13 +18,17 @@ import {
   getVisualizationReady,
   getCurrentDashboardVisualizationItems,
   getCurrentDashboardVisualizationLoading,
-  getCurrentDashboardVisualizationLoaded
+  getCurrentDashboardVisualizationLoaded,
+  getCurrentDashboardGroup
 } from '../../../store';
 import { User, SystemInfo, LegendSet } from '../../../models';
 import { getSystemInfo } from '../../../store/selectors/system-info.selectors';
 import { take } from 'rxjs/operators';
 
-import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
+import {
+  WELCOMING_DESCRIPTION,
+  WELCOMING_TITLE
+} from '../../constants/welcoming-messages.constants';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -37,6 +41,7 @@ export class CurrentDashboardComponent implements OnInit {
   currentDashboardVisualizationLoading$: Observable<boolean>;
   currentDashboardVisualizationLoaded$: Observable<boolean>;
   currentDashboard$: Observable<Dashboard>;
+  currentDashboardGroup$: Observable<DashboardGroups>;
   currentUser$: Observable<User>;
   systemInfo$: Observable<SystemInfo>;
   dashboardLoading$: Observable<boolean>;
@@ -49,13 +54,20 @@ export class CurrentDashboardComponent implements OnInit {
   emptyVisualizationMessage: string;
 
   constructor(private store: Store<State>) {
-    this.currentDashboardVisualizationItems$ = store.select(getCurrentDashboardVisualizationItems);
+    this.currentDashboardVisualizationItems$ = store.select(
+      getCurrentDashboardVisualizationItems
+    );
 
-    this.currentDashboardVisualizationLoading$ = store.select(getCurrentDashboardVisualizationLoading);
+    this.currentDashboardVisualizationLoading$ = store.select(
+      getCurrentDashboardVisualizationLoading
+    );
 
-    this.currentDashboardVisualizationLoaded$ = store.select(getCurrentDashboardVisualizationLoaded);
+    this.currentDashboardVisualizationLoaded$ = store.select(
+      getCurrentDashboardVisualizationLoaded
+    );
 
     this.currentDashboard$ = store.select(getCurrentDashboard);
+    this.currentDashboardGroup$ = store.select(getCurrentDashboardGroup);
     this.currentUser$ = store.select(getCurrentUser);
     this.systemInfo$ = store.select(getSystemInfo);
     this.dashboardLoading$ = store.select(getDashboardObjectLoading);
@@ -71,18 +83,33 @@ export class CurrentDashboardComponent implements OnInit {
 
   ngOnInit() {}
 
-  onToggleCurrentDashboardBookmark(dashboardDetails: { id: string; supportBookmark: boolean; bookmarked: boolean }) {
+  onToggleCurrentDashboardBookmark(dashboardDetails: {
+    id: string;
+    supportBookmark: boolean;
+    bookmarked: boolean;
+  }) {
     this.store.dispatch(
-      new ToggleDashboardBookmarkAction(dashboardDetails.id, dashboardDetails.supportBookmark, {
-        bookmarked: dashboardDetails.bookmarked,
-        bookmarkPending: true
-      })
+      new ToggleDashboardBookmarkAction(
+        dashboardDetails.id,
+        dashboardDetails.supportBookmark,
+        {
+          bookmarked: dashboardDetails.bookmarked,
+          bookmarkPending: true
+        }
+      )
     );
   }
 
-  onAddDashboardItem(dashboardFavoriteDetails: { dashboardId: string; dashboardItem: any }) {
+  onAddDashboardItem(dashboardFavoriteDetails: {
+    dashboardId: string;
+    dashboardItem: any;
+  }) {
     this.store.dispatch(
-      new ManageDashboardItemAction(dashboardFavoriteDetails.dashboardId, dashboardFavoriteDetails.dashboardItem, 'ADD')
+      new ManageDashboardItemAction(
+        dashboardFavoriteDetails.dashboardId,
+        dashboardFavoriteDetails.dashboardItem,
+        'ADD'
+      )
     );
   }
 
@@ -91,7 +118,12 @@ export class CurrentDashboardComponent implements OnInit {
   }
 
   onToggleVisualizationFullScreen(fullScreenDetails) {
-    this.store.dispatch(new SetCurrentVisualizationAction(fullScreenDetails.id, fullScreenDetails.dashboardId));
+    this.store.dispatch(
+      new SetCurrentVisualizationAction(
+        fullScreenDetails.id,
+        fullScreenDetails.dashboardId
+      )
+    );
   }
 
   onGlobalFilterChange(globalFilterDetails: any) {

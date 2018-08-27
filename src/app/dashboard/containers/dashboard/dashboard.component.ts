@@ -66,12 +66,20 @@ export class DashboardComponent implements OnInit {
     this.store.dispatch(new CreateDashboardAction(dashboardName));
   }
 
-  onToggleDashboardBookmark(dashboardDetails: { id: string; supportBookmark: boolean; bookmarked: boolean }) {
+  onToggleDashboardBookmark(dashboardDetails: {
+    id: string;
+    supportBookmark: boolean;
+    bookmarked: boolean;
+  }) {
     this.store.dispatch(
-      new ToggleDashboardBookmarkAction(dashboardDetails.id, dashboardDetails.supportBookmark, {
-        bookmarked: dashboardDetails.bookmarked,
-        bookmarkPending: true
-      })
+      new ToggleDashboardBookmarkAction(
+        dashboardDetails.id,
+        dashboardDetails.supportBookmark,
+        {
+          bookmarked: dashboardDetails.bookmarked,
+          bookmarkPending: true
+        }
+      )
     );
   }
 }
