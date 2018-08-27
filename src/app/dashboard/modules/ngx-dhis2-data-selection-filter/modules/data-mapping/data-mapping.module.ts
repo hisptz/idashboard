@@ -10,6 +10,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { DndModule } from 'ng2-dnd';
 import { HttpModule } from '@angular/http';
 import { DataMappingComponent } from './data-mapping.component';
+import { DataMappingContainerComponent } from './containers/data-mapping-container/data-mapping-container.component';
 import { mappingServices } from './services';
 
 @NgModule({
@@ -23,12 +24,13 @@ import { mappingServices } from './services';
   ],
   declarations: [
     DataMappingComponent,
+    DataMappingContainerComponent,
     ClickOutsideDirective,
     FilterByNamePipe,
     OrderPipe,
     AddUnderscorePipe
   ],
-  exports: [DataMappingComponent],
+  exports: [DataMappingComponent, DataMappingContainerComponent],
   providers: [...mappingServices]
 })
 export class DataMappingModule {}

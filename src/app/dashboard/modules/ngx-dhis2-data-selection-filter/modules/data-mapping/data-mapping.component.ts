@@ -6,9 +6,14 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import * as _ from 'lodash';
-import { Subscription, Observable, of } from 'rxjs';
-import { LIST_ICON, ARROW_LEFT_ICON, ARROW_RIGHT_ICON } from './icons';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import {
+  State,
+  getAllSystemDataElements,
+  getAllFuctionRules
+} from '../../../../../store';
+import { DataElement, FunctionRule } from '../../../../../models';
 
 @Component({
   selector: 'app-data-mapping',
@@ -24,11 +29,15 @@ export class DataMappingComponent implements OnInit, OnDestroy {
   @Output()
   dataFilterClose: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {}
+  dataElements$: Observable<DataElement[]>;
+  functionRules$: Observable<FunctionRule[]>;
 
-  ngOnInit() {
-    console.log(this.selectedItems);
+  constructor(private store: Store<State>) {
+    this.dataElements$ = this.store.select(getAllSystemDataElements);
+    this.functionRules$ = this.store.select(getAllFuctionRules);
   }
+
+  ngOnInit() {}
 
   ngOnDestroy() {}
 }

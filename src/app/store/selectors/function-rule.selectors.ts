@@ -7,7 +7,7 @@ export const getFunctionRuleEntityState = createSelector(
   (state: State) => state.functionRules
 );
 
-const {
+export const {
   selectIds: getFunctionRuleIds,
   selectEntities: getFuctionRuleEntitiesState,
   selectAll: getAllFuctionRules

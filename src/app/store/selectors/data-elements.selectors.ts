@@ -7,8 +7,8 @@ export const getDataElementEntityState = createSelector(
   (state: State) => state.dataElements
 );
 
-const {
+export const {
   selectIds: getDataElementIds,
   selectEntities: getDataElementEntitiesState,
-  selectAll: getAllDataElements
-} = DataElementAdapter.getSelectors();
+  selectAll: getAllSystemDataElements
+} = DataElementAdapter.getSelectors(getDataElementEntityState);
