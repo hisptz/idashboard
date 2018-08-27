@@ -1,7 +1,8 @@
 export interface MappingGroup {
   id: string;
   name: string;
-  member: GroupMember[];
+  current: boolean;
+  members: GroupMember[];
 }
 
 export interface GroupMember {

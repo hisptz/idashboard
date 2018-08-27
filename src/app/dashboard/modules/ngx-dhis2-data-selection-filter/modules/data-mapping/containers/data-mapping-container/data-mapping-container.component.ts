@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
-import { Subscription, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { LIST_ICON, ARROW_LEFT_ICON, ARROW_RIGHT_ICON } from '../../icons';
 import { FunctionRule, DataElement } from '../../../../../../../models';
 import { MappingGroup } from '../../model/mapping-group';
@@ -37,6 +37,12 @@ export class DataMappingContainerComponent implements OnInit {
   selectedGroup: any = { id: 'ALL', name: '[ All ]' };
   dataGroups: any[];
 
+  mappingTitle: string;
+  mappingDescription: string;
+  mappingGroupTitle: string;
+
+  currentSelectedGroupId: string;
+
   constructor() {
     this.showGroupingPanel = true;
     this.mappingGroups = [];
@@ -48,6 +54,9 @@ export class DataMappingContainerComponent implements OnInit {
     this.arrowLeftIcon = ARROW_LEFT_ICON;
     this.arrowRightIcon = ARROW_RIGHT_ICON;
     this.selectedFuctionRule = [];
+    this.mappingTitle = 'Template data element mapping';
+    this.mappingDescription =
+      'Select data element from you system to map to template data element';
   }
 
   ngOnInit() {
@@ -72,27 +81,38 @@ export class DataMappingContainerComponent implements OnInit {
         const { expressionMapping } = json;
         const { namesMapping } = json;
         Object.keys(namesMapping).map(groupId => {
-          const group: MappingGroup = {
-            id: groupId,
-            name: namesMapping[groupId],
-            member: []
-          };
-          if (expressionMapping && expressionMapping[groupId]) {
-            const memberId = expressionMapping[groupId];
-            const dataElement: any = _.find(this.dataElements, {
-              id: memberId
-            });
-            if (dataElement && dataElement.id) {
-              group.member.push({
-                id: dataElement.id,
-                name: dataElement.name
+          if (!_.find(groups, { id: groupId })) {
+            const group: MappingGroup = {
+              id: groupId,
+              current: false,
+              name: namesMapping[groupId],
+              members: []
+            };
+            if (expressionMapping && expressionMapping[groupId]) {
+              const memberId = expressionMapping[groupId];
+              const dataElement: any = _.find(this.dataElements, {
+                id: memberId
               });
+              if (dataElement && dataElement.id) {
+                group.members.push({
+                  id: dataElement.id,
+                  name: dataElement.name
+                });
+                this._selectedItems = _.sortBy([...[dataElement]], ['name']);
+              }
             }
+            groups = _.concat(groups, group);
           }
-          groups = _.concat(groups, group);
         });
+        this.selectedItems$ = of(this._selectedItems);
+        groups = _.sortBy(groups, ['name']);
+        if (groups.length > 0) {
+          groups[0].current = true;
+          this.currentSelectedGroupId = groups[0].id;
+        }
       }
     });
+
     return groups;
   }
 

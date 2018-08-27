@@ -12,6 +12,7 @@ import { HttpModule } from '@angular/http';
 import { DataMappingComponent } from './data-mapping.component';
 import { DataMappingContainerComponent } from './containers/data-mapping-container/data-mapping-container.component';
 import { mappingServices } from './services';
+import { components } from './components';
 
 @NgModule({
   imports: [
@@ -28,9 +29,10 @@ import { mappingServices } from './services';
     ClickOutsideDirective,
     FilterByNamePipe,
     OrderPipe,
-    AddUnderscorePipe
+    AddUnderscorePipe,
+    ...components
   ],
-  exports: [DataMappingComponent, DataMappingContainerComponent],
+  exports: [DataMappingComponent, DataMappingContainerComponent, ...components],
   providers: [...mappingServices]
 })
 export class DataMappingModule {}
