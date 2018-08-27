@@ -8,21 +8,21 @@
     </div>
     <div class="dashboard-options">
       <div *ngIf="dashboardLoading" style="display: flex;">
-        <div style="height: 34px; width: 34px; margin-left: 7px;">
+        <div *ngIf="showSharing" style="height: 34px; width: 34px; margin-left: 7px;">
           <app-dashboard-progress [borderRadius]="'17px'"></app-dashboard-progress>
         </div>
-        <div style="height: 34px; width: 34px; margin-left: 7px;">
+        <div *ngIf="showBookmark" style="height: 34px; width: 34px; margin-left: 7px;">
           <app-dashboard-progress [borderRadius]="'17px'"></app-dashboard-progress>
         </div>
         <div style="height: 34px; width: 50px; margin-left: 7px;">
           <app-dashboard-progress [borderRadius]="'17px'"></app-dashboard-progress>
         </div>
       </div>
-      <div class="current-dashboard-share-button" *ngIf="dashboardLoaded || currentDashboard?.access?.manage">
+      <div class="current-dashboard-share-button" *ngIf="showSharing && (dashboardLoaded || currentDashboard?.access?.manage)">
         <app-current-dashboard-sharing [id]="currentDashboard?.id"></app-current-dashboard-sharing>
       </div>
 
-      <div class="current-dashboard-bookmark-button" *ngIf="dashboardLoaded">
+      <div class="current-dashboard-bookmark-button" *ngIf="showBookmark && dashboardLoaded">
         <app-current-dashboard-bookmark [dashboardBookmarked]="currentDashboard?.bookmarked" [dashboardBookmarkPending]="currentDashboard?.bookmarkPending"
           (toggleDashboardBookmark)="onToggleDashboardBookmarkAction($event)"></app-current-dashboard-bookmark>
       </div>

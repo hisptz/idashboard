@@ -33,6 +33,9 @@ export class CurrentDashboardHeaderComponent implements OnInit {
 
   selectionFilterConfig: SelectionFilterConfig;
 
+  showSharing: boolean;
+  showBookmark: boolean;
+
   @Output()
   toggleCurrentDashboardBookmark: EventEmitter<{
     id: string;
@@ -68,6 +71,8 @@ export class CurrentDashboardHeaderComponent implements OnInit {
       showDataFilter: false,
       showLayout: false
     };
+    this.showSharing = false;
+    this.showBookmark = false;
   }
 
   ngOnInit() {}
