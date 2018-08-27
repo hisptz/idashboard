@@ -6,7 +6,9 @@ export function getStandardizedVisualizationUiConfig(
   visualizationItem: any,
   currentVisualizationItemId?: string
 ): VisualizationUiConfig {
-  const isNonVisualizable = checkIfVisualizationIsNonVisualizable(visualizationItem.type);
+  const isNonVisualizable = checkIfVisualizationIsNonVisualizable(
+    visualizationItem.type
+  );
 
   const isFullScreen = currentVisualizationItemId === visualizationItem.id;
   return {
@@ -23,6 +25,6 @@ export function getStandardizedVisualizationUiConfig(
     hideTypeButtons: !isNonVisualizable,
     showInterpretionBlock: !isNonVisualizable,
     hideResizeButtons: true,
-    showTitleBlock: true
+    showTitleBlock: false
   };
 }

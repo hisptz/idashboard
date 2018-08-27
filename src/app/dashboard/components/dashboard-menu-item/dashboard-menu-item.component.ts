@@ -23,15 +23,20 @@ import { openAnimation } from '../../../animations';
   animations: [openAnimation]
 })
 export class DashboardMenuItemComponent implements OnInit {
-  @Input() dashboardMenuItem: Dashboard;
-  @Input() currentDashboardId: string;
-  @Output() setDashboard: EventEmitter<string> = new EventEmitter<string>();
+  @Input()
+  dashboardMenuItem: Dashboard;
+  @Input()
+  currentDashboardId: string;
+  @Output()
+  setDashboard: EventEmitter<string> = new EventEmitter<string>();
   @Output()
   toggleDashboardMenuItemBookmark: EventEmitter<{
     id: string;
     bookmarked: boolean;
     supportBookmark: boolean;
   }> = new EventEmitter();
+
+  enableBookButton: boolean;
 
   showBookmarkButton: boolean;
 
@@ -43,6 +48,7 @@ export class DashboardMenuItemComponent implements OnInit {
     this.bookmarkPendingIcon = BOOKMARK_PENDING_ICON;
     this.unBookmarkedIcon = UN_BOOKMARKED_ICON;
     this.showBookmarkButton = false;
+    this.enableBookButton = false;
   }
 
   ngOnInit() {}
