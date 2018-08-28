@@ -10,9 +10,12 @@ export function drawTable(
   const legendClasses = tableConfiguration.legendSet
     ? tableConfiguration.legendSet.legends
     : null;
+  const { columnsStyles, columnGroups = [] } = tableConfiguration;
 
   const table = {
-    headers: [],
+    headers: columnGroups.length
+      ? [{ items: [...columnGroups], style: '' }]
+      : [],
     columns: [],
     rows: [],
     titles: {
@@ -86,17 +89,20 @@ export function drawTable(
         tableConfiguration.columns,
         columnItem
       );
+      const groupsIds = columnGroups.map(({ id }) => id) || [];
       const currentColumnItems = prepareSingleCategories(
         analyticsObject,
         columnItem
-      );
+      ).filter(({ uid }) => !groupsIds.includes(uid));
       const headerItem = [];
       for (let i = 0; i < dimension.duplication; i++) {
         for (const currentItem of currentColumnItems) {
           headerItem.push({
             name: currentItem.name,
+            row_span: dimension.col_span,
             span: dimension.col_span,
             type: currentItem.type,
+            color: columnsStyles[currentItem.uid],
             id: currentItem.uid
           });
         }

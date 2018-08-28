@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
     this.currentDashboardGroupId$ = store.select(getActiveDashboardGroup);
 
     // menu container height in pixels
-    this.menuContainerHeight = 91;
+    this.menuContainerHeight = 136;
   }
 
   // Get dashboard content margin top by adding additional height from menu container height

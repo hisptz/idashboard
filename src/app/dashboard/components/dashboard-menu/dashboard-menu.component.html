@@ -1,6 +1,6 @@
 <div class="tab">
-
-    <ul class="tabs">
+    <div class="dashboardHeader"><span>{{headerMessage}}</span><br><span>{{headerMessage1}}</span></div>
+    <ul class="tabs" *ngIf="dashboardGroups">
         <li *ngFor="let dashboardGroup of dashboardGroups" [ngClass]="{'current': dashboardGroup.id === activeDashboardGroupId }"
             (click)="onSetActiveDashboardGroup(dashboardGroup)">{{dashboardGroup.name}}</li>
     </ul> <!-- / tabs -->

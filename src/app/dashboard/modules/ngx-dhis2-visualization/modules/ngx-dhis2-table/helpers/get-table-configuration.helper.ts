@@ -19,6 +19,8 @@ export function getTableConfiguration(favoriteObject: any, visualizationLayout: 
     displayList: checkForEventDataType(favoriteObject, type),
     rows: visualizationLayout.rows ? visualizationLayout.rows : ['pe'],
     columns: visualizationLayout.columns ? visualizationLayout.columns : ['dx'],
+    columnsStyles: favoriteObject.columnsStyles,
+    columnGroups: favoriteObject.columnGroups,
     legendSet: favoriteObject.legendSet || null,
     legendDisplayStrategy: favoriteObject.legendDisplayStrategy,
     styles: null

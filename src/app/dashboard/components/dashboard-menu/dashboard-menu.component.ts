@@ -33,7 +33,12 @@ export class DashboardMenuComponent {
     bookmarked: boolean;
     supportBookmark;
   }> = new EventEmitter();
-  constructor() {}
+  headerMessage: string;
+  headerMessage1: string;
+  constructor() {
+    this.headerMessage = 'National Malaria Program';
+    this.headerMessage1 = 'Monthly Surveillance and Logistics Report';
+  }
 
   onSetCurrentDashboard(dashboardId: string) {
     this.setCurrentDashboard.emit(dashboardId);
