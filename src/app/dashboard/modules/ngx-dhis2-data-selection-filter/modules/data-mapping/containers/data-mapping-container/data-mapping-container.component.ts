@@ -19,7 +19,7 @@ export class DataMappingContainerComponent implements OnInit {
   selectedItems;
 
   mappingGroups: MappingGroup[];
-  selectedFuctionRule: FunctionRule[];
+  selectedFuctionRuleIds: string[];
 
   selectedItems$: Observable<any>;
   _selectedItems: any[];
@@ -41,7 +41,7 @@ export class DataMappingContainerComponent implements OnInit {
   mappingDescription: string;
   mappingGroupTitle: string;
 
-  currentSelectedGroupId: string;
+  activeGroupId: string;
 
   constructor() {
     this.showGroupingPanel = true;
@@ -53,7 +53,6 @@ export class DataMappingContainerComponent implements OnInit {
     this.listIcon = LIST_ICON;
     this.arrowLeftIcon = ARROW_LEFT_ICON;
     this.arrowRightIcon = ARROW_RIGHT_ICON;
-    this.selectedFuctionRule = [];
     this.mappingTitle = 'Template data element mapping';
     this.mappingDescription =
       'Select data element from you system to map to template data element';
@@ -63,14 +62,19 @@ export class DataMappingContainerComponent implements OnInit {
     // @todo adding support of data elements groups
     this.dataGroups = [{ id: 'ALL', name: '[ All ]' }];
     this.selectedItems$ = of(this._selectedItems);
-    const ruleIds = this.selectedItems.map(selectedItem => selectedItem.id);
+    this.selectedFuctionRuleIds = this.selectedItems.map(
+      selectedItem => selectedItem.id
+    );
+    this.upDateActiveMappingGroups();
+  }
+
+  upDateActiveMappingGroups() {
     // deduce groups and seleted function rules
     const selectedFuctionRule = this.getSectedRules(
       this.functionRules,
-      ruleIds
+      this.selectedFuctionRuleIds
     );
     this.mappingGroups = this.getMappingGroups(selectedFuctionRule);
-    this.selectedFuctionRule = selectedFuctionRule;
   }
 
   getMappingGroups(selectedRules: FunctionRule[]) {
@@ -84,7 +88,7 @@ export class DataMappingContainerComponent implements OnInit {
           if (!_.find(groups, { id: groupId })) {
             const group: MappingGroup = {
               id: groupId,
-              current: false,
+              current: this.activeGroupId === groupId ? true : false,
               name: namesMapping[groupId],
               members: []
             };
@@ -98,21 +102,31 @@ export class DataMappingContainerComponent implements OnInit {
                   id: dataElement.id,
                   name: dataElement.name
                 });
-                this._selectedItems = _.sortBy([...[dataElement]], ['name']);
               }
             }
             groups = _.concat(groups, group);
           }
         });
+        this._selectedItems = [];
+        groups.map(group => {
+          if (group.members.length > 0) {
+            const { id } = group.members[0];
+            if (!_.find(this._selectedItems, ['id', id])) {
+              const dataElement: any = _.find(this.dataElements, {
+                id: id
+              });
+              this._selectedItems = [...this._selectedItems, dataElement];
+            }
+          }
+        });
         this.selectedItems$ = of(this._selectedItems);
         groups = _.sortBy(groups, ['name']);
-        if (groups.length > 0) {
+        if (groups.length > 0 && !this.activeGroupId) {
           groups[0].current = true;
-          this.currentSelectedGroupId = groups[0].id;
+          this.activeGroupId = groups[0].id;
         }
       }
     });
-
     return groups;
   }
 
@@ -130,33 +144,134 @@ export class DataMappingContainerComponent implements OnInit {
     return selectedRules;
   }
 
+  onUpdateGroups(groups: MappingGroup[]) {
+    const activeGroup = _.find(groups, { current: true });
+    this.activeGroupId = activeGroup && activeGroup.id ? activeGroup.id : null;
+    this.mappingGroups = groups;
+  }
+
   addSelected(item, event) {
     event.stopPropagation();
-    const itemIndex = _.findIndex(this.dataElements, item);
-    this.dataElements = [
-      ...this.dataElements.slice(0, itemIndex),
-      ...this.dataElements.slice(itemIndex + 1)
-    ];
-
-    if (!_.find(this._selectedItems, ['id', item.id])) {
-      this._selectedItems = [...this._selectedItems, item];
+    if (
+      this.activeGroupId &&
+      this.mappingGroups.length > 0 &&
+      _.find(this.mappingGroups, { id: this.activeGroupId })
+    ) {
+      const group = _.find(this.mappingGroups, { id: this.activeGroupId });
+      if (group && group.id && item && item.id) {
+        const systemDataElementId = item.id;
+        const templateDataElementId = group.id;
+        this.functionRules.forEach(rule => {
+          let json = rule.json;
+          if (typeof rule.json === 'string') {
+            json = JSON.parse(json);
+          }
+          if (json && json.expressionMapping) {
+            const { expressionMapping } = json;
+            const templateDataElementIds = Object.keys(expressionMapping);
+            if (
+              templateDataElementIds &&
+              templateDataElementIds.indexOf(templateDataElementId) > -1
+            ) {
+              const oldSystemDataElementId = expressionMapping[
+                templateDataElementId
+              ]
+                ? expressionMapping[templateDataElementId]
+                : templateDataElementId;
+              json.expressionMapping[
+                templateDataElementId
+              ] = systemDataElementId;
+              json.expression = json.expression.replace(
+                new RegExp(oldSystemDataElementId, 'g'),
+                systemDataElementId
+              );
+              rule.json = JSON.stringify(json);
+            }
+          }
+        });
+        const _selectedItems = this._selectedItems;
+        _selectedItems.map(_selectedItem => {
+          if (!_.find(this.dataElements, ['id', _selectedItem.id])) {
+            this.dataElements = [...this.dataElements, _selectedItem];
+          }
+        });
+        this.upDateActiveMappingGroups();
+        const itemIndex = _.findIndex(this.dataElements, item);
+        this.dataElements = [
+          ...this.dataElements.slice(0, itemIndex),
+          ...this.dataElements.slice(itemIndex + 1)
+        ];
+        this.dataElements = _.sortBy(this.dataElements, ['name']);
+      }
     }
-    // @todo tap action of mapping re-mapping on rules
-    this.selectedItems$ = of(this._selectedItems);
   }
 
   removeSelected(item, event) {
     event.stopPropagation();
-    const itemIndex = _.findIndex(this._selectedItems, item);
-    this._selectedItems = [
-      ...this._selectedItems.slice(0, itemIndex),
-      ...this._selectedItems.slice(itemIndex + 1)
-    ];
-
-    if (!_.find(this.dataElements, ['id', item.id])) {
-      this.dataElements = _.sortBy([...this.dataElements, item], ['name']);
-    }
     // @todo tap action of mapping re-mapping on rules
+    if (
+      this.activeGroupId &&
+      this.mappingGroups.length > 0 &&
+      _.find(this.mappingGroups, { id: this.activeGroupId })
+    ) {
+      const group = _.find(this.mappingGroups, { id: this.activeGroupId });
+      if (group && group.id && item && item.id) {
+        const templateDataElementId = group.id;
+        this.functionRules.forEach(rule => {
+          let json = rule.json;
+          if (typeof rule.json === 'string') {
+            json = JSON.parse(json);
+          }
+          if (json && json.expressionMapping) {
+            const { expressionMapping } = json;
+            const templateDataElementIds = Object.keys(expressionMapping);
+            if (
+              templateDataElementIds &&
+              templateDataElementIds.indexOf(templateDataElementId) > -1
+            ) {
+              const oldSystemDataElementId = expressionMapping[
+                templateDataElementId
+              ]
+                ? expressionMapping[templateDataElementId]
+                : templateDataElementId;
+              json.expressionMapping[templateDataElementId] = null;
+              json.expression = json.expression.replace(
+                new RegExp(oldSystemDataElementId, 'g'),
+                templateDataElementId
+              );
+              rule.json = JSON.stringify(json);
+            }
+          }
+        });
+        if (!_.find(this.dataElements, ['id', item.id])) {
+          this.dataElements = _.sortBy([...this.dataElements, item], ['name']);
+        }
+      }
+    }
+  }
+
+  selectAllItems(event) {
+    event.stopPropagation();
+    this.dataElements.map(item => {
+      if (!_.find(this._selectedItems, ['id', item.id])) {
+        this._selectedItems = _.sortBy(
+          [...this._selectedItems, item],
+          ['name']
+        );
+      }
+    });
+    this.dataElements = [];
+    this.selectedItems$ = of(this._selectedItems);
+  }
+
+  deselectAllItems(e) {
+    e.stopPropagation();
+    this._selectedItems.map(item => {
+      if (!_.find(this.dataElements, ['id', item.id])) {
+        this.dataElements = _.sortBy([...this.dataElements, item], ['name']);
+      }
+    });
+    this._selectedItems = [];
     this.selectedItems$ = of(this._selectedItems);
   }
 
@@ -190,21 +305,16 @@ export class DataMappingContainerComponent implements OnInit {
     this.showGroupingPanel = !this.showGroupingPanel;
   }
 
-  close(e) {
+  saveCOnfigurations(e) {
     e.stopPropagation();
-    // this.dataFilterClose.emit({
-    //   items: this._selectedItems,
-    //   groups: this.selectedGroups,
-    //   dimension: 'dx'
-    // });
-  }
-  emit(e) {
-    e.stopPropagation();
-    // this.dataFilterUpdate.emit({
-    //   items: this._selectedItems,
-    //   groups: this.selectedGroups,
-    //   dimension: 'dx'
-    // });
+    const rules = [];
+    this.functionRules.map(rule => {
+      if (typeof rule.json !== 'string') {
+        rule.json = JSON.stringify(rule.json);
+      }
+      rules.push(rule);
+    });
+    this.functionRules = _.assign([], this.functionRules, rules);
   }
 
   searchChanged() {
@@ -224,32 +334,6 @@ export class DataMappingContainerComponent implements OnInit {
       this.deleteData(data.dragData);
       this.insertData(data.dragData, current, number);
     }
-  }
-
-  selectAllItems(event) {
-    event.stopPropagation();
-
-    this.dataElements.map(item => {
-      if (!_.find(this._selectedItems, ['id', item.id])) {
-        this._selectedItems = _.sortBy(
-          [...this._selectedItems, item],
-          ['name']
-        );
-      }
-    });
-    this.dataElements = [];
-    this.selectedItems$ = of(this._selectedItems);
-  }
-
-  deselectAllItems(e) {
-    e.stopPropagation();
-    this._selectedItems.map(item => {
-      if (!_.find(this.dataElements, ['id', item.id])) {
-        this.dataElements = _.sortBy([...this.dataElements, item], ['name']);
-      }
-    });
-    this._selectedItems = [];
-    this.selectedItems$ = of(this._selectedItems);
   }
 
   // helper method to find the index of dragged item
