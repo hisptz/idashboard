@@ -22,6 +22,7 @@
       <div class="data-filter-group__item-content" *ngIf="group.current">
         <div class="data-filter-group__item-member-list">
           <div class="data-filter-group__item-label">{{ groupMemberTitle }} </div>
+          <div class="data-filter-group__item-member-item" *ngIf="group.members.length === 0">Select data element to map</div>
           <div class="data-filter-group__item-member-item" *ngFor="let member of group.members">
             <img [src]="dragIcon" alt="">&nbsp;{{member.name}}
           </div>

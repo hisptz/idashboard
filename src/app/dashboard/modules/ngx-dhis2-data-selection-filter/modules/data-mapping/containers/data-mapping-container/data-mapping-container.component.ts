@@ -242,10 +242,14 @@ export class DataMappingContainerComponent implements OnInit {
               rule.json = JSON.stringify(json);
             }
           }
+          if (!_.find(this.dataElements, ['id', item.id])) {
+            this.dataElements = _.sortBy(
+              [...this.dataElements, item],
+              ['name']
+            );
+          }
         });
-        if (!_.find(this.dataElements, ['id', item.id])) {
-          this.dataElements = _.sortBy([...this.dataElements, item], ['name']);
-        }
+        this.upDateActiveMappingGroups();
       }
     }
   }
@@ -315,6 +319,7 @@ export class DataMappingContainerComponent implements OnInit {
       rules.push(rule);
     });
     this.functionRules = _.assign([], this.functionRules, rules);
+    console.log('rules : ', rules);
   }
 
   searchChanged() {
