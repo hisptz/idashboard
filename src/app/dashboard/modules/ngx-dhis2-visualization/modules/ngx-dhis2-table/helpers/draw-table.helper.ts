@@ -4,7 +4,7 @@ const USE_BY_DATA_ITEM_LEGEND = 'BY_DATA_ITEM';
 
 export function drawTable(analyticsObject, tableConfiguration: TableConfiguration, legendSets: LegendSet[]) {
   const legendClasses = tableConfiguration.legendSet ? tableConfiguration.legendSet.legends : null;
-  const { columnsStyles, columnGroups = [] } = tableConfiguration;
+  const { columnsStyles = {}, columnGroups = [] } = tableConfiguration;
 
   const table = {
     headers: columnGroups.length ? [{ items: [...columnGroups], style: '' }] : [],
