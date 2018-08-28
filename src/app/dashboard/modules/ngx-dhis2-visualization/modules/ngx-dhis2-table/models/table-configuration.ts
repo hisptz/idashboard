@@ -13,5 +13,7 @@ export interface TableConfiguration {
   legendDisplayStrategy: string;
   displayList: boolean;
   legendSet: any;
+  columnsStyles?: any;
+  columnGroups?: any;
   styles: any;
 }

@@ -4,9 +4,10 @@ const USE_BY_DATA_ITEM_LEGEND = 'BY_DATA_ITEM';
 
 export function drawTable(analyticsObject, tableConfiguration: TableConfiguration, legendSets: LegendSet[]) {
   const legendClasses = tableConfiguration.legendSet ? tableConfiguration.legendSet.legends : null;
+  const { columnsStyles, columnGroups = [] } = tableConfiguration;
 
   const table = {
-    headers: [],
+    headers: columnGroups.length ? [{ items: [...columnGroups], style: '' }] : [],
     columns: [],
     rows: [],
     titles: {
@@ -66,14 +67,19 @@ export function drawTable(analyticsObject, tableConfiguration: TableConfiguratio
 
     for (const columnItem of tableConfiguration.columns) {
       const dimension = calculateColSpan(analyticsObject, tableConfiguration.columns, columnItem);
-      const currentColumnItems = prepareSingleCategories(analyticsObject, columnItem);
+      const groupsIds = columnGroups.map(({ id }) => id) || [];
+      const currentColumnItems = prepareSingleCategories(analyticsObject, columnItem).filter(
+        ({ uid }) => !groupsIds.includes(uid)
+      );
       const headerItem = [];
       for (let i = 0; i < dimension.duplication; i++) {
         for (const currentItem of currentColumnItems) {
           headerItem.push({
             name: currentItem.name,
+            row_span: dimension.col_span,
             span: dimension.col_span,
             type: currentItem.type,
+            color: columnsStyles[currentItem.uid],
             id: currentItem.uid
           });
         }
@@ -196,8 +202,6 @@ export function drawTable(analyticsObject, tableConfiguration: TableConfiguratio
         } else {
           table.rows.push(item);
         }
-
-        console.log(item.items);
 
         counter++;
       }
