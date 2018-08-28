@@ -14,4 +14,28 @@ export class FunctionMetadataService {
     const url = 'dataStore/functions/whoMalariafn';
     return this.http.get(url).pipe(map((res: any) => res.rules || []));
   }
+
+  updateFucntionRuleDataStore(data): Observable<any> {
+    return new Observable(observer => {
+      const { rules } = data;
+      const url = 'dataStore/functions/whoMalariafn';
+      this.http.get(url).subscribe(
+        (response: any) => {
+          response['rules'] = rules;
+          this.http.put(url, data).subscribe(
+            res => {
+              observer.next();
+              observer.complete();
+            },
+            error => {
+              observer.error(error);
+            }
+          );
+        },
+        error => {
+          observer.error(error);
+        }
+      );
+    });
+  }
 }

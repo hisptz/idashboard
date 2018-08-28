@@ -32,11 +32,11 @@ export function functionRuleReducer(
         loading: false
       });
     }
+    case FunctionRuleActionTypes.UpdateFunctionRules: {
+      return functionRuleAdapter.updateMany(action.payload.rules, state);
+    }
     case FunctionRuleActionTypes.UpdateFunctionRule: {
-      return functionRuleAdapter.updateOne(
-        { id: action.payload.id, changes: action.payload },
-        state
-      );
+      return functionRuleAdapter.updateOne(action.payload.rule, state);
     }
     case FunctionRuleActionTypes.LoadFunctionRuleFail: {
       return { ...state, loading: false, loaded: false };

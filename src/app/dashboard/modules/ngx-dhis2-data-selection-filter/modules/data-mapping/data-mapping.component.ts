@@ -11,7 +11,8 @@ import { Store } from '@ngrx/store';
 import {
   State,
   getAllSystemDataElements,
-  getAllFuctionRules
+  getAllFuctionRules,
+  UpdateFunctionRules
 } from '../../../../../store';
 import { DataElement, FunctionRule } from '../../../../../models';
 
@@ -40,7 +41,8 @@ export class DataMappingComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   onDataMappingClose(data) {
-    console.log(data);
+    const { rules } = data;
+    this.store.dispatch(new UpdateFunctionRules({ rules }));
   }
 
   ngOnDestroy() {

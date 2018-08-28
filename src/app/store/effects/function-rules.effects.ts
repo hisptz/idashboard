@@ -10,7 +10,8 @@ import {
   FunctionRuleActionTypes,
   LoadFunctionRuleFail,
   LoadFunctionRules,
-  LoadFunctionRuleSuccess
+  LoadFunctionRuleSuccess,
+  UpdateFunctionRuleSuccess
 } from '../actions';
 
 @Injectable()
@@ -25,6 +26,16 @@ export class FunctionRuleEffects {
     ofType<FunctionRuleActions>(FunctionRuleActionTypes.LoadFunctionRules),
     mergeMap(() => this.functionMetadata.loadinFuctionRules()),
     map(functionRules => new LoadFunctionRuleSuccess(functionRules)),
+    catchError(error => of(new LoadFunctionRuleFail(error)))
+  );
+
+  @Effect()
+  updatingFunctionRules$: Observable<Action> = this.actions$.pipe(
+    ofType<FunctionRuleActions>(FunctionRuleActionTypes.UpdateFunctionRules),
+    mergeMap((action: any) =>
+      this.functionMetadata.updateFucntionRuleDataStore(action.payload)
+    ),
+    map(() => new UpdateFunctionRuleSuccess()),
     catchError(error => of(new LoadFunctionRuleFail(error)))
   );
 
