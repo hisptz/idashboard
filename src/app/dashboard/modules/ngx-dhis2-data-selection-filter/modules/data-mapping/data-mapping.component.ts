@@ -43,6 +43,11 @@ export class DataMappingComponent implements OnInit, OnDestroy {
   onDataMappingClose(data) {
     const { rules } = data;
     this.store.dispatch(new UpdateFunctionRules({ rules }));
+    this.dataFilterUpdate.emit({
+      items: this.selectedItems,
+      groups: [],
+      dimension: 'dx'
+    });
   }
 
   ngOnDestroy() {
