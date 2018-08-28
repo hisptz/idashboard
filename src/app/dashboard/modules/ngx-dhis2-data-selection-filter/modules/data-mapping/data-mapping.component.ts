@@ -39,5 +39,12 @@ export class DataMappingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy() {}
+  onDataMappingClose(data) {
+    console.log(data);
+  }
+
+  ngOnDestroy() {
+    this.functionRules$ = null;
+    this.dataElements$ = null;
+  }
 }

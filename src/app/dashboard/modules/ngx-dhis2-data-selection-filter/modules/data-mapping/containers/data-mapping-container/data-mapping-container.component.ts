@@ -1,4 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy
+} from '@angular/core';
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { LIST_ICON, ARROW_LEFT_ICON, ARROW_RIGHT_ICON } from '../../icons';
@@ -10,13 +17,16 @@ import { MappingGroup } from '../../model/mapping-group';
   templateUrl: './data-mapping-container.component.html',
   styleUrls: ['./data-mapping-container.component.css']
 })
-export class DataMappingContainerComponent implements OnInit {
+export class DataMappingContainerComponent implements OnInit, OnDestroy {
   @Input()
   dataElements: DataElement[];
   @Input()
   functionRules: FunctionRule[];
   @Input()
   selectedItems;
+
+  @Output()
+  dataMappingClose = new EventEmitter();
 
   mappingGroups: MappingGroup[];
   selectedFuctionRuleIds: string[];
@@ -208,7 +218,6 @@ export class DataMappingContainerComponent implements OnInit {
 
   removeSelected(item, event) {
     event.stopPropagation();
-    // @todo tap action of mapping re-mapping on rules
     if (
       this.activeGroupId &&
       this.mappingGroups.length > 0 &&
@@ -319,7 +328,7 @@ export class DataMappingContainerComponent implements OnInit {
       rules.push(rule);
     });
     this.functionRules = _.assign([], this.functionRules, rules);
-    console.log('rules : ', rules);
+    this.dataMappingClose.emit({ rules });
   }
 
   searchChanged() {
@@ -386,5 +395,28 @@ export class DataMappingContainerComponent implements OnInit {
       }
     }
     return checker;
+  }
+
+  ngOnDestroy() {
+    this.mappingGroups = null;
+    this.selectedFuctionRuleIds = null;
+    this.selectedItems$ = null;
+    this._selectedItems = null;
+    this.availablePagenator = null;
+    this.selectedPagenator = null;
+    this.showGroupingPanel = null;
+    this.showGroups = null;
+    this.listIcon = null;
+    this.arrowLeftIcon = null;
+    this.arrowRightIcon = null;
+    this.listchanges = null;
+    this.querystring = null;
+    this.selectedGroups = null;
+    this.selectedGroup = null;
+    this.dataGroups = null;
+    this.mappingTitle = null;
+    this.mappingDescription = null;
+    this.mappingGroupTitle = null;
+    this.activeGroupId = null;
   }
 }
