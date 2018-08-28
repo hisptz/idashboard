@@ -37,6 +37,7 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   availablePagenator: number;
   selectedPagenator: number;
   showGroupingPanel: boolean;
+  showBody: boolean;
   showGroups: boolean;
   listIcon: string;
   arrowLeftIcon: string;
