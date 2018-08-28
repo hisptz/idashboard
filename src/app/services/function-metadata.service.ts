@@ -22,7 +22,7 @@ export class FunctionMetadataService {
       this.http.get(url).subscribe(
         (response: any) => {
           response['rules'] = rules;
-          this.http.put(url, data).subscribe(
+          this.http.put(url, response).subscribe(
             res => {
               observer.next();
               observer.complete();
