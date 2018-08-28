@@ -10,7 +10,7 @@ export function drawTable(
   const legendClasses = tableConfiguration.legendSet
     ? tableConfiguration.legendSet.legends
     : null;
-  const { columnsStyles, columnGroups = [] } = tableConfiguration;
+  const { columnsStyles = {}, columnGroups = [] } = tableConfiguration;
 
   const table = {
     headers: columnGroups.length
