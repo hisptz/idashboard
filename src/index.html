@@ -411,7 +411,6 @@
       ScrollNewsDiv()
     }}
   function NewsScrollStart(){
-    console.log('Executed');
     dataobj=document.all? document.all.NewsDiv : document.getElementById("NewsDiv")
     dataobj.style.top=topspace
     setTimeout("HeightData()",( startdelay * 2000 ))
@@ -419,13 +418,11 @@
 
   function ScrollNewsDiv(){
     dataobj.style.top=scrollwind+'px';
-    console.log('scrollwind', scrollwind);
     // dataobj.style.top='20px';
     scrollwind-=scrollspeed;
     if (parseInt(dataobj.style.top)<AreaHeight*(-1)) {
       dataobj.style.top=frameheight+'px';
       scrollwind=frameheight;
-      console.log('frameheight', frameheight);
       setTimeout("ScrollNewsDiv()",( nextdelay * 4000 ))
     }
     else {

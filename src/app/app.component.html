@@ -3,7 +3,7 @@
 </div>
 <div class="no-print" *ngIf="pageToDisplay">
   <div [innerHtml]="pageToDisplay | safeHtml"></div>
-  <div class="col-md-12" style="background-color: #1d49af;">
+  <div class="col-md-12" style="background-color: #2390D2;">
     <div class="topnav" id="myTopnav">
       <a style="width: 1px; padding: 0px"></a>
       <a *ngFor="let page of pages" routerLinkActive="active-btn" (click)="setActiveClass(page.id)" id="{{page.id}}"  class="top-btn" routerLink="{{ page.routeUrl }}">{{ page.name }}</a>

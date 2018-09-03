@@ -4,7 +4,7 @@
 
 .no-print {
   /*border-bottom: 3px solid #000;*/
-  background-color: #1d49af;
+  background-color: #2390D2;
 }
 
 @media print {
@@ -21,6 +21,7 @@
 
 .active-btn {
   background-color: #3779B6 !important;
+  border-radius: 7px 7px 0px 0px;
 }
 
 .active-btn:hover {
@@ -41,6 +42,8 @@
   text-align: center;
   overflow: hidden;
   background-color:  transparent;
+  padding-bottom: 5px;
+  border-bottom: solid 3px;
 }
 
 .topnav a {
@@ -48,9 +51,9 @@
   display: inline-flex;
   color: #ffffff;
   text-align: center;
-  padding: 8px 16px;
+  padding: 8px 20px 8px 20px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 19px;
 }
 
 .topnav a:hover {
