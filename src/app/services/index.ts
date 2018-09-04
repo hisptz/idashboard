@@ -3,3 +3,5 @@ export * from './dashboard-settings.service';
 export * from './dashboard.service';
 export * from './util.service';
 export * from './legend-set.service';
+export * from './dataElements.service';
+export * from './function-metadata.service';

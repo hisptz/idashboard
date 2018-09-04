@@ -4,5 +4,4 @@ export interface DataElement {
   categoryCombo: {
     id: string;
   };
-  dataSetElements: any[];
 }

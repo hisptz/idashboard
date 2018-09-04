@@ -4,11 +4,28 @@ import { environment } from '../../../environments/environment';
 
 import { userReducer, UserState } from './user.reducer';
 import { systemInfoReducer, SystemInfoState } from './system-info.reducer';
-import { DashboardObjectState, dashboardObjectReducer } from './dashboard.reducer';
-import { DashboardSettingsState, dashboardSettingsReducer } from './dashboard-settings.reducer';
-import { DashboardVisualizationState, dashboardVisualizationReducer } from './dashboard-visualization.reducer';
-import { DashboardGroupsState, dashboardGroupReducer } from './dashboard-groups.reducer';
+import {
+  DashboardObjectState,
+  dashboardObjectReducer
+} from './dashboard.reducer';
+import {
+  DashboardSettingsState,
+  dashboardSettingsReducer
+} from './dashboard-settings.reducer';
+import {
+  DashboardVisualizationState,
+  dashboardVisualizationReducer
+} from './dashboard-visualization.reducer';
+import {
+  DashboardGroupsState,
+  dashboardGroupReducer
+} from './dashboard-groups.reducer';
 import { LegendSetState, legendSetReducer } from './legend-set.reducer';
+import { DataElementState, dataElementReducer } from './data-elements.reducer';
+import {
+  FunctionRuleState,
+  functionRuleReducer
+} from './function-rule.reducer';
 
 /**
  * Root state interface
@@ -33,6 +50,8 @@ export interface State {
   dashboardSettings: DashboardSettingsState;
   dashboardVisualization: DashboardVisualizationState;
   legendSets: LegendSetState;
+  dataElements: DataElementState;
+  functionRules: FunctionRuleState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -43,10 +62,14 @@ export const reducers: ActionReducerMap<State> = {
   dashboardGroups: dashboardGroupReducer,
   dashboardSettings: dashboardSettingsReducer,
   dashboardVisualization: dashboardVisualizationReducer,
-  legendSets: legendSetReducer
+  legendSets: legendSetReducer,
+  dataElements: dataElementReducer,
+  functionRules: functionRuleReducer
 };
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<State>[] = !environment.production
+  ? []
+  : [];
 
 /**
  * Root state selector

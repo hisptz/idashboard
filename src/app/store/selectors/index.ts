@@ -5,3 +5,5 @@ export * from './dashboard-visualization.selectors';
 export * from './dashboard.selectors';
 export * from './dashboard-groups.selectors';
 export * from './legend-set.selectors';
+export * from './function-rule.selectors';
+export * from './data-elements.selectors';
