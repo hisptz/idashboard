@@ -6,6 +6,8 @@ export function drawTable(analyticsObject, tableConfiguration: TableConfiguratio
   const legendClasses = tableConfiguration.legendSet ? tableConfiguration.legendSet.legends : null;
   const { columnsStyles = {}, columnGroups = [] } = tableConfiguration;
 
+  console.log({ tableConfiguration });
+
   const table = {
     headers: columnGroups.length ? [{ items: [...columnGroups], style: '' }] : [],
     columns: [],
@@ -19,6 +21,7 @@ export function drawTable(analyticsObject, tableConfiguration: TableConfiguratio
   };
   if (tableConfiguration.hasOwnProperty('title')) {
     table['title'] = tableConfiguration.title;
+    table['titleColor'] = tableConfiguration.styles ? tableConfiguration.styles.header : null;
   }
   if (tableConfiguration.hasOwnProperty('subtitle')) {
     table['subtitle'] = tableConfiguration.subtitle;

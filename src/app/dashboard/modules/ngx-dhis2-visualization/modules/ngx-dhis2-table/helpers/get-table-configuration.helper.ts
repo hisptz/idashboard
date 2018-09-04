@@ -23,7 +23,7 @@ export function getTableConfiguration(favoriteObject: any, visualizationLayout: 
     columnGroups: favoriteObject.columnGroups,
     legendSet: favoriteObject.legendSet || null,
     legendDisplayStrategy: favoriteObject.legendDisplayStrategy,
-    styles: null
+    styles: favoriteObject.styles
   };
 }
 

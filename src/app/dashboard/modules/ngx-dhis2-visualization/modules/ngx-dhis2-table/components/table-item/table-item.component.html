@@ -8,8 +8,9 @@
                 <thead>
                     <!--title-->
                     <tr class="table-title">
-                        <th [attr.colspan]="tableObject.rows[0].items.length">
-                            <h4 style="margin: 0px" class="text-center">{{tableObject.subtitle}} </h4>
+                        <th [attr.colspan]="tableObject.rows[0].items.length" [style.background]="tableObject.titleColor">
+                            <h6 style="margin: 0px" class="text-center">{{tableObject.subtitle || tableObject.title}}
+                            </h6>
                         </th>
                     </tr>
                     <!--headers-->
