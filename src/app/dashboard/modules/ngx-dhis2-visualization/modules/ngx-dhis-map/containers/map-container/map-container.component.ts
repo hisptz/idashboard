@@ -1,20 +1,11 @@
-import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { VisualizationUiConfig, VisualizationConfig, VisualizationLayer } from '../../../../models';
-import { prepareMapContainer } from '../../helpers/mapVisualization.helper';
-import {
-  map as lMap,
-  control as leafletControl,
-  Map,
-  TileLayer as LeafLetTileLayer,
-  Layer as LeafLetLayer,
-  LatLngExpression
-} from 'leaflet';
-import { getTileLayer } from '../../constants';
-import { LayerType } from '../../lib/Layers';
-import { convertLatitudeLongitude } from '../../helpers/latLongConvertion.helper';
 import { LoadGeofeaturesAction } from '../../store/actions/geofeature.actions';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { MapState } from '../../store/reducers';
+import { Observable } from 'rxjs';
+import { LayerGeofeature } from '../../models/geofeature.model';
+import { getGeofeatureEntities, getGeofeatureLoaded } from '../../store/selectors/geofeature.selectors';
 
 @Component({
   selector: 'app-map-container',
@@ -22,7 +13,7 @@ import { MapState } from '../../store/reducers';
   templateUrl: './map-container.component.html',
   styleUrls: ['./map-container.component.scss']
 })
-export class MapContainerComponent implements OnChanges, AfterViewInit {
+export class MapContainerComponent implements OnChanges {
   @Input()
   id;
   @Input()
@@ -32,12 +23,15 @@ export class MapContainerComponent implements OnChanges, AfterViewInit {
   @Input()
   visualizationUiConfig: VisualizationUiConfig;
 
-  public dhis2Map: Map;
-  public baseMapLayer: LeafLetTileLayer;
+  public geofeatureEntities$: Observable<{ [id: string]: LayerGeofeature }>;
+  public isGeofeatureLoaded$: Observable<boolean>;
 
-  constructor(private store: Store<MapState>) {}
+  constructor(private store: Store<MapState>) {
+    this.geofeatureEntities$ = this.store.pipe(select(getGeofeatureEntities));
+    this.isGeofeatureLoaded$ = this.store.pipe(select(getGeofeatureLoaded));
+  }
 
-  async ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     const { visualizationLayers } = changes;
     if (visualizationLayers && visualizationLayers.currentValue) {
       const layers: Array<VisualizationLayer> = visualizationLayers.currentValue;
@@ -47,57 +41,5 @@ export class MapContainerComponent implements OnChanges, AfterViewInit {
       }));
       this.store.dispatch(new LoadGeofeaturesAction(layersPayload));
     }
-  }
-
-  async ngAfterViewInit() {
-    await this.initializeMapContainer();
-    this.initialMapDraw();
-  }
-
-  async initializeMapContainer() {
-    const { height, width, fullScreen } = this.visualizationUiConfig;
-    const container = prepareMapContainer(this.id, height, width, fullScreen);
-    const otherOptions = {
-      zoomControl: false,
-      maxZoom: 12,
-      fadeAnimation: false,
-      scrollWheelZoom: fullScreen,
-      worldCopyJump: true
-    };
-
-    // Initialize Map after ViewInit
-    this.dhis2Map = lMap(container, otherOptions);
-    leafletControl.scale({ position: 'bottomleft', metric: true, updateWhenIdle: true }).addTo(this.dhis2Map);
-  }
-
-  createBaseLayer(basemap?: string) {
-    const mapTileLayer = getTileLayer(basemap);
-    return LayerType[mapTileLayer.type](mapTileLayer);
-  }
-
-  setLayerVisibility(isVisible: boolean, layer: LeafLetLayer) {
-    if (isVisible && !this.dhis2Map.hasLayer(layer)) {
-      this.dhis2Map.addLayer(layer);
-    } else if (!isVisible && this.dhis2Map.hasLayer(layer)) {
-      this.dhis2Map.removeLayer(layer);
-    }
-  }
-
-  initialMapDraw() {
-    const { basemap, zoom, latitude, longitude } = this.visualizationConfig;
-    this.baseMapLayer = this.createBaseLayer(basemap);
-    // Set Opacity of the base layer at the start
-    // this.baseMapLayer.setOpacity(1);
-    this.setLayerVisibility(true, this.baseMapLayer);
-    this.drawBaseAndOverLayLayers(zoom, latitude, longitude);
-  }
-
-  drawBaseAndOverLayLayers(zoom: number = 6, latitude: string = '6.489', longitude: string = '21.885') {
-    const center: LatLngExpression = [
-      Number(convertLatitudeLongitude(latitude)),
-      Number(convertLatitudeLongitude(longitude))
-    ];
-
-    this.dhis2Map.setView(center, zoom);
   }
 }

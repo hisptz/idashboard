@@ -12,6 +12,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import { GeofeatureService } from '../services/geofeature.service';
 @Injectable()
 export class GeofeatureEffects {
+  // Load Geofeature for layers of the given visualization;
   @Effect()
   loadGeofeatures$: Observable<Action> = this.actions$.pipe(
     ofType(GeofeatureActionTypes.LoadGeofeatures),

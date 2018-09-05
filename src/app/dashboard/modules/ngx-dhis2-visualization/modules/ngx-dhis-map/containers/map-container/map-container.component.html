@@ -1,1 +1,2 @@
-<div id="map-view-port-{{id}}" style="width:100%; height: 100%;"></div>
+<app-map-visualizer [id]="id" [visualizationLayers]="visualizationLayers" [visualizationUiConfig]="visualizationUiConfig"
+    [visualizationConfig]="visualizationConfig" [geofeatureEntities]="geofeatureEntities$ | async"></app-map-visualizer>

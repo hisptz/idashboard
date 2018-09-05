@@ -9,4 +9,4 @@ export const reducers: ActionReducerMap<MapState> = {
   geofeatures: geofeatureReducer
 };
 
-export const getMapState = createFeatureSelector<MapState>('visualization');
+export const getMapState = createFeatureSelector<MapState>('map');
