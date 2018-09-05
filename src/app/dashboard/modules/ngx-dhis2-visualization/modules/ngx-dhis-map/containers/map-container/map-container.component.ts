@@ -12,6 +12,9 @@ import {
 import { getTileLayer } from '../../constants';
 import { LayerType } from '../../lib/Layers';
 import { convertLatitudeLongitude } from '../../helpers/latLongConvertion.helper';
+import { LoadGeofeaturesAction } from '../../store/actions/geofeature.actions';
+import { Store } from '@ngrx/store';
+import { MapState } from '../../store/reducers';
 
 @Component({
   selector: 'app-map-container',
@@ -23,7 +26,7 @@ export class MapContainerComponent implements OnChanges, AfterViewInit {
   @Input()
   id;
   @Input()
-  visualizationLayers: VisualizationLayer;
+  visualizationLayers: Array<VisualizationLayer>;
   @Input()
   visualizationConfig: VisualizationConfig;
   @Input()
@@ -32,12 +35,17 @@ export class MapContainerComponent implements OnChanges, AfterViewInit {
   public dhis2Map: Map;
   public baseMapLayer: LeafLetTileLayer;
 
-  constructor() {}
+  constructor(private store: Store<MapState>) {}
 
   async ngOnChanges(changes: SimpleChanges) {
     const { visualizationLayers } = changes;
     if (visualizationLayers && visualizationLayers.currentValue) {
-      console.log({ layers: visualizationLayers.currentValue });
+      const layers: Array<VisualizationLayer> = visualizationLayers.currentValue;
+      const layersPayload = layers.map(({ id, dataSelections }) => ({
+        id,
+        ouDimension: dataSelections.find(({ dimension }) => dimension === 'ou')
+      }));
+      this.store.dispatch(new LoadGeofeaturesAction(layersPayload));
     }
   }
 
