@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
 import { VisualizationUiConfig, VisualizationConfig, VisualizationLayer } from '../../../../models';
-import { LayerGeofeature } from '../../models/geofeature.model';
+import { LayerGeofeature, GeofeatureEntities } from '../../models/geofeature.model';
 import { prepareMapContainer } from '../../helpers/mapVisualization.helper';
 import {
   map as lMap,
@@ -11,7 +11,7 @@ import {
   LatLngExpression
 } from 'leaflet';
 import { getTileLayer } from '../../constants';
-import { LayerType } from '../../lib/Layers';
+import { LayerType, createOverLayLayers } from '../../lib/Layers';
 import { convertLatitudeLongitude } from '../../helpers/latLongConvertion.helper';
 
 @Component({
@@ -29,7 +29,7 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
   @Input()
   visualizationUiConfig: VisualizationUiConfig;
   @Input()
-  geofeatureEntities: { [layerId: string]: LayerGeofeature };
+  geofeatureEntities: GeofeatureEntities;
 
   public dhis2Map: Map;
   public baseMapLayer: LeafLetTileLayer;
@@ -41,7 +41,7 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
 
     // check if geofetures have been loaded.
     if (geofeatureEntities && geofeatureEntities.currentValue && Object.keys(geofeatureEntities.currentValue).length) {
-      console.log(geofeatureEntities.currentValue);
+      this.prepareLayerGroups(this.visualizationLayers, this.geofeatureEntities);
     }
   }
 
@@ -95,5 +95,40 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
     ];
 
     this.dhis2Map.setView(center, zoom);
+  }
+
+  prepareLayerGroups(layers: Array<VisualizationLayer>, geofeatureEntities: GeofeatureEntities) {
+    const layerGroup = createOverLayLayers(layers, geofeatureEntities);
+    layerGroup.forEach(layer => this.setLayerVisibility(true, layer));
+  }
+
+  zoomIn() {
+    this.dhis2Map.zoomIn();
+  }
+
+  zoomOut() {
+    this.dhis2Map.zoomOut();
+  }
+
+  layerFitBound(bounds: L.LatLngBoundsExpression) {
+    this.dhis2Map.fitBounds(bounds);
+  }
+
+  createLayerPane(labels: boolean, id: string, index: number, areaRadius: boolean) {
+    const zIndex = 600 - index * 10;
+    this.dhis2Map.createPane(id);
+    this.dhis2Map.getPane(id).style.zIndex = zIndex.toString();
+
+    if (labels) {
+      const paneLabelId = `${id}-labels`;
+      const labelPane = this.dhis2Map.createPane(paneLabelId);
+      this.dhis2Map.getPane(paneLabelId).style.zIndex = (zIndex + 1).toString();
+    }
+
+    if (areaRadius) {
+      const areaID = `${id}-area`;
+      const areaPane = this.dhis2Map.createPane(areaID);
+      this.dhis2Map.getPane(areaID).style.zIndex = (zIndex - 1).toString();
+    }
   }
 }
