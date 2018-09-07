@@ -14,7 +14,7 @@ import {
 import { getLegendItemForValue, defaultColorScale } from '../helpers/classify.helper';
 import * as _ from 'lodash';
 
-export const thematic = (layer: VisualizationLayer, geofeatures: Array<Geofeature>) => {
+export const thematic = (layer: VisualizationLayer, geofeatures: Array<Geofeature>, contextPath?: string) => {
   const { config, id, analytics, dataSelections, layerType } = layer;
   const {
     labelFontColor,
@@ -34,7 +34,7 @@ export const thematic = (layer: VisualizationLayer, geofeatures: Array<Geofeatur
     colorLow,
     colorHigh
   } = config;
-  const features = toGeoJson(geofeatures, true, opacity);
+  const features = toGeoJson(geofeatures, true, opacity, contextPath);
   const hasAnalytics = analytics ? true : false;
   let valueFeatures;
 
@@ -45,7 +45,6 @@ export const thematic = (layer: VisualizationLayer, geofeatures: Array<Geofeatur
     const orderedValues = getOrderedValues(analytics);
     const minValue = orderedValues[0];
     const maxValue = orderedValues[orderedValues.length - 1];
-    const valueFrequencyPair = _.countBy(orderedValues);
     const legendProperties = { method, classes, colorScale, colorLow, colorHigh };
     const legend = legendSet
       ? createLegendFromLegendSet(legendSet, displayName, layerType)
@@ -84,9 +83,11 @@ export const thematic = (layer: VisualizationLayer, geofeatures: Array<Geofeatur
 
   const options = { features: valueFeatures || features, ...labelOption };
   const geojsonLayer = geoJsonExtended(options);
+  const bounds = geojsonLayer.getBounds();
   return {
     geojsonLayer,
     labels,
-    id
+    id,
+    bounds: bounds.isValid() ? bounds : null
   };
 };

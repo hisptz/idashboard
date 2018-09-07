@@ -3,10 +3,10 @@ import { VisualizationLayer } from '../../../models';
 import { Geofeature } from '../models';
 import { geoJsonExtended } from './GeoJsonExtended';
 
-export const boundary = (layer: VisualizationLayer, geofeatures: Array<Geofeature>) => {
+export const boundary = (layer: VisualizationLayer, geofeatures: Array<Geofeature>, contextPath?: string) => {
   const { config, id } = layer;
   const { labelFontColor, labels, labelFontSize, labelFontWeight, labelFontStyle, opacity } = config;
-  const features = toGeoJson(geofeatures, false, opacity);
+  const features = toGeoJson(geofeatures, false, opacity, contextPath);
 
   // incase there is label here is the font style
   const labelOption = {
@@ -22,10 +22,11 @@ export const boundary = (layer: VisualizationLayer, geofeatures: Array<Geofeatur
   };
   const options = { features, ...labelOption };
   const geojsonLayer = geoJsonExtended(options);
-
+  const bounds = geojsonLayer.getBounds();
   return {
     geojsonLayer,
     labels,
-    id
+    id,
+    bounds: bounds.isValid() ? bounds : null
   };
 };

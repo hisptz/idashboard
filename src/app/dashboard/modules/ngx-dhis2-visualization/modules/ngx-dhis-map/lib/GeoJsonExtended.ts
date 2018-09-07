@@ -1,8 +1,9 @@
-import { GeoJSON as LeafletGeoJson, LayerGroup, layerGroup, Util, Map, divIcon } from 'leaflet';
+import { GeoJSON as LeafletGeoJson, LayerGroup, layerGroup, Util, Map, divIcon, LatLng, CircleMarker } from 'leaflet';
 import { GeoJSONOptionsExtended, Dhis2LayerGroup, LayerGroupEvent } from '../models';
 import polylabel from 'polylabel';
 import * as geojsonArea from '@mapbox/geojson-area';
 import { Label } from './Label';
+import { Feature, Point } from 'geojson';
 
 export class GeoJSON extends LeafletGeoJson {
   constructor(options: GeoJSONOptionsExtended) {
@@ -103,7 +104,19 @@ export const extraOptions = {
       stroke: true
     };
   },
-  _labels: layerGroup()
+  _labels: layerGroup(),
+  pointToLayer: (geoJsonPoint: Feature<Point>, latlng: LatLng) => {
+    const { properties: prop } = geoJsonPoint;
+    const geojsonMarkerOptions = {
+      radius: prop.radius || 6,
+      fillColor: prop.color || '#fff',
+      color: prop.color || '#333',
+      opacity: prop.opacity || 0.8,
+      weight: 1,
+      fillOpacity: prop.opacity || 0.8
+    };
+    return new CircleMarker(latlng, geojsonMarkerOptions);
+  }
 };
 
 export const geoJsonExtended = options => {

@@ -12,7 +12,7 @@ export class GeofeatureService {
 
   getGeofeature(ouValue: string, displayProperty: string = DEFAULT_DISPLAY_PROPERTY): Observable<Array<Geofeature>> {
     return ouValue && ouValue.length
-      ? this.http.get(`geoFeatures?ou=ou:${ouValue}&displayProperty=${displayProperty}`)
+      ? this.http.get(`geoFeatures?ou=ou:${ouValue}&displayProperty=${displayProperty}&includeGroupSets=true`)
       : of(null);
   }
 }

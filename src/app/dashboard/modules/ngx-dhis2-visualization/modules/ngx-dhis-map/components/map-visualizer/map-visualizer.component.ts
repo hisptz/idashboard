@@ -1,6 +1,6 @@
-import { Component, Input, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { VisualizationUiConfig, VisualizationConfig, VisualizationLayer } from '../../../../models';
-import { LayerGeofeature, GeofeatureEntities } from '../../models/geofeature.model';
+import { GeofeatureEntities } from '../../models/geofeature.model';
 import { prepareMapContainer } from '../../helpers/mapVisualization.helper';
 import {
   map as lMap,
@@ -8,7 +8,8 @@ import {
   Map,
   TileLayer as LeafLetTileLayer,
   Layer as LeafLetLayer,
-  LatLngExpression
+  LatLngExpression,
+  LatLngBoundsExpression
 } from 'leaflet';
 import { getTileLayer } from '../../constants';
 import { LayerType, createOverLayLayers } from '../../lib/Layers';
@@ -16,6 +17,7 @@ import { convertLatitudeLongitude } from '../../helpers/latLongConvertion.helper
 
 @Component({
   selector: 'app-map-visualizer',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './map-visualizer.component.html',
   styleUrls: ['./map-visualizer.component.scss']
 })
@@ -36,21 +38,21 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
 
   constructor() {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    const { geofeatureEntities } = changes;
-
+  async ngOnChanges(changes: SimpleChanges) {
+    const { geofeatureEntities, id } = changes;
     // check if geofetures have been loaded.
+
     if (geofeatureEntities && geofeatureEntities.currentValue && Object.keys(geofeatureEntities.currentValue).length) {
-      this.prepareLayerGroups(this.visualizationLayers, this.geofeatureEntities);
+      this.prepareLayerGroups(this.visualizationLayers, this.geofeatureEntities, this.visualizationConfig);
     }
   }
 
   async ngAfterViewInit() {
-    await this.initializeMapContainer();
+    this.initializeMapContainer();
     this.initialMapDraw();
   }
 
-  async initializeMapContainer() {
+  initializeMapContainer() {
     const { height, width, fullScreen } = this.visualizationUiConfig;
     const container = prepareMapContainer(this.id, height, width, fullScreen);
     const otherOptions = {
@@ -82,8 +84,6 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
   initialMapDraw() {
     const { basemap, zoom, latitude, longitude } = this.visualizationConfig;
     this.baseMapLayer = this.createBaseLayer(basemap);
-    // Set Opacity of the base layer at the start
-    // this.baseMapLayer.setOpacity(1);
     this.setLayerVisibility(true, this.baseMapLayer);
     this.drawBaseAndOverLayLayers(zoom, latitude, longitude);
   }
@@ -97,9 +97,25 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
     this.dhis2Map.setView(center, zoom);
   }
 
-  prepareLayerGroups(layers: Array<VisualizationLayer>, geofeatureEntities: GeofeatureEntities) {
-    const layerGroup = createOverLayLayers(layers, geofeatureEntities);
-    layerGroup.forEach(({ geojsonLayer, labels, id }, index) => this.createLayer(geojsonLayer, labels, id, index));
+  prepareLayerGroups(
+    layers: Array<VisualizationLayer>,
+    geofeatureEntities: GeofeatureEntities,
+    visualizationConfig: VisualizationConfig
+  ) {
+    const { contextPath } = visualizationConfig;
+    const layerGroup = createOverLayLayers(layers, geofeatureEntities, contextPath);
+    const layersBounds: LatLngBoundsExpression = [];
+
+    layerGroup.forEach(({ geojsonLayer, labels, id, bounds }, index) => {
+      if (bounds) {
+        layersBounds.push(bounds);
+      }
+      this.createLayer(geojsonLayer, labels, id, index);
+    });
+
+    if (layersBounds.length) {
+      this.layerFitBound(layersBounds);
+    }
   }
 
   createLayer(geoJsonLayer, labels, id, index) {
@@ -115,7 +131,7 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
     this.dhis2Map.zoomOut();
   }
 
-  layerFitBound(bounds: L.LatLngBoundsExpression) {
+  layerFitBound(bounds: LatLngBoundsExpression) {
     this.dhis2Map.fitBounds(bounds);
   }
 
@@ -136,4 +152,6 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
       this.dhis2Map.getPane(areaID).style.zIndex = (zIndex - 1).toString();
     }
   }
+
+  redrawMapOndataChange() {}
 }
