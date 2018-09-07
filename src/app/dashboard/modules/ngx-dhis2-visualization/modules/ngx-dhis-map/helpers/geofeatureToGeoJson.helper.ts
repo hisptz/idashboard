@@ -8,7 +8,7 @@ export const isValidCoordinate = coord =>
   coord[1] >= -90 &&
   coord[1] <= 90;
 
-export const toGeoJson = organisationUnits =>
+export const toGeoJson = (organisationUnits, fill?, opacity = 0.8) =>
   _.sortBy(organisationUnits, 'le')
     .map(ou => {
       const coord = JSON.parse(ou.co);
@@ -48,14 +48,22 @@ export const toGeoJson = organisationUnits =>
         properties: {
           id: ou.id,
           name: ou.na,
+          fill: fill,
           hasCoordinatesDown: ou.hcd,
           hasCoordinatesUp: ou.hcu,
           level: ou.le,
+          opacity,
           grandParentParentGraph: gppg,
           grandParentId: gpid,
           parentGraph: ou.pg,
           parentId: ou.pi,
-          parentName: ou.pn
+          parentName: ou.pn,
+          value: null,
+          color: null,
+          label: null,
+          radius: null,
+          dx: null,
+          percentage: null
         }
       };
     })

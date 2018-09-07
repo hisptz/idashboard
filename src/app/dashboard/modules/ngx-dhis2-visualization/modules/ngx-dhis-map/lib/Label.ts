@@ -1,16 +1,24 @@
-import { Marker, divIcon, LatLng, latLng, Map } from 'leaflet';
+import { Marker, Util } from 'leaflet';
 
 export class Label extends Marker {
-  private _latlng: LatLng;
   constructor(latlng, options) {
     super(latlng, options);
-    this._latlng = latLng(latlng);
   }
 
-  onAdd(map: Map) {
-    const options = this.options;
-    const iconDiv = divIcon({ html: 'Label', className: 'leaflet-div-label', iconSize: null });
-    console.log(options);
-    return super.onAdd(map);
+  onAdd(map) {
+    super.onAdd(map);
+    const options: any = this.options;
+    const iconDiv = this['_icon'];
+
+    if (options.labelStyle) {
+      Util.extend(iconDiv.style, options.labelStyle);
+    }
+    iconDiv.style.marginLeft = '-' + iconDiv.offsetWidth / 2 + 'px';
+
+    if (options.position !== 'below') {
+      iconDiv.style.marginTop = '-' + iconDiv.offsetHeight / 2 + 'px';
+    }
+
+    return this;
   }
 }

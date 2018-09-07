@@ -99,7 +99,12 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
 
   prepareLayerGroups(layers: Array<VisualizationLayer>, geofeatureEntities: GeofeatureEntities) {
     const layerGroup = createOverLayLayers(layers, geofeatureEntities);
-    layerGroup.forEach(layer => this.setLayerVisibility(true, layer));
+    layerGroup.forEach(({ geojsonLayer, labels, id }, index) => this.createLayer(geojsonLayer, labels, id, index));
+  }
+
+  createLayer(geoJsonLayer, labels, id, index) {
+    this.createLayerPane(labels, id, index);
+    this.setLayerVisibility(true, geoJsonLayer);
   }
 
   zoomIn() {
@@ -114,7 +119,7 @@ export class MapVisualizerComponent implements OnChanges, AfterViewInit {
     this.dhis2Map.fitBounds(bounds);
   }
 
-  createLayerPane(labels: boolean, id: string, index: number, areaRadius: boolean) {
+  createLayerPane(labels: boolean, id: string, index: number, areaRadius?: boolean) {
     const zIndex = 600 - index * 10;
     this.dhis2Map.createPane(id);
     this.dhis2Map.getPane(id).style.zIndex = zIndex.toString();

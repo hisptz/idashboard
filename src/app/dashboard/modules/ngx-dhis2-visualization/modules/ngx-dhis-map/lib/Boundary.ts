@@ -4,9 +4,9 @@ import { Geofeature } from '../models';
 import { geoJsonExtended } from './GeoJsonExtended';
 
 export const boundary = (layer: VisualizationLayer, geofeatures: Array<Geofeature>) => {
-  const features = toGeoJson(geofeatures);
   const { config, id } = layer;
-  const { labelFontColor, labels, labelFontSize, labelFontWeight, labelFontStyle } = config;
+  const { labelFontColor, labels, labelFontSize, labelFontWeight, labelFontStyle, opacity } = config;
+  const features = toGeoJson(geofeatures, false, opacity);
 
   // incase there is label here is the font style
   const labelOption = {
@@ -22,5 +22,10 @@ export const boundary = (layer: VisualizationLayer, geofeatures: Array<Geofeatur
   };
   const options = { features, ...labelOption };
   const geojsonLayer = geoJsonExtended(options);
-  return geojsonLayer;
+
+  return {
+    geojsonLayer,
+    labels,
+    id
+  };
 };

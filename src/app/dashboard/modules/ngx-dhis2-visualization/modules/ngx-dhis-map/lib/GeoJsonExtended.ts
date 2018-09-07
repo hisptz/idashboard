@@ -1,13 +1,12 @@
-import { GeoJSON as LeafletGeoJson, LayerGroup, layerGroup, Util, Map } from 'leaflet';
-import { GeoJSONOptionsExtended, Dhis2LayerGroup } from '../models';
+import { GeoJSON as LeafletGeoJson, LayerGroup, layerGroup, Util, Map, divIcon } from 'leaflet';
+import { GeoJSONOptionsExtended, Dhis2LayerGroup, LayerGroupEvent } from '../models';
 import polylabel from 'polylabel';
 import * as geojsonArea from '@mapbox/geojson-area';
 import { Label } from './Label';
 
 export class GeoJSON extends LeafletGeoJson {
-  protected _labels: LayerGroup;
   constructor(options: GeoJSONOptionsExtended) {
-    super(options.features, Object.assign({}, options, { _labels: layerGroup() }));
+    super(options.features, Object.assign({}, options, extraOptions));
   }
 
   addLayer(layer: Dhis2LayerGroup) {
@@ -29,29 +28,30 @@ export class GeoJSON extends LeafletGeoJson {
     const labelStyle = { ...options.labelStyle };
     const latlng = this.getLabelLatLng(geometry);
     const _label = new Label(latlng, {
-      html: text,
+      icon: divIcon({ html: text, className: 'leaflet-div-label', iconSize: null }),
       position: geometry.type === 'Point' ? 'below' : 'middle',
       labelStyle: labelStyle,
       pane: options.labelPane || 'markerPane'
     });
-    options._labels.addLayer(_label);
+    this.options['_labels'].addLayer(_label);
   }
 
   onAdd(map: Map) {
     super.onAdd(map);
-    this.on('mousover', this.onMouseOver, this);
-    this.on('mousout', this.onMouseOut, this);
+    map.addLayer(this.options['_labels']);
+    this.on('mouseover', this.onMouseOver);
+    this.on('mouseout', this.onMouseOut);
     this.fire('ready');
     return this;
   }
 
   // Set highlight style
-  onMouseOver(evt) {
+  onMouseOver(evt: LayerGroupEvent) {
     evt.layer.setStyle({ weight: 2 });
   }
 
   // Reset style
-  onMouseOut(evt) {
+  onMouseOut(evt: LayerGroupEvent) {
     if (!evt.layer.feature.isSelected) {
       evt.layer.setStyle({ weight: 1 });
     }
@@ -59,6 +59,7 @@ export class GeoJSON extends LeafletGeoJson {
 
   onRemove(map: Map) {
     super.onRemove(map);
+    map.removeLayer(this.options['_labels']);
     this.off('mouseover', this.onMouseOver, this);
     this.off('mouseout', this.onMouseOut, this);
     return this;
@@ -88,6 +89,22 @@ export class GeoJSON extends LeafletGeoJson {
     return polylabel(biggestRing, 2).reverse();
   }
 }
+
+export const extraOptions = {
+  style: feature => {
+    const { properties: prop } = feature;
+    return {
+      color: '#333',
+      fillColor: prop.color,
+      fillOpacity: prop.opacity,
+      opacity: prop.opacity,
+      weight: 1,
+      fill: prop.fill,
+      stroke: true
+    };
+  },
+  _labels: layerGroup()
+};
 
 export const geoJsonExtended = options => {
   return new GeoJSON(options);

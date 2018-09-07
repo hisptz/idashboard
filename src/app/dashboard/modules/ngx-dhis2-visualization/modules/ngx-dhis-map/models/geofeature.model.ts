@@ -1,4 +1,4 @@
-import { GeoJSONOptions, LayerGroup, layerGroup } from 'leaflet';
+import { GeoJSONOptions, FeatureGroup, LeafletEvent, LayerGroup } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 export interface Geofeature {
   id: string;
@@ -27,7 +27,7 @@ export interface Dhis2GeoJsonObject extends GeoJsonObject {
   properties: any;
 }
 
-export interface Dhis2LayerGroup extends LayerGroup {
+export interface Dhis2LayerGroup extends FeatureGroup {
   options: any;
   feature: any;
 }
@@ -37,10 +37,15 @@ export interface GeoJSONOptionsExtended extends GeoJSONOptions {
   label?: string;
   hoverlabel?: string;
   labelPane?: string;
+  _labels: LayerGroup;
 }
 
 export enum GeometryTypes {
   POINT = 'Point',
   POLYGON = 'Polygon',
   MULTIPOLYGON = 'MultiPolygon'
+}
+
+export interface LayerGroupEvent extends LeafletEvent {
+  layer: Dhis2LayerGroup;
 }
