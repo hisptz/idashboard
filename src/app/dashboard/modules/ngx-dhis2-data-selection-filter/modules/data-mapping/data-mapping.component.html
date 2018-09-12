@@ -1,2 +1,3 @@
-<app-data-mapping-container (dataMappingClose)="onDataMappingClose($event)" [dataElements]="dataElements$ |async" [selectedItems]="selectedItems"
-  [functionRules]="functionRules$|async"></app-data-mapping-container>
+<app-data-mapping-container (setCurrentDataItemGroup)="onSelectDataMappingGroup($event)" (dataMappingClose)="onDataMappingClose($event)"
+  [selectedGroup]="selectedGroup$ |async" [indicators]="indicators$|async" [dataElements]="dataElements$ |async"
+  [selectedItems]="selectedItems" [functionRules]="functionRules$|async"></app-data-mapping-container>

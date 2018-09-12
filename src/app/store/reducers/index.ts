@@ -27,6 +27,10 @@ import {
   functionRuleReducer
 } from './function-rule.reducer';
 import { IndicatorState, indicatorReducer } from './indicactors.reducer';
+import {
+  DataItemMappingState,
+  dataItemMappingReducer
+} from './data-item-mapping.reducer';
 
 /**
  * Root state interface
@@ -52,7 +56,8 @@ export interface State {
   dashboardVisualization: DashboardVisualizationState;
   legendSets: LegendSetState;
   dataElements: DataElementState;
-  Indicator: IndicatorState;
+  indicators: IndicatorState;
+  dataItemMapping: DataItemMappingState;
   functionRules: FunctionRuleState;
 }
 
@@ -66,7 +71,8 @@ export const reducers: ActionReducerMap<State> = {
   dashboardVisualization: dashboardVisualizationReducer,
   legendSets: legendSetReducer,
   dataElements: dataElementReducer,
-  Indicator: indicatorReducer,
+  indicators: indicatorReducer,
+  dataItemMapping: dataItemMappingReducer,
   functionRules: functionRuleReducer
 };
 

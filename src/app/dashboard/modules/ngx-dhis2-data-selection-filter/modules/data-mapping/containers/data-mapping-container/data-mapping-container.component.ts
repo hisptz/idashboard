@@ -9,7 +9,11 @@ import {
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { LIST_ICON, ARROW_LEFT_ICON, ARROW_RIGHT_ICON } from '../../icons';
-import { FunctionRule, DataElement } from '../../../../../../../models';
+import {
+  FunctionRule,
+  DataElement,
+  Indicator
+} from '../../../../../../../models';
 import { MappingGroup } from '../../model/mapping-group';
 
 @Component({
@@ -23,10 +27,16 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   @Input()
   functionRules: FunctionRule[];
   @Input()
+  indicators: Indicator[];
+  @Input()
   selectedItems;
+  @Input()
+  selectedGroup: any;
 
   @Output()
   dataMappingClose = new EventEmitter();
+  @Output()
+  setCurrentDataItemGroup = new EventEmitter();
 
   mappingGroups: MappingGroup[];
   selectedFuctionRuleIds: string[];
@@ -45,8 +55,8 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   listchanges: string;
   querystring: string;
   selectedGroups: any[] = [];
-  selectedGroup: any = { id: 'ALL', name: '[ All ]' };
   dataGroups: any[];
+  dataFilterItem: any[];
 
   mappingTitle: string;
   mappingDescription: string;
@@ -59,6 +69,7 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
     this.mappingGroups = [];
     this._selectedItems = [];
     this.dataGroups = [];
+    this.dataFilterItem = [];
     this.availablePagenator = 1;
     this.selectedPagenator = 1;
     this.listIcon = LIST_ICON;
@@ -70,8 +81,12 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // @todo adding support of data elements groups
-    this.dataGroups = [{ id: 'ALL', name: '[ All ]' }];
+    this.setCurrentDataItemGroup.emit({ id: 'all', name: '[ All ]' });
+    this.dataGroups = [
+      { id: 'all', name: '[ All ]' },
+      { id: 'de', name: '[ Data elements ]' },
+      { id: 'in', name: '[ Indicators ]' }
+    ];
     this.selectedItems$ = of(this._selectedItems);
     this.selectedFuctionRuleIds = this.selectedItems.map(
       selectedItem => selectedItem.id
@@ -292,7 +307,7 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   setSelectedGroup(group, listArea, event) {
     event.stopPropagation();
     this.listchanges = '';
-    this.selectedGroup = { ...group };
+    this.setCurrentDataItemGroup.emit(group);
     // this.dataElements = this.dataItemList(this._selectedItems, group);
     this.showGroups = false;
     this.availablePagenator = 1;
@@ -413,8 +428,8 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
     this.listchanges = null;
     this.querystring = null;
     this.selectedGroups = null;
-    this.selectedGroup = null;
     this.dataGroups = null;
+    this.dataFilterItem = null;
     this.mappingTitle = null;
     this.mappingDescription = null;
     this.mappingGroupTitle = null;
