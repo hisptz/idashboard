@@ -11,7 +11,7 @@ export const dataItemMappingGroupAdapter: EntityAdapter<
 
 const initialState: DataItemMappingState = dataItemMappingGroupAdapter.getInitialState(
   {
-    currentDataItemMappingGroup: null
+    currentDataItemMappingGroup: { id: 'all', name: '[ All ]' }
   }
 );
 

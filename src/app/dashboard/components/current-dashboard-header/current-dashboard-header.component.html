@@ -18,14 +18,14 @@
           <app-dashboard-progress [borderRadius]="'17px'"></app-dashboard-progress>
         </div>
       </div>
-      <div class="current-dashboard-share-button" *ngIf="dashboardLoaded || currentDashboard?.access?.manage">
+      <!-- <div class="current-dashboard-share-button" *ngIf="dashboardLoaded || currentDashboard?.access?.manage">
         <app-current-dashboard-sharing [id]="currentDashboard?.id"></app-current-dashboard-sharing>
       </div>
 
       <div class="current-dashboard-bookmark-button" *ngIf="dashboardLoaded">
         <app-current-dashboard-bookmark [dashboardBookmarked]="currentDashboard?.bookmarked" [dashboardBookmarkPending]="currentDashboard?.bookmarkPending"
           (toggleDashboardBookmark)="onToggleDashboardBookmarkAction($event)"></app-current-dashboard-bookmark>
-      </div>
+      </div> -->
       <div class="current-dashboard-global-filter" *ngIf="dashboardLoaded">
         <ngx-dhis2-selection-filters (filterUpdate)="onFilterUpdateAction($event)" [dataSelections]="currentDashboard?.globalSelections"
           [selectionFilterConfig]="selectionFilterConfig">

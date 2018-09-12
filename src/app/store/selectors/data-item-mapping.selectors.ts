@@ -2,7 +2,8 @@ import { createSelector } from '@ngrx/store';
 import { getRootState, State } from '../reducers';
 import * as _ from 'lodash';
 
-import { getAllSystemDataElements, getAllIndicators } from '.';
+import { getAllSystemDataElements } from './data-elements.selectors';
+import { getAllIndicators } from './indicators.selectors';
 import { DataElement, Indicator } from '../../models';
 import { DataItemMappingState } from '../reducers/data-item-mapping.reducer';
 

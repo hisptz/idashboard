@@ -1,6 +1,6 @@
 <a [ngClass]="{'dashboard-menu-item': true, 'current-dashboard': dashboardMenuItem?.id === currentDashboardId}" (click)="onSetDashboard($event)"
   (mouseenter)="onHover($event)" (mouseleave)="onBlur($event)">
-  <a [@open] [title]="(dashboardMenuItem?.bookmarked ? 'You have bookmarked this dashboard' : 'Bookmark this dashboard') | translate"
+  <!-- <a [@open] [title]="(dashboardMenuItem?.bookmarked ? 'You have bookmarked this dashboard' : 'Bookmark this dashboard') | translate"
     class="dashboard-menu-bookmark-btn" *ngIf="(dashboardMenuItem?.bookmarked || showBookmarkButton) && !dashboardMenuItem?.bookmarkPending"
     (click)="onToggleBookmark($event)">
     <img *ngIf="dashboardMenuItem?.bookmarked" [src]="bookmarkedIcon" alt="">
@@ -8,6 +8,6 @@
   </a>
   <a [@open] [title]="'Bookmarking dashboard...' | translate" class="dashboard-menu-bookmark-btn" *ngIf="dashboardMenuItem?.bookmarkPending">
     <img [src]="bookmarkPendingIcon" alt="">
-  </a>
+  </a> -->
   {{dashboardMenuItem?.name}}
 </a>

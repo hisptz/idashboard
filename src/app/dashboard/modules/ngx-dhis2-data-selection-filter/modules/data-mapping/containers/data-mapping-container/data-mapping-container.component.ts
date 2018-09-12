@@ -80,7 +80,6 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setCurrentDataItemGroup.emit({ id: 'all', name: '[ All ]' });
     this.dataGroups = [
       { id: 'all', name: '[ All ]' },
       { id: 'de', name: '[ Data elements ]' },
