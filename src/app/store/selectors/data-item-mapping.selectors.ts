@@ -1,10 +1,9 @@
 import { createSelector } from '@ngrx/store';
 import { getRootState, State } from '../reducers';
+import * as _ from 'lodash';
 
-import { getAllSystemDataElements } from './data-elements.selectors';
-import { getAllIndicators } from './indicators.selectors';
-import { DataElement } from '../../models';
-import { Indicator } from '../../dashboard/modules/ngx-dhis2-visualization/modules/map/modules/data-filter/model/indicator';
+import { getAllSystemDataElements, getAllIndicators } from '.';
+import { DataElement, Indicator } from '../../models';
 import { DataItemMappingState } from '../reducers/data-item-mapping.reducer';
 
 export const getDataItemMappingEntityState = createSelector(
@@ -14,15 +13,33 @@ export const getDataItemMappingEntityState = createSelector(
 
 export const getCurrentDataItemMappingGroup = createSelector(
   getDataItemMappingEntityState,
-  state => state.currentDataItemMappingGroup
+  (state: DataItemMappingState) => state.currentDataItemMappingGroup
 );
 
-export const getCurrentDataMappingItems = createSelector(
+export const getCurrentDataFilterItems = createSelector(
   getAllSystemDataElements,
   getAllIndicators,
   getCurrentDataItemMappingGroup,
   (dataElements: DataElement[], indicators: Indicator[], group) => {
-    console.log(group, indicators.length, dataElements.length);
-    return dataElements;
+    let dataFilterItems = [];
+    if (group) {
+      if (group.id === 'all') {
+        dataFilterItems = _.sortBy(
+          _.concat(dataFilterItems, _.concat(dataElements, indicators)),
+          'name'
+        );
+      } else if (group.id === 'de') {
+        dataFilterItems = _.sortBy(
+          _.concat(dataFilterItems, dataElements),
+          'name'
+        );
+      } else if (group.id === 'in') {
+        dataFilterItems = _.sortBy(
+          _.concat(dataFilterItems, indicators),
+          'name'
+        );
+      }
+    }
+    return dataFilterItems;
   }
 );

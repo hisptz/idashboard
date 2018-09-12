@@ -32,6 +32,8 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   selectedItems;
   @Input()
   selectedGroup: any;
+  @Input()
+  dataFilterItems: any;
 
   @Output()
   dataMappingClose = new EventEmitter();
@@ -56,8 +58,6 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
   querystring: string;
   selectedGroups: any[] = [];
   dataGroups: any[];
-  dataFilterItem: any[];
-
   mappingTitle: string;
   mappingDescription: string;
   mappingGroupTitle: string;
@@ -69,7 +69,6 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
     this.mappingGroups = [];
     this._selectedItems = [];
     this.dataGroups = [];
-    this.dataFilterItem = [];
     this.availablePagenator = 1;
     this.selectedPagenator = 1;
     this.listIcon = LIST_ICON;
@@ -120,7 +119,7 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
             };
             if (expressionMapping && expressionMapping[groupId]) {
               const memberId = expressionMapping[groupId];
-              const dataElement: any = _.find(this.dataElements, {
+              const dataElement: any = _.find(this.dataFilterItems, {
                 id: memberId
               });
               if (dataElement && dataElement.id) {
@@ -138,7 +137,7 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
           if (group.members.length > 0) {
             const { id } = group.members[0];
             if (!_.find(this._selectedItems, ['id', id])) {
-              const dataElement: any = _.find(this.dataElements, {
+              const dataElement: any = _.find(this.dataFilterItems, {
                 id: id
               });
               this._selectedItems = [...this._selectedItems, dataElement];
@@ -217,17 +216,17 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
         });
         const _selectedItems = this._selectedItems;
         _selectedItems.map(_selectedItem => {
-          if (!_.find(this.dataElements, ['id', _selectedItem.id])) {
-            this.dataElements = [...this.dataElements, _selectedItem];
+          if (!_.find(this.dataFilterItems, ['id', _selectedItem.id])) {
+            this.dataFilterItems = [...this.dataFilterItems, _selectedItem];
           }
         });
         this.upDateActiveMappingGroups();
-        const itemIndex = _.findIndex(this.dataElements, item);
-        this.dataElements = [
-          ...this.dataElements.slice(0, itemIndex),
-          ...this.dataElements.slice(itemIndex + 1)
+        const itemIndex = _.findIndex(this.dataFilterItems, item);
+        this.dataFilterItems = [
+          ...this.dataFilterItems.slice(0, itemIndex),
+          ...this.dataFilterItems.slice(itemIndex + 1)
         ];
-        this.dataElements = _.sortBy(this.dataElements, ['name']);
+        this.dataFilterItems = _.sortBy(this.dataFilterItems, ['name']);
       }
     }
   }
@@ -267,9 +266,9 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
               rule.json = JSON.stringify(json);
             }
           }
-          if (!_.find(this.dataElements, ['id', item.id])) {
-            this.dataElements = _.sortBy(
-              [...this.dataElements, item],
+          if (!_.find(this.dataFilterItems, ['id', item.id])) {
+            this.dataFilterItems = _.sortBy(
+              [...this.dataFilterItems, item],
               ['name']
             );
           }
@@ -281,7 +280,7 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
 
   selectAllItems(event) {
     event.stopPropagation();
-    this.dataElements.map(item => {
+    this.dataFilterItems.map(item => {
       if (!_.find(this._selectedItems, ['id', item.id])) {
         this._selectedItems = _.sortBy(
           [...this._selectedItems, item],
@@ -289,15 +288,18 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
         );
       }
     });
-    this.dataElements = [];
+    this.dataFilterItems = [];
     this.selectedItems$ = of(this._selectedItems);
   }
 
   deselectAllItems(e) {
     e.stopPropagation();
     this._selectedItems.map(item => {
-      if (!_.find(this.dataElements, ['id', item.id])) {
-        this.dataElements = _.sortBy([...this.dataElements, item], ['name']);
+      if (!_.find(this.dataFilterItems, ['id', item.id])) {
+        this.dataFilterItems = _.sortBy(
+          [...this.dataFilterItems, item],
+          ['name']
+        );
       }
     });
     this._selectedItems = [];
@@ -308,7 +310,6 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     this.listchanges = '';
     this.setCurrentDataItemGroup.emit(group);
-    // this.dataElements = this.dataItemList(this._selectedItems, group);
     this.showGroups = false;
     this.availablePagenator = 1;
     listArea.scrollTop = 0;
@@ -429,7 +430,6 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
     this.querystring = null;
     this.selectedGroups = null;
     this.dataGroups = null;
-    this.dataFilterItem = null;
     this.mappingTitle = null;
     this.mappingDescription = null;
     this.mappingGroupTitle = null;

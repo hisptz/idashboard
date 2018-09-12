@@ -35,7 +35,7 @@
         placeholder="Search" [(ngModel)]="listchanges">
     </div>
     <div class="data-filter-available-header">
-      <span>Available ({{(dataElements | filterByName:listchanges).length}})</span>
+      <span>Available ({{(dataFilterItems | filterByName:listchanges).length}})</span>
       <!-- <a (click)="selectAllItems($event)">&raquo;</a> -->
     </div>
     <div class="data-filter-selected-header">
@@ -45,15 +45,15 @@
 
     <div class="data-filter-available-body">
       <ul #scrollse>
-        <li *ngIf="(dataElements | filterByName:listchanges).length == 0">
+        <li *ngIf="(dataFilterItems | filterByName:listchanges).length == 0">
           <a>No items</a>
         </li>
-        <li *ngFor="let item of dataElements | filterByName:listchanges |  paginate: { id: 'foo',itemsPerPage: 25, currentPage: availablePagenator }"
+        <li *ngFor="let item of dataFilterItems | filterByName:listchanges |  paginate: { id: 'foo',itemsPerPage: 25, currentPage: availablePagenator }"
           [ngClass]="{'hiddenTree': inSelected(item, selectedItems)}" title="Click to select item" id="{{item.id | addUnderscore}}">
           <a (click)="addSelected(item, $event)">{{ item.name }}</a>
         </li>
 
-        <li *ngIf="(dataElements | filterByName:listchanges).length >= 25">
+        <li *ngIf="(dataFilterItems | filterByName:listchanges).length >= 25">
           <a>
             <pagination-controls id="foo" (pageChange)="availablePagenator = $event" maxSize="0">
             </pagination-controls>

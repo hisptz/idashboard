@@ -14,7 +14,9 @@ import {
   getAllFuctionRules,
   UpdateFunctionRules,
   getAllIndicators,
-  SetCurrentDataItemMapingGroup
+  getCurrentDataFilterItems,
+  SetCurrentDataItemMapingGroup,
+  getCurrentDataItemMappingGroup
 } from '../../../../../store';
 import { DataElement, FunctionRule } from '../../../../../models';
 import { Indicator } from '../data-filter/model/indicator';
@@ -37,10 +39,16 @@ export class DataMappingComponent implements OnInit, OnDestroy {
   functionRules$: Observable<FunctionRule[]>;
   indicators$: Observable<Indicator[]>;
   selectedGroup$: Observable<any>;
+  dataFilterItems$: Observable<any[]>;
 
   constructor(private store: Store<State>) {
-    this.dataElements$ = this.store.select(getAllSystemDataElements);
+    this.selectedGroup$ = this.store.pipe(
+      select(getCurrentDataItemMappingGroup)
+    );
     this.functionRules$ = this.store.select(getAllFuctionRules);
+    this.dataFilterItems$ = this.store.pipe(select(getCurrentDataFilterItems));
+    this.dataElements$ = this.store.select(getAllSystemDataElements);
+
     this.indicators$ = this.store.pipe(select(getAllIndicators));
   }
 
