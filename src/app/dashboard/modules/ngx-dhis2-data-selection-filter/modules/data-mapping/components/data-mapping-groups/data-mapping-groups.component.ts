@@ -24,6 +24,7 @@ export class DataMappingGroupsComponent implements OnInit {
 
   dragIcon: string;
   arrowDownIcon: string;
+  arrrowUpIcon: string;
 
   constructor() {
     this.dragIcon = DRAG_ICON;

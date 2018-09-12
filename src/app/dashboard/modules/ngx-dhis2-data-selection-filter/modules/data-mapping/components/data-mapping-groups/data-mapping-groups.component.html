@@ -15,16 +15,24 @@
           </button>  -->{{group.name}}
           <small>({{group.members.length}} selected)</small>
         </div>
-        <img [src]="arrowDownIcon" alt="">
+        <!-- <img [src]="arrowDownIcon" alt=""> -->
+        <div class="data-filter-group__item-header-btns">
+          <a class="data-filter-group__item-header-icon">
+            <i class="{{group.current ? 'icon-up-open' : 'icon-down-open'}}"></i>
+          </a>
+        </div>
       </div>
       <!-- end of title -->
       <!-- content -->
       <div class="data-filter-group__item-content" *ngIf="group.current">
         <div class="data-filter-group__item-member-list">
           <div class="data-filter-group__item-label">{{ groupMemberTitle }} </div>
-          <div class="data-filter-group__item-member-item" *ngIf="group.members.length === 0">Select data element to map</div>
+          <div class="data-filter-group__item-member-item" *ngIf="group.members.length === 0">Select data element to
+            map</div>
           <div class="data-filter-group__item-member-item" *ngFor="let member of group.members">
-            <img [src]="dragIcon" alt="">&nbsp;{{member.name}}
+            <div class="data-filter-group__item-member-item-title">
+              {{member.name}}
+            </div>
           </div>
         </div>
       </div>
