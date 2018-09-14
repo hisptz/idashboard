@@ -1,5 +1,6 @@
 .color-picker {
   height: 25px;
-  width: 100px;
+  position: relative !important;
+  width: 50px;
   border-radius: 2px;
 }

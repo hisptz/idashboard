@@ -1,0 +1,5 @@
+{{ legendSet |json}}
+<hr>
+<div *ngFor="let legend of legendSet.legends">
+  <app-legend-configuration (legendUpdates)="onLegendUpdates($event)" [legend]="legend"></app-legend-configuration>
+</div>

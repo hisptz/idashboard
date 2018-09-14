@@ -10,12 +10,12 @@ export class LegendColorPickerComponent implements OnInit {
   color;
 
   @Output()
-  colorChange = new EventEmitter();
+  colorSelect = new EventEmitter();
 
   constructor() {}
 
-  onColorPickerSelect(event) {
-    console.log(event);
+  onColorPickerSelect(color: string) {
+    this.colorSelect.emit(color);
   }
 
   ngOnInit() {}
