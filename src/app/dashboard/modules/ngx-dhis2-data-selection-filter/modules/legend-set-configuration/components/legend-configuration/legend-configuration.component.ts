@@ -13,7 +13,7 @@ export class LegendConfigurationComponent implements OnInit {
   color: string;
   name: string;
   startValue: number;
-  endValue: Number;
+  endValue: number;
 
   @Output()
   legendUpdates = new EventEmitter();
