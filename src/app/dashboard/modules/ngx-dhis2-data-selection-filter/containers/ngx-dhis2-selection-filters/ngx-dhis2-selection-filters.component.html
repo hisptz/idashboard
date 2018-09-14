@@ -9,48 +9,48 @@
       <!--data filter button-->
       <button *ngIf="filterConfig?.showDataFilter" [ngClass]="{
         'selection-filter-btn': true,
-        'active-filter': selectedFilter === 'DATA'
+        'active-filter': _selectedFilter === 'DATA'
         }"
         [title]="'Filter by data' | translate" (click)="toggleCurrentFilter($event, 'DATA')">
         <img [src]="dataIcon" alt="">&nbsp;{{'Data Mapping' | translate}}&nbsp;
-        <img [ngClass]="{'arrow-up': selectedFilter === 'DATA'}" [src]="arrowDownIcon" alt="">
+        <img [ngClass]="{'arrow-up': _selectedFilter === 'DATA'}" [src]="arrowDownIcon" alt="">
       </button>
       <!--end of data filter button-->
       <!--Legend configuration button-->
-      <button *ngIf="filterConfig?.showLegendConfiguration" [ngClass]="{'selection-filter-btn': true,'active-filter': selectedFilter === 'LEGEND_CONFIGURATION' }"
+      <button *ngIf="filterConfig?.showLegendConfiguration" [ngClass]="{'selection-filter-btn': true,'active-filter': _selectedFilter === 'LEGEND_CONFIGURATION' }"
         [title]="'Configure legend' | translate" (click)="toggleCurrentFilter($event, 'LEGEND_CONFIGURATION')">
         <img [src]="dataIcon" alt="">&nbsp;{{'Legend Configration' | translate}}&nbsp;
-        <img [ngClass]="{'arrow-up': selectedFilter === 'LEGEND_CONFIGURATION'}" [src]="arrowDownIcon" alt="">
+        <img [ngClass]="{'arrow-up': _selectedFilter === 'LEGEND_CONFIGURATION'}" [src]="arrowDownIcon" alt="">
       </button>
       <!--end of Legend configuration button-->
       <!--period filter button-->
       <button *ngIf="filterConfig?.showPeriodFilter" [ngClass]="{
         'selection-filter-btn': true,
-        'active-filter': selectedFilter === 'PERIOD'
+        'active-filter': _selectedFilter === 'PERIOD'
         }"
         [title]="'Filter by period' | translate" (click)="toggleCurrentFilter($event, 'PERIOD')">
         <img [src]="periodIcon" alt="">&nbsp;{{'Period' | translate}}&nbsp;
-        <img [ngClass]="{'arrow-up': selectedFilter === 'PERIOD'}" [src]="arrowDownIcon" alt="">
+        <img [ngClass]="{'arrow-up': _selectedFilter === 'PERIOD'}" [src]="arrowDownIcon" alt="">
       </button>
       <!--end of period filter button-->
 
       <!--org unit filter button-->
       <button *ngIf="filterConfig?.showOrgUnitFilter" [ngClass]="{
         'selection-filter-btn': true,
-        'active-filter': selectedFilter === 'ORG_UNIT'
+        'active-filter': _selectedFilter === 'ORG_UNIT'
         }"
         [title]="'Filter by organisation unit' | translate" (click)="toggleCurrentFilter($event, 'ORG_UNIT')">
         <img [src]="orgUnitIcon" alt="">&nbsp;{{'Org-Unit' | translate}}&nbsp;
-        <img [ngClass]="{'arrow-up': selectedFilter === 'ORG_UNIT'}" [src]="arrowDownIcon" alt="">
+        <img [ngClass]="{'arrow-up': _selectedFilter === 'ORG_UNIT'}" [src]="arrowDownIcon" alt="">
       </button>
 
       <button *ngIf="filterConfig?.showLayout" [ngClass]="{
         'selection-filter-btn': true,
-        'active-filter': selectedFilter === 'LAYOUT'
+        'active-filter': _selectedFilter === 'LAYOUT'
         }"
         [title]="'Layout' | translate" (click)="toggleCurrentFilter($event, 'LAYOUT')">
         <img [src]="orgUnitIcon" alt="">&nbsp;{{'Layout' | translate}}&nbsp;
-        <img [ngClass]="{'arrow-up': selectedFilter === 'LAYOUT'}" [src]="arrowDownIcon" alt="">
+        <img [ngClass]="{'arrow-up': _selectedFilter === 'LAYOUT'}" [src]="arrowDownIcon" alt="">
       </button>
       <!--end of org unit filter button-->
 
@@ -69,28 +69,28 @@
   <!--selection filter body-->
   <div class="selection-filter-body" *ngIf="selectedFilter !== '' && showFilterBody">
     <!--data filter-->
-    <app-data-mapping *ngIf="selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
+    <app-data-mapping *ngIf="_selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
       (dataFilterUpdate)="onFilterUpdate($event, 'DATA')"></app-data-mapping>
 
-    <app-legend-set-configuration *ngIf="selectedFilter === 'LEGEND_CONFIGURATION'" [selectedItems]="selectedData"
+    <app-legend-set-configuration *ngIf="_selectedFilter === 'LEGEND_CONFIGURATION'" [selectedItems]="selectedData"
       (legendSetConfigurationClose)="onFilterClose($event, 'LEGEND_CONFIGURATION')" (legendSetConfigurationClose)="onFilterUpdate($event, 'LEGEND_CONFIGURATION')"></app-legend-set-configuration>
 
 
-    <!-- <app-data-filter *ngIf="selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
+    <!-- <app-data-filter *ngIf="_selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
       (dataFilterUpdate)="onFilterUpdate($event, 'DATA')"></app-data-filter> -->
     <!--end of data filter-->
 
     <!--period filter-->
-    <app-period-filter *ngIf="selectedFilter === 'PERIOD'" [selectedPeriods]="selectedPeriods" (periodFilterClose)="onFilterClose($event, 'PERIOD')"
+    <app-period-filter *ngIf="_selectedFilter === 'PERIOD'" [selectedPeriods]="selectedPeriods" (periodFilterClose)="onFilterClose($event, 'PERIOD')"
       (periodFilterUpdate)="onFilterUpdate($event, 'PERIOD')"></app-period-filter>
     <!--end of period filter-->
 
     <!--org unit filter-->
-    <ngx-dhis2-org-unit-filter *ngIf="selectedFilter === 'ORG_UNIT'" [selectedOrgUnitItems]="selectedOrgUnits"
+    <ngx-dhis2-org-unit-filter *ngIf="_selectedFilter === 'ORG_UNIT'" [selectedOrgUnitItems]="selectedOrgUnits"
       (orgUnitClose)="onFilterClose($event, 'ORG_UNIT')" (orgUnitUpdate)="onFilterUpdate($event, 'ORG_UNIT')"></ngx-dhis2-org-unit-filter>
     <!--end of org unit filter-->
 
-    <app-layout [layoutModel]="layoutItem" *ngIf="selectedFilter === 'LAYOUT'" (onLayoutUpdate)="onFilterUpdate($event, 'LAYOUT')"
+    <app-layout [layoutModel]="layoutItem" *ngIf="_selectedFilter === 'LAYOUT'" (onLayoutUpdate)="onFilterUpdate($event, 'LAYOUT')"
       (onLayoutClose)="onFilterClose($event, 'LAYOUT')"></app-layout>
   </div>
   <!--end of selection filter body-->

@@ -18,7 +18,7 @@
         <!-- <img [src]="arrowDownIcon" alt=""> -->
         <div class="data-filter-group__item-header-btns">
           <a class="data-filter-group__item-header-icon">
-            <i class="{{group.current ? 'icon-up-open' : 'icon-down-open'}}"></i>
+            <img [ngClass]="{'arrow-up':group.current}" [src]="arrowDownIcon" alt="">
           </a>
         </div>
       </div>
