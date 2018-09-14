@@ -6,11 +6,12 @@ import { HttpModule } from '@angular/http';
 import { components } from './components';
 import { containers } from './containers';
 import { LegendSetConfigurationComponent } from './legend-set-configuration.component';
+import { services } from './services';
 
 @NgModule({
   imports: [CommonModule, FormsModule, HttpModule, ColorPickerModule],
   declarations: [LegendSetConfigurationComponent, ...components, ...containers],
   exports: [LegendSetConfigurationComponent, ...components, ...containers],
-  providers: []
+  providers: [...services]
 })
 export class LegendSetConfigurationModule {}
