@@ -8,11 +8,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AddUnderscorePipe } from './pipes/add-underscore.pipe';
 import { DragulaModule } from 'ng2-dragula';
 import { DndModule } from 'ng2-dnd';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { HttpModule } from '@angular/http';
 import { DataMappingComponent } from './data-mapping.component';
-import { DataMappingContainerComponent } from './containers/data-mapping-container/data-mapping-container.component';
 import { mappingServices } from './services';
 import { components } from './components';
+import { containers } from './containers';
 
 @NgModule({
   imports: [
@@ -20,19 +21,20 @@ import { components } from './components';
     FormsModule,
     HttpModule,
     DragulaModule,
+    ColorPickerModule,
     NgxPaginationModule,
     DndModule.forRoot()
   ],
   declarations: [
     DataMappingComponent,
-    DataMappingContainerComponent,
     ClickOutsideDirective,
     FilterByNamePipe,
     OrderPipe,
     AddUnderscorePipe,
-    ...components
+    ...components,
+    ...containers
   ],
-  exports: [DataMappingComponent, DataMappingContainerComponent, ...components],
+  exports: [DataMappingComponent, , ...components, ...containers],
   providers: [...mappingServices]
 })
 export class DataMappingModule {}
