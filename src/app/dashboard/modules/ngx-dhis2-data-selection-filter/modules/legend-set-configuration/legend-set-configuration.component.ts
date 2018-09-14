@@ -6,6 +6,7 @@ import {
   EventEmitter,
   OnDestroy
 } from '@angular/core';
+import { LegendSet } from './models/legend-set';
 
 @Component({
   selector: 'app-legend-set-configuration',
@@ -19,5 +20,10 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
   @Output()
   legendSetConfigurationClose = new EventEmitter();
   ngOnInit() {}
+
+  onLegendSetCOnfigurationClose(legendSets: LegendSet[]) {
+    console.log(JSON.stringify(legendSets));
+  }
+
   ngOnDestroy() {}
 }

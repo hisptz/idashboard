@@ -75,5 +75,10 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
     return item && item.id ? item.id : index;
   }
 
+  saveCOnfigurations(event) {
+    event.stopPropagation();
+    this.legendSetConfigurationClose.emit(this.legendSets);
+  }
+
   ngOnDestroy() {}
 }

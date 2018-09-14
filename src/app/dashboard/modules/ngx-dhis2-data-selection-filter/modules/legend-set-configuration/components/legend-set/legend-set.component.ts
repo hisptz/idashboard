@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LegendSet, Legend } from '../../models/legend-set';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-legend-set',
@@ -9,11 +10,17 @@ import { LegendSet, Legend } from '../../models/legend-set';
 export class LegendSetComponent implements OnInit {
   @Input()
   legendSet: LegendSet;
+
   constructor() {}
 
   ngOnInit() {}
 
-  onLegendUpdates(legend: Legend) {
-    console.log(legend);
+  onLegendUpdates(data: Legend) {
+    this.legendSet.legends = _.sortBy(
+      _.map(this.legendSet.legends, legend => {
+        return legend.id === data.id ? data : legend;
+      }),
+      'startValue'
+    );
   }
 }

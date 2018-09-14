@@ -31,7 +31,7 @@ export class LegendConfigurationComponent implements OnInit {
     const name = this.name;
     const startValue = this.startValue;
     const endValue = this.endValue;
-    this.legendUpdates.emit({ id, name, color, startValue, endValue });
+    this.legendUpdates.emit({ id, color, name, startValue, endValue });
   }
 
   ngOnInit() {

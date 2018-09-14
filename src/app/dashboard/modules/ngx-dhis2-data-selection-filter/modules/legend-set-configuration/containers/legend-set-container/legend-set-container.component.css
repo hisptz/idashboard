@@ -203,3 +203,10 @@
   margin-top: 10px;
   border-top: solid thin #eeeeee;
 }
+
+.legend-set-save-btns {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.2em;
+  padding-right: 5px;
+}
