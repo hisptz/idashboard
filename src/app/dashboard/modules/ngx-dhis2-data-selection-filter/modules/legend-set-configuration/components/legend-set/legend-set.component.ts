@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LegendSet, Legend } from '../../models/legend-set';
 import * as _ from 'lodash';
+import * as lengeSetHelper from '../../helpers';
 
 @Component({
   selector: 'app-legend-set',
@@ -22,5 +23,12 @@ export class LegendSetComponent implements OnInit {
       }),
       'startValue'
     );
+  }
+
+  addNewLegend(event) {
+    event.stopPropagation();
+    const { legends } = this.legendSet;
+    const legend: Legend = lengeSetHelper.getNewLegend(legends);
+    this.legendSet.legends = _.sortBy([...legends, legend], 'startValue');
   }
 }

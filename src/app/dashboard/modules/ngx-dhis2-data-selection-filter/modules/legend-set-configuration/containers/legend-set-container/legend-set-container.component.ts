@@ -33,7 +33,6 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(legendHelper.getDefaultLegends());
     const legendSets: LegendSet[] = legendHelper.getLegendSetsConfiguration(
       this.selectedItems,
       this.legendSetEntities
