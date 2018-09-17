@@ -11,6 +11,7 @@ export class FunctionMetadataService {
   constructor(private http: NgxDhis2HttpClientService) {}
 
   loadinFuctionRules(): Observable<any> {
+    // @todo make generatic for other use case
     const url = 'dataStore/functions/whoMalariafn';
     return this.http.get(url).pipe(map((res: any) => res.rules || []));
   }
@@ -18,6 +19,7 @@ export class FunctionMetadataService {
   updateFucntionRuleDataStore(data): Observable<any> {
     return new Observable(observer => {
       const { rules } = data;
+      // @todo make generatic for other use case
       const url = 'dataStore/functions/whoMalariafn';
       this.http.get(url).subscribe(
         (response: any) => {

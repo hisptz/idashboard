@@ -9,9 +9,34 @@ import { LegendSet } from '../models/legend-set.model';
 export class LegendSetService {
   constructor(private http: NgxDhis2HttpClientService) {}
 
+  // @todo update url to data store
   getLegendSets(): Observable<LegendSet[]> {
-    const legendUrl = `legendSets.json?fields=id,displayName~rename(name),
-    legends[id,displayName~rename(name),startValue,endValue,color]&paging=false`;
-    return this.http.get(legendUrl).pipe(map((legenSetResponse: any) => legenSetResponse.legendSets || []));
+    const legendUrl = `dataStore/legendSets/configuration`;
+    return new Observable(observer => {
+      this.http.get(legendUrl).subscribe(
+        (response: any) => {
+          const legendSets = response.legendSets || [];
+          observer.next(legendSets);
+          observer.complete();
+        },
+        () => {
+          const legendSets = [];
+          this.http.post(legendUrl, { legendSets }).subscribe(
+            () => {
+              observer.next([]);
+              observer.complete();
+            },
+            error => {
+              observer.error(error);
+            }
+          );
+        }
+      );
+    });
+  }
+
+  updateLegendSets(legendSets: LegendSet[]): Observable<any> {
+    const legendUrl = `dataStore/legendSets/configuration`;
+    return this.http.put(legendUrl, { legendSets });
   }
 }

@@ -14,7 +14,10 @@ import { LegendSetService } from '../../services';
 
 @Injectable()
 export class LegendSetEffects {
-  constructor(private actions$: Actions, private legendSetService: LegendSetService) {}
+  constructor(
+    private actions$: Actions,
+    private legendSetService: LegendSetService
+  ) {}
 
   @Effect()
   loadLegendSets$: Observable<Action> = this.actions$.pipe(

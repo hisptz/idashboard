@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
 import { LegendSet } from '../../models/legend-set.model';
 
 /**
@@ -8,7 +9,8 @@ import { LegendSet } from '../../models/legend-set.model';
 export enum LegendSetActionTypes {
   LoadLegendSets = '[LegendSet] Load LegendSets',
   LoadLegendSetSuccess = '[LegendSet] Load LegendSet Success',
-  LoadLegendSetFail = '[LegendSet] Load LegendSet Fail'
+  LoadLegendSetFail = '[LegendSet] Load LegendSet Fail',
+  UpsetLagendSet = '[LegendSet] Add or update legendSet'
 }
 
 /**
@@ -30,8 +32,17 @@ export class LoadLegendSetFail implements Action {
   constructor(public error: any) {}
 }
 
+export class UpsetLagendSet implements Action {
+  readonly type = LegendSetActionTypes.UpsetLagendSet;
+  constructor(public payload: { legendSets: LegendSet[] }) {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type LegendSetActions = LoadLegendSets | LoadLegendSetSuccess | LoadLegendSetFail;
+export type LegendSetActions =
+  | LoadLegendSets
+  | LoadLegendSetSuccess
+  | LoadLegendSetFail
+  | UpsetLagendSet;
