@@ -10,19 +10,22 @@ export function getLegendSetsConfiguration(selectedItems, legendSetEntities) {
       : {
           id: selectedItem.id,
           name: selectedItem.name ? selectedItem.name : 'item ' + index,
-          legends: getDefaultLegends()
+          legends: []
         };
   });
 }
 
 export function getNewLegend(legends: Legend[]): Legend {
   legends = _.reverse(_.sortBy(legends, 'startValue'));
+  const startValue =
+    legends && legends.length > 0 ? legends[0].endValue + 1 : 0;
+  const endValue = startValue + 9;
   return {
     id: getUniqueId(),
     name: 'Unititled',
     color: '#fff',
-    startValue: legends[0].endValue + 1,
-    endValue: legends[0].endValue + 10
+    startValue: startValue,
+    endValue: endValue
   };
 }
 

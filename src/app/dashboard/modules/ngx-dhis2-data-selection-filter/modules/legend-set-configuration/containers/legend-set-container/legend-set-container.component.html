@@ -23,9 +23,14 @@
       <div class="legend-set-group_item-content" *ngIf="legendSet.id == currentLegendSet">
         <div class="legend-set-group_item-member-list">
           <div class="legend-set-group_item-label"> </div>
-          <div class="legend-set-group_item-member-item" *ngIf="legendSet.legends.length === 0">Add new Legend</div>
+          <!-- <div class="legend-set-group_item-member-item" *ngIf="legendSet.legends.length === 0">Add new Legend</div> -->
           <div class="legend-set-group_item-member-item" *ngIf="legendSet.legends.length > 0">
             <app-legend-set [legendSet]="legendSet"></app-legend-set>
+          </div>
+          <div class="add-new-legend ">
+            <button title="Add new legend" class="add-new-legend-button" (click)="addNewLegend($event,legendSet.id)">
+              Add
+            </button>
           </div>
         </div>
       </div>

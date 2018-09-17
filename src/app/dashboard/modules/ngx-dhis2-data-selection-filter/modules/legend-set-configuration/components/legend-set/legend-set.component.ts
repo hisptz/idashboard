@@ -24,11 +24,4 @@ export class LegendSetComponent implements OnInit {
       'startValue'
     );
   }
-
-  addNewLegend(event) {
-    event.stopPropagation();
-    const { legends } = this.legendSet;
-    const legend: Legend = lengeSetHelper.getNewLegend(legends);
-    this.legendSet.legends = _.sortBy([...legends, legend], 'startValue');
-  }
 }
