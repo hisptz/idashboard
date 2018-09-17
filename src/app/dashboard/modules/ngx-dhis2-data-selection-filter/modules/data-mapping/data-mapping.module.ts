@@ -34,7 +34,7 @@ import { containers } from './containers';
     ...components,
     ...containers
   ],
-  exports: [DataMappingComponent, , ...components, ...containers],
+  exports: [DataMappingComponent, ...components, ...containers],
   providers: [...mappingServices]
 })
 export class DataMappingModule {}
