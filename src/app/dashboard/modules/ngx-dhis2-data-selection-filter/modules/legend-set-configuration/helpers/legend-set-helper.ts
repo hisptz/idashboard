@@ -1,18 +1,26 @@
 import { DEFAULT_LEGENDS } from '../constants/default-legend';
 import * as _ from 'lodash';
-import { Legend } from '../models/legend-set';
+import { Legend, LegendSet } from '../models/legend-set';
 
 export function getLegendSetsConfiguration(selectedItems, legendSetEntities) {
   return _.map(selectedItems, selectedItem => {
     const index = _.indexOf(selectedItems, selectedItem) + 1;
-    return legendSetEntities && legendSetEntities[selectedItem.id]
-      ? legendSetEntities[selectedItem.id]
-      : {
-          id: selectedItem.id,
-          name: selectedItem.name ? selectedItem.name : 'item ' + index,
-          legends: []
-        };
+    const legends =
+      legendSetEntities && legendSetEntities[selectedItem.id]
+        ? legendSetEntities && legendSetEntities[selectedItem.id].legends
+        : [];
+    const name = selectedItem.name ? selectedItem.name : 'Item ' + index;
+    const { id } = selectedItem;
+    return { id, name, legends };
   });
+}
+
+export function getLegendSetForUpdate(legendSets: LegendSet[]) {
+  const filteredegendSets = _.filter(
+    legendSets,
+    (legendSet: LegendSet) => legendSet.legends.length > 0
+  );
+  return filteredegendSets;
 }
 
 export function getNewLegend(legends: Legend[]): Legend {
@@ -22,7 +30,7 @@ export function getNewLegend(legends: Legend[]): Legend {
   const endValue = startValue + 9;
   return {
     id: getUniqueId(),
-    name: 'Unititled',
+    name: 'Untitled',
     color: '#fff',
     startValue: startValue,
     endValue: endValue

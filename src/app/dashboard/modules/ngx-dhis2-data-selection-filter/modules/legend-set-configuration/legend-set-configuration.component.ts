@@ -7,6 +7,11 @@ import {
   OnDestroy
 } from '@angular/core';
 import { LegendSet } from './models/legend-set';
+import { Store, select } from '@ngrx/store';
+import { State, getLegendSetsEntities } from '../../../../../store';
+import { Observable } from 'rxjs';
+import * as legendSetHelper from './helpers/legend-set-helper';
+import { UpsetLagendSets } from '../../../../../store/actions/legend-set.action';
 
 @Component({
   selector: 'app-legend-set-configuration',
@@ -19,10 +24,22 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
 
   @Output()
   legendSetConfigurationClose = new EventEmitter();
+  legendSetEntities$: Observable<any>;
+
+  constructor(private store: Store<State>) {
+    this.legendSetEntities$ = this.store.pipe(select(getLegendSetsEntities));
+  }
+
   ngOnInit() {}
 
   onLegendSetCOnfigurationClose(legendSets: LegendSet[]) {
-    console.log(JSON.stringify(legendSets));
+    legendSets = legendSetHelper.getLegendSetForUpdate(legendSets);
+    this.store.dispatch(new UpsetLagendSets({ legendSets }));
+    this.legendSetConfigurationClose.emit({
+      items: this.selectedItems,
+      groups: [],
+      dimension: 'dx'
+    });
   }
 
   ngOnDestroy() {}

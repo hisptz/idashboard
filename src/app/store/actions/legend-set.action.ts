@@ -10,7 +10,7 @@ export enum LegendSetActionTypes {
   LoadLegendSets = '[LegendSet] Load LegendSets',
   LoadLegendSetSuccess = '[LegendSet] Load LegendSet Success',
   LoadLegendSetFail = '[LegendSet] Load LegendSet Fail',
-  UpsetLagendSet = '[LegendSet] Add or update legendSet'
+  UpsetLagendSets = '[LegendSet] Add or update legendSets'
 }
 
 /**
@@ -32,8 +32,8 @@ export class LoadLegendSetFail implements Action {
   constructor(public error: any) {}
 }
 
-export class UpsetLagendSet implements Action {
-  readonly type = LegendSetActionTypes.UpsetLagendSet;
+export class UpsetLagendSets implements Action {
+  readonly type = LegendSetActionTypes.UpsetLagendSets;
   constructor(public payload: { legendSets: LegendSet[] }) {}
 }
 
@@ -45,4 +45,4 @@ export type LegendSetActions =
   | LoadLegendSets
   | LoadLegendSetSuccess
   | LoadLegendSetFail
-  | UpsetLagendSet;
+  | UpsetLagendSets;

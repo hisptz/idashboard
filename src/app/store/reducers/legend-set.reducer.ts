@@ -33,7 +33,7 @@ export function legendSetReducer(
       });
     }
 
-    case LegendSetActionTypes.UpsetLagendSet: {
+    case LegendSetActionTypes.UpsetLagendSets: {
       return LegendSetAdapter.upsertMany(action.payload.legendSets, state);
     }
 
