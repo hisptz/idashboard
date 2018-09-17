@@ -6,7 +6,7 @@ import {
   EventEmitter,
   OnDestroy
 } from '@angular/core';
-import { LegendSet } from '../../models/legend-set';
+import { LegendSet, Legend } from '../../models/legend-set';
 import * as _ from 'lodash';
 import { ARROW_DOWN_ICON } from '../../icons/arrow-down.icon';
 import * as legendHelper from '../../helpers';
@@ -50,6 +50,17 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
           ? ''
           : legendSet.id
         : this.currentLegendSet;
+  }
+
+  addNewLegend(event, legendSetId) {
+    event.stopPropagation();
+    this.legendSets = _.forEach(this.legendSets, legendSet => {
+      if (legendSet.id === legendSetId) {
+        const { legends } = legendSet;
+        const legend: Legend = legendHelper.getNewLegend(legends);
+        legendSet.legends = _.sortBy([...legends, legend], 'startValue');
+      }
+    });
   }
 
   trackByFn(index, item) {

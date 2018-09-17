@@ -210,3 +210,30 @@
   padding-top: 0.2em;
   padding-right: 5px;
 }
+
+.add-new-legend {
+  margin: 5px;
+  display: -webkit-flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+}
+
+.add-new-legend-button {
+  outline: none;
+  border: solid thin #eeeeee;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40%;
+  padding: 3px;
+  border-radius: 3px;
+  color: #333333;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.add-new-legend-button:hover {
+  background-color: #eeeeee;
+}
