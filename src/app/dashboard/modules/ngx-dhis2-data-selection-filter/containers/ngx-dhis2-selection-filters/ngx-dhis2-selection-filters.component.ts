@@ -42,7 +42,6 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   constructor() {
     this.showFilters = this.showFilterBody = false;
-
     // icons initializations
     this.filterIcon = FILTER_ICON;
     this.arrowLeftIcon = ARROW_LEFT_ICON;
@@ -113,11 +112,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
   toggleFilters(e) {
     e.stopPropagation();
     this.showFilters = !this.showFilters;
-    if (this.showFilters) {
-      this.showFilterBody = true;
-    } else {
-      this.showFilterBody = false;
-    }
+    this.toggleCurrentFilter(e, '');
   }
 
   toggleCurrentFilter(e, selectedFilter) {
@@ -145,9 +140,8 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
             )
           ];
     }
-
-    if (this.selectedFilter === selectedFilter) {
-      // this._selectedFilter = '';
+    if (this._selectedFilter === selectedFilter) {
+      this._selectedFilter = '';
       this.showFilterBody = false;
     }
   }

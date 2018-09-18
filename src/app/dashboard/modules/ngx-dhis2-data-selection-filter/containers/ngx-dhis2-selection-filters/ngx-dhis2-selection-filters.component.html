@@ -67,7 +67,7 @@
   <!--end of selection filter header-->
 
   <!--selection filter body-->
-  <div class="selection-filter-body" *ngIf="selectedFilter !== '' && showFilterBody">
+  <div class="selection-filter-body" *ngIf="_selectedFilter !== '' && showFilterBody">
     <!--data filter-->
     <app-data-mapping *ngIf="_selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
       (dataFilterUpdate)="onFilterUpdate($event, 'DATA')"></app-data-mapping>
