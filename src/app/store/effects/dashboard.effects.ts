@@ -372,16 +372,16 @@ export class DashboardEffects {
       ]) =>
         from(dashboardVisualizations)
           .pipe(
-            mergeMap(dashboardVisualization =>
+            mergeMap((dashboardVisualization: any) =>
               this.store
                 .select(
-                  getCurrentVisualizationObjectLayers(dashboardVisualization)
+                  getCurrentVisualizationObjectLayers(dashboardVisualization.id)
                 )
                 .pipe(
                   take(1),
                   map((visualizationLayers: VisualizationLayer[]) => {
                     return {
-                      visualizationId: dashboardVisualization,
+                      visualizationId: dashboardVisualization.id,
                       visualizationLayers: _.map(
                         visualizationLayers,
                         (visualizationLayer: VisualizationLayer) => {
