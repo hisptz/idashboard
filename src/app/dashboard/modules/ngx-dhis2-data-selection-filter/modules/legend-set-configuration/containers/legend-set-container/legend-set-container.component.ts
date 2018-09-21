@@ -23,6 +23,9 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
 
   @Output()
   legendSetConfigurationClose = new EventEmitter();
+  @Output()
+  legendSetConfigurationSave = new EventEmitter();
+
   legendSets: LegendSet[];
   currentLegendSet: string;
   arrowDownIcon: string;
@@ -67,9 +70,14 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
     return item && item.id ? item.id : index;
   }
 
-  saveCOnfigurations(event) {
+  closeConfigurations(event) {
     event.stopPropagation();
-    this.legendSetConfigurationClose.emit(this.legendSets);
+    this.legendSetConfigurationClose.emit({});
+  }
+
+  saveCofigurations(event) {
+    event.stopPropagation();
+    this.legendSetConfigurationSave.emit(this.legendSets);
   }
 
   ngOnDestroy() {}
