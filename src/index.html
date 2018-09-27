@@ -7,6 +7,16 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-navbutton-color" content="#303F9F">
+
+  <!-- Material Design Lite -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-indigo.min.css">
+
+  <!-- App Styling -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Creepster:regular,bold|Julee:regular,bold|Crafty+Girls:regular,bold|Bonbon:regular,bold|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -59,10 +69,10 @@
       padding: 10px;
     }
 
-  .the-card-title {
+    .the-card-title {
       margin-bottom: 0.75rem;
       font-size: 1.8em;
-  }
+    }
     .separator-line {
       border-bottom: solid 2px #e1e1e1; margin-bottom: 10px;
     }
@@ -137,134 +147,134 @@
   </style>
 </head>
 <body class="body-wrapper">
-  <div id="intro-body">
-    <!--<img src="assets/icons/balls-5.svg" alt="">-->
-    <h3 style="margin-top: 50px;">Welcome to the Tanzania national health observatory</h3>
-    <!--<h5 style="">Get the data, interactively from different data sources such as national health management information system, census, surveys (DHS, THMIS, SARA, TSPA, etc)</h5>-->
+<div id="intro-body">
+  <!--<img src="assets/icons/balls-5.svg" alt="">-->
+  <h3 style="margin-top: 50px;">Welcome to the Tanzania national health observatory</h3>
+  <!--<h5 style="">Get the data, interactively from different data sources such as national health management information system, census, surveys (DHS, THMIS, SARA, TSPA, etc)</h5>-->
 
-    <div class="loading-block">
-      <div style="display: inline-block">
-        <input value="0" id="current-timer" style="border: none; text-align: center; width: 0.5px;">
-        <h2><b></b><b id="seconds-to-go"></b> <b>seconds</b> <b>to go</b></h2>
-      </div>
-      <div class="progress-div">
-        <div id="progress-bar"></div>
-      </div>
-      <h3 style="text-align: center">
-        <a class="time-control-btn" onclick="stopTimer();" id="stay">click here to stay on this page</a>
-        <a class="time-control-btn" onclick="startTimer()" id="continue" style="display: none">click to continue</a>
-      </h3>
+  <div class="loading-block">
+    <div style="display: inline-block">
+      <input value="0" id="current-timer" style="border: none; text-align: center; width: 0.5px;">
+      <!--<h2><b></b><b id="seconds-to-go"></b> <b>seconds</b> <b>to go</b></h2>-->
     </div>
+    <!--<div class="progress-div">-->
+      <!--<div id="progress-bar"></div>-->
+    <!--</div>-->
+    <h3 style="text-align: center">
+      <a class="time-control-btn" onclick="stopTimer();" id="stay">click here to stay on this page</a>
+      <a class="time-control-btn" onclick="startTimer()" id="continue" style="display: none">click to continue</a>
+    </h3>
+  </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <!--Welcoming html-->
-          <div class="top-welcome">
-            <p>The tanzania national health observatory enables you to browse the data coming from different sources including HMIS routine collected event and aggregate data,
-              programs reports, survey reports e.t.c</p>
-            <h3>What is in here</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!--Welcoming html-->
+        <div class="top-welcome">
+          <p>The tanzania national health observatory enables you to browse the data coming from different sources including HMIS routine collected event and aggregate data,
+            programs reports, survey reports e.t.c</p>
+          <h3>What is in here</h3>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="the-card-summary">
+              <a routerLink="/page/home">
+                <div class="card-block">
+                  <h5 class="the-card-title">Observatory themes</h5>
+                  <div class="separator-line"></div>
+                  <p class="the-card-text">This is where you can get data about different health themes in summary and you can drill
+                    down to more details in the respective theme. Some are listed below</p>
+                  <ul class="list-group">
+                    <li class="list-group-item">1. Health performance.</li>
+                    <li class="list-group-item">2. Reproductive health.</li>
+                    <li class="list-group-item">3. Nutrition. </li>
+                    <li class="list-group-item">4. HIV and AIDS.</li>
+                    <li class="list-group-item">5. TB and Leprosy.</li>
+                  </ul>
+                </div>
+              </a>
+            </div>
           </div>
-          <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="the-card-summary">
-                <a routerLink="/page/home">
-                  <div class="card-block">
-                    <h5 class="the-card-title">Observatory themes</h5>
-                    <div class="separator-line"></div>
-                    <p class="the-card-text">This is where you can get data about different health themes in summary and you can drill
-                      down to more details in the respective theme. Some are listed below</p>
-                    <ul class="list-group">
-                      <li class="list-group-item">1. Health performance.</li>
-                      <li class="list-group-item">2. Reproductive health.</li>
-                      <li class="list-group-item">3. Nutrition. </li>
-                      <li class="list-group-item">4. HIV and AIDS.</li>
-                      <li class="list-group-item">5. TB and Leprosy.</li>
-                    </ul>
-                  </div>
-                </a>
-              </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="the-card-summary">
+              <a routerLink="/dashboards/gdeaYoJncPv">
+                <div class="card-block">
+                  <h5 class="the-card-title">Data statistics</h5>
+                  <div class="separator-line"></div>
+                  <p class="the-card-text">This component provide interactive data analysis and comprehensive description of indicators with different data download formats (excel, pdf, images etc) at easy.
+                    You can define the data, period and organisation unit interactively and decide the type of data presentation between graphs, maps and table at different layouts</p>
+                </div>
+              </a>
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="the-card-summary">
-                <a routerLink="/dashboards/gdeaYoJncPv">
-                  <div class="card-block">
-                    <h5 class="the-card-title">Data statistics</h5>
-                    <div class="separator-line"></div>
-                    <p class="the-card-text">This component provide interactive data analysis and comprehensive description of indicators with different data download formats (excel, pdf, images etc) at easy.
-                      You can define the data, period and organisation unit interactively and decide the type of data presentation between graphs, maps and table at different layouts</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="the-card-summary">
-                <a>
-                  <div class="card-block">
-                    <h5 class="the-card-title">Downloads</h5>
-                    <div class="separator-line"></div>
-                    <p class="the-card-text">You can download scorecards for HMIS, RMNCAH, BUSKET FUNDS etc and data from programs reports, census and surveys</p>
-                  </div>
-                </a>
-              </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="the-card-summary">
+              <a>
+                <div class="card-block">
+                  <h5 class="the-card-title">Downloads</h5>
+                  <div class="separator-line"></div>
+                  <p class="the-card-text">You can download scorecards for HMIS, RMNCAH, BUSKET FUNDS etc and data from programs reports, census and surveys</p>
+                </div>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div id="app-root" style="display: none">
-    <app-root></app-root>
-  </div>
-  <script>
-    var theCurrentInterval;
+</div>
+<div id="app-root" style="display: none">
+  <app-root></app-root>
+</div>
+<script>
+  var theCurrentInterval;
+
+  theCurrentInterval = setInterval(() => {
+    setTimeout(function () {
+      var counter = document.getElementById('current-timer').value;
+      document.getElementById('current-timer').value = parseInt(counter) + 1;
+      // const elem = document.getElementById('progress-bar');
+      // elem.style.width = (parseInt(counter) * 10) + '%';
+      // document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
+      if (counter >=10) {
+        document.getElementById('app-root').style.display = 'block';
+        document.getElementById('intro-body').style.display = 'none';
+      }
+    }, 1000);
+  }, 1000);
+
+  function stopTimer() {
+    document.getElementById('continue').style.display = 'block';
+    document.getElementById('stay').style.display = 'none';
+    clearInterval(theCurrentInterval);
+    var counter = document.getElementById('current-timer').value;
+    // document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
+    document.getElementById('current-timer').value = parseInt(counter) + 1;
+    // const elem = document.getElementById('progress-bar');
+    // elem.style.width = (parseInt(counter) * 10) + '%';
+  }
+
+  function startTimer() {
+    var counter = document.getElementById('current-timer').value;
+    document.getElementById('continue').style.display = 'none';
+    document.getElementById('stay').style.display = 'block';
+    console.log(counter);
 
     theCurrentInterval = setInterval(() => {
-         setTimeout(function () {
-           var counter = document.getElementById('current-timer').value;
-           document.getElementById('current-timer').value = parseInt(counter) + 1;
-           const elem = document.getElementById('progress-bar');
-           elem.style.width = (parseInt(counter) * 10) + '%';
-           document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
-           if (counter >=10) {
-             document.getElementById('app-root').style.display = 'block';
-             document.getElementById('intro-body').style.display = 'none';
-           }
-         }, 1000);
-     }, 1000);
-
-    function stopTimer() {
-      document.getElementById('continue').style.display = 'block';
-      document.getElementById('stay').style.display = 'none';
-      clearInterval(theCurrentInterval);
-      var counter = document.getElementById('current-timer').value;
-      document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
-      document.getElementById('current-timer').value = parseInt(counter) + 1;
-      const elem = document.getElementById('progress-bar');
-      elem.style.width = (parseInt(counter) * 10) + '%';
-    }
-
-    function startTimer() {
-      var counter = document.getElementById('current-timer').value;
-      document.getElementById('continue').style.display = 'none';
-      document.getElementById('stay').style.display = 'block';
-      console.log(counter);
-
-      theCurrentInterval = setInterval(() => {
-        setTimeout(function () {
-          var counter = document.getElementById('current-timer').value;
-          document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
-          document.getElementById('current-timer').value = parseInt(counter) + 1;
-          const elem = document.getElementById('progress-bar');
-          elem.style.width = (parseInt(counter) * 10) + '%';
-          if (counter >=10) {
-            document.getElementById('app-root').style.display = 'block';
-            document.getElementById('intro-body').style.display = 'none';
-          }
-        }, 1000);
+      setTimeout(function () {
+        var counter = document.getElementById('current-timer').value;
+        // document.getElementById('seconds-to-go').innerText = 10 - parseInt(counter);
+        document.getElementById('current-timer').value = parseInt(counter) + 1;
+        // const elem = document.getElementById('progress-bar');
+        // elem.style.width = (parseInt(counter) * 10) + '%';
+        if (counter >=10) {
+          document.getElementById('app-root').style.display = 'block';
+          document.getElementById('intro-body').style.display = 'none';
+        }
       }, 1000);
-    }
-  </script>
+    }, 1000);
+  }
+</script>
 <script>
 
   function showThisStatisticsPage(DataId, menuId) {
@@ -400,30 +410,31 @@
   }
 </script>
 <script>
-  var startdelay 	= 2;var scrollspeed	= 0.3;var scrollwind= 0.8;var speedjump= 20;var nextdelay		= 1;var topspace	= "2px";var frameheight	= 80;
-  current = (scrollspeed);
+  var startdelay 	= 2;var scrollspeed	= 0.5;var scrollwind= 2;var speedjump= 20;var nextdelay		= 1;var topspace	= "2px";var frameheight	= 80;
+  current = (2);
   function HeightData(){
     AreaHeight=dataobj.offsetHeight
     if (AreaHeight===0){
-      setTimeout("HeightData()",( startdelay * 2000 ))
+      setTimeout("HeightData()",( startdelay * 1000 ))
     }
     else {
-      ScrollNewsDiv()
+      ScrollNewsDiv();
     }}
   function NewsScrollStart(){
     dataobj=document.all? document.all.NewsDiv : document.getElementById("NewsDiv")
-    dataobj.style.top=topspace
-    setTimeout("HeightData()",( startdelay * 2000 ))
+    dataobj.style.top=topspace;
+    setTimeout("HeightData()",( startdelay * 1000 ))
   }
 
   function ScrollNewsDiv(){
     dataobj.style.top=scrollwind+'px';
-    // dataobj.style.top='20px';
+    // console.log('scrollwind', scrollwind);
+    dataobj.style.top='20px';
     scrollwind-=scrollspeed;
     if (parseInt(dataobj.style.top)<AreaHeight*(-1)) {
       dataobj.style.top=frameheight+'px';
       scrollwind=frameheight;
-      setTimeout("ScrollNewsDiv()",( nextdelay * 4000 ))
+      setTimeout("ScrollNewsDiv()",( nextdelay * 1000 ));
     }
     else {
       setTimeout("ScrollNewsDiv()",speedjump)
@@ -446,6 +457,69 @@
         elemsData[i].style.display = 'none';
       } else {
         elemsData[i].style.display = 'block';
+      }
+    }
+  }
+</script>
+<script>
+  function getHelpAndFaqs(id) {
+    var elems = document.getElementsByClassName('help');
+    var classElems = document.getElementsByClassName(id);
+    var btnsElems = document.getElementsByClassName('btns');
+    var itemElems = document.getElementsByClassName('item');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== id) {
+        elems[i].style.display = 'none';
+      } else {
+        elems[i].style.display = 'block';
+      }
+    }
+
+    for (var i=0;i<btnsElems.length;i+=1){
+      btnsElems[i].style.backgroundColor = '#d9dadb';
+    }
+
+    for (var i=0;i<itemElems.length;i+=1){
+      itemElems[i].style.backgroundColor = '#fff';
+    }
+
+    for (var i=0;i<classElems.length;i+=1){
+      classElems[i].style.backgroundColor = '#2A8FD1';
+    }
+  }
+
+  function showTheAnswer(id) {
+    var listElems = document.getElementsByClassName('list-faqs');
+    for (var i=0;i<listElems.length;i+=1){
+      listElems[i].style.color = '#000';
+    }
+    document.getElementById('li-' + id).style.color = '#2A8FD1';
+    var elems = document.getElementsByClassName('info');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== id) {
+        elems[i].style.display = 'none';
+      } else {
+        elems[i].style.display = 'block';
+      }
+    }
+  }
+
+  function infoAndHelp(id, divId) {
+    var elems = document.getElementsByClassName('help-title');
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id === id) {
+        elems[i].style.display = 'none';
+      } else {
+        elems[i].style.display = 'block';
+      }
+    }
+
+    var elemsDiv = document.getElementsByClassName('help-faqs-info');
+    for (var i=0;i<elemsDiv.length;i+=1){
+      if (elemsDiv[i].id !== divId) {
+        elemsDiv[i].style.display = 'none';
+      } else {
+        elemsDiv[i].style.display = 'block';
       }
     }
   }

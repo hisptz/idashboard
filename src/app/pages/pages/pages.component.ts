@@ -34,7 +34,6 @@ export class PagesComponent implements OnInit, AfterViewInit {
   hasScriptSet: boolean;
   hasHtmlSet: boolean;
   timeOut: boolean;
-  activeTime = 0;
   timerStatus: boolean;
   private subscription: Subscription;
 

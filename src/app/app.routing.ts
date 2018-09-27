@@ -4,6 +4,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {FullScreenDashboardItemViewComponent} from './pages/full-screen-dashboard-item-view/full-screen-dashboard-item-view.component';
 import {PagesComponent} from './pages/pages/pages.component';
+import {ChattingComponent} from './pages/chatting/chatting.component';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,10 @@ export const routes: Routes = [
   {
     path: 'page/:parentId/:id',
     component: PagesComponent
+  },
+  {
+    path: 'chatting',
+    component: ChattingComponent
   },
   {
     path: 'page/:id',

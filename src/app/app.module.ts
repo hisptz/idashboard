@@ -84,10 +84,32 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { PagesComponent } from './pages/pages/pages.component';
 import { CreateAbsoluteUrlPipe } from './pipes/create-absolute-url.pipe';
 import {ServiceWorkerModule} from '@angular/service-worker';
+import { ChattingComponent } from './pages/chatting/chatting.component';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+const configErrMsg = `You have not configured and imported the Firebase SDK.
+Make sure you go through the codelab setup instructions.`;
+
+const bucketErrMsg = `Your Firebase Storage bucket has not been enabled. Sorry
+about that. This is actually a Firebase bug that occurs rarely. Please go and
+re-generate the Firebase initialization snippet (step 4 of the codelab) and make
+sure the storageBucket attribute is not empty. You may also need to visit the
+Storage tab and paste the name of your bucket which is displayed there.`;
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+if (!environment.firebase) {
+  if (!environment.firebase.apiKey) {
+    window.alert(configErrMsg);
+  } else if (environment.firebase.storageBucket === '') {
+    window.alert(bucketErrMsg);
+  }
 }
 
 @NgModule({
@@ -139,7 +161,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     VisualizationErrorNotifierComponent,
     SafeHtmlPipe,
     PagesComponent,
-    CreateAbsoluteUrlPipe
+    CreateAbsoluteUrlPipe,
+    ChattingComponent,
   ],
   imports: [
     BrowserModule,
@@ -160,6 +183,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapModule,
     ResourcesModule,
     ReportsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     // TODO: We need to look and revisit to see. what is causing service worker not to be registered.
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     FeedbackMessageModule,

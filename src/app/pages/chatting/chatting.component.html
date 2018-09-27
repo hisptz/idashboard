@@ -1,0 +1,126 @@
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <!-- Header section containing logo -->
+  <header class="mdl-layout__header mdl-color-text--black mdl-color--white">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+        <h3><i class="material-icons"></i></h3>
+      </div>
+      <div id="user-container">
+        <div *ngIf="currentUser" id="user-pic" [ngStyle]="profilePicStyles"></div>
+        <div *ngIf="currentUser" id="user-name">{{ (user | async)?.displayName }}</div>
+        <button *ngIf="currentUser" id="sign-out" (click)="logout()" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--black">
+          Sign-out
+        </button>
+        <button *ngIf="!currentUser" id="sign-in" (click)="login()" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--black">
+          <i class="material-icons">account_circle</i>Sign-in with Google
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mdl-layout__content mdl-color--grey-100">
+
+    <div class="mdl-cell mdl-cell--12-col" style="padding: 0px 20px 20px 20px">
+      <div class="mdl-color--white" style="margin-top: 2px;">
+        <div *ngIf="!_htmlMarkup" class="loading-progress">
+          <app-progress-loader></app-progress-loader>
+        </div>
+        <div class="container-fluid" style="padding-left: 0px;" *ngIf="_htmlMarkup">
+          <div class="row">
+            <div class="col-md-12" *ngIf="hasHtmlSet" [innerHtml]="_htmlMarkup"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+
+      <!-- Messages container -->
+      <div id="messages-card" class="col-md-8 col-sx-12">
+        <div class="">
+          <div class="row" style="padding: 0px" *ngIf="!submitSet">
+            <div class="col-md-8">
+              <h4><span>Make live chat here.</span></h4>
+            </div>
+            <div class="col-md-4">
+              <h4  style="text-align: right"><span (click)="setSubmit(true)" title="Ask questions here">Want to ask?<img style="margin-left: 10px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOJSURBVFhH7ZhZqE1RHIeveZ6HDFGUhBLFgwdEoryYXpCQ8uCBBzJlLlEkIRlSHgzxYgiJzEPGQihkTAiZk3n4vn0d99zr3HP3cA6SX33ds9a+ew17Df/fWgX/9V+lqxWMgCWwDU7A+R8chg0wG/pDHfgtagoz4TJ8S+Mt3IOzcAkewidIPf8I+2AYVIGcy4atAiuywuuwAgZAPShNrWEsbIUX4LsPYBxUhJzICl6ChR+CflAOoqoGTIC7YFkXoDPEVjXYCBZ2B3pALlQJJsF7eAejIbJqgRPdxjnZa0Ou1RGugHVMNSOs7OFB8MUFZuRRrm4XlnU5L0NpMfjC0iAVXi4Wv0o7sJNhVR9c+Z+hmxnZ1B2+wi4IuxA6wAH4AnZM3sAiCLulNIdncBOqmpFJNugMvIImZoRQe3D7sFPbYRYsg9tgQ3dC2I6OBN+ZEqQyqDf4D3OCVDgdAd9xK0pXXXgEPhtoRgjZkYvgJl/ZjJLaAi77hkGqbLl524DHUN6MEjIE+nxNkAqnUeA7g4JUmtzV3Yx3B6lw6gnPwaHNpIVgZW5TYeWqNlqtD1Jpci5Z2MQglVzVIRUxppkRQafgauHPIg0BCzOMJZWjsQMs7wZE3eTXgUaj2OIaAxbYNUjFl4WmwqNfUEsWVQYH33eh/VSqgV2CVHzNBcu5D3Eap+aDZRRzSa4aM5MMcTPQAHyATmbElKveqFJsZzAa2EBdRlzpri3DIU6i43Ct8GeRKsBrMMTFlY7EBs4LUvFUExyFjJ3cBD7M5pDzraFgJ/37i/qCDz3oxJGuRIvfOEjF02l4CprljNIsGPyd8FGVihyORBwNhjKniH7MFRTFhaSUpIGNQHPh9uTZJav0cVYU1U3HHWLDomdqLVsfM8qSK9ovaCNnmJFHOddSx4tIMdte7QdfXAulutwEMtKcBOtw1CJL06jtsQDPDC0hF3Ju6/t07s73yZBIqfia1OnocoaDrtnyboGeMrGmgwW6ANKlh9RcZBt+HYlxfiV4d2M5bmOeXZxGOZHzxC0gPXi3hSdghQ6TdzWeT1xce+AoaLd85v+It17jIaeXADbE5b88SBWqF9g4j5bG39VwDLwlcB/zROfvveAFkyaiBeRF3vt53m0DOp7NYIMdrqTeMbH8Ug6NhykP1P62sa7sBvBHZbjxPGGjPGWdAyOLX/KvkHcr2q583Gr9Syoo+A4UR+DK3iniVQAAAABJRU5ErkJggg=="></span></h4>
+            </div>
+          </div>
+          <div>
+            <h4 *ngIf="submitSet"  style="text-align: right"><span title="Want to chat" (click)="setSubmit(false)">Want to chart?<img style="margin-left: 10px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARSSURBVFhH7ZhpqFVVFMdfmZo2aEoqFjbboKKU0UCBRfWl0SgjoywJPziAZllfAsFopOGDmkUQlWB9SJSEJJowA6HIVARRcyKVyrQoM23y99v3rjqed99999x3HJD+8OOefe45+6y999prrXNa/td/6g7XwP1wA/SEI0bj4Dv4J8PP8DgcA4dVGqFBX8K9cDncAR+A51+HUjQIpsNi2AJ/gg+wfTxk1QmGws3gde9Uz+X1PNjHg3CiJ4rqWLgbvgY7km9gEbwM86rnnI2xcBXcBJshrncpT4FaOg7WgtfthbnQFxrSafAhePMmeBQGQF5PQRgTbICpMAUmQz1dCfqoS/0XOAGnQl0NBI3aA9OgC9TT2eCDVsFO6AfN6Bb4G15NrTbUA9bBDrjMEwX0LSysHB6gE+CsymFa1gsqh0kXga4Ueh9+gjZ3t36wD65OrWJaXiUvN5d+qdzBzpJx8HzQJa6A0HPguZp+eyl48zOpVVwPg53PgOzO1hhnSnWFSyqHaZZcpewOdwP+AtlZ/VdvwK9wcmo1puvhM9BvO8PboJG74R4oouvACdKOVnLEWv5WajWmUWB40KCvwFjmrPggA/Pv8ATcBYafvLx2NDiQWfAHbIX+0EpOtQ+6L7Xq63SImdLnjJXO2FKIONYb3gOvEQP2GAg5Ia9A/C8G/TOhpiaCFw1OrdbST0aAM+wminAQGeBGcDbNudnZMgRZHIQRxrlP4Mdq+0WwiHDQdaVje4NhRhnLNOgRmA+R7DVMRzan5uUqGKS9zuzigyNc6D4bQePWwALQ8IY1E+xYuWQeB7/BEjDxnwf15ADNLi659zpwZWz9tHLYnGaDeVPNAX3GTWBIcHcWlaHFoiKMWgnu9qalgUZwZUeOuKPSFX6oHJZroA5cK2UVlQHfZe4DpRno5rBT/SirM2Bk9TcvQ4uJ3poxK8OKfblZOmSgO82a73sYAnZqzgxNgChQ/Z0EoVvB7ON/YtgIRV93wjJwuSNKFFIE6cdSq9Jx5EJrM+PbenBn6pvGQWfNgTkoN4NhJIrPbBVkXLWv28D/ssG6YcVSZDsOXQz+FzHrWohre4Ez6gwrs4BFp+krL3e19z2ZWgWlb3mzo6ylc6u/oWzbOi9bjeTboQvBZ1iZF5bpSv/YBlEKlSlfFVaArpIfbMNyp+nsLpFJvCw5Y7466Aq+tHdI54A51HzbXkprRH5NMDsZIYZ7ogwZy/SVZ1OrY3oA7Ov21CpR1nW74KTUak6GoNVgAdreW2FhWds58qhEmpGfOezjodQ6CPoYdG4LzqIyKvgKav2X/yxSmoaBYeFzKFpuvQkHxffy8vOFD3optRrTePCeMkNVm9LR3wUfaBEQ5Xtb0jhD1BfQzROHQu7AeIOzADVW5mXh8BponC5xyL+emlstPs0Gvrt+BC/A06DRvrM4AD+b+B3msMkg7qvmdtAgsfr2O6Fft44omcaa+ip6FKmlZT/74Ba6POGI6gAAAABJRU5ErkJggg=="></span></h4>
+          </div>
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-color--white"  *ngIf="!submitSet">
+          <div id="messages">
+            <span id="message-filler"></span>
+            <div class="message-container" *ngFor="let message of messages | async">
+              <div class="spacing">
+                <div class="pic" [style.background-image]="'url(' + message.photoUrl + ')'"></div>
+              </div>
+              <div class="message">
+                <span *ngIf="message.text" [style]="message.sentiment">{{ message.text }}</span>
+                <img *ngIf="message.imageUrl" [src]="message.imageUrl + (message.moderated ? '&amp;moderated=1' : '')">
+              </div>
+              <div class="name"><b>{{ message.name }}</b></div>
+              <div *ngFor="let messageReply of messagesReplies | async"  style="margin-top: 20px">
+                <div *ngIf="messageReply.messageKey === message.uniqueId">
+                  <div style="margin-top: 20px">
+                    <div><p style="text-align: right; margin-bottom: 0px;">{{ messageReply.replyMessage }} </p></div>
+                    <img *ngIf="message.imageUrl" [src]="message.imageUrl + (message.moderated ? '&amp;moderated=1' : '')">
+                  </div>
+                  <div class="name" style="text-align: right">{{ messageReply.name }}</div>
+                </div>
+              </div>
+              <div *ngIf="uniqueIdSet != ''">
+                <div *ngIf="message.uniqueId === uniqueIdSet">
+                  <form id="message-form-reply" (submit)="replyTheMessage($event, message.uniqueId)">
+                    <textarea rows="4" cols="40" #box class="mdl-textfield__input" type="text" id="reply"
+                              (keyup)="update(box.value)" (blur)="update(box.value)"
+                              placeholder="Reply here ....."></textarea>
+                    <button id="submit-reply" [disabled]="!value" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                      Reply
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div (click)="setTheUniqueId(message.uniqueId)">Reply</div>
+            </div>
+          </div>
+          <div *ngIf="topics"><em>Recent topics: {{ topics }}</em></div>
+          <form id="message-form" (submit)="saveMessage($event, box)">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <textarea rows="4" cols="50" #box class="mdl-textfield__input" type="text" id="message"
+                        (keyup)="update(box.value)" (blur)="update(box.value)"
+                        placeholder="Message..."></textarea>
+            </div>
+            <button id="submit" [disabled]="!value" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              Send
+            </button>
+          </form>
+          <!--Upload image-->
+          <!--<form id="image-form" action="#">-->
+            <!--<input id="mediaCapture" type="file" accept="image/*,capture=camera" (change)="saveImageMessage($event)">-->
+            <!--<button id="submitImage" title="Add an image" (click)="onImageClick($event)"-->
+                    <!--class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-color&#45;&#45;amber-400 mdl-color-text&#45;&#45;white">-->
+              <!--<i class="material-icons">image</i>-->
+            <!--</button>-->
+          <!--</form>-->
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-color--white"  *ngIf="submitSet">
+          <div class="qns">
+            <h4 style="margin-bottom: 20px;">Your question</h4>
+            <form id="message-form-qns" (submit)="submitQuestion($event)">
+              <div>
+              <textarea rows="10" cols="50" #box class="mdl-textfield__input" type="text" id="message-qns"
+                        (keyup)="update(box.value)" (blur)="update(box.value)"
+                        placeholder="Ask..."></textarea>
+              </div>
+              <button id="submit-qns" [disabled]="!value" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
