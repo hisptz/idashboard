@@ -150,7 +150,7 @@ body *{
   font-weight: 600;
 }
 
-.the-card-summary h5, p {
+.the-card-summary, p {
   color: #000000;
 }
 
@@ -158,10 +158,6 @@ body *{
   padding: 10px;
 }
 
-.the-card-title {
-  margin-bottom: 0.75rem;
-  font-size: 1.8em;
-}
 .separator-line {
   border-bottom: solid 2px #e1e1e1; margin-bottom: 10px;
 }
@@ -181,6 +177,12 @@ h3 {font-weight: 500}
   text-align: left;
 }
 
+.the-card-title {
+  margin-bottom: 0.75rem;
+  font-size: 1.8em;
+  color: #2A8FD1;
+}
+
 .top-welcome p {
   font-size: 1.4em;
   line-height: 2em;
@@ -188,6 +190,10 @@ h3 {font-weight: 500}
 
 .top-welcome h3 {
   color: #244AAE;
+}
+
+.the-card-summary .list-group {
+  padding: 2px 2px 2px 20px;
 }
 
 .list-group-option {
@@ -200,7 +206,12 @@ h3 {font-weight: 500}
   background-color: transparent;
   text-align: left;
   border: none;
+  cursor: pointer;
   /*border: 1px solid rgba(0, 0, 0, 0.125);*/
+}
+
+.contents-index {
+  margin-top: 20px; border: solid 1px #f1eeee; padding: 15px 15px 20px 0px;
 }
 
 
@@ -233,4 +244,24 @@ h3 {font-weight: 500}
 
 .loading-block b {
   font-weight: 400;
+}
+
+.top-welcome-message {
+  text-align: left;
+}
+.top-welcome-message h2 {
+  font-weight: 600;
+}
+
+.top-welcome-message h1 {
+  color: #2A8FD1;
+}
+
+.top-welcome-message h4 {
+  font-weight: 500;
+  line-height: 1.5em;
+}
+
+#ob-themes {
+  color: #2A8FD1;
 }

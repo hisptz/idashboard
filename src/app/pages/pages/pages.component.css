@@ -31,3 +31,11 @@
 .loading-block b {
   font-weight: 400;
 }
+
+/* Progress bar*/
+.loading-progress {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 20px;
+  border-radius: 2px;
+}

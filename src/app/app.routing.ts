@@ -16,7 +16,7 @@ export const routes: Routes = [
     component: PagesComponent
   },
   {
-    path: 'chatting',
+    path: 'faqs-help',
     component: ChattingComponent
   },
   {

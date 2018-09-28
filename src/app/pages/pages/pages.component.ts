@@ -30,12 +30,15 @@ export class PagesComponent implements OnInit, AfterViewInit {
   page$: Observable<PageState>;
   pageToDisplay: string;
   topScrollBar: string;
+  statisticsSummary: string;
 
   _htmlMarkupTopScrollBar: SafeHtml;
   _htmlMarkup: SafeHtml;
+  _htmlMarkupstatisticsSummary: SafeHtml;
   hasScriptSet: boolean;
   hasHtmlSet: boolean;
   hasHtmlSetScrollBar: boolean;
+  hasHtmlSetStatisticsSummary: boolean;
   timeOut: boolean;
   timerStatus: boolean;
   pageId: string;
@@ -62,6 +65,20 @@ export class PagesComponent implements OnInit, AfterViewInit {
           }
         }
       });
+    this.httpClientService.get('dataStore/observatoryContents/statisticsSummary')
+      .subscribe((statisticsSummaryObj) => {
+        if (statisticsSummaryObj) {
+          this.statisticsSummary = statisticsSummaryObj['pageContent'];
+          try {
+            this._htmlMarkupstatisticsSummary = this.sanitizer.bypassSecurityTrustHtml(
+              this.statisticsSummary
+            );
+            this.hasHtmlSetStatisticsSummary = true;
+          } catch (e) {
+            console.log(JSON.stringify(e));
+          }
+        }
+      })
     this.hasScriptSet = false;
     this.hasHtmlSet = false;
     if (this.page$) {

@@ -22,6 +22,7 @@ export class ChattingComponent implements OnInit, AfterViewInit {
 
   pageToDisplay: string;
   submitSet: boolean;
+  submitOption: string;
   _htmlMarkup: SafeHtml;
   hasScriptSet: boolean;
   hasHtmlSet: boolean;
@@ -40,6 +41,7 @@ export class ChattingComponent implements OnInit, AfterViewInit {
   constructor(private httpClient: HttpClientService, public db: AngularFireDatabase, private af: AngularFireDatabase, public afAuth: AngularFireAuth, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
     this.user = afAuth.authState;
     this.uniqueIdSet = '';
+    this.submitOption = 'comments';
     this.submitSet = false;
     this.user.subscribe((user: firebase.User) => {
       this.currentUser = user;
@@ -246,7 +248,7 @@ export class ChattingComponent implements OnInit, AfterViewInit {
       });
   }
 
-  replyTheMessage(event, key) {
+  replyTheMessage(event, key, el: HTMLInputElement) {
     const messagesReplies = this.db.list('/messagesReplies');
     messagesReplies.push({
       messageKey: key,
@@ -254,14 +256,15 @@ export class ChattingComponent implements OnInit, AfterViewInit {
       replyMessage: this.value,
     }).then(() => {
       // Clear message text field and SEND button state.
-      this.value = '';
+      el.value = '';
     }, (err) => {
       console.error(err);
     });
   }
 
-  submitQuestion(e) {
-    const qns = this.db.list('/questions');
+  submitQuestion(e, option, el: HTMLInputElement) {
+
+    const qns = this.db.list('/' + option);
     let qnUniqueId = '';
     for (let i = 0; i < 10; i++) {
       qnUniqueId += this.referance.charAt(Math.floor(Math.random() * this.referance.length));
@@ -273,7 +276,7 @@ export class ChattingComponent implements OnInit, AfterViewInit {
       photoUrl: this.currentUser.photoURL || PROFILE_PLACEHOLDER_IMAGE_URL
     }).then(() => {
       // Clear message text field and SEND button state.
-      this.value = '';
+      el.value = '';
     }, (err) => {
       console.error(err);
     });
