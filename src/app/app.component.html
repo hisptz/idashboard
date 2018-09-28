@@ -1,5 +1,97 @@
 <div *ngIf="!pageToDisplay" class="loading-progress">
   <app-progress-loader></app-progress-loader>
+  <div id="intro-body">
+    <!--<img src="assets/icons/balls-5.svg" alt="">-->
+    <h3 style="margin-top: 20px;">Welcome to the Tanzania national health observatory</h3>
+    <!--<h5 style="">Get the data, interactively from different data sources such as national health management information system, census, surveys (DHS, THMIS, SARA, TSPA, etc)</h5>-->
+
+    <!--<div class="loading-block">-->
+    <!--<div style="display: inline-block">-->
+    <!--<h2><b></b><b id="seconds-to-go"></b> <b>seconds</b> <b>to go</b></h2>-->
+    <!--</div>-->
+    <!--<div class="progress-div">-->
+    <!--<div id="progress-bar"></div>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <input value="0" id="current-timer" style="border: none; text-align: center; width: 0.5px;">
+
+    <h3 style="text-align: center">
+      <!--<a class="time-control-btn" onclick="stopTimer();" id="stay">click here to stay on this page</a>-->
+      <!--<a class="time-control-btn" onclick="startTimer()" id="continue" style="display: none">click to continue</a>-->
+    </h3>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <!--Welcoming html-->
+          <div class="top-welcome">
+            <p>The tanzania national health observatory enables you to browse the data coming from different sources including HMIS routine collected event and aggregate data,
+              programs reports, survey reports e.t.c</p>
+            <h3>What is in here</h3>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="the-card-summary">
+                <a routerLink="/page/home">
+                  <div class="card-block">
+                    <h5 class="the-card-title">Observatory themes</h5>
+                    <div class="separator-line"></div>
+                    <p class="the-card-text">This is where you can get data about different health themes in summary and you can drill
+                      down to more details in the respective theme. Some are listed below</p>
+                    <ul class="list-group">
+                      <li class="list-group-option">1. Health performance.</li>
+                      <li class="list-group-option">2. Reproductive health.</li>
+                      <li class="list-group-option">3. Nutrition. </li>
+                      <li class="list-group-option">4. HIV and AIDS.</li>
+                      <li class="list-group-option">5. TB and Leprosy.</li>
+                    </ul>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="the-card-summary">
+                <a routerLink="/dashboards/gdeaYoJncPv">
+                  <div class="card-block">
+                    <h5 class="the-card-title">Data statistics</h5>
+                    <div class="separator-line"></div>
+                    <p class="the-card-text">This component provide interactive data analysis (Defining data (indicators, data elements etc), periods and organisation units, choosing data
+                      presentation (graphs, maps and table) at different layouts)
+                      <!--<p>-->
+                      <!--<ul class="list-group">-->
+                      <!--<li class="list-group-option">1. Data view options (Charts, tables and maps)</li>-->
+                      <!--<li class="list-group-option">2. Data selection (indicators, data elements etc)</li>-->
+                      <!--<li class="list-group-option">3. Period selection</li>-->
+                      <!--<li class="list-group-option">4. Organisation unit selection (Moh tanzania, regions and councils)</li>-->
+                      <!--<li class="list-group-option">5. Layout definition</li>-->
+                      <!--<li class="list-group-option">5. All possible types of charts</li>-->
+                      <!--<li class="list-group-item"></li>-->
+                      <!--</ul>-->
+                      <!--<p class="the-card-text">-->
+                      and comprehensive
+                      description of indicators with different data download formats (excel, pdf, images etc) at easy.
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="the-card-summary">
+                <a>
+                  <div class="card-block">
+                    <h5 class="the-card-title">Downloads</h5>
+                    <div class="separator-line"></div>
+                    <p class="the-card-text">You can download scorecards for HMIS, RMNCAH, BUSKET FUNDS etc and data from programs reports, census and surveys</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="no-print" *ngIf="pageToDisplay">
   <div [innerHtml]="pageToDisplay | safeHtml"></div>

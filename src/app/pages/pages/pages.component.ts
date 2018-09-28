@@ -29,12 +29,16 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
   page$: Observable<PageState>;
   pageToDisplay: string;
+  topScrollBar: string;
 
+  _htmlMarkupTopScrollBar: SafeHtml;
   _htmlMarkup: SafeHtml;
   hasScriptSet: boolean;
   hasHtmlSet: boolean;
+  hasHtmlSetScrollBar: boolean;
   timeOut: boolean;
   timerStatus: boolean;
+  pageId: string;
   private subscription: Subscription;
 
   constructor(private store: Store<AppState>, private httpClientService: HttpClientService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
@@ -44,7 +48,20 @@ export class PagesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
+    this.httpClientService.get('dataStore/observatoryContents/homeTopScrollbar')
+      .subscribe((topScrollBar) => {
+        if (topScrollBar) {
+          this.topScrollBar = topScrollBar['pageContent'];
+          try {
+            this._htmlMarkupTopScrollBar = this.sanitizer.bypassSecurityTrustHtml(
+              this.topScrollBar
+            );
+            this.hasHtmlSetScrollBar = true;
+          } catch (e) {
+            console.log(JSON.stringify(e));
+          }
+        }
+      });
     this.hasScriptSet = false;
     this.hasHtmlSet = false;
     if (this.page$) {
@@ -53,6 +70,7 @@ export class PagesComponent implements OnInit, AfterViewInit {
           thePage.pages.forEach((page) => {
             this.route.params.forEach((params: Params) => {
               if (page.id === params['id'] && page.category === 'leaf') {
+                this.pageId = page.id;
                 this.pageToDisplay = page.pageContent;
                 try {
                   this._htmlMarkup = this.sanitizer.bypassSecurityTrustHtml(

@@ -1,3 +1,8 @@
+<div class="container-fluid" *ngIf="_htmlMarkupTopScrollBar && pageId == 'home' && _htmlMarkup">
+  <div class="row">
+    <div class="col-md-12" *ngIf="hasHtmlSetScrollBar" [innerHtml]="_htmlMarkupTopScrollBar"></div>
+  </div>
+</div>
 <div class="container-fluid" style="padding-left: 0px;" *ngIf="_htmlMarkup">
   <div class="row">
     <div class="col-md-12" *ngIf="hasHtmlSet" [innerHtml]="_htmlMarkup"></div>

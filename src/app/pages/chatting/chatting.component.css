@@ -200,3 +200,11 @@ mdl-button--raised[disabled][disabled], .mdl-button--raised.mdl-button--disabled
   color: #FFFFFF;
   box-shadow: none;
 }
+
+/* Progress bar*/
+.loading-progress {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 7px;
+  border-radius: 2px;
+}
