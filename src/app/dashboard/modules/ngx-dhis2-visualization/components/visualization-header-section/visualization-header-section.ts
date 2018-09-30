@@ -33,7 +33,9 @@ export class VisualizationHeaderSectionComponent {
   showNameInput: boolean;
 
   @Output()
-  visualizationLayerUpdate: EventEmitter<VisualizationLayer> = new EventEmitter<VisualizationLayer>();
+  visualizationLayerUpdate: EventEmitter<VisualizationLayer> = new EventEmitter<
+    VisualizationLayer
+  >();
 
   @Output()
   fullScreenAction: EventEmitter<any> = new EventEmitter<any>();
@@ -45,9 +47,10 @@ export class VisualizationHeaderSectionComponent {
 
   constructor() {
     this.selectionFilterConfig = {
-      showPeriodFilter: false,
-      showOrgUnitFilter: false,
-      showLayout: false
+      showPeriodFilter: true,
+      showOrgUnitFilter: true,
+      showLayout: true,
+      showDataFilter: false
     };
   }
 
