@@ -6,3 +6,13 @@ export interface PageState {
   footerContents: string;
 }
 
+export interface SinglePageState {
+  id: string;
+  name: string;
+  routeUrl: string;
+  category: string;
+  parentId: string;
+  headerButton: string;
+  pageContent: string;
+}
+

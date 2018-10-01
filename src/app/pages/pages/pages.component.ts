@@ -13,12 +13,13 @@ import {ActivatedRoute, Params} from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import * as _ from 'lodash';
 import * as $ from 'jquery';
-import {PageState} from '../../store/pages/page.state';
+import {PageState, SinglePageState} from '../../store/pages/page.state';
 import {AppState} from '../../store/app.reducers';
-import {getPage} from '../../store/pages/page.selectors';
+import {getPage, getScrollBar} from '../../store/pages/page.selectors';
 import {HttpClientService} from '../../services/http-client.service';
 import {TimerObservable} from 'rxjs-compat/observable/TimerObservable';
 import {Subscription} from 'rxjs/Subscription';
+import {LoadTopScrollAction} from '../../store/pages/page.actions';
 
 @Component({
   selector: 'app-pages',
@@ -28,6 +29,7 @@ import {Subscription} from 'rxjs/Subscription';
 export class PagesComponent implements OnInit, AfterViewInit {
 
   page$: Observable<PageState>;
+  topScrollBar$: Observable<SinglePageState>;
   pageToDisplay: string;
   topScrollBar: string;
   statisticsSummary: string;
@@ -45,14 +47,16 @@ export class PagesComponent implements OnInit, AfterViewInit {
   private subscription: Subscription;
 
   constructor(private store: Store<AppState>, private httpClientService: HttpClientService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
+    this.store.dispatch(new LoadTopScrollAction());
     this.page$ = store.select(getPage);
+    this.topScrollBar$ = store.select(getScrollBar);
     this.timeOut = false;
     this.timerStatus = true;
   }
 
   ngOnInit() {
-    this.httpClientService.get('dataStore/observatoryContents/homeTopScrollbar')
-      .subscribe((topScrollBar) => {
+    if (this.topScrollBar$) {
+      this.topScrollBar$.subscribe((topScrollBar) => {
         if (topScrollBar) {
           this.topScrollBar = topScrollBar['pageContent'];
           try {
@@ -65,6 +69,21 @@ export class PagesComponent implements OnInit, AfterViewInit {
           }
         }
       });
+    }
+    // this.httpClientService.get('dataStore/observatoryContents/homeTopScrollbar')
+    //   .subscribe((topScrollBar) => {
+    //     if (topScrollBar) {
+    //       this.topScrollBar = topScrollBar['pageContent'];
+    //       try {
+    //         this._htmlMarkupTopScrollBar = this.sanitizer.bypassSecurityTrustHtml(
+    //           this.topScrollBar
+    //         );
+    //         this.hasHtmlSetScrollBar = true;
+    //       } catch (e) {
+    //         console.log(JSON.stringify(e));
+    //       }
+    //     }
+    //   });
     this.httpClientService.get('dataStore/observatoryContents/statisticsSummary')
       .subscribe((statisticsSummaryObj) => {
         if (statisticsSummaryObj) {
