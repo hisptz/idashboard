@@ -41,5 +41,26 @@
 
 .legend-start-end-value-input {
   width: 27%;
+}
 
+img {
+  height: 20px;
+}
+
+.delete-legend-button {
+  outline: none;
+  border: solid thin #eeeeee;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border-radius: 3px;
+  margin: 2px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.delete-legend-button:hover {
+  background-color: #eeeeee;
 }
