@@ -42,8 +42,7 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLegendSetConfigurationClose(event) {
-    event.stopPropagation();
+  onLegendSetConfigurationClose() {
     this.legendSetConfigurationClose.emit({
       items: this.selectedItems,
       groups: [],
