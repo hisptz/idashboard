@@ -21,6 +21,9 @@ export class LegendConfigurationComponent implements OnInit {
   @Output()
   legendUpdates = new EventEmitter();
 
+  @Output()
+  deleteLegend = new EventEmitter();
+
   constructor() {
     this.arrowDownIcon = DELETE_ICON;
   }
@@ -37,6 +40,11 @@ export class LegendConfigurationComponent implements OnInit {
     const startValue = this.startValue;
     const endValue = this.endValue;
     this.legendUpdates.emit({ id, color, name, startValue, endValue });
+  }
+
+  onDeleteLegend() {
+    const { id } = this.legend;
+    this.deleteLegend.emit({ id });
   }
 
   ngOnInit() {

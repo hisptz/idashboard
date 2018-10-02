@@ -33,7 +33,6 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   onLegendSetConfigurationSave(legendSets: LegendSet[]) {
-    legendSets = legendSetHelper.getLegendSetForUpdate(legendSets);
     this.store.dispatch(new UpsetLagendSets({ legendSets }));
     this.legendSetConfigurationClose.emit({
       items: this.selectedItems,
