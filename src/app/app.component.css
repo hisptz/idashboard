@@ -3,7 +3,6 @@
 }
 
 .no-print {
-  /*border-bottom: 3px solid #000;*/
   background-color: #2390D2;
 }
 
@@ -43,7 +42,6 @@
   overflow: hidden;
   background-color:  transparent;
   padding-bottom: 5px;
-  border-bottom: solid 3px;
 }
 
 .topnav a {
