@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Legend } from '../../models/legend-set';
+import { DELETE_ICON } from '../../icons';
 
 @Component({
   selector: 'app-legend-configuration',
@@ -15,10 +16,17 @@ export class LegendConfigurationComponent implements OnInit {
   startValue: number;
   endValue: number;
 
+  arrowDownIcon: string;
+
   @Output()
   legendUpdates = new EventEmitter();
 
-  constructor() {}
+  @Output()
+  deleteLegend = new EventEmitter();
+
+  constructor() {
+    this.arrowDownIcon = DELETE_ICON;
+  }
 
   onColorSelect(color: string) {
     this.color = color;
@@ -32,6 +40,11 @@ export class LegendConfigurationComponent implements OnInit {
     const startValue = this.startValue;
     const endValue = this.endValue;
     this.legendUpdates.emit({ id, color, name, startValue, endValue });
+  }
+
+  onDeleteLegend() {
+    const { id } = this.legend;
+    this.deleteLegend.emit({ id });
   }
 
   ngOnInit() {

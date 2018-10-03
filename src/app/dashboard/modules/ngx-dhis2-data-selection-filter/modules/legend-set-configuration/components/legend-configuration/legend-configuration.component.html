@@ -7,5 +7,8 @@
     <input (blur)="onLegendUpdate()" type="number" class="legend-input legend-start-end-value-input" [(ngModel)]="startValue">
     <span style="padding: 0.375rem 0.75rem;">-</span>
     <input (blur)="onLegendUpdate()" type="number" class="legend-input legend-start-end-value-input" [(ngModel)]="endValue">
+    <button title="Delete legend" class="delete-legend-button" (click)="onDeleteLegend()">
+      <img [src]="arrowDownIcon" alt="">
+    </button>
   </div>
 </div>

@@ -72,7 +72,7 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
 
   closeConfigurations(event) {
     event.stopPropagation();
-    this.legendSetConfigurationClose.emit({});
+    this.legendSetConfigurationClose.emit();
   }
 
   saveCofigurations(event) {

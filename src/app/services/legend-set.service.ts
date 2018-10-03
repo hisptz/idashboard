@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import * as _ from 'lodash';
 
 import { NgxDhis2HttpClientService } from '@hisptz/ngx-dhis2-http-client';
 import { LegendSet } from '../models/legend-set.model';
@@ -36,6 +37,10 @@ export class LegendSetService {
 
   updateLegendSets(legendSets: LegendSet[]): Observable<any> {
     const legendUrl = `dataStore/legendSets/configuration`;
-    return this.http.put(legendUrl, { legendSets });
+    const filteredLegendSets = _.filter(
+      legendSets,
+      (legendSet: LegendSet) => legendSet.legends.length > 0
+    );
+    return this.http.put(legendUrl, { legendSets: filteredLegendSets });
   }
 }
