@@ -102,7 +102,7 @@ export function drawTable(
         for (const currentItem of currentColumnItems) {
           headerItem.push({
             name: currentItem.name,
-            row_span: dimension.col_span,
+            row_span: 1,
             span: dimension.col_span,
             type: currentItem.type,
             color: columnsStyles[currentItem.uid],
