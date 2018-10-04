@@ -273,44 +273,18 @@ button, input {
   overflow: visible;
 }
 
-.account #sign-out {
-  margin-left: 4px;
-  float: right;
-  text-align: right;
+#sign-out {
+  display: inline-block;
 }
 
-.account-info {
-  float: left;
+#user-name {
+  display: inline-block;
 }
 
-.account #sign-in {
-  float: right;
-  text-align: right;
+#user-pic {
+  display: inline-block;
 }
 
-.account #user-name {
-  float: left;
-  text-align: left;
-}
-
-.account #user-pic {
-  float: left;
-  margin-right: 4px;
-}
-
-.account {
-  width: 100%; display: inline-block;
-  padding-bottom: 20px;
-}
-
-.account .btns {
-  display: inline-block;float: right;
-}
-
-
-.account .btns .account-info {
-  width: 90%;
-}
 
 #message-form-reply, #message-form-send {
   margin-top: 10px;
@@ -325,3 +299,10 @@ button, input {
   margin-top: 20px;
 }
 
+.user-info {
+  padding: 20px 10px 10px 10px;
+}
+
+.choose-body {
+  padding: 10px;
+}

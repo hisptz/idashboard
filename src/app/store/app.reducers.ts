@@ -12,13 +12,14 @@ import {visualizationReducer} from './visualization/visualization.reducer';
 import {DictionaryState} from '../modules/dictionary/store/dictionary.state';
 import {dictionaryReducer} from '../modules/dictionary/store/dictionary.reducer';
 import {PageState, SinglePageState} from './pages/page.state';
-import {pageReducer, singlePageReducer} from './pages/page.reducer';
+import {pageReducer, singlePageReducer, singleFAQsHelpPageReducer} from './pages/page.reducer';
 
 export interface AppState {
   route: RouterReducerState;
   currentUser: CurrentUserState;
   dashboard: DashboardState;
   page: PageState;
+  FAQsHelp: SinglePageState;
   singlePage: SinglePageState;
   visualization: VisualizationState;
   metadataDictionary: DictionaryState[];
@@ -29,6 +30,7 @@ export const reducers: ActionReducerMap<AppState> = {
   currentUser: currentUserReducer,
   page: pageReducer,
   singlePage: singlePageReducer,
+  FAQsHelp: singleFAQsHelpPageReducer,
   dashboard: dashboardReducer,
   visualization: visualizationReducer,
   metadataDictionary: dictionaryReducer

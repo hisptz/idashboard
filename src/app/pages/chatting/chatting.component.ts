@@ -8,6 +8,11 @@ import * as firebase from 'firebase';
 import {HttpClientService} from '../../services/http-client.service';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Params} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../store/app.reducers';
+import {LoadFAQSHelpAction} from '../../store/pages/page.actions';
+import {SinglePageState} from '../../store/pages/page.state';
+import {getFAQsHelp} from '../../store/pages/page.selectors';
 
 const LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 const PROFILE_PLACEHOLDER_IMAGE_URL = '/assets/img/profile_placeholder.png';
@@ -23,6 +28,8 @@ export class ChattingComponent implements OnInit, AfterViewInit {
   pageToDisplay: string;
   submitSet: boolean;
   submitOption: string;
+  _htmlMarkupFAQSHelp: SafeHtml;
+  FAQSHelp: string;
   _htmlMarkup: SafeHtml;
   hasScriptSet: boolean;
   hasHtmlSet: boolean;
@@ -31,6 +38,7 @@ export class ChattingComponent implements OnInit, AfterViewInit {
   currentUser: firebase.User;
   messages: Observable<any>;
   messagesReplies: Observable<any>;
+  faqs_and_help$: Observable<SinglePageState>;
   profilePicStyles: {};
   topics = '';
   value = '';
@@ -38,7 +46,9 @@ export class ChattingComponent implements OnInit, AfterViewInit {
   list$: Observable<any>;
   referance = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  constructor(private httpClient: HttpClientService, public db: AngularFireDatabase, private af: AngularFireDatabase, public afAuth: AngularFireAuth, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
+  constructor(private store: Store<AppState>, private httpClient: HttpClientService, public db: AngularFireDatabase, private af: AngularFireDatabase, public afAuth: AngularFireAuth, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
+    this.store.dispatch(new LoadFAQSHelpAction());
+    this.faqs_and_help$ = this.store.select(getFAQsHelp);
     this.user = afAuth.authState;
     this.uniqueIdSet = '';
     this.submitOption = 'comments';
@@ -101,19 +111,21 @@ export class ChattingComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.httpClient.get('dataStore/observatoryContents/help-faqs.json').subscribe((helpPage) => {
-      if (helpPage) {
-              this.pageToDisplay = helpPage['pageContent'];
-              try {
-                this._htmlMarkup = this.sanitizer.bypassSecurityTrustHtml(
-                  this.pageToDisplay
-                );
-                this.hasHtmlSet = true;
-              } catch (e) {
-                console.log(JSON.stringify(e));
-              }
-      }
-    });
+    if (this.faqs_and_help$) {
+      this.faqs_and_help$.subscribe((faqsHelp) => {
+        if (faqsHelp) {
+          this.FAQSHelp = faqsHelp['pageContent'];
+          try {
+            this._htmlMarkupFAQSHelp = this.sanitizer.bypassSecurityTrustHtml(
+              this.FAQSHelp
+            );
+            this.hasHtmlSet = true;
+          } catch (e) {
+            console.log(JSON.stringify(e));
+          }
+        }
+      });
+    }
   }
 
   login() {

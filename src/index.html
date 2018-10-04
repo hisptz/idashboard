@@ -175,12 +175,7 @@
 <script>
 
   function showSelectedContent(id, idColor, classNameDisplay, classNameForColor) {
-    console.log(id);
-    console.log(idColor);
-    console.log(classNameDisplay);
-    console.log(classNameForColor);
     var elems = document.getElementsByClassName(classNameDisplay);
-    console.log(elems);
     var elemsForColor = document.getElementsByClassName(classNameForColor);
     for (var i=0;i<elems.length;i+=1){
       if (elems[i].id !== id) {

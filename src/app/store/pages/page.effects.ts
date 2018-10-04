@@ -34,6 +34,17 @@ export class PageEffects {
       ))
     );
 
+  @Effect()
+  loadFAQSandHelp$ = this.actions$
+    .ofType<page.LoadAction>(page.PageActions.LOAD_FAQS)
+    .pipe(
+      switchMap(() => this._loadFAQSandHelp().pipe(
+        map((pageObject: SinglePageState) =>
+          new page.LoadFAQSHelpSuccessAction(pageObject)),
+        catchError((error) => of(new page.LoadFAQSHelpFailAction(error)))
+      ))
+    );
+
   constructor(private actions$: Actions,
               private httpClient: HttpClientService) {
   }
@@ -44,5 +55,9 @@ export class PageEffects {
 
   private _loadHomeScrollBar(): Observable<any> {
     return this.httpClient.get(`dataStore/observatoryContents/homeTopScrollbar.json`);
+  }
+
+  private _loadFAQSandHelp(): Observable<any> {
+    return this.httpClient.get(`dataStore/observatoryContents/help-faqs.json`);
   }
 }

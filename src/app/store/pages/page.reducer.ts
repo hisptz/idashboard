@@ -18,3 +18,12 @@ export function singlePageReducer(state: SinglePageState = null, action: PageAct
       return state;
   }
 }
+
+export function singleFAQsHelpPageReducer(state: SinglePageState = null, action: PageAction) {
+  switch (action.type) {
+    case PageActions.LOAD_FAQS_SUCCESS:
+      return {...action.payload};
+    default:
+      return state;
+  }
+}
