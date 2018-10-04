@@ -173,6 +173,32 @@
   }
 </script>
 <script>
+  function showSelectedContents(id, idColor, classNameDisplay, classNameForColor) {
+    var elems = document.getElementsByClassName(classNameDisplay);
+    var elemsForColor = document.getElementsByClassName(classNameForColor);
+    for (var i=0;i<elems.length;i+=1){
+      if (elems[i].id !== id) {
+        elems[i].style.display = 'none';
+      } else {
+        elems[i].style.display = 'block';
+      }
+    }
+
+    for (var i=0;i<elemsForColor.length;i+=1){
+      if (elemsForColor[i].id !== idColor) {
+        elemsForColor[i].style.backgroundColor = 'transparent';
+        elemsForColor[i].style.color = '#2a8fd1';
+        elemsForColor[i].style.fontWeight = '500';
+      } else {
+        elemsForColor[i].style.backgroundColor = '#2a8fd1';
+        elemsForColor[i].style.color = '#FFFFFF';
+        elemsForColor[i].style.borderRadius = '20px';
+        elemsForColor[i].style.fontWeight = '600';
+      }
+    }
+  }
+</script>
+<script>
 
   function showSelectedContent(id, idColor, classNameDisplay, classNameForColor) {
     var elems = document.getElementsByClassName(classNameDisplay);
