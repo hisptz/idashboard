@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setTitle('Observatory');
+    this.setTitle('Tanzania national health portal');
     if (this.page$) {
       this.page$.subscribe((thePage) => {
         if (thePage) {

@@ -52,7 +52,7 @@ export class ChattingComponent implements OnInit, AfterViewInit {
     this.user = afAuth.authState;
     this.uniqueIdSet = '';
     this.submitOption = 'comments';
-    this.submitSet = false;
+    this.submitSet = true;
     this.user.subscribe((user: firebase.User) => {
       this.currentUser = user;
 

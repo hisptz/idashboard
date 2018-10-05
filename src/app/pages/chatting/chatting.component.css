@@ -292,6 +292,8 @@ button, input {
 
 #messages-card {
   background-color: #FFFFFF;
+  border: solid 1px #e0dddd;
+  padding: 20px 0px 20px 20px;
 }
 
 .reply-div {
@@ -305,4 +307,8 @@ button, input {
 
 .choose-body {
   padding: 10px;
+}
+
+.submit-options {
+  padding: 0px 0px 10px 0px;
 }
