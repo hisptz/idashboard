@@ -102,9 +102,7 @@ export class AppConfigurationsService {
       this.httpClient.get(`./config/functions.json`).subscribe(
         (reposnse: any) => {
           const { whoMalariafn } = reposnse;
-          const functionObj =
-            whoMalariafn && whoMalariafn.function ? whoMalariafn.function : {};
-          observer.next(functionObj);
+          observer.next(whoMalariafn);
           observer.complete();
         },
         error => {

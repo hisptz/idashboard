@@ -24,8 +24,10 @@ export class FunctionRuleEffects {
   @Effect()
   loadingFunctionRules$: Observable<Action> = this.actions$.pipe(
     ofType<FunctionRuleActions>(FunctionRuleActionTypes.LoadFunctionRules),
-    mergeMap(() => this.functionMetadata.loadinFuctionRules()),
-    map(functionRules => new LoadFunctionRuleSuccess(functionRules)),
+    mergeMap(() => this.functionMetadata.loadingFunction()),
+    map(
+      (functionObject: any) => new LoadFunctionRuleSuccess(functionObject.rules)
+    ),
     catchError(error => of(new LoadFunctionRuleFail(error)))
   );
 

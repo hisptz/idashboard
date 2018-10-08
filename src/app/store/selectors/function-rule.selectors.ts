@@ -10,5 +10,5 @@ export const getFunctionRuleEntityState = createSelector(
 export const {
   selectIds: getFunctionRuleIds,
   selectEntities: getFuctionRuleEntitiesState,
-  selectAll: getAllFuctionRules
+  selectAll: getAllFunctionRules
 } = functionRuleAdapter.getSelectors(getFunctionRuleEntityState);

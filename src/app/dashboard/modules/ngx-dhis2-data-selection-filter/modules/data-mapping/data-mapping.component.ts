@@ -11,7 +11,7 @@ import { Store, select } from '@ngrx/store';
 import {
   State,
   getAllSystemDataElements,
-  getAllFuctionRules,
+  getAllFunctionRules,
   UpdateFunctionRules,
   getAllIndicators,
   getCurrentDataFilterItems,
@@ -45,7 +45,7 @@ export class DataMappingComponent implements OnInit, OnDestroy {
     this.selectedGroup$ = this.store.pipe(
       select(getCurrentDataItemMappingGroup)
     );
-    this.functionRules$ = this.store.select(getAllFuctionRules);
+    this.functionRules$ = this.store.select(getAllFunctionRules);
     this.dataFilterItems$ = this.store.pipe(select(getCurrentDataFilterItems));
     this.dataElements$ = this.store.select(getAllSystemDataElements);
 
