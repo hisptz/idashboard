@@ -21,6 +21,8 @@ import { UpsetLagendSets } from '../../../../../store/actions/legend-set.action'
 export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
   @Input()
   selectedItems;
+  @Input()
+  visualizationLayerId: string;
 
   @Output()
   legendSetConfigurationClose = new EventEmitter();
@@ -30,7 +32,9 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
     this.legendSetEntities$ = this.store.pipe(select(getLegendSetsEntities));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log({ visualizationLayerId: this.visualizationLayerId });
+  }
 
   onLegendSetConfigurationSave(legendSets: LegendSet[]) {
     this.store.dispatch(new UpsetLagendSets({ legendSets }));
