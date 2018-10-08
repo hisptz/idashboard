@@ -92,6 +92,8 @@
 
     <app-layout [layoutModel]="layoutItem" *ngIf="selectedFilter === 'LAYOUT'" (onLayoutUpdate)="onFilterUpdate($event, 'LAYOUT')"
       (onLayoutClose)="onFilterClose($event, 'LAYOUT')"></app-layout>
+
+    <ngx-dhis2-dynamic-dimension *ngIf="selectedFilter === 'DYNAMIC'"></ngx-dhis2-dynamic-dimension>
   </div>
   <!--end of selection filter body-->
 </div>
