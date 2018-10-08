@@ -1,0 +1,331 @@
+{
+  "s6UwlCxG5nW": {
+    "lastUpdated": "2018-08-21T22:02:34.706",
+    "id": "s6UwlCxG5nW",
+    "created": "2018-08-21T22:02:34.137",
+    "name": "Surveillance data by districts",
+    "publicAccess": "rw------",
+    "legendDisplayStyle": "FILL",
+    "hideEmptyColumns": false,
+    "subscribed": false,
+    "rowSubTotals": false,
+    "showDimensionLabels": true,
+    "sortOrder": 0,
+    "fontSize": "NORMAL",
+    "favorite": false,
+    "topLimit": 0,
+    "displayName": "Surveillance data by districts",
+    "showHierarchy": false,
+    "cumulative": false,
+    "hideTitle": false,
+    "skipRounding": false,
+    "numberType": "VALUE",
+    "hideEmptyRows": false,
+    "displayDensity": "NORMAL",
+    "completedOnly": false,
+    "colTotals": false,
+    "aggregationType": "DEFAULT",
+    "hideSubtitle": false,
+    "legendDisplayStrategy": "BY_DATA_ITEM",
+    "colSubTotals": false,
+    "rowTotals": false,
+    "digitGroupSeparator": "SPACE",
+    "regression": false,
+    "reportParams": {
+      "paramGrandParentOrganisationUnit": false,
+      "paramReportingPeriod": false,
+      "paramOrganisationUnit": false,
+      "paramParentOrganisationUnit": false
+    },
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "lastUpdatedBy": {
+      "id": "M5zQapPyTZI"
+    },
+    "user": {
+      "displayName": "admin admin",
+      "dataViewOrganisationUnits": []
+    },
+    "dataElementGroupSetDimensions": [],
+    "attributeDimensions": [],
+    "translations": [],
+    "interpretations": [],
+    "userGroupAccesses": [],
+    "subscribers": [],
+    "columnsStyles": {
+      "ZCCrHrs1Ta2": "#0e8720",
+      "lz1FE0wvo1m": "#abeab4",
+      "Qzfvt1YRb1Y": "#abeab4",
+      "LH9FKWl1FfP": "#abeab4",
+      "gTPP0wYkXBA": "#bee8f4",
+      "DYpakDmCvNG": "#bee8f4",
+      "Ppc51eaCPHb": "#bee8f4",
+      "nx6lSAN1YmB": "#bee8f4",
+      "EM5cpI2NZ7d": "#ccc31c",
+      "clAcoaqWA5q": "#ccc31c",
+      "lZi1cjtvVB6": "#e58647",
+      "EHbjdbiKtd8": "#e58647",
+      "IS9VxwhkJXR": "#e58647"
+    },
+    "columnGroups": [{
+        "name": "Population",
+        "span": 1,
+        "row_span": 2,
+        "type": "dx",
+        "color": "#0e8720",
+        "id": "ZCCrHrs1Ta2"
+      },
+      {
+        "name": "Foci",
+        "span": 3,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#7c3506",
+        "id": "lxAvmpSPV2y"
+      },
+      {
+        "name": "Cases",
+        "span": 6,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#343fd8",
+        "id": "aCAvP2NqgCh"
+      },
+      {
+        "name": "Investigation",
+        "span": 3,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#7c3506",
+        "id": "iOuPl5kmN4D"
+      }
+    ],
+    "columns": [{
+      "dimension": "dx",
+      "items": [{
+          "id": "ZCCrHrs1Ta2",
+          "dimensionItem": "ZCCrHrs1Ta2",
+          "displayName": "Proportion of population at risk",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "lz1FE0wvo1m",
+          "dimensionItem": "lz1FE0wvo1m",
+          "displayName": "Number of malaria foci classified as active (with ongoing transmission, locally acquired case(s) detected within the current transmission calendar year )",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "Qzfvt1YRb1Y",
+          "dimensionItem": "Qzfvt1YRb1Y",
+          "displayName": "Number of malaria foci classified as residual non-active (Transmission interrupted recently, 1-3 years ago)",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "LH9FKWl1FfP",
+          "dimensionItem": "LH9FKWl1FfP",
+          "displayName": "Number of malaria Foci classified as cleared-up (no local transmission for >3 years, no longer considered residual non-active)",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "gTPP0wYkXBA",
+          "dimensionItem": "gTPP0wYkXBA",
+          "displayName": "Total malaria confirmed cases",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "DYpakDmCvNG",
+          "dimensionItem": "DYpakDmCvNG",
+          "displayName": "Number of malaria cases classified as indigenous",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "Ppc51eaCPHb",
+          "dimensionItem": "Ppc51eaCPHb",
+          "displayName": "Number of malaria cases investigated",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "nx6lSAN1YmB",
+          "dimensionItem": "nx6lSAN1YmB",
+          "displayName": "Proportion of cases investigated within N2 days of diagnosis",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "EM5cpI2NZ7d",
+          "dimensionItem": "EM5cpI2NZ7d",
+          "displayName": "Percentage of P. falciparum",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "clAcoaqWA5q",
+          "dimensionItem": "clAcoaqWA5q",
+          "displayName": "Percentage of P. vivax",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "lZi1cjtvVB6",
+          "dimensionItem": "lZi1cjtvVB6",
+          "displayName": "Number of new active foci with the current calendar year",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "EHbjdbiKtd8",
+          "dimensionItem": "EHbjdbiKtd8",
+          "displayName": "Number of malaria foci classified",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "IS9VxwhkJXR",
+          "dimensionItem": "IS9VxwhkJXR",
+          "displayName": "proportion of foci with response within N4 days of diagnosis",
+          "dimensionItemType": "INDICATOR"
+        }
+      ]
+    }],
+    "dataElementDimensions": [],
+    "categoryDimensions": [],
+    "programIndicatorDimensions": [],
+    "attributeValues": [],
+    "userAccesses": [],
+    "favorites": [],
+    "groups": {
+      "headers": [{
+          "name": "foci",
+          "dx": [
+            "LH9FKWl1FfP",
+            "lz1FE0wvo1m",
+            "s9FmEvF0r4n"
+          ]
+        },
+        {
+          "name": "cases",
+          "dx": [
+            "LhcXjWs6lm7",
+            "DYpakDmCvNG",
+            "Ppc51eaCPHb",
+            "dASLnPMS8L8",
+            "Uzmk0S9IwWn"
+          ]
+        },
+        {
+          "name": "investigation",
+          "dx": [
+            "EEuvMCljxc9",
+            "lZi1cjtvVB6"
+          ]
+        }
+      ],
+      "levels": 1
+    },
+    "dataDimensionItems": [{
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "DkmMEcubiPv"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "LH9FKWl1FfP"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "lz1FE0wvo1m"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "s9FmEvF0r4n"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "LhcXjWs6lm7"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "DYpakDmCvNG"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "Ppc51eaCPHb"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "dASLnPMS8L8"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "Uzmk0S9IwWn"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "EEuvMCljxc9"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "lZi1cjtvVB6"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "EHbjdbiKtd8"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "N8S7Vnntced"
+        }
+      }
+    ],
+    "categoryOptionGroupSetDimensions": [],
+    "organisationUnitGroupSetDimensions": [],
+    "filters": [{
+      "dimension": "pe",
+      "items": [{
+        "id": "THIS_YEAR",
+        "dimensionItem": "THIS_YEAR",
+        "displayName": "THIS_YEAR",
+        "dimensionItemType": "PERIOD"
+      }]
+    }],
+    "rows": [{
+      "dimension": "ou",
+      "items": [{
+          "id": "USER_ORGUNIT",
+          "dimensionItem": "USER_ORGUNIT",
+          "displayName": "USER_ORGUNIT"
+        },
+        {
+          "id": "USER_ORGUNIT_CHILDREN",
+          "dimensionItem": "USER_ORGUNIT_CHILDREN",
+          "displayName": "USER_ORGUNIT_CHILDREN"
+        }
+      ]
+    }]
+  }
+}

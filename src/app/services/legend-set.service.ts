@@ -4,10 +4,14 @@ import * as _ from 'lodash';
 
 import { NgxDhis2HttpClientService } from '@hisptz/ngx-dhis2-http-client';
 import { LegendSet } from '../models/legend-set.model';
+import { AppConfigurationsService } from './app-configurations.service';
 
 @Injectable({ providedIn: 'root' })
 export class LegendSetService {
-  constructor(private http: NgxDhis2HttpClientService) {}
+  constructor(
+    private http: NgxDhis2HttpClientService,
+    private appConfigurationService: AppConfigurationsService
+  ) {}
 
   // @todo update url to data store
   getLegendSets(): Observable<LegendSet[]> {
@@ -20,16 +24,12 @@ export class LegendSetService {
           observer.complete();
         },
         () => {
-          const legendSets = [];
-          this.http.post(legendUrl, { legendSets }).subscribe(
-            () => {
-              observer.next([]);
+          this.appConfigurationService
+            .getDefaultLegends()
+            .subscribe(legendSets => {
+              observer.next(legendSets);
               observer.complete();
-            },
-            error => {
-              observer.error(error);
-            }
-          );
+            });
         }
       );
     });

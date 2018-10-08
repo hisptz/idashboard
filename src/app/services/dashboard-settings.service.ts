@@ -7,12 +7,14 @@ import {
 } from '@hisptz/ngx-dhis2-http-client';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { forkJoin, of, Observable } from 'rxjs';
+import { AppConfigurationsService } from './app-configurations.service';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardSettingsService {
   constructor(
     private httpClient: NgxDhis2HttpClientService,
-    private manifestService: ManifestService
+    private manifestService: ManifestService,
+    private appConfigurationService: AppConfigurationsService
   ) {}
 
   loadAll() {
@@ -52,8 +54,15 @@ export class DashboardSettingsService {
           observer.complete();
         },
         () => {
-          console.log('Here ');
-          observer.error();
+          this.appConfigurationService.initateAppConfigurations().subscribe(
+            dashboardSettings => {
+              observer.next(Object.keys(dashboardSettings));
+              observer.complete();
+            },
+            error => {
+              console.log({ error });
+            }
+          );
         }
       );
     });

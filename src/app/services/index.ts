@@ -6,3 +6,4 @@ export * from './legend-set.service';
 export * from './dataElements.service';
 export * from './function-metadata.service';
 export * from './indicator.service';
+export * from './app-configurations.service';

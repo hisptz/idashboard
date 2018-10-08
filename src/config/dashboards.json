@@ -1,0 +1,40 @@
+{
+  "who-malaria_aBVHnhMvdEO": {
+    "lastUpdated": "2018-08-20T14:35:19.821",
+    "created": "2018-08-20T14:35:19.821",
+    "name": "Surveillance",
+    "namespace": "who-malaria",
+    "id": "who-malaria_aBVHnhMvdEO",
+    "displayName": "Surveillance",
+    "favorite": false,
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "M5zQapPyTZI",
+      "name": "admin admin"
+    },
+    "dashboardItems": [{
+      "id": "Isa51DFqB6k",
+      "shape": "FULL_WIDTH",
+      "type": "REPORT_TABLE",
+      "name": "Surveillance data by districts",
+      "title": "Surveillance data by districts",
+      "x": 0,
+      "w": 60,
+      "y": 0,
+      "h": 25,
+      "reportTable": {
+        "id": "s6UwlCxG5nW"
+      },
+      "reports": [],
+      "resources": [],
+      "users": []
+    }]
+  }
+}
