@@ -44,7 +44,6 @@ import {
 import {
   AddVisualizationObjectAction,
   AddVisualizationUiConfigurationAction,
-  ToggleFullScreenAction,
   LoadVisualizationAnalyticsAction,
   RemoveVisualizationObjectAction,
   RemoveVisualizationFavoriteAction,

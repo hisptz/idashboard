@@ -1,4 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy
+} from '@angular/core';
 import * as _ from 'lodash';
 import * as fromDynamicDimension from '../../store/reducers/dynamic-dimension.reducer';
 import { Store } from '@ngrx/store';
@@ -12,12 +19,22 @@ import { map } from 'rxjs/operators';
   templateUrl: './ngx-dhis2-dynamic-dimension.component.html',
   styleUrls: ['./ngx-dhis2-dynamic-dimension.component.scss']
 })
-export class NgxDhis2DynamicDimensionComponent implements OnInit {
+export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
   @Input()
+  selectedDynamicDimensions: any[];
+
   selectedDimensions: any[];
+
   dynamicDimensions$: Observable<DynamicDimension[]>;
 
   private _activeDimension: any;
+
+  @Output()
+  dynamicDimensionUpdate: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  dynamicDimensionClose: EventEmitter<any> = new EventEmitter<any>();
+
   get selectedDimensionItems(): any[] {
     return _.flatten(
       _.map(
@@ -37,7 +54,9 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
           const activeDimension: DynamicDimension =
             _.find(
               dynamicDimensions,
-              firstSelectedDimension ? firstSelectedDimension.id : ''
+              firstSelectedDimension
+                ? firstSelectedDimension.id || firstSelectedDimension.dimension
+                : ''
             ) || dynamicDimensions[0];
           return activeDimension
             ? {
@@ -73,7 +92,9 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.selectedDimensions = [...this.selectedDynamicDimensions];
+  }
 
   onSetActiveDynamicDimension(dynamicDimension: DynamicDimension) {
     this._activeDimension = dynamicDimension;
@@ -84,8 +105,8 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
       e.stopPropagation();
     }
     const availableDimensionObject = _.find(this.selectedDimensions, [
-      'id',
-      dimensionObject.id
+      'dimension',
+      dimensionObject.dimension || dimensionObject.id
     ]);
 
     if (!availableDimensionObject) {
@@ -130,7 +151,7 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
     )[0];
     const availableDimensionObject = _.find(this.selectedDimensions, [
       'id',
-      dimensionObject.id
+      dimensionObject.id || dimensionObject.dimension
     ]);
 
     if (availableDimensionObject) {
@@ -181,5 +202,20 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
   onRemoveAllItems(e) {
     e.stopPropagation();
     this.selectedDimensions = [];
+  }
+
+  onClose(e) {
+    e.stopPropagation();
+    console.log(this.selectedDimensions);
+    this.dynamicDimensionClose.emit(this.selectedDimensions);
+  }
+
+  onUpdate(e) {
+    e.stopPropagation();
+    this.dynamicDimensionUpdate.emit(this.selectedDimensions);
+  }
+
+  ngOnDestroy() {
+    this.dynamicDimensionClose.emit(this.selectedDimensions);
   }
 }

@@ -8,6 +8,7 @@ import { tap, withLatestFrom } from 'rxjs/operators';
 import { getDynamicDimensionInitiatedStatus } from '../selectors/dynamic-dimension.selectors';
 import { Store } from '@ngrx/store';
 import { DynamicDimensionService } from '../../services/dynamic-dimension.service';
+import { getSanitizedDynamicDimensions } from '../../helpers';
 
 @Injectable()
 export class DynamicDimensionEffects {
@@ -36,7 +37,7 @@ export class DynamicDimensionEffects {
             (dimensions: any[]) => {
               this.dynamicDimensionStore.dispatch(
                 new fromDynamicDimensionActions.AddDynamicDimensionsAction(
-                  dimensions
+                  getSanitizedDynamicDimensions(dimensions)
                 )
               );
             },
