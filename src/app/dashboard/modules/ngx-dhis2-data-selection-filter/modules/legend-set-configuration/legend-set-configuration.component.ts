@@ -32,9 +32,7 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
     this.legendSetEntities$ = this.store.pipe(select(getLegendSetsEntities));
   }
 
-  ngOnInit() {
-    console.log({ visualizationLayerId: this.visualizationLayerId });
-  }
+  ngOnInit() {}
 
   onLegendSetConfigurationSave(legendSets: LegendSet[]) {
     this.store.dispatch(new UpsetLagendSets({ legendSets }));

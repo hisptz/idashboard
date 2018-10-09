@@ -1,6 +1,8 @@
 export interface LegendSet {
   id: string;
   name: string;
+  dimensionItemId: string;
+  visualizationLayerId: string;
   legends: Legend[];
 }
 
