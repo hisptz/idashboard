@@ -16,6 +16,8 @@ import {
   getDashboardObjectLoading,
   getDashboardObjectLoaded,
   getVisualizationReady,
+  getFunctionById,
+  getFuctionRuleEntities,
   getCurrentDashboardVisualizationItems,
   getCurrentDashboardVisualizationLoading,
   getCurrentDashboardVisualizationLoaded
@@ -24,7 +26,11 @@ import { User, SystemInfo, LegendSet } from '../../../models';
 import { getSystemInfo } from '../../../store/selectors/system-info.selectors';
 import { take } from 'rxjs/operators';
 
-import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
+import {
+  WELCOMING_DESCRIPTION,
+  WELCOMING_TITLE,
+  FUNCTION_NAMESPACE
+} from '../../constants/welcoming-messages.constants';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -37,6 +43,8 @@ export class CurrentDashboardComponent implements OnInit {
   currentDashboardVisualizationLoading$: Observable<boolean>;
   currentDashboardVisualizationLoaded$: Observable<boolean>;
   currentDashboard$: Observable<Dashboard>;
+  functionString$: Observable<any>;
+  functionRulesEntities$: Observable<any>;
   currentUser$: Observable<User>;
   systemInfo$: Observable<SystemInfo>;
   dashboardLoading$: Observable<boolean>;
@@ -54,6 +62,9 @@ export class CurrentDashboardComponent implements OnInit {
     this.currentDashboardVisualizationLoading$ = store.select(getCurrentDashboardVisualizationLoading);
 
     this.currentDashboardVisualizationLoaded$ = store.select(getCurrentDashboardVisualizationLoaded);
+
+    this.functionString$ = store.select(getFunctionById(FUNCTION_NAMESPACE));
+    this.functionRulesEntities$ = store.select(getFuctionRuleEntities);
 
     this.currentDashboard$ = store.select(getCurrentDashboard);
     this.currentUser$ = store.select(getCurrentUser);

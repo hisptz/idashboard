@@ -1,9 +1,10 @@
 <div class="current-dashboard-container">
   <!-- current dashboard header -->
   <div class="current-dashboard-header-block">
-    <app-current-dashboard-header [currentDashboard]="currentDashboard$ | async" [currentUser]="currentUser$ | async" (toggleCurrentDashboardBookmark)="onToggleCurrentDashboardBookmark($event)"
-      (addDashboardItem)="onAddDashboardItem($event)" (createFavoriteForCurrentDashboard)="onCreateFavoriteForCurrentDashboard($event)"
-      (globalFilterChange)="onGlobalFilterChange($event)" [dashboardLoading]="dashboardLoading$ | async" [dashboardLoaded]="dashboardLoaded$ | async"></app-current-dashboard-header>
+    <app-current-dashboard-header [currentDashboard]="currentDashboard$ | async" [currentUser]="currentUser$ | async"
+      (toggleCurrentDashboardBookmark)="onToggleCurrentDashboardBookmark($event)" (addDashboardItem)="onAddDashboardItem($event)"
+      (createFavoriteForCurrentDashboard)="onCreateFavoriteForCurrentDashboard($event)" (globalFilterChange)="onGlobalFilterChange($event)"
+      [dashboardLoading]="dashboardLoading$ | async" [dashboardLoaded]="dashboardLoaded$ | async"></app-current-dashboard-header>
   </div>
   <!-- end of current dashboard header -->
 
@@ -37,11 +38,12 @@
   <!-- end of empty visualization placeholder -->
 
   <!-- current dashboard visualizations -->
-  <div class="current-dashboard-visualizations" *ngIf="(currentDashboardVisualizationLoaded$ | async)">
+  <div class="current-dashboard-visualizations" *ngIf="(currentDashboardVisualizationLoaded$ | async) && (functionString$ | async)">
 
     <div class="visualization-card-block" [style.grid-column]="visualization.width" [style.grid-row]="'span 1'" *ngFor="let visualization of currentDashboardVisualizationItems$ | async">
       <ngx-dhis2-visualization [id]="visualization.id" [currentUser]="currentUser$ | async" [systemInfo]="systemInfo$ | async"
-        [legendSets]="legendSets$ | async" [dashboardId]="(currentDashboard$ | async)?.id" (toggleFullScreen)="onToggleVisualizationFullScreen($event)"
+        [legendSets]="legendSets$ | async" [dashboardId]="(currentDashboard$ | async)?.id" [functionString]="functionString$ | async"
+        [functionRulesEntities]="functionRulesEntities$ | async" (toggleFullScreen)="onToggleVisualizationFullScreen($event)"
         (deleteVisualization)="onDeleteVisualizationAction($event)"></ngx-dhis2-visualization>
     </div>
 

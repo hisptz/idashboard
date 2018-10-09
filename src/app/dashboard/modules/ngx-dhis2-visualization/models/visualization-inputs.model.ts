@@ -7,4 +7,6 @@ export interface VisualizationInputs {
   visualizationLayers: VisualizationLayer[];
   currentUser: any;
   systemInfo: any;
+  functionString?: string;
+  functionRulesEntities?: any;
 }

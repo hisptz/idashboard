@@ -28,8 +28,7 @@ export class AddVisualizationObjectsAction implements Action {
 }
 
 export class InitializeVisualizationObjectAction implements Action {
-  readonly type =
-    VisualizationObjectActionTypes.INITIALIZE_VISUALIZATION_OBJECT;
+  readonly type = VisualizationObjectActionTypes.INITIALIZE_VISUALIZATION_OBJECT;
 
   constructor(
     public id: string,
@@ -37,7 +36,9 @@ export class InitializeVisualizationObjectAction implements Action {
     public visualizationType: string,
     public visualizationLayers: VisualizationLayer[],
     public currentUser: any,
-    public systemInfo: any
+    public systemInfo: any,
+    public functionString?: string,
+    public functionRulesEntities?: any
   ) {}
 }
 
@@ -50,16 +51,11 @@ export class UpdateVisualizationObjectAction implements Action {
 export class LoadVisualizationFavoriteAction implements Action {
   readonly type = VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE;
 
-  constructor(
-    public visualization: Visualization,
-    public currentUser: any,
-    public systemInfo: any
-  ) {}
+  constructor(public visualization: Visualization, public currentUser: any, public systemInfo: any) {}
 }
 
 export class LoadVisualizationFavoriteSuccessAction implements Action {
-  readonly type =
-    VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE_SUCCESS;
+  readonly type = VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE_SUCCESS;
 
   constructor(
     public visualization: Visualization,
@@ -70,24 +66,18 @@ export class LoadVisualizationFavoriteSuccessAction implements Action {
 }
 
 export class LoadVisualizationFavoriteFailAction implements Action {
-  readonly type =
-    VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE_FAIL;
+  readonly type = VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE_FAIL;
 
   constructor(public id: string, public error: any) {}
 }
 
 export class SaveVisualizationFavoriteAction implements Action {
   readonly type = VisualizationObjectActionTypes.SaveVisualizationFavorite;
-  constructor(
-    public id: string,
-    public favoriteDetails: any,
-    public dashboardId: string
-  ) {}
+  constructor(public id: string, public favoriteDetails: any, public dashboardId: string) {}
 }
 
 export class SaveVisualizationFavoriteSuccessAction implements Action {
-  readonly type =
-    VisualizationObjectActionTypes.SaveVisualizationFavoriteSuccess;
+  readonly type = VisualizationObjectActionTypes.SaveVisualizationFavoriteSuccess;
   constructor(
     public dashboardId: string,
     public visualizationId: string,
@@ -104,11 +94,7 @@ export class RemoveVisualizationObjectAction implements Action {
 
 export class RemoveVisualizationFavoriteAction implements Action {
   readonly type = VisualizationObjectActionTypes.RemoveVisualizationFavorite;
-  constructor(
-    public visualizationId: string,
-    public favoriteId: string,
-    public favoriteType: string
-  ) {}
+  constructor(public visualizationId: string, public favoriteId: string, public favoriteType: string) {}
 }
 
 export type VisualizationObjectAction =

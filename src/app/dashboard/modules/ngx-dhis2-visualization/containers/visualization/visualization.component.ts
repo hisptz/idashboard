@@ -64,6 +64,11 @@ export class VisualizationComponent implements OnInit, OnChanges {
   legendSets: LegendSet[];
   @Input()
   systemInfo: any;
+
+  @Input()
+  functionString: string;
+  @Input()
+  functionRulesEntities: any = {};
   cardFocused: boolean;
 
   @Output()
@@ -93,7 +98,9 @@ export class VisualizationComponent implements OnInit, OnChanges {
             visualizationInputs.type,
             visualizationInputs.visualizationLayers,
             visualizationInputs.currentUser,
-            visualizationInputs.systemInfo
+            visualizationInputs.systemInfo,
+            visualizationInputs.functionString,
+            visualizationInputs.functionRulesEntities
           )
         );
 
@@ -116,7 +123,9 @@ export class VisualizationComponent implements OnInit, OnChanges {
       visualizationLayers: this.visualizationLayers,
       name: this.name,
       currentUser: this.currentUser,
-      systemInfo: this.systemInfo
+      systemInfo: this.systemInfo,
+      functionString: this.functionString,
+      functionRulesEntities: this.functionRulesEntities
     });
   }
 
