@@ -16,6 +16,8 @@ export class TableItemComponent implements OnInit {
   @Input()
   analyticsObject: any;
   @Input()
+  tableId: string;
+  @Input()
   legendSets: LegendSet[];
   tableObject: any;
   sort_direction: string[] = [];
@@ -26,8 +28,7 @@ export class TableItemComponent implements OnInit {
 
   ngOnInit() {
     if (this.analyticsObject && this.tableConfiguration) {
-      this.tableObject = drawTable(this.analyticsObject, this.tableConfiguration, this.legendSets);
-      console.log(this.tableObject);
+      this.tableObject = drawTable(this.analyticsObject, this.tableConfiguration, this.legendSets, this.tableId);
     }
   }
   sortData(tableObject, n, isLastItem) {

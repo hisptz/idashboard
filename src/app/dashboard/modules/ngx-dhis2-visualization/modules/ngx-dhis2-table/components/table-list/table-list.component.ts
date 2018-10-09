@@ -23,12 +23,11 @@ export class TableListComponent implements OnInit {
 
   ngOnInit() {
     if (this.visualizationLayers && this.visualizationLayers.length > 0) {
-      this.tableLayers = this.visualizationLayers.map((layer: any) => {
-        return {
-          tableConfiguration: getTableConfiguration(layer.config || {}, layer.layout, this.visualizationType),
-          analyticsObject: layer.analytics
-        };
-      });
+      this.tableLayers = this.visualizationLayers.map(layer => ({
+        tableConfiguration: getTableConfiguration(layer.config || {}, layer.layout, this.visualizationType),
+        tableId: layer.id,
+        analyticsObject: layer.analytics
+      }));
     }
   }
 }

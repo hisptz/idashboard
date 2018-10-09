@@ -2,7 +2,12 @@ import { TableConfiguration } from '../models/table-configuration';
 import { LegendSet } from '../models/legend-set.model';
 const USE_BY_DATA_ITEM_LEGEND = 'BY_DATA_ITEM';
 
-export function drawTable(analyticsObject, tableConfiguration: TableConfiguration, legendSets: LegendSet[]) {
+export function drawTable(
+  analyticsObject,
+  tableConfiguration: TableConfiguration,
+  legendSets: LegendSet[],
+  tableId?: string
+) {
   const legendClasses = tableConfiguration.legendSet ? tableConfiguration.legendSet.legends : null;
   const { columnsStyles = {}, columnGroups = [] } = tableConfiguration;
 
@@ -189,7 +194,7 @@ export function drawTable(analyticsObject, tableConfiguration: TableConfiguratio
             name: '',
             val: getDataValue(analyticsObject, dataItem),
             color: getDataValueColor(
-              getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, analyticsObject.metaData),
+              getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, analyticsObject.metaData, tableId),
               getDataValue(analyticsObject, dataItem)
             ),
             row_span: '1',
@@ -342,13 +347,13 @@ function getDataValueColor(legendItems: any = [], value) {
   return dataItem && dataItem.color;
 }
 
-function getLegendSets(dataItem, legendClasses, legendSets, configuration, metaData) {
+function getLegendSets(dataItem, legendClasses, legendSets, configuration, metaData, tableId) {
   const { legendDisplayStrategy } = configuration;
   const { items } = metaData;
 
   if (legendDisplayStrategy === USE_BY_DATA_ITEM_LEGEND) {
     const dx = dataItem.find(dItem => dItem.type === 'dx');
-    const legendSetId = dx && dx.value && items[dx.value] && items[dx.value]['legendSet'];
+    const legendSetId = `${tableId}_${dx.value}`;
     const legendSet = legendSetId && legendSets && legendSets.find(({ id }) => id === legendSetId);
     return legendSet && legendSet.legends;
   }
