@@ -12,8 +12,8 @@ export function getLegendSetsConfiguration(
     const dimensionItemId = selectedItem.id;
     const id = `${visualizationLayerId}_${dimensionItemId}`;
     const legends =
-      legendSetEntities && legendSetEntities[selectedItem.id]
-        ? legendSetEntities && legendSetEntities[selectedItem.id].legends
+      legendSetEntities && legendSetEntities[id]
+        ? legendSetEntities && legendSetEntities[id].legends
         : [];
     const name = selectedItem.name ? selectedItem.name : 'Item ' + index;
     return { id, visualizationLayerId, dimensionItemId, name, legends };
