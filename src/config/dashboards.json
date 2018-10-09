@@ -1,0 +1,424 @@
+{
+  "who-malaria_aBVHnhMvdEO": {
+    "lastUpdated": "2018-08-20T14:35:19.821",
+    "created": "2018-08-20T14:35:19.821",
+    "name": "Surveillance",
+    "namespace": "who-malaria",
+    "id": "who-malaria_aBVHnhMvdEO",
+    "displayName": "Surveillance",
+    "favorite": false,
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "M5zQapPyTZI",
+      "name": "admin admin"
+    },
+    "dashboardItems": [{
+      "id": "Isa51DFqB6k",
+      "shape": "FULL_WIDTH",
+      "type": "REPORT_TABLE",
+      "name": "Surveillance data by districts",
+      "title": "Surveillance data by districts",
+      "x": 0,
+      "w": 60,
+      "y": 0,
+      "h": 25,
+      "reportTable": {
+        "id": "s6UwlCxG5nW"
+      },
+      "reports": [],
+      "resources": [],
+      "users": []
+    }]
+  },
+  "who-malaria_zMdUF7qxNEt": {
+    "lastUpdated": "2018-08-21T04:14:20.289",
+    "created": "2018-08-13T07:52:08.865",
+    "name": "Bulletin Page 2",
+    "namespace": "who-malaria",
+    "id": "who-malaria_zMdUF7qxNEt",
+    "displayDescription": "Bulletin Page 2",
+    "displayName": "Bulletin Page 2",
+    "description": "Bulletin Page 2",
+    "favorite": false,
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "M5zQapPyTZI",
+      "name": "admin admin"
+    },
+    "dashboardItems": [{
+      "id": "odoShFXb17g",
+      "shape": "FULL_WIDTH",
+      "type": "REPORT_TABLE",
+      "name": "Surveillance data by districts",
+      "title": "Surveillance data by districts",
+      "x": 0,
+      "w": 60,
+      "y": 0,
+      "h": 25,
+      "reportTable": {
+        "id": "EFuehVGA7qF"
+      },
+      "reports": [],
+      "resources": [],
+      "users": []
+    }],
+    "bookmarks": [
+      "M5zQapPyTZI"
+    ]
+  },
+  "who-malaria_b8F1kKlV9Fk": {
+    "lastUpdated": "2018-08-01T09:31:26.483",
+    "created": "2017-05-31T21:16:32.000",
+    "namespace": "who-malaria",
+    "name": "Malaria Elimination",
+    "id": "who-malaria_b8F1kKlV9Fk",
+    "displayName": "Malaria Elimination",
+    "favorite": false,
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "jB4WJmaNuGT",
+      "name": "Olav Poppe"
+    },
+    "dashboardItems": [{
+        "id": "TPiaBPTjHN9",
+        "shape": "FULL_WIDTH",
+        "type": "REPORT_TABLE",
+        "title": "National-level Surveillance data",
+        "name": "National-level Surveillance data",
+        "x": 22,
+        "w": 20,
+        "y": 0,
+        "h": 29,
+        "reportTable": {
+          "id": "JyOc57gUaXp",
+          "interpretations": []
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "UWm7wNOGTHG",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "name": "Confirmed cases and foci",
+        "title": "Confirmed cases and foci",
+        "chart": {
+          "id": "lxBTpJDaL7f"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "xQiwj7LABJm",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "name": "Malaria: Percent P.F and P.v",
+        "title": "Malaria: Percent P.F and P.v",
+        "chart": {
+          "id": "PvxM8Xg87Nj"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "X3DsfWcC2Cz",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "name": "Malaria: Proportion of cases investigated and classified",
+        "title": "Malaria: Proportion of cases investigated and classified",
+        "chart": {
+          "id": "sV93XsyzYKh"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "BkQyoFMYVei",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "name": "Malaria: Proportion of foci investigated and classified",
+        "title": "Malaria: Proportion of foci investigated and classified",
+        "chart": {
+          "id": "E0Ct7kfn7ah"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "PLRIsIlzbW2",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "name": "Malaria: Proportion of foci with zero local cases",
+        "title": "Malaria: Proportion of foci with zero local cases",
+        "chart": {
+          "id": "uE5LUxEM6sT"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "khbUS36sTys",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "name": "Malaria: Report completeness",
+        "chart": {
+          "id": "hQwk2byL539"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      }
+    ]
+  },
+  "who-malaria_sLldHZZgnFx": {
+    "lastUpdated": "2018-08-17T14:11:19.357",
+    "namespace": "who-malaria",
+    "created": "2017-05-31T21:15:05.427",
+    "name": "Bulletin Page 1",
+    "id": "who-malaria_sLldHZZgnFx",
+    "displayName": "Malaria Burden Reduction",
+    "favorite": false,
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "jB4WJmaNuGT",
+      "name": "Olav Poppe"
+    },
+    "dashboardItems": [{
+        "id": "EFQH9naV7bu",
+        "shape": "FULL_WIDTH",
+        "type": "REPORT_TABLE",
+        "x": 22,
+        "w": 20,
+        "y": 0,
+        "h": 29,
+        "name": "National-level Surveillance data",
+        "title": "National-level Surveillance data",
+        "reportTable": {
+          "id": "SjvpCQUNq2n",
+          "name": "National-level Surveillance data",
+          "interpretations": []
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "iFoBSxTa8n3",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "name": "Malaria: OPD",
+        "title": "Malaria: OPD",
+        "x": 0,
+        "w": 29,
+        "y": 129,
+        "h": 20,
+        "chart": {
+          "name": "Malaria: OPD",
+          "id": "wSudey0Yc2R"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "imp9cY9m5EA",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "title": "Microscopy and RDT Testing",
+        "name": "Microscopy and RDT Testing",
+        "x": 0,
+        "w": 29,
+        "y": 49,
+        "h": 20,
+        "chart": {
+          "id": "QqZNdTABzsZ"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "COP5m9xs6iY",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "title": "Malaria and Non-malaria deaths",
+        "name": "Malaria and Non-malaria deaths",
+        "x": 29,
+        "w": 29,
+        "y": 20,
+        "h": 20,
+        "chart": {
+          "id": "tq6l6xuECZo"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "GBuwmMa1iGE",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "title": "Malaria and non-malaria IPD",
+        "name": "Malaria and non-malaria IPD",
+        "x": 29,
+        "w": 29,
+        "y": 40,
+        "h": 20,
+        "chart": {
+          "id": "mmdI4h7KdLL"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "Jx1yxCt3wvY",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "title": "Proportions (OPD,IPD, Deaths)",
+        "name": "Proportions (OPD,IPD, Deaths)",
+        "x": 0,
+        "w": 29,
+        "y": 89,
+        "h": 20,
+        "chart": {
+          "id": "pnEMZYfUAZt"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "LLJURREsNnj",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "x": 29,
+        "w": 29,
+        "y": 0,
+        "h": 20,
+        "name": "Malaria: Positivity",
+        "title": "Malaria: Positivity",
+        "chart": {
+          "id": "SKJkOTlS8vN"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "NGkPe7Z2xco",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "x": 0,
+        "w": 29,
+        "y": 109,
+        "h": 20,
+        "name": "% Suspected Tested, Confirmed cases and ABER",
+        "title": "% Suspected Tested, Confirmed cases and ABER",
+        "chart": {
+          "id": "XG7LBCz7nQn"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      },
+      {
+        "id": "eEluY5AA8eb",
+        "shape": "DOUBLE_WIDTH",
+        "type": "CHART",
+        "title": "Reporting completeness",
+        "name": "Reporting completeness",
+        "x": 29,
+        "w": 29,
+        "y": 80,
+        "h": 20,
+        "chart": {
+          "id": "eqbjzgCFSFs"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      }
+    ],
+    "bookmarks": [
+      "M5zQapPyTZI"
+    ]
+  },
+  "who-malaria_QT4gSejEGCE": {
+    "lastUpdated": "2018-08-21T04:14:20.289",
+    "created": "2018-08-13T07:52:08.865",
+    "name": "Bulletin Page 3",
+    "id": "who-malaria_QT4gSejEGCE",
+    "namespace": "who-malaria",
+    "displayDescription": "Bulletin Page 3",
+    "displayName": "Bulletin Page 3",
+    "description": "Bulletin Page 3",
+    "favorite": false,
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "M5zQapPyTZI",
+      "name": "admin admin"
+    },
+    "dashboardItems": [{
+      "id": "MQfuNJs1O6x",
+      "shape": "FULL_WIDTH",
+      "type": "REPORT_TABLE",
+      "name": "Surveillance data by districts",
+      "title": "Surveillance data by districts",
+      "x": 0,
+      "w": 60,
+      "y": 0,
+      "h": 25,
+      "reportTable": {
+        "id": "dHt43srjYsF"
+      },
+      "reports": [],
+      "resources": [],
+      "users": []
+    }],
+    "bookmarks": [
+      "M5zQapPyTZI"
+    ]
+  }
+}

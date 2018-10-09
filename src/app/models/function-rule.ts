@@ -4,3 +4,8 @@ export interface FunctionRule {
   description: string;
   json: any;
 }
+
+export interface Function {
+  id: string;
+  functionString: any;
+}

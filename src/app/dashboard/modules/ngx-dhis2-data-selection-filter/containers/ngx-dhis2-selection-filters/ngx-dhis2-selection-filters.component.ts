@@ -22,6 +22,8 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
   @Input()
   dataSelections: any[];
   @Input()
+  visualizationLayerId: string;
+  @Input()
   layout: any;
   @Input()
   selectionFilterConfig: SelectionFilterConfig;

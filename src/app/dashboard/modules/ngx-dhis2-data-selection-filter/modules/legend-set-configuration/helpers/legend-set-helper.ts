@@ -2,16 +2,21 @@ import { DEFAULT_LEGENDS } from '../constants/default-legend';
 import * as _ from 'lodash';
 import { Legend, LegendSet } from '../models/legend-set';
 
-export function getLegendSetsConfiguration(selectedItems, legendSetEntities) {
+export function getLegendSetsConfiguration(
+  selectedItems,
+  legendSetEntities,
+  visualizationLayerId
+) {
   return _.map(selectedItems, selectedItem => {
     const index = _.indexOf(selectedItems, selectedItem) + 1;
+    const dimensionItemId = selectedItem.id;
+    const id = `${visualizationLayerId}_${dimensionItemId}`;
     const legends =
-      legendSetEntities && legendSetEntities[selectedItem.id]
-        ? legendSetEntities && legendSetEntities[selectedItem.id].legends
+      legendSetEntities && legendSetEntities[id]
+        ? legendSetEntities && legendSetEntities[id].legends
         : [];
     const name = selectedItem.name ? selectedItem.name : 'Item ' + index;
-    const { id } = selectedItem;
-    return { id, name, legends };
+    return { id, visualizationLayerId, dimensionItemId, name, legends };
   });
 }
 

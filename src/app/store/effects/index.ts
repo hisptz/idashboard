@@ -8,6 +8,7 @@ import { DashboardGroupsEffects } from './dashboard-groups.effects';
 import { LegendSetEffects } from './legend-set.effects';
 import { DataElementEffects } from './data-elements.effects';
 import { FunctionRuleEffects } from './function-rules.effects';
+import { FunctionEffects } from './function.effects';
 import { IndicatorsEffects } from './indicators.effects';
 
 export const effects: any[] = [
@@ -21,5 +22,6 @@ export const effects: any[] = [
   DashboardGroupsEffects,
   DataElementEffects,
   IndicatorsEffects,
-  FunctionRuleEffects
+  FunctionRuleEffects,
+  FunctionEffects
 ];

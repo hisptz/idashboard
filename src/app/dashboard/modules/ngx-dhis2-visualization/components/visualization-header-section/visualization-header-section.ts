@@ -33,7 +33,9 @@ export class VisualizationHeaderSectionComponent {
   showNameInput: boolean;
 
   @Output()
-  visualizationLayerUpdate: EventEmitter<VisualizationLayer> = new EventEmitter<VisualizationLayer>();
+  visualizationLayerUpdate: EventEmitter<VisualizationLayer> = new EventEmitter<
+    VisualizationLayer
+  >();
 
   @Output()
   fullScreenAction: EventEmitter<any> = new EventEmitter<any>();

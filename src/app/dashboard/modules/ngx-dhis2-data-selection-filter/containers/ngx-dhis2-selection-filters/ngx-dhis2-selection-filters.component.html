@@ -72,8 +72,9 @@
     <app-data-mapping *ngIf="_selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
       (dataFilterUpdate)="onFilterUpdate($event, 'DATA')"></app-data-mapping>
 
-    <app-legend-set-configuration *ngIf="_selectedFilter === 'LEGEND_CONFIGURATION'" [selectedItems]="selectedData"
-      (legendSetConfigurationClose)="onFilterClose($event, 'LEGEND_CONFIGURATION')" (legendSetConfigurationClose)="onFilterUpdate($event, 'LEGEND_CONFIGURATION')"></app-legend-set-configuration>
+    <app-legend-set-configuration *ngIf="_selectedFilter === 'LEGEND_CONFIGURATION'" [visualizationLayerId]="visualizationLayerId"
+      [selectedItems]="selectedData" (legendSetConfigurationClose)="onFilterClose($event, 'LEGEND_CONFIGURATION')"
+      (legendSetConfigurationClose)="onFilterUpdate($event, 'LEGEND_CONFIGURATION')"></app-legend-set-configuration>
 
 
     <!-- <app-data-filter *ngIf="_selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"

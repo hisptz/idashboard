@@ -21,6 +21,8 @@ import { UpsetLagendSets } from '../../../../../store/actions/legend-set.action'
 export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
   @Input()
   selectedItems;
+  @Input()
+  visualizationLayerId: string;
 
   @Output()
   legendSetConfigurationClose = new EventEmitter();

@@ -31,6 +31,7 @@ import {
   DataItemMappingState,
   dataItemMappingReducer
 } from './data-item-mapping.reducer';
+import { FunctionState, FunctionReducer } from './function.reducer';
 
 /**
  * Root state interface
@@ -59,6 +60,7 @@ export interface State {
   indicators: IndicatorState;
   dataItemMapping: DataItemMappingState;
   functionRules: FunctionRuleState;
+  functions: FunctionState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -73,7 +75,8 @@ export const reducers: ActionReducerMap<State> = {
   dataElements: dataElementReducer,
   indicators: indicatorReducer,
   dataItemMapping: dataItemMappingReducer,
-  functionRules: functionRuleReducer
+  functionRules: functionRuleReducer,
+  functions: FunctionReducer
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production

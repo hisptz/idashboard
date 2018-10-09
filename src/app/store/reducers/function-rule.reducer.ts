@@ -46,9 +46,3 @@ export function functionRuleReducer(
     }
   }
 }
-
-const {
-  selectIds: getFunctionRuleIds,
-  selectEntities: getFuctionRuleEntitiesState,
-  selectAll: getAllFuctionRules
-} = functionRuleAdapter.getSelectors();
