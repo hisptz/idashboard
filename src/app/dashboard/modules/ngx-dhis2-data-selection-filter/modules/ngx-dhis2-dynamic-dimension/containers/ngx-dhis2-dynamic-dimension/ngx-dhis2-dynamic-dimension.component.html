@@ -27,11 +27,11 @@
     </div>
     <div class="dynamic-dimension-available-header">
       <span>Available ({{(activeDimension$ | async)?.items.length}})</span>
-      <a (click)="selectAllItems($event)">&raquo;</a>
+      <a *ngIf="(activeDimension$ | async) as activeDimension" (click)="onAddAllItems(activeDimension, $event)">&raquo;</a>
     </div>
     <div class="dynamic-dimension-selected-header">
-      <a (click)="deselectAllItems($event)">&laquo;</a>
-      <span>Selected (0)</span>
+      <a (click)="onRemoveAllItems($event)">&laquo;</a>
+      <span>Selected ({{selectedDimensionItems.length}})</span>
     </div>
 
     <!-- items body -->
@@ -42,7 +42,8 @@
           <a>No items</a>
         </li>
         <li *ngFor="let item of (activeDimension$ | async)?.items" title="Click to select item">
-          <a (click)="addSelected(item, $event)">{{ item.name }}</a>
+          <a *ngIf="(activeDimension$ | async) as activeDimension" (click)="onAddDimensionItem(activeDimension, item, $event)">{{
+            item.name }}</a>
         </li>
 
         <li *ngIf="true">
@@ -56,8 +57,8 @@
 
     <div class="dynamic-dimension-selected-body">
       <ul>
-        <li *ngFor="let item of []" style="cursor: move" title="click to unselect item">
-          <a (click)="removeSelected(item, $event)">
+        <li *ngFor="let item of selectedDimensionItems" style="cursor: move" title="click to unselect item">
+          <a (click)="onRemoveDimensionItem(item, $event)">
             {{ item.name }} </a>
         </li>
         <li *ngIf="true">

@@ -18,6 +18,15 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
   dynamicDimensions$: Observable<DynamicDimension[]>;
 
   private _activeDimension: any;
+  get selectedDimensionItems(): any[] {
+    return _.flatten(
+      _.map(
+        this.selectedDimensions || [],
+        (selectedDimension: any) => selectedDimension.items
+      )
+    );
+  }
+
   get activeDimension$(): Observable<any> {
     if (!this._activeDimension) {
       const firstSelectedDimension = this.selectedDimensions
@@ -25,21 +34,37 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
         : null;
       return this.dynamicDimensions$.pipe(
         map((dynamicDimensions: DynamicDimension[]) => {
-          return (
+          const activeDimension: DynamicDimension =
             _.find(
               dynamicDimensions,
               firstSelectedDimension ? firstSelectedDimension.id : ''
-            ) || dynamicDimensions[0]
-          );
+            ) || dynamicDimensions[0];
+          return activeDimension
+            ? {
+                ...activeDimension,
+                items: _.filter(
+                  activeDimension.items || [],
+                  (item: any) =>
+                    !_.find(this.selectedDimensionItems, ['id', item.id])
+                )
+              }
+            : null;
         })
       );
     }
-    return of(this._activeDimension);
+    return of({
+      ...this._activeDimension,
+      items: _.filter(
+        this._activeDimension.items || [],
+        (item: any) => !_.find(this.selectedDimensionItems, ['id', item.id])
+      )
+    });
   }
 
   constructor(
     private dynamicDimensionStore: Store<fromDynamicDimension.State>
   ) {
+    this.selectedDimensions = [];
     this.dynamicDimensionStore.dispatch(new LoadDynamicDimensionsAction());
 
     // select dynamic dimension prorperties
@@ -52,5 +77,109 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit {
 
   onSetActiveDynamicDimension(dynamicDimension: DynamicDimension) {
     this._activeDimension = dynamicDimension;
+  }
+
+  onAddDimensionItem(dimensionObject, dimensionItem: any, e?) {
+    if (e) {
+      e.stopPropagation();
+    }
+    const availableDimensionObject = _.find(this.selectedDimensions, [
+      'id',
+      dimensionObject.id
+    ]);
+
+    if (!availableDimensionObject) {
+      this.selectedDimensions = [
+        ...this.selectedDimensions,
+        {
+          ...dimensionObject,
+          items: [dimensionItem]
+        }
+      ];
+    } else {
+      const availableDimensionIndex = this.selectedDimensions.indexOf(
+        availableDimensionObject
+      );
+
+      this.selectedDimensions =
+        availableDimensionIndex !== -1
+          ? [
+              ..._.slice(this.selectedDimensions, 0, availableDimensionIndex),
+              {
+                ...availableDimensionObject,
+                items: _.uniqBy(
+                  [...availableDimensionObject.items, dimensionItem],
+                  'id'
+                )
+              },
+              ..._.slice(this.selectedDimensions, availableDimensionIndex + 1)
+            ]
+          : this.selectedDimensions;
+    }
+  }
+
+  onRemoveDimensionItem(dimensionItem: any, e?) {
+    if (e) {
+      e.stopPropagation();
+    }
+
+    const dimensionObject: any = _.filter(
+      this.selectedDimensions,
+      (selectedDimensionObject: any) =>
+        _.find(selectedDimensionObject.items, ['id', dimensionItem.id])
+    )[0];
+    const availableDimensionObject = _.find(this.selectedDimensions, [
+      'id',
+      dimensionObject.id
+    ]);
+
+    if (availableDimensionObject) {
+      const availableDimensionIndex = this.selectedDimensions.indexOf(
+        availableDimensionObject
+      );
+
+      const dimensionItemIndex = availableDimensionObject.items.indexOf(
+        _.find(availableDimensionObject.items || [], ['id', dimensionItem.id])
+      );
+
+      this.selectedDimensions =
+        availableDimensionIndex !== -1
+          ? availableDimensionObject.items.length > 1
+            ? [
+                ..._.slice(this.selectedDimensions, 0, availableDimensionIndex),
+                {
+                  ...availableDimensionObject,
+                  items: [
+                    ..._.slice(
+                      availableDimensionObject.items,
+                      0,
+                      dimensionItemIndex
+                    ),
+                    ..._.slice(
+                      availableDimensionObject.items,
+                      dimensionItemIndex + 1
+                    )
+                  ]
+                },
+                ..._.slice(this.selectedDimensions, availableDimensionIndex + 1)
+              ]
+            : [
+                ..._.slice(this.selectedDimensions, 0, availableDimensionIndex),
+                ..._.slice(this.selectedDimensions, availableDimensionIndex + 1)
+              ]
+          : this.selectedDimensions;
+    }
+  }
+
+  onAddAllItems(dimensionObject: DynamicDimension, e) {
+    e.stopPropagation();
+    _.each(dimensionObject.items || [], (dimensionItem: any) => {
+      this.onAddDimensionItem(dimensionObject, dimensionItem);
+    });
+  }
+
+  onRemoveAllItems(e) {
+    e.stopPropagation();
+    this.selectedDimensions = [];
   }
 }
