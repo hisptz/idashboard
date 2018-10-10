@@ -64,7 +64,8 @@ export function drawTable(
     if (tableConfiguration.showDimensionLabels) {
       table.titlesAvailable = true;
       for (const item of tableConfiguration.columns) {
-        table.titles.column.push(analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)].column);
+        const titleColumns = analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)].column;
+        table.titles.column.push(titleColumns);
       }
       for (const item of tableConfiguration.rows) {
         table.titles.rows.push(analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)].column);
@@ -194,7 +195,7 @@ export function drawTable(
             name: '',
             val: getDataValue(analyticsObject, dataItem),
             color: getDataValueColor(
-              getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, analyticsObject.metaData, tableId),
+              getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, tableId),
               getDataValue(analyticsObject, dataItem)
             ),
             row_span: '1',
@@ -338,19 +339,19 @@ function getDataValue(analyticsObject, dataItems = []) {
 function getDataValueColor(legendItems: any = [], value) {
   const isLast = index => index === legendItems.length - 1;
   const dataItem =
-    value &&
+    (value || value === 0) &&
     legendItems &&
     legendItems.find(
-      (item, index) => value >= item.startValue && (value < item.endValue || (isLast(index) && value === item.endValue))
+      (item, index) =>
+        Number(value) >= Number(item.startValue) &&
+        (Number(value) < Number(item.endValue) || (isLast(index) && Number(value) === Number(item.endValue)))
     );
 
   return dataItem && dataItem.color;
 }
 
-function getLegendSets(dataItem, legendClasses, legendSets, configuration, metaData, tableId) {
+function getLegendSets(dataItem, legendClasses, legendSets, configuration, tableId) {
   const { legendDisplayStrategy } = configuration;
-  const { items } = metaData;
-
   if (legendDisplayStrategy === USE_BY_DATA_ITEM_LEGEND) {
     const dx = dataItem.find(dItem => dItem.type === 'dx');
     const legendSetId = `${tableId}_${dx.value}`;

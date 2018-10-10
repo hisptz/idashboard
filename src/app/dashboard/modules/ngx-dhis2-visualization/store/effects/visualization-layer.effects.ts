@@ -84,6 +84,7 @@ export class VisualizationLayerEffects {
               analyticsResponse => {
                 // Save visualizations layers
                 _.each(analyticsResponse, (analytics, analyticsIndex) => {
+                  // console.log({ analytics });
                   this.store.dispatch(
                     new LoadVisualizationAnalyticsSuccessAction(action.visualizationLayers[analyticsIndex].id, {
                       analytics: getSanitizedAnalytics(
