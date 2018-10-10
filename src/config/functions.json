@@ -3,158 +3,300 @@
     "function": "//Example of function implementation\nparameters.progress(0);\n//get expression and expresiion map form rule\nvar expressionMapping = parameters.rule.json.expressionMapping;\nvar namesMapping = parameters.rule.json.namesMapping\nvar expression = parameters.rule.json.expression;\n// get all uids form expression\nvar dataElements = getUidsFromExpression(expression);\n//checking for all de uids has mapper\nvar mappingStatus = getDataElementMappingStatus(dataElements,expressionMapping);\n//@todo remove skip logic in case result of mapping is false\nif(mappingStatus.areAllMapped){\n    //get analytics results\n    var dx=dataElements.join(\";\");\n    loadingAndEvaluateAnalyticsData(dx,expression,dataElements);\n}else{\n    // return error message with unmapped de\n    var errorMessage = getMissingDataElementsMappingErrorMessage(mappingStatus.dataElementWithoutMapping,namesMapping)\n    parameters.error(errorMessage);\n}\n\nfunction loadingAndEvaluateAnalyticsData(dx,expression,dataElements){\n    $.ajax({\n\turl: \"../../../api/analytics.json?dimension=dx:\" + dx + \"&dimension=pe:\" + parameters.pe + \"&dimension=ou:\" + parameters.ou,\n\ttype: \"GET\",\n\tsuccess: function(analyticsResults) {\n\t    //evaluate expression and and get new analytic object\n\t    \n\t\tparameters.success(getSanitizedAnalytict(analyticsResults,parameters));\n\t},\n\terror:function(error){\n\t\t  parameters.error(error);\n\t    }\n    })\n}\n\nfunction getDataElementMappingStatus(dataElements,expressionMapping){\n    var areAllMapped = true;\n    var dataElementWithoutMapping = []\n    dataElements.forEach(function(dataElement){\n        var hasBeenMapped  = false;\n        Object.keys(expressionMapping).forEach(function(key){\n            if(expressionMapping[key] === dataElement){\n              hasBeenMapped = true;  \n            }\n        })\n        if(!hasBeenMapped){\n            dataElementWithoutMapping = dataElementWithoutMapping.concat(dataElement);\n            areAllMapped = false;\n        }\n    });\n    return {areAllMapped,dataElementWithoutMapping};\n}\n\nfunction getUidsFromExpression(expression ){\n    var uids = [];\n    var matchRegrex = /(\\{.*?\\})/gi;\n    expression.match(matchRegrex).forEach(function(value){\n        uids = uids.concat(value.replace(\"{\", ':separator:').replace(\"}\", ':separator:').split(':separator:').filter(content => content.length > 0));\n    });\n    return uids;\n}\n\nfunction getMissingDataElementsMappingErrorMessage(dataElementsIds,namesMapping){\n    var errorMessage = {\"httpStatus\":\"Conflict\",\"httpStatusCode\":409,\"status\":\"ERROR\",\"message\":\"\"};\n    var missingDataElementNames = [];\n    dataElementsIds.forEach(function(id){\n        if(namesMapping[id]){\n          missingDataElementNames.push(namesMapping[id])  \n        }else{\n            missingDataElementNames.push(id) \n        }\n    })\n    errorMessage.message += missingDataElementNames.join(\",\") + \" have not been mapped\";\n    return errorMessage;\n}\n\nfunction getSanitizedAnalytict(analyticsResults,parameters){\n    var analytics = {\"headers\":[{\"name\":\"dx\",\"column\":\"Data\",\"valueType\":\"TEXT\",\"type\":\"java.lang.String\",\"hidden\":false,\"meta\":true},{\"name\":\"pe\",\"column\":\"Period\",\"valueType\":\"TEXT\",\"type\":\"java.lang.String\",\"hidden\":false,\"meta\":true},{\"name\":\"ou\",\"column\":\"Organisation unit\",\"valueType\":\"TEXT\",\"type\":\"java.lang.String\",\"hidden\":false,\"meta\":true},{\"name\":\"value\",\"column\":\"Value\",\"valueType\":\"NUMBER\",\"type\":\"java.lang.Double\",\"hidden\":false,\"meta\":false}],\"metaData\":{\"items\":{\"dx\":{\"name\":\"Data\"},\"pe\":{\"name\":\"Period\"},\"ou\":{\"name\":\"Organisation unit\"}},\"dimensions\":{\"dx\":[],\"pe\":[],\"ou\":[],\"co\":[]}},\"rows\":[],\"width\":4,\"height\":0};\n    var ous = [];\n    var periods = [];\n    if(analyticsResults && analyticsResults.metaData && analyticsResults.metaData.dimensions){\n        periods = periods.concat(analyticsResults.metaData.dimensions.pe);\n        ous = ous.concat(analyticsResults.metaData.dimensions.ou);\n        periods.forEach(function(pe){\n           analytics.metaData.items[pe] = analyticsResults.metaData.items[pe];\n        });\n         ous.forEach(function(ou){\n           analytics.metaData.items[ou] = analyticsResults.metaData.items[ou];\n        });\n        \n    }else if(analyticsResults && analyticsResults.metaData && analyticsResults.metaData.pe){\n        periods = periods.concat(analyticsResults.metaData.pe);\n        ous = ous.concat(analyticsResults.metaData.ou);\n        if(analyticsResults.metaData.names){\n            periods.forEach(function(pe){\n                analytics.metaData.items[pe] = {\"name\": analyticsResults.metaData.names[pe]};\n            });\n             ous.forEach(function(ou){\n               analytics.metaData.items[ou] = {\"name\": analyticsResults.metaData.names[ou]};\n            }); \n        }\n    }\n    \n    var rule = parameters.rule;\n    analytics.metaData.items[rule.id] = {\"name\" : rule.name};\n    analytics.metaData.dimensions.dx = analytics.metaData.dimensions.dx.concat(rule.id)\n    analytics.metaData.dimensions.pe = analytics.metaData.dimensions.pe.concat(periods)\n    analytics.metaData.dimensions.ou = analytics.metaData.dimensions.dx.concat(ous);\n    \n    if(ous.length > 0 && periods.length > 0){\n        // get key value pair\n        ous.forEach(function(ou){\n            periods.forEach(function(pe){\n                var keyValuePair = getDataElementValuePair(ou,pe,analyticsResults.rows);\n                //get evaulated values of rule\n                var evaluatedValue = getEvaluatedValueOfRule(rule.json.expression, keyValuePair);\n                //adding values on row\n                analytics.rows.push([rule.id,pe,ou,evaluatedValue]);\n            })\n        })\n    }\n    analytics.height = analytics.rows.length;\n    return analytics;\n}\n\nfunction getDataElementValuePair(ou,pe,rows){\n    var keyValuePair = {};\n    rows.forEach(function(row){\n        var key = row[0];\n        if(!keyValuePair[key]){\n           keyValuePair[key] = 0; \n        }\n        if(row.length === 4){\n          var rowPe = row[1];\n          var rowOu = row[2];\n          var value = row[3];  \n          if(rowPe === pe && rowOu === ou){\n              var oldValue = parseInt(keyValuePair[key],10);\n              var newValue = oldValue + parseInt(value,10);\n              keyValuePair[key] = newValue.toFixed(1);   \n          }\n        }\n    });\n    return keyValuePair;\n}\n\nfunction getEvaluatedValueOfRule(expression, keyValuePair){\n    var evaluatedValue = 0;\n    var formulaPattern = /#\\{.+?\\}/g;\n    var matcher = expression.match(formulaPattern);\n    matcher.forEach(function(match) {\n        var operand = match.replace(/[#\\{\\}]/g, '');\n        if(keyValuePair[operand]){\n            expression = expression.replace(match, parseInt(keyValuePair[operand],10));\n        }\n        try{\n            if(!isNaN(eval(expression))){\n                evaluatedValue = eval(expression);\n            }\n        }catch(e){\n            \n        }\n    });\n    return evaluatedValue.toFixed(1);\n}\n\n\n\n\n\n\n\n\n",
     "rules": [{
         "id": "OCN59f0jJbk",
-        "name": "Proportion of foci investigated",
+        "name": "Foci investigated",
         "description": "Number of foci investigated divided by total number of foci in the registry multipled by 100 (in ayear)",
-        "json": "{\"expression\":\"((#{EHbjdbiKtd8}/#{lZi1cjtvVB6})*100)\",\"expressionMapping\":{\"EHbjdbiKtd8\":null,\"lZi1cjtvVB6\":null},\"namesMapping\":{\"EHbjdbiKtd8\":\"Number of malaria foci classified\",\"lZi1cjtvVB6\":\"Number of new active foci with the current calendar year\"}}"
-      },
-      {
-        "id": "kRasaq1REFp",
-        "name": "Number of total malaria cases (confirmed + presumed)",
-        "json": "{\"expression\":\"((#{kRasaq1REFp}/1)*1)\",\"expressionMapping\":{\"kRasaq1REFp\":null},\"namesMapping\":{\"kRasaq1REFp\":\"Number of total malaria cases (confirmed + presumed)\"}}"
-      },
-      {
-        "id": "q5EPiDt5Xzt",
-        "name": "Malaria inpatient reporting completeness (%)",
-        "description": "Percentage of reporting completeness for malaria inpatients ",
-        "json": "{\"expression\":\"((#{v0WZQQ6gKAX}/#{IVf0LfRTMw7})*100)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null,\"IVf0LfRTMw7\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\",\"IVf0LfRTMw7\":\"Number of health facilities expected to report\"}}"
-      },
-      {
-        "id": "YS1Rf9k88HX",
-        "name": "Malaria deaths reporting completeness (%)",
-        "description": "Number of malaria deaths reported by health facilities (public, private and NGO) divided by total number of health facilities expected to report ",
-        "json": "{\"expression\":\"((#{GxlrIgMyEf4}/#{IVf0LfRTMw7})*100)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null,\"IVf0LfRTMw7\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\",\"IVf0LfRTMw7\":\"Number of health facilities expected to report\"}}"
-      },
-      {
-        "id": "GxlrIgMyEf4",
-        "name": "Number of malaria deaths",
-        "json": "{\"expression\":\"((#{GxlrIgMyEf4}/1)*1)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\"}}"
-      },
-      {
-        "id": "af7VIQU9Gsb",
-        "name": "Non-malaria inpatient deaths",
-        "description": "All deaths except malaria (all-cause deaths minus malaria deaths)",
-        "json": "{\"expression\":\"((#{SXGjaEobp6V} - #{GxlrIgMyEf4}/1)*1)\",\"expressionMapping\":{\"SXGjaEobp6V\":null,\"GxlrIgMyEf4\":null},\"namesMapping\":{\"SXGjaEobp6V\":\"Number of all-cause death\",\"GxlrIgMyEf4\":\"Number of malaria deaths\"}}"
-      },
-      {
-        "id": "UHoPVgnALcd",
-        "name": "Non-malaria outpatient cases",
-        "description": "All outpatient cases except malaria (all-cause outpatient cases minus malaria cases)",
-        "json": "{\"expression\":\"((#{VL73cqNHxBJ} - #{kRasaq1REFp}/1)*1)\",\"expressionMapping\":{\"VL73cqNHxBJ\":null,\"kRasaq1REFp\":null},\"namesMapping\":{\"VL73cqNHxBJ\":\"Number of all-cause outpatient cases\",\"kRasaq1REFp\":\"Number of total malaria cases (confirmed + presumed)\"}}"
+        "json": "{\"expression\":\"(((#{EHbjdbiKtd8})/(#{lZi1cjtvVB6}))*100)\",\"expressionMapping\":{\"EHbjdbiKtd8\":null,\"lZi1cjtvVB6\":null},\"namesMapping\":{\"EHbjdbiKtd8\":\"Number of malaria foci classified\",\"lZi1cjtvVB6\":\"Number of new foci indentified\"}}"
       },
       {
         "id": "nrJvyLYwsHA",
-        "name": "Proportion of foci classified",
+        "name": "Foci classified",
         "description": "Number of foci investigated and classified divided by total number of foci in the registry multipled by 100 (in ayear)",
-        "json": "{\"expression\":\"((#{EHbjdbiKtd8}/#{lZi1cjtvVB6})*100)\",\"expressionMapping\":{\"EHbjdbiKtd8\":null,\"lZi1cjtvVB6\":null},\"namesMapping\":{\"EHbjdbiKtd8\":\"Number of malaria foci classified\",\"lZi1cjtvVB6\":\"Number of new active foci with the current calendar year\"}}"
+        "json": "{\"expression\":\"(((#{EHbjdbiKtd8})/(#{lZi1cjtvVB6}))*100)\",\"expressionMapping\":{\"EHbjdbiKtd8\":null,\"lZi1cjtvVB6\":null},\"namesMapping\":{\"EHbjdbiKtd8\":\"Number of malaria foci classified\",\"lZi1cjtvVB6\":\"Number of new foci indentified\"}}"
       },
       {
         "id": "v0WZQQ6gKAX",
         "name": "Number of inpatient malaria cases",
-        "json": "{\"expression\":\"((#{v0WZQQ6gKAX}/1)*1)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\"}}"
-      },
-      {
-        "id": "DPNsg3wjxGm",
-        "name": "Number of malaria cases tested with microscopy ",
-        "json": "{\"expression\":\"((#{DPNsg3wjxGm}/1)*1)\",\"expressionMapping\":{\"DPNsg3wjxGm\":null},\"namesMapping\":{\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \"}}"
-      },
-      {
-        "id": "HMUc4RajgaC",
-        "name": "Number of malaria cases classified as local",
-        "json": "{\"expression\":\"((#{HMUc4RajgaC}/1)*1)\",\"expressionMapping\":{\"HMUc4RajgaC\":null},\"namesMapping\":{\"HMUc4RajgaC\":\"Number of malaria cases classified as local\"}}"
-      },
-      {
-        "id": "Te6QHrjYc8k",
-        "name": "Slide positivity rate (microscopy)",
-        "description": "Number of malaria microscopy positive cases divided by total microcopy tests multiplied by 100",
-        "json": "{\"expression\":\"((#{enVf9I39FRZ}/#{DPNsg3wjxGm})*100)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"DPNsg3wjxGm\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \"}}"
-      },
-      {
-        "id": "EM5cpI2NZ7d",
-        "name": "Percentage of P. falciparum",
-        "description": "Percentage of positive cases due to P. falciparum (Number of cases due to P. falciparum divided by all positives multiplied by 100)",
-        "json": "{\"expression\":\"((#{cEKPBNNMixF} + #{lgDGha7OO9o} + #{IUrl6HtHVQI}/#{cEKPBNNMixF} + #{yHS1RqIFeD7} + #{lgDGha7OO9o} + #{jtyuEfbNbkb} + #{iMcQ1MedqGo} + #{WNcIBqTodHr} + #{QJUcVI1zY5y} + #{IUrl6HtHVQI} + #{yVGY0DGVPor} + #{llpG8qA0SvG})*100)\",\"expressionMapping\":{\"jvjJ901K56K\":\"cEKPBNNMixF\",\"lgDGha7OO9o\":null,\"IUrl6HtHVQI\":null,\"yHS1RqIFeD7\":null,\"jtyuEfbNbkb\":null,\"iMcQ1MedqGo\":null,\"WNcIBqTodHr\":null,\"QJUcVI1zY5y\":null,\"yVGY0DGVPor\":null,\"llpG8qA0SvG\":null},\"namesMapping\":{\"jvjJ901K56K\":\"Number of plasmodium falciparum (microscopy) \",\"lgDGha7OO9o\":\"Number of malaria mixed infection (microscopy) \",\"IUrl6HtHVQI\":\"Number of plasmodium falciparum (RDT) \",\"yHS1RqIFeD7\":\"Number of plasmodium vivax (microscopy) \",\"jtyuEfbNbkb\":\"Number of other malaria species (microscopy) \",\"iMcQ1MedqGo\":\"Number of plasmodium ovale (microscopy) \",\"WNcIBqTodHr\":\"Number of plasmodium malariae (microscopy) \",\"QJUcVI1zY5y\":\"Number of plasmodium knowlesi (microscopy) \",\"yVGY0DGVPor\":\"Number of plasmodium vivax (RDT) \",\"llpG8qA0SvG\":\"Number of mixed/Other malaria species (RDT)\"}}"
-      },
-      {
-        "id": "clAcoaqWA5q",
-        "name": "Percentage of P. vivax",
-        "description": "Percentage of positive cases due to P. vivax (Number of cases due to P. falciparum divided by all positives multiplied by 100)",
-        "json": "{\"expression\":\"((#{yHS1RqIFeD7} + #{yVGY0DGVPor}/#{cEKPBNNMixF} + #{yHS1RqIFeD7} + #{lgDGha7OO9o} + #{jtyuEfbNbkb} + #{iMcQ1MedqGo} + #{WNcIBqTodHr} + #{QJUcVI1zY5y} + #{IUrl6HtHVQI} + #{yVGY0DGVPor} + #{llpG8qA0SvG})*100)\",\"expressionMapping\":{\"yHS1RqIFeD7\":null,\"yVGY0DGVPor\":null,\"jvjJ901K56K\":\"cEKPBNNMixF\",\"lgDGha7OO9o\":null,\"jtyuEfbNbkb\":null,\"iMcQ1MedqGo\":null,\"WNcIBqTodHr\":null,\"QJUcVI1zY5y\":null,\"IUrl6HtHVQI\":null,\"llpG8qA0SvG\":null},\"namesMapping\":{\"yHS1RqIFeD7\":\"Number of plasmodium vivax (microscopy) \",\"yVGY0DGVPor\":\"Number of plasmodium vivax (RDT) \",\"jvjJ901K56K\":\"Number of plasmodium falciparum (microscopy) \",\"lgDGha7OO9o\":\"Number of malaria mixed infection (microscopy) \",\"jtyuEfbNbkb\":\"Number of other malaria species (microscopy) \",\"iMcQ1MedqGo\":\"Number of plasmodium ovale (microscopy) \",\"WNcIBqTodHr\":\"Number of plasmodium malariae (microscopy) \",\"QJUcVI1zY5y\":\"Number of plasmodium knowlesi (microscopy) \",\"IUrl6HtHVQI\":\"Number of plasmodium falciparum (RDT) \",\"llpG8qA0SvG\":\"Number of mixed/Other malaria species (RDT)\"}}"
-      },
-      {
-        "id": "gTPP0wYkXBA",
-        "name": "Total malaria confirmed cases",
-        "description": "Cases confirmed as positive with microscopy and/or RDT \n",
-        "json": "{\"expression\":\"((#{enVf9I39FRZ} + #{vTRrNdOOT9g}/1)*1)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
-      },
-      {
-        "id": "fj29hAOSNDk",
-        "name": "Annual blood examination rate",
-        "description": "\"The number of people receiving a parasitological test for malaria per\nunit population per year \"",
-        "json": "{\"expression\":\"((#{DPNsg3wjxGm} + #{pmRn0GsUfr6}/1)*100)\",\"expressionMapping\":{\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
-      },
-      {
-        "id": "lZi1cjtvVB6",
-        "name": "Number of new active foci with the current calendar year",
-        "json": "{\"expression\":\"((#{lZi1cjtvVB6}/1)*1)\",\"expressionMapping\":{\"lZi1cjtvVB6\":null},\"namesMapping\":{\"lZi1cjtvVB6\":\"Number of new active foci with the current calendar year\"}}"
-      },
-      {
-        "id": "HfEGwjpq3Rq",
-        "name": "Presumed cases",
-        "description": "Case suspected of being malaria that is not confirmed by a diagnostic test.\nNote: The designation ?presumed case? is reserved for uncommon\nsituations in which a diagnostic test cannot be performed in a timely\nmanner. ",
-        "json": "{\"expression\":\"((#{cE8SDxizo5s} - (#{DPNsg3wjxGm} + #{pmRn0GsUfr6})/1)*1)\",\"expressionMapping\":{\"cE8SDxizo5s\":null,\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"cE8SDxizo5s\":\"Number of suspected malaria cases\",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
-      },
-      {
-        "id": "IPI8Xmc1nnT",
-        "name": "Test positivity rate (RDT)",
-        "description": "Number of malaria RDT positive cases divided by total RDT tests multiplied by 100",
-        "json": "{\"expression\":\"((#{vTRrNdOOT9g}/#{pmRn0GsUfr6})*100)\",\"expressionMapping\":{\"vTRrNdOOT9g\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
-      },
-      {
-        "id": "lWrQhvx4YUA",
-        "name": "Proportion of cases investigated",
-        "description": "Number of positive cases detected through PCD and investigated by total number of cases detected through PCD",
-        "json": "{\"expression\":\"((#{Ppc51eaCPHb}/#{enVf9I39FRZ} + #{vTRrNdOOT9g})*100)\",\"expressionMapping\":{\"Ppc51eaCPHb\":null,\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"Ppc51eaCPHb\":\"Number of malaria cases investigated\",\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
-      },
-      {
-        "id": "c9o7AH6loTf",
-        "name": "Proportion of cases classified",
-        "description": "Number of positive cases investigated and classified divided by total number of cases investigated multiplied by 100 ",
-        "json": "{\"expression\":\"((#{a4Cw4iPcMrY} /#{enVf9I39FRZ} + #{vTRrNdOOT9g})*100)\",\"expressionMapping\":{\"a4Cw4iPcMrY\":null,\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"a4Cw4iPcMrY\":\"Number of malaria cases classified\",\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
-      },
-      {
-        "id": "pmRn0GsUfr6",
-        "name": "Number of malaria cases tested with RDT",
-        "json": "{\"expression\":\"((#{pmRn0GsUfr6}/1)*1)\",\"expressionMapping\":{\"pmRn0GsUfr6\":null},\"namesMapping\":{\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+        "json": "{\"expression\":\"(((#{v0WZQQ6gKAX})/(1))*1)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\"}}"
       },
       {
         "id": "FDgw48IMC7A",
         "name": "Non-malaria inpatient cases",
         "description": "All inpatient cases except malaria (all-cause admissions minus malaria admissions)",
-        "json": "{\"expression\":\"((#{BjDrgVrkBI3} - #{v0WZQQ6gKAX}/1)*1)\",\"expressionMapping\":{\"BjDrgVrkBI3\":null,\"v0WZQQ6gKAX\":null},\"namesMapping\":{\"BjDrgVrkBI3\":\"Number of all-cause inpatient\",\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\"}}"
+        "json": "{\"expression\":\"((((#{BjDrgVrkBI3}) - (#{v0WZQQ6gKAX}))/(1))*1)\",\"expressionMapping\":{\"BjDrgVrkBI3\":null,\"v0WZQQ6gKAX\":null},\"namesMapping\":{\"BjDrgVrkBI3\":\"Number of all-cause inpatient\",\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\"}}"
+      },
+      {
+        "id": "c9o7AH6loTf",
+        "name": "Cases classified",
+        "description": "Number of positive cases investigated and classified divided by total number of cases investigated multiplied by 100 ",
+        "json": "{\"expression\":\"(((((#{a4Cw4iPcMrY})))/(((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g}))))*100)\",\"expressionMapping\":{\"a4Cw4iPcMrY\":null,\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"a4Cw4iPcMrY\":\"Number of malaria cases classified\",\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
       },
       {
         "id": "MljjlLCWohp",
         "name": "Proportion of local cases",
         "description": "Number of cases classified as either indigineous or introduced divided by total number of cases classified mutiplied by 100",
-        "json": "{\"expression\":\"((#{HMUc4RajgaC} /#{enVf9I39FRZ} + #{vTRrNdOOT9g})*100)\",\"expressionMapping\":{\"HMUc4RajgaC\":null,\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"HMUc4RajgaC\":\"Number of malaria cases classified as local\",\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
+        "json": "{\"expression\":\"(((((#{HMUc4RajgaC})))/(((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g}))))*100)\",\"expressionMapping\":{\"HMUc4RajgaC\":null,\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"HMUc4RajgaC\":\"Number of malaria cases classified as local\",\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
       },
       {
         "id": "ySyleCjszMH",
         "name": "Proportion of outpatient malaria cases",
         "description": "Malaria as a proportion of all-cause outpatient consultations",
-        "json": "{\"expression\":\"((#{kRasaq1REFp}/#{VL73cqNHxBJ})*1)\",\"expressionMapping\":{\"kRasaq1REFp\":null,\"VL73cqNHxBJ\":null},\"namesMapping\":{\"kRasaq1REFp\":\"Number of total malaria cases (confirmed + presumed)\",\"VL73cqNHxBJ\":\"Number of all-cause outpatient cases\"}}"
+        "json": "{\"expression\":\"((((#{kRasaq1REFp}))/((#{VL73cqNHxBJ})))*1)\",\"expressionMapping\":{\"kRasaq1REFp\":null,\"VL73cqNHxBJ\":null},\"namesMapping\":{\"kRasaq1REFp\":\"Incidence\",\"VL73cqNHxBJ\":\"Number of all-cause outpatient cases\"}}"
       },
       {
         "id": "UROz5lfu4ab",
         "name": "Proportion of inpatient malaria",
         "description": "Malaria as a proportion of all-cause inpatient cases (admissions or hospitalizations)",
-        "json": "{\"expression\":\"((#{v0WZQQ6gKAX}/#{BjDrgVrkBI3})*1)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null,\"BjDrgVrkBI3\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\",\"BjDrgVrkBI3\":\"Number of all-cause inpatient\"}}"
+        "json": "{\"expression\":\"((((#{v0WZQQ6gKAX}))/((#{BjDrgVrkBI3})))*1)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null,\"BjDrgVrkBI3\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\",\"BjDrgVrkBI3\":\"Number of all-cause inpatient\"}}"
       },
       {
         "id": "ploh4JSyBCf",
         "name": "Proportion of malaria deaths",
         "description": "Malaria as a proportion of all-cause deaths ",
-        "json": "{\"expression\":\"((#{GxlrIgMyEf4}/#{SXGjaEobp6V})*1)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null,\"SXGjaEobp6V\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\",\"SXGjaEobp6V\":\"Number of all-cause death\"}}"
+        "json": "{\"expression\":\"((((#{GxlrIgMyEf4}))/((#{SXGjaEobp6V})))*1)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null,\"SXGjaEobp6V\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\",\"SXGjaEobp6V\":\"Number of all-cause death\"}}"
+      },
+      {
+        "id": "DPNsg3wjxGm",
+        "name": "Number of malaria cases tested with microscopy ",
+        "json": "{\"expression\":\"(((#{DPNsg3wjxGm})/(1))*1)\",\"expressionMapping\":{\"DPNsg3wjxGm\":null},\"namesMapping\":{\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \"}}"
+      },
+      {
+        "id": "pmRn0GsUfr6",
+        "name": "Number of malaria cases tested with RDT",
+        "json": "{\"expression\":\"(((#{pmRn0GsUfr6})/(1))*1)\",\"expressionMapping\":{\"pmRn0GsUfr6\":null},\"namesMapping\":{\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+      },
+      {
+        "id": "Te6QHrjYc8k",
+        "name": "Slide positivity rate (microscopy)",
+        "description": "Number of malaria microscopy positive cases divided by total microcopy tests multiplied by 100",
+        "json": "{\"expression\":\"(((((#{enVf9I39FRZ})))/(((#{DPNsg3wjxGm}))))*100)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"DPNsg3wjxGm\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \"}}"
+      },
+      {
+        "id": "ZCCrHrs1Ta2",
+        "name": "Proportion of population at risk",
+        "description": "Popuation living in areas where malaria transmission is possible, i.e. population living in either endemic area, active foci, non-active and cleared-up foci",
+        "json": "{\"expression\":\"((((#{cOVhTyW8zN6}))/(1))*1)\",\"expressionMapping\":{\"cOVhTyW8zN6\":null},\"namesMapping\":{\"cOVhTyW8zN6\":\"Population at risk\"}}"
+      },
+      {
+        "id": "lz1FE0wvo1m",
+        "name": "Number of active foci ",
+        "json": "{\"expression\":\"(((#{lz1FE0wvo1m})/(1))*1)\",\"expressionMapping\":{\"lz1FE0wvo1m\":null},\"namesMapping\":{\"lz1FE0wvo1m\":\"Number of active foci \"}}"
+      },
+      {
+        "id": "Qzfvt1YRb1Y",
+        "name": "Number of residula non-active foci",
+        "json": "{\"expression\":\"(((#{Qzfvt1YRb1Y})/(1))*1)\",\"expressionMapping\":{\"Qzfvt1YRb1Y\":null},\"namesMapping\":{\"Qzfvt1YRb1Y\":\"Number of residula non-active foci\"}}"
+      },
+      {
+        "id": "LH9FKWl1FfP",
+        "name": "Number of cleared-up foci",
+        "json": "{\"expression\":\"(((#{LH9FKWl1FfP})/(1))*1)\",\"expressionMapping\":{\"LH9FKWl1FfP\":null},\"namesMapping\":{\"LH9FKWl1FfP\":\"Number of cleared-up foci\"}}"
+      },
+      {
+        "id": "gTPP0wYkXBA",
+        "name": "Confirmed cases",
+        "description": "Cases confirmed as positive with microscopy and/or RDT \n",
+        "json": "{\"expression\":\"(((((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g})))/(1))*1)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
+      },
+      {
+        "id": "DYpakDmCvNG",
+        "name": "Indigenous cases",
+        "json": "{\"expression\":\"(((#{DYpakDmCvNG})/(1))*1)\",\"expressionMapping\":{\"DYpakDmCvNG\":null},\"namesMapping\":{\"DYpakDmCvNG\":\"Indigenous cases\"}}"
+      },
+      {
+        "id": "Ppc51eaCPHb",
+        "name": "Number of Malaria cases investigated",
+        "json": "{\"expression\":\"(((#{Ppc51eaCPHb})/(1))*1)\",\"expressionMapping\":{\"Ppc51eaCPHb\":null},\"namesMapping\":{\"Ppc51eaCPHb\":\"Number of Malaria cases investigated\"}}"
+      },
+      {
+        "id": "nx6lSAN1YmB",
+        "name": "Proportion of cases investigated within N2 days  of diagnosis",
+        "description": "Number of confirmed malaria cases investigated within (N2)*,the number of days after confirmation, defined in the national guideline divided by total number of confirmed malaria cases reported through PCD multiplied by 100. ",
+        "json": "{\"expression\":\"(((#{HHpmA3PRXlJ})/(((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g}))))*100)\",\"expressionMapping\":{\"HHpmA3PRXlJ\":null,\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"HHpmA3PRXlJ\":\"Number of malaria cases investigated within (N2)* timeframe of the guideline\",\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
+      },
+      {
+        "id": "EM5cpI2NZ7d",
+        "name": "Percentage of P. falciparum",
+        "description": "Percentage of positive cases due to P. falciparum (Number of cases due to P. falciparum divided by all positives multiplied by 100)",
+        "json": "{\"expression\":\"(((((#{jvjJ901K56K})) + ((#{lgDGha7OO9o}) ) + ((#{IUrl6HtHVQI} )))/(((#{jvjJ901K56K})) + ((#{yHS1RqIFeD7} ) ) + ((#{lgDGha7OO9o})) + ((#{jtyuEfbNbkb} ) ) + ((#{WNcIBqTodHr}) ) + ((#{QJUcVI1zY5y} )) + ((#{IUrl6HtHVQI})) + ((#{yVGY0DGVPor})) + ((#{llpG8qA0SvG})) + ((#{iMcQ1MedqGo}))))*100)\",\"expressionMapping\":{\"jvjJ901K56K\":null,\"lgDGha7OO9o\":null,\"IUrl6HtHVQI\":null,\"yHS1RqIFeD7\":null,\"jtyuEfbNbkb\":null,\"WNcIBqTodHr\":null,\"QJUcVI1zY5y\":null,\"yVGY0DGVPor\":null,\"llpG8qA0SvG\":null,\"iMcQ1MedqGo\":null},\"namesMapping\":{\"jvjJ901K56K\":\"Number of plasmodium falciparum (microscopy) \",\"lgDGha7OO9o\":\"Number of malaria mixed infection (microscopy) \",\"IUrl6HtHVQI\":\"Number of plasmodium falciparum (RDT) \",\"yHS1RqIFeD7\":\"Number of plasmodium vivax (microscopy) \",\"jtyuEfbNbkb\":\"Number of other malaria species (microscopy) \",\"WNcIBqTodHr\":\"Number of plasmodium malariae (microscopy) \",\"QJUcVI1zY5y\":\"Number of plasmodium knowlesi (microscopy) \",\"yVGY0DGVPor\":\"Number of plasmodium vivax (RDT) \",\"llpG8qA0SvG\":\"Number of mixed/Other malaria species (RDT)\",\"iMcQ1MedqGo\":\"Number of plasmodium ovale (microscopy) \"}}"
+      },
+      {
+        "id": "clAcoaqWA5q",
+        "name": "Percentage of P. vivax",
+        "description": "Percentage of positive cases due to P. vivax (Number of cases due to P. falciparum divided by all positives multiplied by 100)",
+        "json": "{\"expression\":\"(((((#{yHS1RqIFeD7})) + ((#{yVGY0DGVPor})))/(((#{jvjJ901K56K})) + ((#{yHS1RqIFeD7})) + ((#{lgDGha7OO9o})) + ((#{jtyuEfbNbkb}) ) + ((#{iMcQ1MedqGo}) + ((#{WNcIBqTodHr})) + ((#{IUrl6HtHVQI})) + ((#{yVGY0DGVPor})) + ((#{llpG8qA0SvG})) + ((#{QJUcVI1zY5y}))))*100)\",\"expressionMapping\":{\"yHS1RqIFeD7\":null,\"yVGY0DGVPor\":null,\"jvjJ901K56K\":null,\"lgDGha7OO9o\":null,\"jtyuEfbNbkb\":null,\"iMcQ1MedqGo\":null,\"WNcIBqTodHr\":null,\"IUrl6HtHVQI\":null,\"llpG8qA0SvG\":null,\"QJUcVI1zY5y\":null},\"namesMapping\":{\"yHS1RqIFeD7\":\"Number of plasmodium vivax (microscopy) \",\"yVGY0DGVPor\":\"Number of plasmodium vivax (RDT) \",\"jvjJ901K56K\":\"Number of plasmodium falciparum (microscopy) \",\"lgDGha7OO9o\":\"Number of malaria mixed infection (microscopy) \",\"jtyuEfbNbkb\":\"Number of other malaria species (microscopy) \",\"iMcQ1MedqGo\":\"Number of plasmodium ovale (microscopy) \",\"WNcIBqTodHr\":\"Number of plasmodium malariae (microscopy) \",\"IUrl6HtHVQI\":\"Number of plasmodium falciparum (RDT) \",\"llpG8qA0SvG\":\"Number of mixed/Other malaria species (RDT)\",\"QJUcVI1zY5y\":\"Number of plasmodium knowlesi (microscopy) \"}}"
+      },
+      {
+        "id": "lZi1cjtvVB6",
+        "name": "Number of new foci indentified",
+        "json": "{\"expression\":\"(((#{lZi1cjtvVB6})/(1))*1)\",\"expressionMapping\":{\"lZi1cjtvVB6\":null},\"namesMapping\":{\"lZi1cjtvVB6\":\"Number of new foci indentified\"}}"
+      },
+      {
+        "id": "EHbjdbiKtd8",
+        "name": "Number of malaria foci classified",
+        "json": "{\"expression\":\"(((#{EHbjdbiKtd8})/(1))*1)\",\"expressionMapping\":{\"EHbjdbiKtd8\":null},\"namesMapping\":{\"EHbjdbiKtd8\":\"Number of malaria foci classified\"}}"
+      },
+      {
+        "id": "IS9VxwhkJXR",
+        "name": "proportion of foci with response within N4 days of diagnosis",
+        "description": "Number of foci with response within (N4)*,(the number of days after confirmation of case, defined in the national guideline) divided by total number of foci detected as new (eligible for response) muliplied by 100. Note: Eligibility of foci for response depends on previous interventions, status of foci (active, non-active or cleare-up)",
+        "json": "{\"expression\":\"(((#{jKGVvTehpps})/(#{lZi1cjtvVB6}))*100)\",\"expressionMapping\":{\"jKGVvTehpps\":null,\"lZi1cjtvVB6\":null},\"namesMapping\":{\"jKGVvTehpps\":\"Number of malaria foci with response within (N4)* timeframe of the guideline\",\"lZi1cjtvVB6\":\"Number of new foci indentified\"}}"
+      },
+      {
+        "id": "lWrQhvx4YUA",
+        "name": "Cases investigated",
+        "description": "Number of positive cases detected through PCD and investigated by total number of cases detected through PCD",
+        "json": "{\"expression\":\"(((((#{Ppc51eaCPHb})))/(((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g}))))*100)\",\"expressionMapping\":{\"Ppc51eaCPHb\":null,\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"Ppc51eaCPHb\":\"Number of Malaria cases investigated\",\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
+      },
+      {
+        "id": "fj29hAOSNDk",
+        "name": "Annual blood examination rate",
+        "description": "\"The number of people receiving a parasitological test for malaria per\nunit population per year \"",
+        "json": "{\"expression\":\"(((((#{DPNsg3wjxGm})) + (( #{pmRn0GsUfr6}) ))/(1))*100)\",\"expressionMapping\":{\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+      },
+      {
+        "id": "HfEGwjpq3Rq",
+        "name": "Presumed cases",
+        "description": "Case suspected of being malaria that is not confirmed by a diagnostic test.\nNote: The designation “presumed case” is reserved for uncommon\nsituations in which a diagnostic test cannot be performed in a timely\nmanner. ",
+        "json": "{\"expression\":\"((((#{cE8SDxizo5s}) + (((#{DPNsg3wjxGm})) + ((#{pmRn0GsUfr6}))))/(1))*1)\",\"expressionMapping\":{\"cE8SDxizo5s\":null,\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"cE8SDxizo5s\":\"Number of suspected malaria cases\",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+      },
+      {
+        "id": "HMUc4RajgaC",
+        "name": "Number of malaria cases classified as local",
+        "json": "{\"expression\":\"(((#{HMUc4RajgaC})/(1))*1)\",\"expressionMapping\":{\"HMUc4RajgaC\":null},\"namesMapping\":{\"HMUc4RajgaC\":\"Number of malaria cases classified as local\"}}"
+      },
+      {
+        "id": "kRasaq1REFp",
+        "name": "Incidence",
+        "json": "{\"expression\":\"(((#{kRasaq1REFp})/(1))*1)\",\"expressionMapping\":{\"kRasaq1REFp\":null},\"namesMapping\":{\"kRasaq1REFp\":\"Incidence\"}}"
+      },
+      {
+        "id": "UHoPVgnALcd",
+        "name": "Non-malaria outpatient cases",
+        "description": "All outpatient cases except malaria (all-cause outpatient cases minus malaria cases)",
+        "json": "{\"expression\":\"((((#{VL73cqNHxBJ}) -(#{kRasaq1REFp}))/(1))*1)\",\"expressionMapping\":{\"VL73cqNHxBJ\":null,\"kRasaq1REFp\":null},\"namesMapping\":{\"VL73cqNHxBJ\":\"Number of all-cause outpatient cases\",\"kRasaq1REFp\":\"Incidence\"}}"
+      },
+      {
+        "id": "GxlrIgMyEf4",
+        "name": "Number of malaria deaths",
+        "json": "{\"expression\":\"(((#{GxlrIgMyEf4})/(1))*1)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\"}}"
+      },
+      {
+        "id": "af7VIQU9Gsb",
+        "name": "Non-malaria inpatient deaths",
+        "description": "All deaths except malaria (all-cause deaths minus malaria deaths)",
+        "json": "{\"expression\":\"((((#{SXGjaEobp6V}) - (#{GxlrIgMyEf4}))/(1))*1)\",\"expressionMapping\":{\"SXGjaEobp6V\":null,\"GxlrIgMyEf4\":null},\"namesMapping\":{\"SXGjaEobp6V\":\"Number of all-cause death\",\"GxlrIgMyEf4\":\"Number of malaria deaths\"}}"
+      },
+      {
+        "id": "q5EPiDt5Xzt",
+        "name": "Malaria inpatient reporting completeness (%)",
+        "description": "Percentage of reporting completeness for malaria inpatients ",
+        "json": "{\"expression\":\"((((#{v0WZQQ6gKAX}))/(#{IVf0LfRTMw7}))*100)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null,\"IVf0LfRTMw7\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\",\"IVf0LfRTMw7\":\"Number of health facilities expected to report\"}}"
+      },
+      {
+        "id": "YS1Rf9k88HX",
+        "name": "Malaria deaths reporting completeness (%)",
+        "description": "Number of malaria deaths reported by health facilities (public, private and NGO) divided by total number of health facilities expected to report ",
+        "json": "{\"expression\":\"((((#{GxlrIgMyEf4}))/(#{IVf0LfRTMw7}))*100)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null,\"IVf0LfRTMw7\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\",\"IVf0LfRTMw7\":\"Number of health facilities expected to report\"}}"
+      },
+      {
+        "id": "AvQDluaf46N",
+        "name": "Total malaria cases (confirmed+presumed)",
+        "description": "Total number of cases reported as malaria (confirmed with either microscopy or RDT, and presumed clinically as malaria in absence of diagnosis)",
+        "json": "{\"expression\":\"((((#{enVf9I39FRZ} + #{vTRrNdOOT9g}) + (#{cE8SDxizo5s} - (#{DPNsg3wjxGm} + #{pmRn0GsUfr6})))/(1))*1)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null,\"cE8SDxizo5s\":null,\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"cE8SDxizo5s\":\"Number of suspected malaria cases\",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+      },
+      {
+        "id": "RqGYc77Xhek",
+        "name": "% of suspected cases tested",
+        "description": "Number of suspected cases tested with either microscopy or RDT divided by total number of suspected cases multiplied by 100 ",
+        "json": "{\"expression\":\"((((#{cE8SDxizo5s}))/(((#{DPNsg3wjxGm}))  + ((#{pmRn0GsUfr6}))))*100)\",\"expressionMapping\":{\"cE8SDxizo5s\":null,\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"cE8SDxizo5s\":\"Number of suspected malaria cases\",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+      },
+      {
+        "id": "HxTrnX154BH",
+        "name": "No. of LLIN distributed ",
+        "json": "{\"expression\":\"(((#{HxTrnX154BH})/(1))*1)\",\"expressionMapping\":{\"HxTrnX154BH\":null},\"namesMapping\":{\"HxTrnX154BH\":\"No. of LLIN distributed \"}}"
+      },
+      {
+        "id": "UH47dKFqTRK",
+        "name": "Number of long lasting insecticide treated nets distributed",
+        "json": "{\"expression\":\"(((#{UH47dKFqTRK})/(1))*1)\",\"expressionMapping\":{\"UH47dKFqTRK\":null},\"namesMapping\":{\"UH47dKFqTRK\":\"Number of long lasting insecticide treated nets distributed\"}}"
+      },
+      {
+        "id": "NywGy6uMS5r",
+        "name": "Number of people protected by IRS",
+        "json": "{\"expression\":\"(((#{NywGy6uMS5r})/(1))*1)\",\"expressionMapping\":{\"NywGy6uMS5r\":null},\"namesMapping\":{\"NywGy6uMS5r\":\"Number of people protected by IRS\"}}"
+      },
+      {
+        "id": "UyuDDeXuIbr",
+        "name": "% of population protected by IRS",
+        "description": "Number of people in the targeted risk group protected by IRS in the past 12 months divided by number of people in risk group mutiplied by 100",
+        "json": "{\"expression\":\"((((#{AFoWbafBOac}))/((#{cOVhTyW8zN6})))*100)\",\"expressionMapping\":{\"AFoWbafBOac\":null,\"cOVhTyW8zN6\":null},\"namesMapping\":{\"AFoWbafBOac\":\"Number of hummocks distributed\",\"cOVhTyW8zN6\":\"Population at risk\"}}"
+      },
+      {
+        "id": "SEi6VEB5DO0",
+        "name": "Annual parasite incidence (API)",
+        "json": "{\"expression\":\"(((((#{enVf9I39FRZ} + #{vTRrNdOOT9g}) + (#{cE8SDxizo5s} - (#{DPNsg3wjxGm} + #{pmRn0GsUfr6})) * (100 * (#{enVf9I39FRZ} / #{DPNsg3wjxGm})) ) * 1000)/(#{cOVhTyW8zN6} * #{lz1FE0wvo1m}))*1)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null,\"cE8SDxizo5s\":null,\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null,\"cOVhTyW8zN6\":null,\"lz1FE0wvo1m\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"cE8SDxizo5s\":\"Number of suspected malaria cases\",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\",\"cOVhTyW8zN6\":\"Population at risk\",\"lz1FE0wvo1m\":\"Number of active foci \"}}"
+      },
+      {
+        "id": "PAbp5CFUJEP",
+        "name": "Domestic Funding",
+        "json": "{\"expression\":\"(((#{PAbp5CFUJEP})/(1))*1)\",\"expressionMapping\":{\"PAbp5CFUJEP\":null},\"namesMapping\":{\"PAbp5CFUJEP\":\"Domestic Funding\"}}"
+      },
+      {
+        "id": "bMshElFlkIT",
+        "name": "External Funding",
+        "json": "{\"expression\":\"(((#{bMshElFlkIT})/(1))*1)\",\"expressionMapping\":{\"bMshElFlkIT\":null},\"namesMapping\":{\"bMshElFlkIT\":\"External Funding\"}}"
+      },
+      {
+        "id": "LB63qxQWAot",
+        "name": "Funding gap",
+        "json": "{\"expression\":\"(((#{LB63qxQWAot})/(1))*1)\",\"expressionMapping\":{\"LB63qxQWAot\":null},\"namesMapping\":{\"LB63qxQWAot\":\"Funding gap\"}}"
+      },
+      {
+        "id": "l7gcisIvTBN",
+        "name": "Number of ACTs courses received",
+        "json": "{\"expression\":\"(((#{l7gcisIvTBN})/(1))*1)\",\"expressionMapping\":{\"l7gcisIvTBN\":null},\"namesMapping\":{\"l7gcisIvTBN\":\"Number of ACTs courses received\"}}"
+      },
+      {
+        "id": "M91K9z70dl4",
+        "name": "Number of P. falciparum cases treated with ACT only",
+        "json": "{\"expression\":\"(((#{M91K9z70dl4})/(1))*1)\",\"expressionMapping\":{\"M91K9z70dl4\":null},\"namesMapping\":{\"M91K9z70dl4\":\"Number of P. falciparum cases treated with ACT only\"}}"
+      },
+      {
+        "id": "OMYp5Suv6P2",
+        "name": "RDT/ACT Ratio",
+        "description": "Number of RDTs distributed divided by number ACTs distributed",
+        "json": "{\"expression\":\"(((((#{pmRn0GsUfr6})))/((#{l7gcisIvTBN})))*100)\",\"expressionMapping\":{\"pmRn0GsUfr6\":null,\"l7gcisIvTBN\":null},\"namesMapping\":{\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\",\"l7gcisIvTBN\":\"Number of ACTs courses received\"}}"
+      },
+      {
+        "id": "OcBiqoUWLYy",
+        "name": "% of population potenially covered with LLINs",
+        "description": "Number of LLIINs distributed in past 3 years* 1.8 divided by population at risk of malaria multiplied by 100",
+        "json": "{\"expression\":\"((((#{UH47dKFqTRK} )* 1.8)/((#{cOVhTyW8zN6})))*100)\",\"expressionMapping\":{\"UH47dKFqTRK\":null,\"cOVhTyW8zN6\":null},\"namesMapping\":{\"UH47dKFqTRK\":\"Number of long lasting insecticide treated nets distributed\",\"cOVhTyW8zN6\":\"Population at risk\"}}"
+      },
+      {
+        "id": "cOVhTyW8zN6",
+        "name": "Population at risk",
+        "json": "{\"expression\":\"(((#{cOVhTyW8zN6})/(1))*1)\",\"expressionMapping\":{\"cOVhTyW8zN6\":null},\"namesMapping\":{\"cOVhTyW8zN6\":\"Population at risk\"}}"
+      },
+      {
+        "id": "X0luAFiy268",
+        "name": "Number of malaria confirmed cases (Mic+RDT)",
+        "json": "{\"expression\":\"(((#{X0luAFiy268})/(1))*1)\",\"expressionMapping\":{\"X0luAFiy268\":null},\"namesMapping\":{\"X0luAFiy268\":\"Number of malaria confirmed cases (Mic+RDT)\"}}"
+      },
+      {
+        "id": "Jlp3WR8fVnO",
+        "name": "Relapsing/recrudesance cases",
+        "json": "{\"expression\":\"((((#{QFz6w4llj0h}) + (#{TMaDgAn60aR}))/(1))*1)\",\"expressionMapping\":{\"QFz6w4llj0h\":null,\"TMaDgAn60aR\":null},\"namesMapping\":{\"QFz6w4llj0h\":\"Number of malaria cases classified as relapsing\",\"TMaDgAn60aR\":\"Number of malaria cases classified as recrudescent\"}}"
+      },
+      {
+        "id": "HiH7BmkVTyK",
+        "name": "Number of P. Falciparum cases",
+        "json": "{\"expression\":\"((((#{IIU1O0Z4l49}) + (#{TNTW2ruEVEu}) + (#{IUrl6HtHVQI})  + (#{llpG8qA0SvG}))/(1))*1)\",\"expressionMapping\":{\"IIU1O0Z4l49\":null,\"TNTW2ruEVEu\":null,\"IUrl6HtHVQI\":null,\"llpG8qA0SvG\":null},\"namesMapping\":{\"IIU1O0Z4l49\":\"Number of plasmodium falciparum (Mic+RDT)\",\"TNTW2ruEVEu\":\"Number of mixed malaria species  (Mic+RDT)\",\"IUrl6HtHVQI\":\"Number of plasmodium falciparum (RDT) \",\"llpG8qA0SvG\":\"Number of mixed/Other malaria species (RDT)\"}}"
+      },
+      {
+        "id": "tGfdJPAcElX",
+        "name": "Number of P. vivax cases",
+        "json": "{\"expression\":\"((((#{yHS1RqIFeD7}) + (#{yVGY0DGVPor}))/(1))*1)\",\"expressionMapping\":{\"yHS1RqIFeD7\":null,\"yVGY0DGVPor\":null},\"namesMapping\":{\"yHS1RqIFeD7\":\"Number of plasmodium vivax (microscopy) \",\"yVGY0DGVPor\":\"Number of plasmodium vivax (RDT) \"}}"
       }
     ],
     "name": "who malaria",
