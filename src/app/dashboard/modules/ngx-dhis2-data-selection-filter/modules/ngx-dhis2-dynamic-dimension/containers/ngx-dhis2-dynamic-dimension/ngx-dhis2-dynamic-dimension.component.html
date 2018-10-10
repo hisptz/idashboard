@@ -14,9 +14,12 @@
 
     <!-- dynamic dimension list -->
     <ul class="ngx-dhis2-dynamic-dimension-list">
-      <li *ngFor="let dynamicDimension of dynamicDimensions$ | async | filterByName:dimensionSearchQuery">
-        <a [ngClass]="{'active-dimension': (activeDimension$ | async) && (activeDimension$ | async).id === dynamicDimension.id}"
-          (click)="onSetActiveDynamicDimension(dynamicDimension, $event)">{{dynamicDimension.name}}</a>
+      <li *ngFor="let dynamicDimension of dynamicDimensionList$ | async | filterByName:dimensionSearchQuery">
+        <a [ngClass]="{'active-dimension': (activeDimension$ | async) && (activeDimension$ | async).id === dynamicDimension.id, 'dimension-with-selected-items': dynamicDimension.selectedCount > 0}"
+          (click)="onSetActiveDynamicDimension(dynamicDimension, $event)">
+          {{dynamicDimension.name}}{{dynamicDimension.selectedCount > 0 ? ' (' + dynamicDimension.selectedCount +
+          ')' : ''}}
+        </a>
       </li>
     </ul>
     <!-- end of dynamic dimension list -->
@@ -31,7 +34,7 @@
         [(ngModel)]="dimensionItemSearchQuery">
     </div>
     <div class="dynamic-dimension-available-header">
-      <span>Available ({{(activeDimension$ | async)?.items.length}})</span>
+      <span>Available ({{(activeDimension$ | async)?.items.length || 0}})</span>
       <a *ngIf="(activeDimension$ | async) as activeDimension" (click)="onAddAllItems(activeDimension, $event)">&raquo;</a>
     </div>
     <div class="dynamic-dimension-selected-header">

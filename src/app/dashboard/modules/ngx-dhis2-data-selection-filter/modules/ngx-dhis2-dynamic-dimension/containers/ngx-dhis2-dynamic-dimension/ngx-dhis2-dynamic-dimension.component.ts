@@ -50,7 +50,28 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
     );
   }
 
-  get activeDimension$(): Observable<any> {
+  get dynamicDimensionList$(): Observable<DynamicDimension[]> {
+    return this.dynamicDimensions$.pipe(
+      map((dynamicDimensions: DynamicDimension[]) => {
+        return _.map(
+          dynamicDimensions,
+          (dynamicDimension: DynamicDimension) => {
+            const selectedDimension: DynamicDimension = _.find(
+              this.selectedDimensions,
+              ['id', dynamicDimension.id || dynamicDimension.dimension]
+            );
+            return {
+              ...dynamicDimension,
+              selectedCount: selectedDimension
+                ? selectedDimension.items.length
+                : 0
+            };
+          }
+        );
+      })
+    );
+  }
+  get activeDimension$(): Observable<DynamicDimension> {
     if (!this._activeDimension) {
       const firstSelectedDimension =
         this.selectedDimensions || this.selectedDynamicDimensions
