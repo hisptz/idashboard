@@ -91,7 +91,7 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
                   : ''
               ]
             ) || dynamicDimensions[0];
-          return activeDimension
+          const newActiveDimension = activeDimension
             ? {
                 ...activeDimension,
                 items: _.filter(
@@ -101,6 +101,9 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
                 )
               }
             : null;
+          // Also set active dimension in private property for later uses
+          this._activeDimension = newActiveDimension;
+          return newActiveDimension;
         })
       );
     }
