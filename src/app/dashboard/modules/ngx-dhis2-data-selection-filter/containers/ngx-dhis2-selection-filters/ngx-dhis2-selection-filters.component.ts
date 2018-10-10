@@ -140,7 +140,58 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
   }
 
   onFilterClose(selectedItems, selectedFilter) {
-    if (selectedItems) {
+    if (selectedFilter === 'LAYOUT') {
+      console.log('Layout');
+    } else {
+      if (selectedItems) {
+        if (_.isArray(selectedItems)) {
+          // Remove all dynamic dimension selections first
+          this.dataSelections = _.filter(
+            this.dataSelections,
+            (dataSelection: any) =>
+              ['ou', 'pe', 'dx', 'co', 'dy'].indexOf(
+                dataSelection.dimension
+              ) !== -1
+          );
+          _.each(selectedItems, (selectedItem: any) => {
+            this.dataSelections = !_.find(this.dataSelections, [
+              'dimension',
+              selectedItem.dimension
+            ])
+              ? [...this.dataSelections, { ...selectedItem, layout: 'filters' }]
+              : [
+                  ...this.updateDataSelectionWithNewSelections(
+                    this.dataSelections,
+                    selectedItem
+                  )
+                ];
+          });
+        } else if (selectedItems.items.length > 0) {
+          this.dataSelections = !_.find(this.dataSelections, [
+            'dimension',
+            selectedItems.dimension
+          ])
+            ? [...this.dataSelections, { ...selectedItems, layout: 'columns' }]
+            : [
+                ...this.updateDataSelectionWithNewSelections(
+                  this.dataSelections,
+                  selectedItems
+                )
+              ];
+        }
+      }
+    }
+
+    if (this.selectedFilter === selectedFilter) {
+      this._selectedFilter = '';
+      this.showFilterBody = false;
+    }
+  }
+
+  onFilterUpdate(selectedItems, selectedFilter) {
+    if (selectedFilter === 'LAYOUT') {
+      console.log('Layout');
+    } else {
       if (_.isArray(selectedItems)) {
         // Remove all dynamic dimension selections first
         this.dataSelections = _.filter(
@@ -162,7 +213,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
                 )
               ];
         });
-      } else if (selectedItems.items.length > 0) {
+      } else {
         this.dataSelections = !_.find(this.dataSelections, [
           'dimension',
           selectedItems.dimension
@@ -175,47 +226,6 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
               )
             ];
       }
-    }
-
-    if (this.selectedFilter === selectedFilter) {
-      this._selectedFilter = '';
-      this.showFilterBody = false;
-    }
-  }
-
-  onFilterUpdate(selectedItems, selectedFilter) {
-    if (_.isArray(selectedItems)) {
-      // Remove all dynamic dimension selections first
-      this.dataSelections = _.filter(
-        this.dataSelections,
-        (dataSelection: any) =>
-          ['ou', 'pe', 'dx', 'co', 'dy'].indexOf(dataSelection.dimension) !== -1
-      );
-      _.each(selectedItems, (selectedItem: any) => {
-        this.dataSelections = !_.find(this.dataSelections, [
-          'dimension',
-          selectedItem.dimension
-        ])
-          ? [...this.dataSelections, { ...selectedItem, layout: 'filters' }]
-          : [
-              ...this.updateDataSelectionWithNewSelections(
-                this.dataSelections,
-                selectedItem
-              )
-            ];
-      });
-    } else {
-      this.dataSelections = !_.find(this.dataSelections, [
-        'dimension',
-        selectedItems.dimension
-      ])
-        ? [...this.dataSelections, { ...selectedItems, layout: 'columns' }]
-        : [
-            ...this.updateDataSelectionWithNewSelections(
-              this.dataSelections,
-              selectedItems
-            )
-          ];
     }
 
     this.filterUpdate.emit(this.dataSelections);

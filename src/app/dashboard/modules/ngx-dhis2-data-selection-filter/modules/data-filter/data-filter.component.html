@@ -9,7 +9,8 @@
             'btn-sm': true,
             'btn-info': option.selected,
             'btn-default': !option.selected
-           }" title="Click to see {{option.name}}">
+           }"
+            title="Click to see {{option.name}}">
             {{option.name}}
           </a>
         </li>
@@ -48,8 +49,8 @@
     </div>
 
     <div class="data-filter-list-search">
-      <input type="text" class="form-control form-control-sm" (focus)="showBody = true" (keyup)="searchChanged()" placeholder="Search"
-        [(ngModel)]="listchanges">
+      <input type="text" class="form-control form-control-sm" (focus)="showBody = true" (keyup)="searchChanged()"
+        placeholder="Search" [(ngModel)]="listchanges">
     </div>
 
     <div class="data-filter-available-header">
@@ -84,9 +85,9 @@
 
     <div class="data-filter-selected-body">
       <ul>
-        <li *ngFor="let item of selectedItems$ | async | paginate:{id: 'selectedlist',itemsPerPage: 100, currentPage: k}" style="cursor: move"
-          dnd-droppable (onDropSuccess)="transferDataSuccess($event,item)" title="click to unselect item">
-          <a dnd-draggable [dragEnabled]="true" (click)="removeSelected(item, $event)" [dragData]="item" class="{{item.hasOwnProperty('programType') ? 'auto-growing' : ''}}">
+        <li *ngFor="let item of selectedItems$ | async | paginate:{id: 'selectedlist',itemsPerPage: 100, currentPage: k}"
+          style="cursor: move" title="click to unselect item">
+          <a (click)="removeSelected(item, $event)" class="{{item.hasOwnProperty('programType') ? 'auto-growing' : ''}}">
             {{ item.name }} </a>
         </li>
         <li *ngIf="(selectedItems$ | async).length > 100">

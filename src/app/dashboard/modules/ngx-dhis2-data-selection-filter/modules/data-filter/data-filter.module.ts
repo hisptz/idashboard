@@ -8,7 +8,6 @@ import { OrderPipe } from './pipes/order-by.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddUnderscorePipe } from './pipes/add-underscore.pipe';
 import { DragulaModule } from 'ng2-dragula';
-import { DndModule } from 'ng2-dnd';
 import { DataFilterService } from './services/data-filter.service';
 import { HttpModule } from '@angular/http';
 import { components } from './components';
@@ -19,8 +18,7 @@ import { components } from './components';
     FormsModule,
     HttpModule,
     DragulaModule,
-    NgxPaginationModule,
-    DndModule.forRoot()
+    NgxPaginationModule
   ],
   declarations: [
     DataFilterComponent,

@@ -8,13 +8,18 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
-  @Input() layoutModel: any = INITIAL_LAYOUT_MODEL;
-  @Input() visualizationType: string;
-  @Output() onLayoutUpdate = new EventEmitter();
-  @Output() onLayoutClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input()
+  layoutModel: any = INITIAL_LAYOUT_MODEL;
+  @Input()
+  visualizationType: string;
+  @Output()
+  onLayoutUpdate = new EventEmitter();
+  @Output()
+  onLayoutClose: EventEmitter<boolean> = new EventEmitter<boolean>();
   filters: any[];
   columns: any[];
   rows: any[];
+  availableDimensions: any[];
   icons: any;
   dimensions: any;
   columnName: string;
@@ -35,6 +40,7 @@ export class LayoutComponent implements OnInit {
     };
     this.columnName = 'Column dimensions';
     this.rowName = 'Row dimensions';
+    this.availableDimensions = [];
   }
 
   ngOnInit() {

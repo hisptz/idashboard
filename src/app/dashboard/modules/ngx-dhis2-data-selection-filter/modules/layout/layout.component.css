@@ -74,6 +74,10 @@
   border: solid thin #eeeeee;
 }
 
+.layout-dimension-content {
+  min-height: 100px;
+}
+
 .filter-row-dimensions {
   width: 33%;
   margin-right: 2px;
