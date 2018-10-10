@@ -52,17 +52,23 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
 
   get activeDimension$(): Observable<any> {
     if (!this._activeDimension) {
-      const firstSelectedDimension = this.selectedDimensions
-        ? this.selectedDimensions[0]
-        : null;
+      const firstSelectedDimension =
+        this.selectedDimensions || this.selectedDynamicDimensions
+          ? (this.selectedDimensions || this.selectedDynamicDimensions)[0]
+          : null;
+
       return this.dynamicDimensions$.pipe(
         map((dynamicDimensions: DynamicDimension[]) => {
           const activeDimension: DynamicDimension =
             _.find(
               dynamicDimensions,
-              firstSelectedDimension
-                ? firstSelectedDimension.id || firstSelectedDimension.dimension
-                : ''
+              [
+                'id',
+                firstSelectedDimension
+                  ? firstSelectedDimension.id ||
+                    firstSelectedDimension.dimension
+                  : ''
+              ]
             ) || dynamicDimensions[0];
           return activeDimension
             ? {
@@ -77,6 +83,7 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
         })
       );
     }
+
     return of({
       ...this._activeDimension,
       items: _.filter(
