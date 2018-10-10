@@ -21,3 +21,4 @@ export * from './get-visualization-width-from-shape.helper';
 export * from './get-selection-dimensions-from-analytics.helper';
 export * from './get-merged-dataSelections.helper';
 export * from './get-merged-analytics.helper';
+export * from './update-data-selection-based-preference.helper';

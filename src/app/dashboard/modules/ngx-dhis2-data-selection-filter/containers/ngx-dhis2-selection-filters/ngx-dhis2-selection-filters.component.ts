@@ -154,7 +154,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
             'dimension',
             selectedItem.dimension
           ])
-            ? [...this.dataSelections, { ...selectedItem, layout: 'columns' }]
+            ? [...this.dataSelections, { ...selectedItem, layout: 'filters' }]
             : [
                 ...this.updateDataSelectionWithNewSelections(
                   this.dataSelections,
@@ -190,7 +190,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
           'dimension',
           selectedItem.dimension
         ])
-          ? [...this.dataSelections, { ...selectedItem, layout: 'columns' }]
+          ? [...this.dataSelections, { ...selectedItem, layout: 'filters' }]
           : [
               ...this.updateDataSelectionWithNewSelections(
                 this.dataSelections,
