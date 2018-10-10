@@ -8,7 +8,7 @@
       </div>
       <div class="layout-dimension-content" [dragula]="'layout-bag'" [dragulaModel]="availableDimensions">
         <div class="layout-item" *ngFor="let available of availableDimensions">
-          <img [src]="icons[available.value]"> &nbsp;
+          <img [src]="icons[available.value] || icons['dx']"> &nbsp;
           <div>{{available.name}}</div>
         </div>
       </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="layout-dimension-content" [dragula]="'layout-bag'" [dragulaModel]="filters">
           <div class="layout-item" *ngFor="let filter of filters">
-            <img [src]="icons[filter.value]"> &nbsp;
+            <img [src]="icons[filter.value] || icons['dx']"> &nbsp;
             <div>{{filter.name}}</div>
           </div>
         </div>
@@ -38,7 +38,7 @@
         </div>
         <div class="layout-dimension-content" [dragula]="'layout-bag'" [dragulaModel]="rows">
           <div class="layout-item" *ngFor="let row of rows">
-            <img [src]="icons[row.value]"> &nbsp;
+            <img [src]="icons[row.value] || icons['dx']"> &nbsp;
             <div>{{row.name}}</div>
           </div>
         </div>
@@ -54,7 +54,7 @@
       </div>
       <div class="layout-dimension-content" [dragula]="'layout-bag'" [dragulaModel]="columns">
         <div class="layout-item" *ngFor="let column of columns">
-          <img [src]="icons[column.value]"> &nbsp;
+          <img [src]="icons[column.value] || icons['dx']"> &nbsp;
           <div>{{column.name}}</div>
         </div>
       </div>

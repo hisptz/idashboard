@@ -13,9 +13,9 @@ export class LayoutComponent implements OnInit {
   @Input()
   visualizationType: string;
   @Output()
-  onLayoutUpdate = new EventEmitter();
+  layoutUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output()
-  onLayoutClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  layoutClose: EventEmitter<any> = new EventEmitter<any>();
   filters: any[];
   columns: any[];
   rows: any[];
@@ -25,7 +25,6 @@ export class LayoutComponent implements OnInit {
   columnName: string;
   rowName: string;
 
-  subs = new Subscription();
   constructor() {
     this.icons = {
       dx: 'assets/icons/data.png',
@@ -58,7 +57,7 @@ export class LayoutComponent implements OnInit {
   }
 
   updateLayout() {
-    this.onLayoutUpdate.emit({
+    this.layoutUpdate.emit({
       filters: this.filters,
       columns: this.columns,
       rows: this.rows
@@ -66,6 +65,10 @@ export class LayoutComponent implements OnInit {
   }
 
   close() {
-    this.onLayoutClose.emit(true);
+    this.layoutClose.emit({
+      filters: this.filters,
+      columns: this.columns,
+      rows: this.rows
+    });
   }
 }

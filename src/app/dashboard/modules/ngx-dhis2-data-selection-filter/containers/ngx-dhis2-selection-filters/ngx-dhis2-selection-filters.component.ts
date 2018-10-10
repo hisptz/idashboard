@@ -141,7 +141,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   onFilterClose(selectedItems, selectedFilter) {
     if (selectedFilter === 'LAYOUT') {
-      console.log('Layout');
+      console.log({ selectedItems });
     } else {
       if (selectedItems) {
         if (_.isArray(selectedItems)) {
@@ -190,7 +190,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   onFilterUpdate(selectedItems, selectedFilter) {
     if (selectedFilter === 'LAYOUT') {
-      console.log('Layout');
+      console.log(selectedItems);
     } else {
       if (_.isArray(selectedItems)) {
         // Remove all dynamic dimension selections first

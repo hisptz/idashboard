@@ -90,8 +90,8 @@
       (orgUnitClose)="onFilterClose($event, 'ORG_UNIT')" (orgUnitUpdate)="onFilterUpdate($event, 'ORG_UNIT')"></ngx-dhis2-org-unit-filter>
     <!--end of org unit filter-->
 
-    <app-layout [layoutModel]="layoutItem" *ngIf="selectedFilter === 'LAYOUT'" (onLayoutUpdate)="onFilterUpdate($event, 'LAYOUT')"
-      (onLayoutClose)="onFilterClose($event, 'LAYOUT')"></app-layout>
+    <app-layout [layoutModel]="layoutItem" *ngIf="selectedFilter === 'LAYOUT'" (layoutUpdate)="onFilterUpdate($event, 'LAYOUT')"
+      (layoutClose)="onFilterClose($event, 'LAYOUT')"></app-layout>
 
     <ngx-dhis2-dynamic-dimension [selectedDynamicDimensions]="selectedDynamicDimensions" *ngIf="selectedFilter === 'DYNAMIC'"
       (dynamicDimensionClose)="onFilterClose($event, 'DYNAMIC')" (dynamicDimensionUpdate)="onFilterUpdate($event, 'DYNAMIC')"></ngx-dhis2-dynamic-dimension>
