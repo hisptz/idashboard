@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { VisualizationDataSelection } from '../models';
 import { updateDataSelectionBasedOnPreferences } from './update-data-selection-based-preference.helper';
+import { checkIfDataSelectionHasDynamicDimension } from './check-if-data-selection-has-dynamic-dimension.helper';
 
 export function getMergedDataSelections(
   existingDataSelections: VisualizationDataSelection[],
@@ -14,6 +15,16 @@ export function getMergedDataSelections(
     chart: { includeOrgUnitChildren: false }
   }
 ): any[] {
+  if (
+    checkIfDataSelectionHasDynamicDimension(newDataSelections) &&
+    checkIfDataSelectionHasDynamicDimension(existingDataSelections)
+  ) {
+    existingDataSelections = _.filter(
+      existingDataSelections || [],
+      (dataSelection: any) =>
+        ['ou', 'pe', 'dx', 'co', 'dy'].indexOf(dataSelection.dimension) !== -1
+    );
+  }
   const unAvailableDataSelections: VisualizationDataSelection[] = _.filter(
     newDataSelections,
     (dataSelection: VisualizationDataSelection) =>

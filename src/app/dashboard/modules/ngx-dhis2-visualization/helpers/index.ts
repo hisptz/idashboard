@@ -22,3 +22,4 @@ export * from './get-selection-dimensions-from-analytics.helper';
 export * from './get-merged-dataSelections.helper';
 export * from './get-merged-analytics.helper';
 export * from './update-data-selection-based-preference.helper';
+export * from './check-if-data-selection-has-dynamic-dimension.helper';

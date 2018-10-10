@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 import {
   FILTER_ICON,
@@ -149,6 +142,13 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
   onFilterClose(selectedItems, selectedFilter) {
     if (selectedItems) {
       if (_.isArray(selectedItems)) {
+        // Remove all dynamic dimension selections first
+        this.dataSelections = _.filter(
+          this.dataSelections,
+          (dataSelection: any) =>
+            ['ou', 'pe', 'dx', 'co', 'dy'].indexOf(dataSelection.dimension) !==
+            -1
+        );
         _.each(selectedItems, (selectedItem: any) => {
           this.dataSelections = !_.find(this.dataSelections, [
             'dimension',
@@ -185,6 +185,12 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   onFilterUpdate(selectedItems, selectedFilter) {
     if (_.isArray(selectedItems)) {
+      // Remove all dynamic dimension selections first
+      this.dataSelections = _.filter(
+        this.dataSelections,
+        (dataSelection: any) =>
+          ['ou', 'pe', 'dx', 'co', 'dy'].indexOf(dataSelection.dimension) !== -1
+      );
       _.each(selectedItems, (selectedItem: any) => {
         this.dataSelections = !_.find(this.dataSelections, [
           'dimension',

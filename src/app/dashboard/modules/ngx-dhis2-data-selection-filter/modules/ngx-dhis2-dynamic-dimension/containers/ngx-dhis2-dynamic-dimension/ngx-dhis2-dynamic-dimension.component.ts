@@ -206,7 +206,6 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
 
   onClose(e) {
     e.stopPropagation();
-    console.log(this.selectedDimensions);
     this.dynamicDimensionClose.emit(this.selectedDimensions);
   }
 

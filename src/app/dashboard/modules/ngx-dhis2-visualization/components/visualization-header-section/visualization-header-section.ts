@@ -5,6 +5,7 @@ import { VisualizationDataSelection } from '../../models/visualization-data-sele
 import { openAnimation } from '../../../../../animations';
 
 import { SelectionFilterConfig } from '../../../ngx-dhis2-data-selection-filter/models/selected-filter-config.model';
+import { getMergedDataSelections } from '../../helpers';
 
 @Component({
   selector: 'visualization-header-section',
@@ -29,6 +30,9 @@ export class VisualizationHeaderSectionComponent {
   fullScreen: boolean;
   @Input()
   visualizationLayer: VisualizationLayer;
+
+  @Input()
+  favoriteType: string;
 
   showNameInput: boolean;
 
@@ -65,7 +69,11 @@ export class VisualizationHeaderSectionComponent {
   onFilterUpdateAction(dataSelections: VisualizationDataSelection[]) {
     this.visualizationLayerUpdate.emit({
       ...this.visualizationLayer,
-      dataSelections
+      dataSelections: getMergedDataSelections(
+        this.visualizationLayer.dataSelections,
+        dataSelections,
+        this.favoriteType
+      )
     });
   }
 
