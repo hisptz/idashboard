@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import * as _ from 'lodash';
 import * as fromDynamicDimension from '../../store/reducers/dynamic-dimension.reducer';
+import * as fromDynamicDimensionSelectors from '../../store/selectors/dynamic-dimension.selectors';
 import { Store } from '@ngrx/store';
 import { LoadDynamicDimensionsAction } from '../../store/actions/dynamic-dimension.actions';
 import { Observable, of } from 'rxjs';
@@ -31,6 +32,8 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
 
   dimensionSearchQuery: string;
   dimensionItemSearchQuery: string;
+
+  dynamicDimensionLoading$: Observable<boolean>;
 
   @Output()
   dynamicDimensionUpdate: EventEmitter<any> = new EventEmitter<any>();
@@ -92,6 +95,10 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
     // select dynamic dimension prorperties
     this.dynamicDimensions$ = this.dynamicDimensionStore.select(
       fromDynamicDimension.getDynamicDimensions
+    );
+
+    this.dynamicDimensionLoading$ = this.dynamicDimensionStore.select(
+      fromDynamicDimensionSelectors.getDynamicDimensionLoadingStatus
     );
   }
 

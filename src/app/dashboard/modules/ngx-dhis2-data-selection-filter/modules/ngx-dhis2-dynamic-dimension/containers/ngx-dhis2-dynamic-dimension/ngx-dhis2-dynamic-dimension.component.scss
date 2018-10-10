@@ -3,11 +3,16 @@
   width: 450px;
 }
 
-.ngx-dhis2-dynamic-dimension-list-block {
+.ngx-dhis2-dynamic-dimension-list-block,
+.ngx-dhis2-dynamic-dimensions-loading {
   padding: 5px;
   height: 300px;
   flex: 1;
   overflow: hidden;
+}
+
+.ngx-dhis2-dynamic-dimensions-loading {
+  font-size: 12px;
 }
 
 .ngx-dhis2-dynamic-dimension-list {

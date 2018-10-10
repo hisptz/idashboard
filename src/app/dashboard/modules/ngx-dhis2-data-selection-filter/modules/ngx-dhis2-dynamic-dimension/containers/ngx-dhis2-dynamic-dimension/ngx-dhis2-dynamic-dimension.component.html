@@ -1,6 +1,11 @@
 <div class="ngx-dhis2-dynamic-dimension-container">
+  <!-- dynamic dimensions loading -->
+  <div class="ngx-dhis2-dynamic-dimensions-loading" *ngIf="dynamicDimensionLoading$ | async">
+    Loading...
+  </div>
+  <!-- end of dynamic dimensions loading -->
   <!-- dynamic dimension list block-->
-  <div class="ngx-dhis2-dynamic-dimension-list-block">
+  <div class="ngx-dhis2-dynamic-dimension-list-block" *ngIf="!(dynamicDimensionLoading$ | async)">
     <!-- dimension search -->
     <div class="dynamic-dimension-search">
       <input type="text" class="form-control form-control-sm" [(ngModel)]="dimensionSearchQuery" placeholder="Search dimension">
@@ -22,7 +27,7 @@
   <!-- dynamic dimension items -->
   <div class="ngx-dhis2-dynamic-dimension-items">
     <div class="dynamic-dimension-list-search">
-      <input type="text" class="form-control form-control-sm" (focus)="showBody = true" placeholder="Search"
+      <input type="text" class="form-control form-control-sm" (focus)="showBody = true" placeholder="Search dimension items"
         [(ngModel)]="dimensionItemSearchQuery">
     </div>
     <div class="dynamic-dimension-available-header">
@@ -37,8 +42,8 @@
     <!-- items body -->
     <div class="dynamic-dimension-available-body">
       <ul #scrollse>
-        <li *ngIf="loading">Loading...</li>
-        <li *ngIf="(activeDimension$ | async)?.items.length === 0">
+        <li *ngIf="dynamicDimensionLoading$ | async"><small>Loading...</small></li>
+        <li *ngIf="!(dynamicDimensionLoading$ | async) && (activeDimension$ | async)?.items.length === 0">
           <a>No items</a>
         </li>
         <li *ngFor="let item of (activeDimension$ | async)?.items | filterByName:dimensionItemSearchQuery" title="Click to select item">
