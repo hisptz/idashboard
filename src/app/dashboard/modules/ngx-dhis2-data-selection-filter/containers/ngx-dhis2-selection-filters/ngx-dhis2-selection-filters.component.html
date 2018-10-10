@@ -56,7 +56,7 @@
         'active-filter': selectedFilter === 'DYNAMIC'
         }"
         [title]="'Layout' | translate" (click)="toggleCurrentFilter($event, 'DYNAMIC')">
-        <img [src]="dataIcon" alt="">&nbsp;{{'Dimensions' | translate}}&nbsp;
+        <img [src]="dataIcon" alt="">&nbsp;{{'Data dimensions' | translate}}&nbsp;
         <img [ngClass]="{'arrow-up': selectedFilter === 'DYNAMIC'}" [src]="arrowDownIcon" alt="">
       </button>
       <!-- end of dynamic dimension filter button -->
@@ -92,6 +92,9 @@
 
     <app-layout [layoutModel]="layoutItem" *ngIf="selectedFilter === 'LAYOUT'" (onLayoutUpdate)="onFilterUpdate($event, 'LAYOUT')"
       (onLayoutClose)="onFilterClose($event, 'LAYOUT')"></app-layout>
+
+    <ngx-dhis2-dynamic-dimension [selectedDynamicDimensions]="selectedDynamicDimensions" *ngIf="selectedFilter === 'DYNAMIC'"
+      (dynamicDimensionClose)="onFilterClose($event, 'DYNAMIC')" (dynamicDimensionUpdate)="onFilterUpdate($event, 'DYNAMIC')"></ngx-dhis2-dynamic-dimension>
   </div>
   <!--end of selection filter body-->
 </div>
