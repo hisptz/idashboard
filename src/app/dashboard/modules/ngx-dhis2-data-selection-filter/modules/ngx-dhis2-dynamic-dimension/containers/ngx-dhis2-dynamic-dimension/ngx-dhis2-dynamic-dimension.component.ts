@@ -29,6 +29,9 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
 
   private _activeDimension: any;
 
+  dimensionSearchQuery: string;
+  dimensionItemSearchQuery: string;
+
   @Output()
   dynamicDimensionUpdate: EventEmitter<any> = new EventEmitter<any>();
 

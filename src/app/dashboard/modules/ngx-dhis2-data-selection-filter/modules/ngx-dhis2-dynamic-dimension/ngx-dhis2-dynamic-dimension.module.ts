@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 import * as fromReducer from './store/reducers/dynamic-dimension.reducer';
 import { DynamicDimensionEffects } from './store/effects/dynamic-dimension.effects';
+import { pipes } from './pipes';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { DynamicDimensionEffects } from './store/effects/dynamic-dimension.effec
     StoreModule.forFeature('dynamicDimension', fromReducer.reducer),
     EffectsModule.forFeature([DynamicDimensionEffects])
   ],
-  declarations: [...containers],
+  declarations: [...containers, ...pipes],
   exports: [...containers]
 })
 export class NgxDhis2DynamicDimensionModule {}

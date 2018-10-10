@@ -3,13 +3,13 @@
   <div class="ngx-dhis2-dynamic-dimension-list-block">
     <!-- dimension search -->
     <div class="dynamic-dimension-search">
-      <input type="text" class="form-control form-control-sm" placeholder="Search dimension">
+      <input type="text" class="form-control form-control-sm" [(ngModel)]="dimensionSearchQuery" placeholder="Search dimension">
     </div>
     <!-- end of dimension search -->
 
     <!-- dynamic dimension list -->
     <ul class="ngx-dhis2-dynamic-dimension-list">
-      <li *ngFor="let dynamicDimension of dynamicDimensions$ | async">
+      <li *ngFor="let dynamicDimension of dynamicDimensions$ | async | filterByName:dimensionSearchQuery">
         <a [ngClass]="{'active-dimension': (activeDimension$ | async) && (activeDimension$ | async).id === dynamicDimension.id}"
           (click)="onSetActiveDynamicDimension(dynamicDimension, $event)">{{dynamicDimension.name}}</a>
       </li>
@@ -22,8 +22,8 @@
   <!-- dynamic dimension items -->
   <div class="ngx-dhis2-dynamic-dimension-items">
     <div class="dynamic-dimension-list-search">
-      <input type="text" class="form-control form-control-sm" (focus)="showBody = true" (keyup)="searchChanged()"
-        placeholder="Search" [(ngModel)]="listchanges">
+      <input type="text" class="form-control form-control-sm" (focus)="showBody = true" placeholder="Search"
+        [(ngModel)]="dimensionItemSearchQuery">
     </div>
     <div class="dynamic-dimension-available-header">
       <span>Available ({{(activeDimension$ | async)?.items.length}})</span>
@@ -41,7 +41,7 @@
         <li *ngIf="(activeDimension$ | async)?.items.length === 0">
           <a>No items</a>
         </li>
-        <li *ngFor="let item of (activeDimension$ | async)?.items" title="Click to select item">
+        <li *ngFor="let item of (activeDimension$ | async)?.items | filterByName:dimensionItemSearchQuery" title="Click to select item">
           <a *ngIf="(activeDimension$ | async) as activeDimension" (click)="onAddDimensionItem(activeDimension, item, $event)">{{
             item.name }}</a>
         </li>
