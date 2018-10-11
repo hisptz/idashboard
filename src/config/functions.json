@@ -22,7 +22,7 @@
         "id": "IPI8Xmc1nnT",
         "name": "Number of malaria cases positive with RDT",
         "description": "Number of malaria RDT positive cases divided by total RDT tests multiplied by 100",
-        "json": "{\"expression\":\"(((#{vTRrNdOOT9g)/(#{pmRn0GsUfr6}))*100)\",\"expressionMapping\":{\"vTRrNdOOT9g\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+        "json": "{\"expression\":\"(((#{vTRrNdOOT9g})/(#{pmRn0GsUfr6}))*100)\",\"expressionMapping\":{\"vTRrNdOOT9g\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
 
       },
       {
