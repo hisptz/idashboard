@@ -9,7 +9,7 @@
     <div class="data-filter-group__item" *ngFor="let group of dataGroups">
       <!-- title -->
       <div class="data-filter-group__item-header" (click)="onSetCurrentGroup(group, $event)">
-        <div class="data-filter-group__item-header-title">
+        <div class="data-filter-group__item-header-title" [ngClass]="{'not-mapped-item':group.members.length === 0}">
           <!-- <button>
             <img [src]="dragIcon" alt="">
           </button>  -->{{group.name}}

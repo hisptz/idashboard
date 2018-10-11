@@ -1790,7 +1790,7 @@
     "aggregationType": "DEFAULT",
     "hideSubtitle": false,
     "description": "Line listing by sub-national level",
-    "legendDisplayStrategy": "FIXED",
+    "legendDisplayStrategy": "BY_DATA_ITEM",
     "colSubTotals": false,
     "rowTotals": false,
     "digitGroupSeparator": "SPACE",
