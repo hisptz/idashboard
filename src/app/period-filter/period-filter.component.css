@@ -1,0 +1,65 @@
+.period-filter-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: solid 1px #dddddd;
+  padding: .2em;
+}
+
+.period-type-section,
+.period-year-btns {
+  padding-bottom:.2em;
+}
+
+.period-available-header {
+  border-top: solid 1px #dddddd;
+  border-bottom: solid 1px #dddddd;
+  border-right: solid 1px #ddd;
+}
+
+.period-available-body,
+.period-selected-body {
+  padding: .2em;
+  height: 200px;
+  overflow: auto;
+}
+
+.period-available-body {
+  border-right: solid 1px #dddddd;
+}
+
+.period-available-body > ul > li > a,
+.period-selected-body > ul > li > a {
+  cursor: pointer;
+  font-size: 10px;
+  color: #000000;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.period-selected-header {
+  border-top: solid 1px #dddddd;
+  border-bottom: solid 1px #dddddd;
+}
+
+.period-filter-btns {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-top: .2em;
+}
+
+.period-available-body::-webkit-scrollbar,
+.period-selected-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.period-available-body::-webkit-scrollbar-track,
+.period-selected-body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.period-available-body::-webkit-scrollbar-thumb,
+.period-selected-body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+}
