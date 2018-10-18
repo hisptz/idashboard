@@ -141,7 +141,38 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   onFilterClose(selectedItems, selectedFilter) {
     if (selectedFilter === 'LAYOUT') {
-      console.log({ selectedItems });
+      const layouts = _.flatten(
+        _.map(_.keys(selectedItems), (selectedItemKey: string) => {
+          return _.map(
+            selectedItems[selectedItemKey],
+            (selectedItem: any, selectedItemIndex: number) => {
+              return {
+                ...selectedItem,
+                layout: selectedItemKey,
+                layoutOrder: selectedItemIndex
+              };
+            }
+          );
+        })
+      );
+
+      this.dataSelections = _.sortBy(
+        _.map(this.dataSelections, (dataSelection: any) => {
+          const availableDataSelectionLayout = _.find(layouts, [
+            'value',
+            dataSelection.dimension
+          ]);
+
+          return availableDataSelectionLayout
+            ? {
+                ...dataSelection,
+                layout: availableDataSelectionLayout.layout,
+                layoutOrder: availableDataSelectionLayout.layoutOrder
+              }
+            : dataSelection;
+        }),
+        'layoutOrder'
+      );
     } else {
       if (selectedItems) {
         if (_.isArray(selectedItems)) {
@@ -190,7 +221,38 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   onFilterUpdate(selectedItems, selectedFilter) {
     if (selectedFilter === 'LAYOUT') {
-      console.log(selectedItems);
+      const layouts = _.flatten(
+        _.map(_.keys(selectedItems), (selectedItemKey: string) => {
+          return _.map(
+            selectedItems[selectedItemKey],
+            (selectedItem: any, selectedItemIndex: number) => {
+              return {
+                ...selectedItem,
+                layout: selectedItemKey,
+                layoutOrder: selectedItemIndex
+              };
+            }
+          );
+        })
+      );
+
+      this.dataSelections = _.sortBy(
+        _.map(this.dataSelections, (dataSelection: any) => {
+          const availableDataSelectionLayout = _.find(layouts, [
+            'value',
+            dataSelection.dimension
+          ]);
+
+          return availableDataSelectionLayout
+            ? {
+                ...dataSelection,
+                layout: availableDataSelectionLayout.layout,
+                layoutOrder: availableDataSelectionLayout.layoutOrder
+              }
+            : dataSelection;
+        }),
+        'layoutOrder'
+      );
     } else {
       if (_.isArray(selectedItems)) {
         // Remove all dynamic dimension selections first
@@ -227,6 +289,8 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
             ];
       }
     }
+
+    console.log(this.dataSelections);
 
     this.filterUpdate.emit(this.dataSelections);
     this._selectedFilter = '';
