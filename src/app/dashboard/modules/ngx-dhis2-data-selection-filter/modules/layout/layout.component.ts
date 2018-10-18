@@ -40,6 +40,9 @@ export class LayoutComponent implements OnInit {
     this.columnName = 'Column dimensions';
     this.rowName = 'Row dimensions';
     this.availableDimensions = [];
+    this.rows = [];
+    this.columns = [];
+    this.filters = [];
   }
 
   ngOnInit() {

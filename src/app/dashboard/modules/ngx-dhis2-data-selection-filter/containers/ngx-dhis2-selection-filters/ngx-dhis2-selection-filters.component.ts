@@ -290,8 +290,6 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
       }
     }
 
-    console.log(this.dataSelections);
-
     this.filterUpdate.emit(this.dataSelections);
     this._selectedFilter = '';
     this.showFilterBody = false;

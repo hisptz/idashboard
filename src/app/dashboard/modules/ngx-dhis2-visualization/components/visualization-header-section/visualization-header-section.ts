@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import * as _ from 'lodash';
 import { VisualizationUiConfig } from '../../models/visualization-ui-config.model';
 import { VisualizationLayer } from '../../models/visualization-layer.model';
 import { VisualizationDataSelection } from '../../models/visualization-data-selection.model';
@@ -69,10 +70,13 @@ export class VisualizationHeaderSectionComponent {
   onFilterUpdateAction(dataSelections: VisualizationDataSelection[]) {
     this.visualizationLayerUpdate.emit({
       ...this.visualizationLayer,
-      dataSelections: getMergedDataSelections(
-        this.visualizationLayer.dataSelections,
-        dataSelections,
-        this.favoriteType
+      dataSelections: _.sortBy(
+        getMergedDataSelections(
+          this.visualizationLayer.dataSelections,
+          dataSelections,
+          this.favoriteType
+        ),
+        'layoutOrder'
       )
     });
   }

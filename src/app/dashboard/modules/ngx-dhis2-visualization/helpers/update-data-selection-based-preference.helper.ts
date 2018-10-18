@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { USER_ORG_UNITS } from '../../ngx-dhis2-data-selection-filter/modules/ngx-dhis2-org-unit-filter/constants/user-org-units.constants';
 import { VisualizationDataSelection } from '../models';
 
+// TODO: Refactor this implementation to be flexible for increased preferences
 export function updateDataSelectionBasedOnPreferences(
   dataSelection: VisualizationDataSelection,
   visualizationType,
@@ -18,7 +19,7 @@ export function updateDataSelectionBasedOnPreferences(
 
       let dataSelectionItems = [];
       if (
-        !chartPreferences.includeOrgUnitChildren &&
+        chartPreferences.excludeOrgUnitChildren &&
         dataSelection.dimension === 'ou'
       ) {
         if (
@@ -32,6 +33,8 @@ export function updateDataSelectionBasedOnPreferences(
             (item: any) => item.type && item.type.indexOf('LEVEL') === -1
           );
         } else if (
+          chartPreferences.includeOrgUnitChildren &&
+          dataSelection.dimension === 'ou' &&
           _.some(
             dataSelection.items,
             (item: any) => item.id && item.id.indexOf('CHILDREN') !== -1
@@ -65,7 +68,7 @@ export function updateDataSelectionBasedOnPreferences(
 
       let dataSelectionItems = [];
       if (
-        reportTablePreferences.includeOrgUnitChildren &&
+        reportTablePreferences.excludeOrgUnitChildren &&
         dataSelection.dimension === 'ou'
       ) {
         if (
