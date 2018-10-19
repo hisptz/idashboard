@@ -125,7 +125,7 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
 
     // select dynamic dimension prorperties
     this.dynamicDimensions$ = this.dynamicDimensionStore.select(
-      fromDynamicDimension.getDynamicDimensions
+      fromDynamicDimensionSelectors.getDynamicDimensions
     );
 
     this.dynamicDimensionLoading$ = this.dynamicDimensionStore.select(

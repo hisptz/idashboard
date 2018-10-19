@@ -8,11 +8,17 @@ export function getMergedDataSelections(
   newDataSelections: VisualizationDataSelection[],
   visualizationType: string,
   favoritePreferences: {
-    reportTable: { includeOrgUnitChildren: boolean };
-    chart: { includeOrgUnitChildren: boolean };
+    reportTable: {
+      includeOrgUnitChildren: boolean;
+      excludeOrgUnitChildren: boolean;
+    };
+    chart: { includeOrgUnitChildren: boolean; excludeOrgUnitChildren: boolean };
   } = {
-    reportTable: { includeOrgUnitChildren: true },
-    chart: { includeOrgUnitChildren: false }
+    reportTable: {
+      includeOrgUnitChildren: false,
+      excludeOrgUnitChildren: false
+    },
+    chart: { includeOrgUnitChildren: false, excludeOrgUnitChildren: false }
   }
 ): any[] {
   if (

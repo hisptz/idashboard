@@ -18,6 +18,8 @@
 }
 .dashboard-search-block {
   flex: 2;
+  display: flex;
+  justify-content: space-between;
 }
 
 .dashboard-options {

@@ -8,19 +8,23 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
-  @Input() layoutModel: any = INITIAL_LAYOUT_MODEL;
-  @Input() visualizationType: string;
-  @Output() onLayoutUpdate = new EventEmitter();
-  @Output() onLayoutClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input()
+  layoutModel: any = INITIAL_LAYOUT_MODEL;
+  @Input()
+  visualizationType: string;
+  @Output()
+  layoutUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  layoutClose: EventEmitter<any> = new EventEmitter<any>();
   filters: any[];
   columns: any[];
   rows: any[];
+  availableDimensions: any[];
   icons: any;
   dimensions: any;
   columnName: string;
   rowName: string;
 
-  subs = new Subscription();
   constructor() {
     this.icons = {
       dx: 'assets/icons/data.png',
@@ -35,6 +39,10 @@ export class LayoutComponent implements OnInit {
     };
     this.columnName = 'Column dimensions';
     this.rowName = 'Row dimensions';
+    this.availableDimensions = [];
+    this.rows = [];
+    this.columns = [];
+    this.filters = [];
   }
 
   ngOnInit() {
@@ -52,7 +60,7 @@ export class LayoutComponent implements OnInit {
   }
 
   updateLayout() {
-    this.onLayoutUpdate.emit({
+    this.layoutUpdate.emit({
       filters: this.filters,
       columns: this.columns,
       rows: this.rows
@@ -60,6 +68,10 @@ export class LayoutComponent implements OnInit {
   }
 
   close() {
-    this.onLayoutClose.emit(true);
+    this.layoutClose.emit({
+      filters: this.filters,
+      columns: this.columns,
+      rows: this.rows
+    });
   }
 }

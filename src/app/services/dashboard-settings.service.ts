@@ -6,14 +6,17 @@ import {
   Manifest
 } from '@hisptz/ngx-dhis2-http-client';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardSettingsService {
+  private _dataStoreUrl: string;
   constructor(
     private httpClient: NgxDhis2HttpClientService,
     private manifestService: ManifestService
-  ) {}
+  ) {
+    this._dataStoreUrl = 'dataStore/dashboard-settings';
+  }
 
   loadAll() {
     return this.manifestService.getManifest().pipe(
@@ -35,12 +38,31 @@ export class DashboardSettingsService {
                     map((dashboardSettings: any) => dashboardSettings),
                     catchError((error: any) => of(null))
                   )
-              : of(null);
+              : this.create(namespace);
           }),
-          catchError((error: any) => of(null))
+          catchError((error: any) => {
+            if (error.status !== 404) {
+              return throwError(error);
+            }
+
+            return this.create(namespace);
+          })
         );
       }),
       catchError((error: any) => of(null))
     );
+  }
+
+  create(namespace: string) {
+    // TODO FIND A GENERIC WAY TO CREATE DASHBOARD PREFERENCES
+    const dashboardSettings = {
+      id: namespace,
+      useDataStoreAsSource: true,
+      allowAdditionalAttributes: true,
+      additionalAttributes: ['globalSelections']
+    };
+    return this.httpClient
+      .post(`${this._dataStoreUrl}/${namespace}`, dashboardSettings)
+      .pipe(map(() => dashboardSettings));
   }
 }

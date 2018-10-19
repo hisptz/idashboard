@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, forkJoin } from 'rxjs';
+import * as _ from 'lodash';
+import { Observable, of, forkJoin, throwError } from 'rxjs';
 import { NgxDhis2HttpClientService } from '@hisptz/ngx-dhis2-http-client';
 
 import { getFavoriteUrl } from '../helpers';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { FavoriteConfiguration } from '../models/favorite-configurations.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class FavoriteService {
-  constructor(private http: NgxDhis2HttpClientService) {}
+  constructor(
+    private httpClient: NgxDhis2HttpClientService,
+    private http: HttpClient
+  ) {}
 
   getFavorite(
     favorite: { id: string; type: string },
     configurations: FavoriteConfiguration = {
       useDataStoreAsSource: false,
-      useBothSources: true
+      useBothSources: true,
+      useDataStoreForSaving: true
     },
     namespace: string = 'favorites'
   ): Observable<any> {
@@ -24,7 +30,30 @@ export class FavoriteService {
         ? forkJoin(
             this.getFromApi(favorite),
             this.getFromDataStore(namespace, favorite.id).pipe(
-              catchError(() => of({}))
+              catchError((error: any) => {
+                if (error.status !== 404) {
+                  return throwError(error);
+                }
+
+                return this.http.get('config/favorites.json').pipe(
+                  switchMap((favorites: any[]) => {
+                    const availableFavorite = _.find(favorites, [
+                      'id',
+                      favorite.id
+                    ]);
+
+                    return availableFavorite
+                      ? this.create(
+                          '',
+                          availableFavorite,
+                          configurations,
+                          namespace
+                        )
+                      : of({});
+                  }),
+                  catchError(() => of({}))
+                );
+              })
             )
           ).pipe(
             map((favoriteResults: any[]) => {
@@ -35,25 +64,34 @@ export class FavoriteService {
   }
 
   getFromDataStore(namespace: string, favoriteId: string) {
-    return this.http.get(`dataStore/${namespace}/${favoriteId}`);
+    return this.httpClient.get(`dataStore/${namespace}/${favoriteId}`);
   }
 
   getFromApi(favorite: any) {
     const favoriteUrl = getFavoriteUrl(favorite);
-    return favoriteUrl !== '' ? this.http.get(favoriteUrl) : of(null);
+    return favoriteUrl !== '' ? this.httpClient.get(favoriteUrl) : of(null);
   }
 
-  create(favoriteUrl: string, favorite: any) {
-    return this.http.post(favoriteUrl, favorite).pipe(map(() => favorite));
+  create(
+    favoriteUrl: string,
+    favorite: any,
+    configurations?: FavoriteConfiguration,
+    namespace?: string
+  ) {
+    return configurations && configurations.useDataStoreForSaving
+      ? this.httpClient
+          .post(`dataStore/${namespace}/${favorite.id}`, favorite)
+          .pipe(map(() => favorite))
+      : this.httpClient.post(favoriteUrl, favorite).pipe(map(() => favorite));
   }
 
   update(favoriteUrl: string, favorite: any) {
-    return this.http
+    return this.httpClient
       .put(`${favoriteUrl}/${favorite.id}`, favorite)
       .pipe(map(() => favorite));
   }
 
   delete(favoriteId: string, favoriteType: string) {
-    return this.http.delete(`${favoriteType}s/${favoriteId}`);
+    return this.httpClient.delete(`${favoriteType}s/${favoriteId}`);
   }
 }

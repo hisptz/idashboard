@@ -4,7 +4,8 @@
       <div *ngIf="dashboardLoading" style="height: 34px; width: 200px;">
         <app-dashboard-progress [borderRadius]="'3px'"></app-dashboard-progress>
       </div>
-      <app-current-dashboard-title *ngIf="dashboardLoaded" [currentDashboardTitle]="currentDashboard?.name" [currentDashboardGroupName]="currentDashboardGroup?.name"></app-current-dashboard-title>
+      <app-current-dashboard-title *ngIf="dashboardLoaded" [currentDashboardTitle]="currentDashboard?.name"
+        [currentDashboardGroupName]="currentDashboardGroup?.name"></app-current-dashboard-title>
     </div>
     <div class="dashboard-options">
       <div *ngIf="dashboardLoading" style="display: flex;">
@@ -26,7 +27,7 @@
         <app-current-dashboard-bookmark [dashboardBookmarked]="currentDashboard?.bookmarked" [dashboardBookmarkPending]="currentDashboard?.bookmarkPending"
           (toggleDashboardBookmark)="onToggleDashboardBookmarkAction($event)"></app-current-dashboard-bookmark>
       </div>
-      <div class="current-dashboard-global-filter" *ngIf="dashboardLoaded">
+      <div class="current-dashboard-global-filter  no-print" *ngIf="dashboardLoaded">
         <ngx-dhis2-selection-filters (filterUpdate)="onFilterUpdateAction($event)" [dataSelections]="currentDashboard?.globalSelections"
           [selectionFilterConfig]="selectionFilterConfig">
         </ngx-dhis2-selection-filters>
@@ -35,12 +36,16 @@
   </div>
 
   <!-- hide search and add dashboard item. to revert remove ngif=false -->
-  <div class="dashboard-search-block no-print" *ngIf="false">
-    <div style="height: 40px; width: 100%;" *ngIf="dashboardLoading">
+  <div class="dashboard-search-block no-print">
+    <div *ngIf="!showFavoriteFilter">&nbsp;</div>
+    <button title="Print this dashboard" class="btn btn-sm" (click)="onPrintDashboard($event)" [disabled]="dashboardLoading">Print</button>
+    <div style="height: 40px; width: 100%;" *ngIf="showFavoriteFilter && dashboardLoading">
       <app-dashboard-progress [borderRadius]="'5px'"></app-dashboard-progress>
     </div>
-    <app-favorite-filter *ngIf="dashboardLoaded" [currentUser]="currentUser" [dashboardAccess]="currentDashboard?.access" (addFavorite)="onAddFavoriteAction($event)"
-      (createFavorite)="onCreateFavoriteAction()"></app-favorite-filter>
+    <div *ngIf="showFavoriteFilter">
+      <app-favorite-filter *ngIf="dashboardLoaded" [currentUser]="currentUser" [dashboardAccess]="currentDashboard?.access"
+        (addFavorite)="onAddFavoriteAction($event)" (createFavorite)="onCreateFavoriteAction()"></app-favorite-filter>
+    </div>
   </div>
 </div>
 

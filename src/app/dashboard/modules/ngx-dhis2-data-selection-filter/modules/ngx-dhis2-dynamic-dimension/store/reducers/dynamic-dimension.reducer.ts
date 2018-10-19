@@ -14,6 +14,7 @@ export interface State extends EntityState<DynamicDimension> {
   loadInitiated: boolean;
   hasError: boolean;
   error: ErrorMessage;
+  allowedDimensions: string[];
 }
 
 export const adapter: EntityAdapter<DynamicDimension> = createEntityAdapter<
@@ -26,7 +27,14 @@ export const initialState: State = adapter.getInitialState({
   loaded: false,
   loadInitiated: false,
   hasError: false,
-  error: null
+  error: null,
+  allowedDimensions: [
+    'l2RYQfC9SfV',
+    'VG4aAdXA4JI',
+    'IymWT9V0HZI',
+    'EaSVpHl8C4J',
+    'X4NKFlvMewI'
+  ]
 });
 
 export function reducer(
@@ -65,6 +73,6 @@ export const getDynamicDimensionState = createFeatureSelector<State>(
   'dynamicDimension'
 );
 
-export const { selectAll: getDynamicDimensions } = adapter.getSelectors(
+export const { selectAll: getAllDynamicDimensions } = adapter.getSelectors(
   getDynamicDimensionState
 );

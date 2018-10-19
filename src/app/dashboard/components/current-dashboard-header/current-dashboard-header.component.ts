@@ -38,6 +38,7 @@ export class CurrentDashboardHeaderComponent implements OnInit {
 
   showSharing: boolean;
   showBookmark: boolean;
+  showFavoriteFilter: boolean;
 
   @Output()
   toggleCurrentDashboardBookmark: EventEmitter<{
@@ -132,5 +133,10 @@ export class CurrentDashboardHeaderComponent implements OnInit {
       id: this.currentDashboard.id,
       globalSelections: dataSelections
     });
+  }
+
+  onPrintDashboard(e) {
+    e.stopPropagation();
+    window.print();
   }
 }
