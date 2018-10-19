@@ -81,7 +81,7 @@ export class DashboardService {
   ): Observable<Dashboard[]> {
     const dashboardUrl =
       dashboardSettings && dashboardSettings.useDataStoreAsSource
-        ? `dataStore/dashboards/${id}`
+        ? `dataStore/dashboards/${dashboardSettings.id}_${id}`
         : `dashboards/${id}.json${customFields || this.dashboardUrlFields}`;
     return this.httpClient.get(dashboardUrl);
   }

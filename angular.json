@@ -26,8 +26,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.json",
-              "src/config/dashboards.json",
-              "src/config/dashboard-groups.json",
+              "src/config",
               "src/manifest.webapp"
             ],
             "styles": [
