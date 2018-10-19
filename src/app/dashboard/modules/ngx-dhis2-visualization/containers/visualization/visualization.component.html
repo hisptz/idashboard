@@ -20,7 +20,7 @@
   <!--visualization body block-->
   <div class="visualization-body-block" [style.height]="(visualizationUiConfig$ | async)?.height" *ngIf="(visualizationUiConfig$ | async)?.showBody">
     <!--visualization body header-->
-    <div class="visualization-body-header-block" *ngIf="!(visualizationUiConfig$ | async)?.hideHeader">
+    <div class="visualization-body-header-block no-print" *ngIf="!(visualizationUiConfig$ | async)?.hideHeader">
       <visualization-header-section [id]="id" [uiConfigId]="(visualizationUiConfig$ | async)?.id" [showFilters]="(visualizationUiConfig$ | async)?.showFilters"
         [hideResizeButtons]="(visualizationUiConfig$ | async)?.hideResizeButtons" [fullScreen]="(visualizationUiConfig$ | async)?.fullScreen"
         [isNew]="(visualizationObject$ | async)?.isNew" [visualizationLayer]="(visualizationLayers$ | async) ? (visualizationLayers$ | async)[0] : null"
@@ -68,7 +68,7 @@
     <!--end of visualization body content block-->
 
     <!--visualization body footer block-->
-    <div class="visualization-body-footer-block" *ngIf="(visualizationProgress$ | async) &&
+    <div class="visualization-body-footer-block no-print" *ngIf="(visualizationProgress$ | async) &&
            (visualizationProgress$ | async).percent === 100 &&
            (visualizationProgress$ | async).statusCode === 200 && !(visualizationUiConfig$ | async)?.hideFooter">
       <visualization-footer-section [type]="(visualizationConfig$ | async)?.currentType" [configId]="(visualizationConfig$ | async)?.id"

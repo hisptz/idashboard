@@ -1,5 +1,4 @@
-<div class="tab">
-
+<div class="tab dashboard-menu-container no-print">
     <ul class="tabs">
         <li *ngFor="let dashboardGroup of dashboardGroups" [ngClass]="{'current': dashboardGroup.id === activeDashboardGroupId }"
             (click)="onSetActiveDashboardGroup(dashboardGroup)">{{dashboardGroup.name}}</li>
@@ -12,8 +11,8 @@
                     <app-add-dashboard (create)="onCreateDashboard($event)"></app-add-dashboard>
                 </li> -->
                 <li *ngFor="let dashboardMenuItem of dashboardMenuList | sortByBookmark">
-                    <app-dashboard-menu-item [dashboardMenuItem]="dashboardMenuItem" [currentDashboardId]="currentDashboardId" (setDashboard)="onSetCurrentDashboard($event)"
-                        (toggleDashboardMenuItemBookmark)="onToggleDashboardMenuItemBookmark($event)"></app-dashboard-menu-item>
+                    <app-dashboard-menu-item [dashboardMenuItem]="dashboardMenuItem" [currentDashboardId]="currentDashboardId"
+                        (setDashboard)="onSetCurrentDashboard($event)" (toggleDashboardMenuItemBookmark)="onToggleDashboardMenuItemBookmark($event)"></app-dashboard-menu-item>
                 </li>
             </ul>
         </div>

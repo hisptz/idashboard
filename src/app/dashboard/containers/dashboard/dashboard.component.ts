@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  HostListener
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
@@ -31,6 +36,18 @@ export class DashboardComponent implements OnInit {
   dashboardLoading$: Observable<boolean>;
   dashboardLoaded$: Observable<boolean>;
   dashboardGroups$: Observable<DashboardGroups[]>;
+
+  @HostListener('window:beforeprint', ['$event'])
+  onBeforePrint(event) {
+    event.stopPropagation();
+    document.getElementById('dashboard_content').style.marginTop = '20px';
+  }
+
+  @HostListener('window:afterprint', ['$event'])
+  onAfterPrint(event) {
+    event.stopPropagation();
+    this.menuContainerHeight = 91;
+  }
 
   constructor(private store: Store<State>) {
     // initialize dashboads settings
