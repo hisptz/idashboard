@@ -16,6 +16,8 @@ export class VisualizationHeaderSectionComponent {
   @Input()
   id: string;
   @Input()
+  currentVisualizationType: string;
+  @Input()
   name: string;
   @Input()
   isNew: string;

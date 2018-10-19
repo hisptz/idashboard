@@ -1,7 +1,8 @@
 <div class="visualization-header-section-container">
   <div class="visualization-filters" *ngIf="showFilters">
-    <ngx-dhis2-selection-filters [visualizationLayerId]="visualizationLayer?.id" [dataSelections]="visualizationLayer?.dataSelections"
-      [layout]="visualizationLayer?.layout" (filterUpdate)="onFilterUpdateAction($event)" [selectionFilterConfig]="selectionFilterConfig">
+    <ngx-dhis2-selection-filters [visualizationLayerId]="visualizationLayer?.id" [currentVisualizationType]="currentVisualizationType"
+      [dataSelections]="visualizationLayer?.dataSelections" [layout]="visualizationLayer?.layout" (filterUpdate)="onFilterUpdateAction($event)"
+      [selectionFilterConfig]="selectionFilterConfig">
     </ngx-dhis2-selection-filters>
     &nbsp;
   </div>

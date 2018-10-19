@@ -1,7 +1,8 @@
 <div [@open] [ngClass]="{
  'visualization-card': true,
  'visualization-card-full-screen': (visualizationUiConfig$ | async)?.fullScreen
- }" (mouseenter)="onToggleVisualizationCardFocus($event, true)" (mouseleave)="onToggleVisualizationCardFocus($event, false)">
+ }"
+  (mouseenter)="onToggleVisualizationCardFocus($event, true)" (mouseleave)="onToggleVisualizationCardFocus($event, false)">
   <!-- visualization notification block -->
   <div class="visualization-notification-block" *ngIf="(visualizationObject$ | async)?.notification">
     {{(visualizationObject$ | async)?.notification.message}}
@@ -11,8 +12,8 @@
   <!--visualization title block-->
   <div class="visualization-title-block" *ngIf="(visualizationUiConfig$ | async)?.showTitleBlock">
     <visualization-title-section [id]="id" [uiConfigId]="(visualizationUiConfig$ | async)?.id" [showBody]="(visualizationUiConfig$ | async)?.showBody"
-      [fullScreen]="(visualizationUiConfig$ | async)?.fullScreen" [type]="(visualizationConfig$ | async)?.currentType" [name]="(visualizationObject$ | async)?.title || (visualizationObject$ | async)?.name"
-      (toggleVisualization)="onToggleVisualizationBody($event)"></visualization-title-section>
+      [fullScreen]="(visualizationUiConfig$ | async)?.fullScreen" [type]="(visualizationConfig$ | async)?.currentType"
+      [name]="(visualizationObject$ | async)?.title || (visualizationObject$ | async)?.name" (toggleVisualization)="onToggleVisualizationBody($event)"></visualization-title-section>
   </div>
   <!--end of visualization title block-->
 
@@ -20,10 +21,11 @@
   <div class="visualization-body-block" [style.height]="(visualizationUiConfig$ | async)?.height" *ngIf="(visualizationUiConfig$ | async)?.showBody">
     <!--visualization body header-->
     <div class="visualization-body-header-block" *ngIf="!(visualizationUiConfig$ | async)?.hideHeader">
-      <visualization-header-section [id]="id" [uiConfigId]="(visualizationUiConfig$ | async)?.id" [showFilters]="(visualizationUiConfig$ | async)?.showFilters"
+      <visualization-header-section [id]="id" [currentVisualizationType]="(visualizationConfig$ | async)?.currentType" [uiConfigId]="(visualizationUiConfig$ | async)?.id" [showFilters]="(visualizationUiConfig$ | async)?.showFilters"
         [hideResizeButtons]="(visualizationUiConfig$ | async)?.hideResizeButtons" [fullScreen]="(visualizationUiConfig$ | async)?.fullScreen"
         [isNew]="(visualizationObject$ | async)?.isNew" [visualizationLayer]="(visualizationLayers$ | async) ? (visualizationLayers$ | async)[0] : null"
-        (fullScreenAction)="onFullScreenAction($event)" (visualizationLayerUpdate)="onLoadVisualizationAnalytics($event)" (savefavorite)="onSaveFavorite($event)"></visualization-header-section>
+        (fullScreenAction)="onFullScreenAction($event)" (visualizationLayerUpdate)="onLoadVisualizationAnalytics($event)"
+        (savefavorite)="onSaveFavorite($event)"></visualization-header-section>
     </div>
     <!--end of visualization body header-->
 
@@ -55,10 +57,11 @@
       <div class="visualization-content" *ngIf="(visualizationProgress$ | async) &&
            (visualizationProgress$ | async).percent === 100 &&
            (visualizationProgress$ | async).statusCode === 200">
-        <visualization-body-section [id]="(visualizationUiConfig$ | async)?.fullScreen ? id + '_full_screen' : id" [visualizationUiConfig]="visualizationUiConfig$ | async"
-          [visualizationLayers]="visualizationLayers$ | async" [visualizationConfig]="visualizationConfig$ | async" [dashboardId]="dashboardId"
-          [focusedVisualization]="focusedVisualization$ | async" (updateVisualizationLayer)="onVisualizationLayerConfigUpdate($event)"
-          [appKey]="(visualizationObject$ | async)?.appKey" [legendSets]="legendSets"></visualization-body-section>
+        <visualization-body-section [id]="(visualizationUiConfig$ | async)?.fullScreen ? id + '_full_screen' : id"
+          [visualizationUiConfig]="visualizationUiConfig$ | async" [visualizationLayers]="visualizationLayers$ | async"
+          [visualizationConfig]="visualizationConfig$ | async" [dashboardId]="dashboardId" [focusedVisualization]="focusedVisualization$ | async"
+          (updateVisualizationLayer)="onVisualizationLayerConfigUpdate($event)" [appKey]="(visualizationObject$ | async)?.appKey"
+          [legendSets]="legendSets"></visualization-body-section>
       </div>
       <!--end of visualization content-->
     </div>
