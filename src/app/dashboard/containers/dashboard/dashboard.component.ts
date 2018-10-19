@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
   @HostListener('window:afterprint', ['$event'])
   onAfterPrint(event) {
     event.stopPropagation();
-    this.menuContainerHeight = 91;
+    document.getElementById('dashboard_content').style.marginTop = '151px';
   }
 
   constructor(private store: Store<State>) {
