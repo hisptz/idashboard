@@ -3,5 +3,7 @@
   <br>
   <h4>Aw, Snap. We are sorry for this inconvenience, our server tells us that</h4>
   <h5>{{errorMessage.statusText}} - (Error Code {{errorMessage.statusCode}})</h5>
-  <small [innerHtml]="errorMessage.message | safe:'html'"></small>
+  <div>
+    <span style="color:#e76767" [innerHtml]="errorMessage.message | safe:'html'"></span>
+  </div>
 </div>
