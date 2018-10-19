@@ -68,7 +68,7 @@ export class AppConfigurationsService {
                     observer.complete();
                   }
                 },
-                error => {
+                () => {
                   observer.next();
                   observer.complete();
                 }

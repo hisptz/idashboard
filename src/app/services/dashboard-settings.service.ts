@@ -28,7 +28,7 @@ export class DashboardSettingsService {
         //     : 'default';
         // TODO FIND DYNAMIC WAY
         const namespace = 'who-malaria';
-        return this.loadDashboardSettings().pipe(
+        return this.loadDashboardSettings(namespace).pipe(
           mergeMap((dashboardSettingsList: Array<string>) => {
             return dashboardSettingsList.indexOf(namespace) !== -1
               ? this.httpClient
@@ -46,12 +46,24 @@ export class DashboardSettingsService {
     );
   }
 
-  loadDashboardSettings(): Observable<any> {
+  loadDashboardSettings(namespace: string): Observable<any> {
     return new Observable(observer => {
       this.httpClient.get('dataStore/dashboard-settings').subscribe(
         dashboardSettingsList => {
-          observer.next(dashboardSettingsList);
-          observer.complete();
+          if (dashboardSettingsList.indexOf(namespace) > -1) {
+            observer.next(dashboardSettingsList);
+            observer.complete();
+          } else {
+            this.appConfigurationService.initateAppConfigurations().subscribe(
+              dashboardSettings => {
+                observer.next(Object.keys(dashboardSettings));
+                observer.complete();
+              },
+              error => {
+                console.log({ error });
+              }
+            );
+          }
         },
         () => {
           this.appConfigurationService.initateAppConfigurations().subscribe(
