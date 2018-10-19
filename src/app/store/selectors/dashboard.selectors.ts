@@ -32,6 +32,7 @@ export const getAllGroupDashboards = createSelector(
   getAllDashboards,
   getCurrentDashboardGroup,
   (allDashboards, currentDashboardGroup) => {
+    console.log(allDashboards);
     return currentDashboardGroup && currentDashboardGroup.dashboards
       ? allDashboards
           .filter(({ id }) => currentDashboardGroup.dashboards.includes(id))

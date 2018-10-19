@@ -2,17 +2,27 @@ import * as _ from 'lodash';
 import { VisualizationDataSelection } from '../models';
 
 // TODO Find best standard for config structure so that layerType can be obtained direct from config object
-export function getAnalyticsUrl(dataSelections: VisualizationDataSelection[], layerType: string, config?: any): string {
+export function getAnalyticsUrl(
+  dataSelections: VisualizationDataSelection[],
+  layerType: string,
+  config?: any
+): string {
   return layerType === 'thematic'
     ? getAggregateAnalyticsUrl(dataSelections, layerType, config)
     : getEventAnalyticsUrl(dataSelections, layerType, config);
 }
 
-function flattenDimensions(dataSelections: VisualizationDataSelection[], isAggregate?: boolean): string {
+function flattenDimensions(
+  dataSelections: VisualizationDataSelection[],
+  isAggregate?: boolean
+): string {
   const isEligibleForAnalytics = isAggregate
     ? dataSelections.length >= 3
     : _.filter(
-        _.map(dataSelections, dataSelection => ['ou', 'pe'].indexOf(dataSelection.dimension) !== -1),
+        _.map(
+          dataSelections,
+          dataSelection => ['ou', 'pe'].indexOf(dataSelection.dimension) !== -1
+        ),
         isEligible => isEligible
       ).length === 2;
 
@@ -24,10 +34,15 @@ function flattenDimensions(dataSelections: VisualizationDataSelection[], isAggre
       const selectionValues = dataSelection.filter
         ? dataSelection.filter
         : _.map(dataSelection.items, item => item.id).join(';');
+
+      const dimensionSection =
+        dataSelection.layout === 'filters' ? 'filter=' : 'dimension=';
       return selectionValues !== ''
-        ? 'dimension=' + dataSelection.dimension + ':' + selectionValues
+        ? dimensionSection + dataSelection.dimension + ':' + selectionValues
         : ['dx', 'ou', 'pe'].indexOf(dataSelection.dimension) === -1
-          ? 'dimension=' + dataSelection.dimension + (dataSelection.legendSet ? '-' + dataSelection.legendSet : '')
+          ? dimensionSection +
+            dataSelection.dimension +
+            (dataSelection.legendSet ? '-' + dataSelection.legendSet : '')
           : '';
     }),
     dimension => dimension !== ''
@@ -43,7 +58,9 @@ function getAggregateAnalyticsUrl(
 ): string {
   const flattenedDimensionString = flattenDimensions(dataSelections, true);
   return flattenedDimensionString !== ''
-    ? 'analytics.json?' + flattenedDimensionString + getAnalyticsUrlOptions(config, layerType)
+    ? 'analytics.json?' +
+        flattenedDimensionString +
+        getAnalyticsUrlOptions(config, layerType)
     : '';
 }
 
@@ -52,7 +69,9 @@ function getAnalyticsUrlOptions(config: any, layerType: string) {
     return '';
   }
 
-  const displayPropertySection = config.displayNameProperty ? '&displayProperty=' + config.displayNameProperty : '';
+  const displayPropertySection = config.displayNameProperty
+    ? '&displayProperty=' + config.displayNameProperty
+    : '';
 
   const aggregrationTypeSection = config
     ? config.aggregationType && config.aggregationType !== 'DEFAULT'
@@ -64,13 +83,18 @@ function getAnalyticsUrlOptions(config: any, layerType: string) {
 
   const outputType = layerType === 'event' ? '&outputType=EVENT' : '';
 
-  const coordinateSection = layerType === 'event' ? '&coordinatesOnly=true' : '';
+  const coordinateSection =
+    layerType === 'event' ? '&coordinatesOnly=true' : '';
   const includeMetadataDetails = `&includeMetadataDetails=true`;
 
   return `${displayPropertySection}${aggregrationTypeSection}${valueSection}${outputType}${coordinateSection}${includeMetadataDetails}`;
 }
 
-function getEventAnalyticsUrl(dataSelections: VisualizationDataSelection[], layerType: string, config: any) {
+function getEventAnalyticsUrl(
+  dataSelections: VisualizationDataSelection[],
+  layerType: string,
+  config: any
+) {
   const flattenedDimensionString = flattenDimensions(dataSelections);
   const analyticsUrlFields =
     flattenedDimensionString !== ''
@@ -80,7 +104,9 @@ function getEventAnalyticsUrl(dataSelections: VisualizationDataSelection[], laye
         flattenedDimensionString +
         getAnalyticsUrlOptions(config, layerType)
       : '';
-  return analyticsUrlFields !== '' ? 'analytics/events/' + analyticsUrlFields : '';
+  return analyticsUrlFields !== ''
+    ? 'analytics/events/' + analyticsUrlFields
+    : '';
 }
 
 function getProgramParameters(config: any): string {
@@ -100,7 +126,11 @@ function getEventAnalyticsUrlSection(config) {
     case 'EVENT_REPORT':
       return config.dataType === 'AGGREGATED_VALUES' ? 'aggregate/' : 'query/';
     default:
-      return !config.aggregate ? (config.eventClustering && config.spatialSupport ? 'count/' : 'query/') : 'aggregate/';
+      return !config.aggregate
+        ? config.eventClustering && config.spatialSupport
+          ? 'count/'
+          : 'query/'
+        : 'aggregate/';
   }
 }
 

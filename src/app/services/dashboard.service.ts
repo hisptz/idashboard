@@ -7,10 +7,15 @@ import { Dashboard } from '../dashboard/models';
 import { map, switchMap, catchError, mergeMap } from 'rxjs/operators';
 import { DashboardSettings } from '../dashboard/models/dashboard-settings.model';
 import { generateUid } from '../helpers/generate-uid.helper';
+import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
   dashboardUrlFields: string;
-  constructor(private httpClient: NgxDhis2HttpClientService) {
+  // TODO: Update http client service to have option to load from external url
+  constructor(
+    private httpClient: NgxDhis2HttpClientService,
+    private http: HttpClient
+  ) {
     this.dashboardUrlFields =
       '?fields=id,name,description,publicAccess,access,externalAccess,created,lastUpdated,favorite,' +
       'user[id,name],dashboardItems[id,type,created,lastUpdated,shape,appKey,chart[id,displayName],' +
@@ -46,8 +51,19 @@ export class DashboardService {
         );
 
         if (filteredDashboardIds.length === 0) {
-          return of([]);
+          // Create dashboards if not found
+          return this.http.get('config/dashboards.json').pipe(
+            switchMap((dashboards: any) => {
+              return forkJoin(
+                _.map(dashboards, (dashboard: any) =>
+                  this.create(dashboard, dashboardSettings)
+                )
+              );
+            }),
+            catchError(() => of([]))
+          );
         }
+
         return forkJoin(
           _.map(filteredDashboardIds, dashboardId => {
             return this.httpClient.get(`dataStore/dashboards/${dashboardId}`);
@@ -71,13 +87,19 @@ export class DashboardService {
   }
 
   create(dashboard: Dashboard, dashboardSettings: DashboardSettings) {
+    const sanitizedDashboard: any = dashboardSettings.allowAdditionalAttributes
+      ? dashboard
+      : _.omit(dashboard, dashboardSettings.additionalAttributes);
     return dashboardSettings && dashboardSettings.useDataStoreAsSource
-      ? this.httpClient.post(`dataStore/dashboards/${dashboard.id}`, {
-          ...dashboard,
-          namespace: dashboardSettings.id,
-          dashbboardItems: []
-        })
-      : this.httpClient.post('dashboards.json', dashboard);
+      ? this.httpClient
+          .post(
+            `dataStore/dashboards/${dashboardSettings.id}_${dashboard.id}`,
+            sanitizedDashboard
+          )
+          .pipe(map(() => sanitizedDashboard))
+      : this.httpClient
+          .post('dashboards.json', sanitizedDashboard)
+          .pipe(map(() => sanitizedDashboard));
   }
 
   bookmarkDashboard(
