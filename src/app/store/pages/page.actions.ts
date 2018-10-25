@@ -11,7 +11,10 @@ export enum PageActions {
   LOAD_TOP_SCROLL_BAR_FAIL = '[Home top bar] Load top scroll bar fail',
   LOAD_FAQS = '[FAQs and Help] Load FAQS and helps page',
   LOAD_FAQS_SUCCESS = '[FAQS and Help] Load FAQs and Help success',
-  LOAD_FAQS_FAIL = '[FAQS and Help] Load FAQS and Help fail'
+  LOAD_FAQS_FAIL = '[FAQS and Help] Load FAQS and Help fail',
+  LOAD_STATS_SUMMARY = '[Statistics summary] Load stats summary',
+  LOAD_STATS_SUMMARY_SUCCESS = '[Statistics summary] Load stats summary success',
+  LOAD_STATS_SUMMARY_FAIL = '[Statistics summary] Load statistics summary fail'
 }
 
 export class LoadAction implements Action {
@@ -66,6 +69,24 @@ export class LoadFAQSHelpFailAction implements Action {
 }
 
 
+export class LoadStatsSummaryAction implements Action {
+  readonly type = PageActions.LOAD_STATS_SUMMARY;
+}
+
+export class LoadStatsSummarySuccessAction implements Action {
+  readonly type = PageActions.LOAD_STATS_SUMMARY_SUCCESS;
+
+  constructor(public payload: SinglePageState) {
+  }
+}
+
+export class LoadStatsSummaryFailAction implements Action {
+  readonly type = PageActions.LOAD_STATS_SUMMARY_FAIL;
+
+  constructor(public payload: any) {}
+}
+
+
 export type PageAction =  LoadAction
   | LoadSuccessAction
   | LoadFailAction
@@ -74,4 +95,7 @@ export type PageAction =  LoadAction
   | LoadTopScrollFailAction
   | LoadFAQSHelpAction
   | LoadFAQSHelpSuccessAction
-  | LoadFAQSHelpFailAction;
+  | LoadFAQSHelpFailAction
+  | LoadStatsSummaryAction
+  | LoadStatsSummarySuccessAction
+  | LoadStatsSummaryFailAction;

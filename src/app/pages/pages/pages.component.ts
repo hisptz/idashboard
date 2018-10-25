@@ -15,11 +15,11 @@ import * as _ from 'lodash';
 import * as $ from 'jquery';
 import {PageState, SinglePageState} from '../../store/pages/page.state';
 import {AppState} from '../../store/app.reducers';
-import {getPage, getScrollBar} from '../../store/pages/page.selectors';
+import {getPage, getScrollBar, getStatsSummary} from '../../store/pages/page.selectors';
 import {HttpClientService} from '../../services/http-client.service';
 import {TimerObservable} from 'rxjs-compat/observable/TimerObservable';
 import {Subscription} from 'rxjs/Subscription';
-import {LoadTopScrollAction} from '../../store/pages/page.actions';
+import {LoadStatsSummaryAction, LoadTopScrollAction} from '../../store/pages/page.actions';
 
 @Component({
   selector: 'app-pages',
@@ -29,6 +29,7 @@ import {LoadTopScrollAction} from '../../store/pages/page.actions';
 export class PagesComponent implements OnInit, AfterViewInit {
 
   page$: Observable<PageState>;
+  statsSummary$: Observable<SinglePageState>;
   topScrollBar$: Observable<SinglePageState>;
   pageToDisplay: string;
   topScrollBar: string;
@@ -48,8 +49,10 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
   constructor(private store: Store<AppState>, private httpClientService: HttpClientService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
     this.store.dispatch(new LoadTopScrollAction());
+    this.store.dispatch(new LoadStatsSummaryAction());
     this.page$ = store.select(getPage);
     this.topScrollBar$ = store.select(getScrollBar);
+    this.statsSummary$ = store.select(getStatsSummary);
     this.timeOut = false;
     this.timerStatus = true;
   }
@@ -70,24 +73,11 @@ export class PagesComponent implements OnInit, AfterViewInit {
         }
       });
     }
-    // this.httpClientService.get('dataStore/observatoryContents/homeTopScrollbar')
-    //   .subscribe((topScrollBar) => {
-    //     if (topScrollBar) {
-    //       this.topScrollBar = topScrollBar['pageContent'];
-    //       try {
-    //         this._htmlMarkupTopScrollBar = this.sanitizer.bypassSecurityTrustHtml(
-    //           this.topScrollBar
-    //         );
-    //         this.hasHtmlSetScrollBar = true;
-    //       } catch (e) {
-    //         console.log(JSON.stringify(e));
-    //       }
-    //     }
-    //   });
-    this.httpClientService.get('dataStore/observatoryContents/statisticsSummary')
-      .subscribe((statisticsSummaryObj) => {
-        if (statisticsSummaryObj) {
-          this.statisticsSummary = statisticsSummaryObj['pageContent'];
+
+    if (this.statsSummary$) {
+      this.statsSummary$.subscribe((statsSummary) => {
+        if (statsSummary) {
+          this.statisticsSummary = statsSummary['pageContent'];
           try {
             this._htmlMarkupstatisticsSummary = this.sanitizer.bypassSecurityTrustHtml(
               this.statisticsSummary
@@ -97,7 +87,9 @@ export class PagesComponent implements OnInit, AfterViewInit {
             console.log(JSON.stringify(e));
           }
         }
-      })
+      });
+    }
+
     this.hasScriptSet = false;
     this.hasHtmlSet = false;
     if (this.page$) {

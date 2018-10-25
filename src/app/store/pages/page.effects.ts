@@ -43,6 +43,17 @@ export class PageEffects {
           new page.LoadFAQSHelpSuccessAction(pageObject)),
         catchError((error) => of(new page.LoadFAQSHelpFailAction(error)))
       ))
+    )
+
+  @Effect()
+  loadStatisticsSummary$ = this.actions$
+    .ofType<page.LoadAction>(page.PageActions.LOAD_STATS_SUMMARY)
+    .pipe(
+      switchMap(() => this._loadStatisticsSummary().pipe(
+        map((pageObj: SinglePageState) =>
+        new page.LoadStatsSummarySuccessAction(pageObj)),
+        catchError((error) => of(new page.LoadStatsSummaryFailAction(error)))
+      ))
     );
 
   constructor(private actions$: Actions,
@@ -59,5 +70,9 @@ export class PageEffects {
 
   private _loadFAQSandHelp(): Observable<any> {
     return this.httpClient.get(`dataStore/observatoryContents/help-faqs.json`);
+  }
+
+  private _loadStatisticsSummary(): Observable<any> {
+    return this.httpClient.get(`dataStore/observatoryContents/statisticsSummary.json`);
   }
 }
