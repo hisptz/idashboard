@@ -40,6 +40,7 @@ export class NgxDhis2DynamicDimensionComponent implements OnInit, OnDestroy {
 
   @Output()
   dynamicDimensionClose: EventEmitter<any> = new EventEmitter<any>();
+  showBody: boolean;
 
   get selectedDimensionItems(): any[] {
     return _.flatten(
