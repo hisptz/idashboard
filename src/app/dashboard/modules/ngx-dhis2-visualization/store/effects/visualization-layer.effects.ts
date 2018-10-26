@@ -75,7 +75,7 @@ export class VisualizationLayerEffects {
                 }));
                 const dataSelectionFormated = [...otherSelections, { ...dxSelection, items }];
                 return this.analyticsService.getAnalytics(
-                  dataSelectionFormated,
+                  visualizationLayer.dataSelections,
                   visualizationLayer.layerType,
                   visualizationLayer.config
                 );

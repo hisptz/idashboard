@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { VisualizationUiConfig } from '../../models/visualization-ui-config.model';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { VisualizationLayer } from '../../models/visualization-layer.model';
 import { VisualizationDataSelection } from '../../models/visualization-data-selection.model';
 import { openAnimation } from '../../../../../animations';
@@ -12,7 +11,7 @@ import { SelectionFilterConfig } from '../../../ngx-dhis2-data-selection-filter/
   styleUrls: ['./visualization-header-section.css'],
   animations: [openAnimation]
 })
-export class VisualizationHeaderSectionComponent {
+export class VisualizationHeaderSectionComponent implements OnChanges {
   @Input()
   id: string;
   @Input()
@@ -32,12 +31,14 @@ export class VisualizationHeaderSectionComponent {
   @Input()
   visualizationLayer: VisualizationLayer;
 
+  @Input()
+  visualizationLayers: Array<VisualizationLayer>;
+
   showNameInput: boolean;
+  layerDataSelection;
 
   @Output()
-  visualizationLayerUpdate: EventEmitter<VisualizationLayer> = new EventEmitter<
-    VisualizationLayer
-  >();
+  visualizationLayerUpdate: EventEmitter<VisualizationLayer> = new EventEmitter<VisualizationLayer>();
 
   @Output()
   fullScreenAction: EventEmitter<any> = new EventEmitter<any>();
@@ -53,6 +54,23 @@ export class VisualizationHeaderSectionComponent {
       showOrgUnitFilter: false,
       showLayout: false
     };
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const { visualizationLayers } = changes;
+
+    if (visualizationLayers.currentValue && visualizationLayers.currentValue.length) {
+      const layers = visualizationLayers.currentValue;
+      const _dataSelections = layers[0].dataSelections;
+      const otherThanDx = _dataSelections.filter(({ dimension }) => dimension !== 'dx');
+      const dxDimension = _dataSelections.find(({ dimension }) => dimension === 'dx');
+      const dx_items = layers.map(
+        ({ dataSelections }) => dataSelections.find(({ dimension }) => dimension === 'dx').items
+      );
+      const items = [].concat.apply([], dx_items);
+      const newDx = { ...dxDimension, items };
+      this.layerDataSelection = [...otherThanDx, ...newDx];
+    }
   }
 
   onFullScreenAction(id) {

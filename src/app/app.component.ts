@@ -10,10 +10,7 @@ import { State, LoadSystemInfo } from './store';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(
-    private store: Store<State>,
-    private translate: TranslateService
-  ) {
+  constructor(private store: Store<State>, private translate: TranslateService) {
     // Load system information
     store.dispatch(new LoadSystemInfo());
 
