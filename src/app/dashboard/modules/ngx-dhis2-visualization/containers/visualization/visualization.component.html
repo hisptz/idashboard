@@ -21,11 +21,12 @@
   <div class="visualization-body-block" [style.height]="(visualizationUiConfig$ | async)?.height" *ngIf="(visualizationUiConfig$ | async)?.showBody">
     <!--visualization body header-->
     <div class="visualization-body-header-block" *ngIf="!(visualizationUiConfig$ | async)?.hideHeader">
-      <visualization-header-section [id]="id" [currentVisualizationType]="(visualizationConfig$ | async)?.currentType" [uiConfigId]="(visualizationUiConfig$ | async)?.id" [showFilters]="(visualizationUiConfig$ | async)?.showFilters"
+      <visualization-header-section [id]="id" [currentVisualizationType]="(visualizationConfig$ | async)?.currentType"
+        [uiConfigId]="(visualizationUiConfig$ | async)?.id" [showFilters]="(visualizationUiConfig$ | async)?.showFilters"
         [hideResizeButtons]="(visualizationUiConfig$ | async)?.hideResizeButtons" [fullScreen]="(visualizationUiConfig$ | async)?.fullScreen"
         [isNew]="(visualizationObject$ | async)?.isNew" [visualizationLayer]="(visualizationLayers$ | async) ? (visualizationLayers$ | async)[0] : null"
-        (fullScreenAction)="onFullScreenAction($event)" (visualizationLayerUpdate)="onLoadVisualizationAnalytics($event)"
-        (savefavorite)="onSaveFavorite($event)"></visualization-header-section>
+        [visualizationLayers]="(visualizationLayers$ | async)" (fullScreenAction)="onFullScreenAction($event)"
+        (visualizationLayerUpdate)="onLoadVisualizationAnalytics($event)" (savefavorite)="onSaveFavorite($event)"></visualization-header-section>
     </div>
     <!--end of visualization body header-->
 
