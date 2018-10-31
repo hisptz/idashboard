@@ -37,3 +37,34 @@
   text-align: center;
   opacity: 0.5;
 }
+
+.corousel-text {
+  padding: 25px 5px 5px 30px;text-align: left;
+}
+
+.corousel-text h2 {
+  color: #2A8FD1;
+}
+
+.corousel-img {
+  height: 100%; padding: 5px 5px 5px 30px; text-align: right;
+}
+
+.corousel-img img {
+  height: 300px;
+  width: 100%;
+}
+
+carousel-indicators li {
+  position: relative;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  width: 10px;
+  height: 10px;
+  margin-right: 3px;
+  border-radius: 10px;
+  margin-left: 3px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: #2A8FD1;
+}

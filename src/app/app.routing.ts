@@ -3,11 +3,16 @@ import {NgModule} from '@angular/core';
 import {HomeComponent} from './pages/home/home.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {FullScreenDashboardItemViewComponent} from './pages/full-screen-dashboard-item-view/full-screen-dashboard-item-view.component';
+import {PortalComponent} from './pages/portal/portal.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'pages/:id',
+    component: PortalComponent
   },
   {
     path: 'dashboards/:id',

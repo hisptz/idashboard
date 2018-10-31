@@ -15,6 +15,7 @@ import * as dashboardHelpers from './helpers/index';
 import * as visualization from '../visualization/visualization.actions';
 import * as visualizationHelpers from '../visualization/helpers/index';
 import * as currentUser from '../current-user/current-user.actions';
+import * as portalConfiguration from '../portal/portal.actions';
 import { AppState } from '../app.reducers';
 import { Store } from '@ngrx/store';
 import { CurrentUserState } from '../current-user/current-user.state';
@@ -27,10 +28,16 @@ import { SharingEntity } from '../../modules/sharing-filter/models/sharing-entit
 @Injectable()
 export class DashboardEffects {
   @Effect({dispatch: false})
+  portalConfigurationLoaded$ = this.actions$.ofType<portalConfiguration.LoadPortalConfigurationSuccessAction>(
+    portalConfiguration.PortalActions.LOAD_PORTAL_CONFIGURATION_SUCCESS
+  ).pipe(tap(() => {
+    this.store.dispatch(new dashboard.LoadAction());
+  }));
+  @Effect({dispatch: false})
   currentUserLoaded$ = this.actions$.ofType<currentUser.LoadSuccessAction>(
     currentUser.CurrentUserActions.LOAD_SUCCESS
   ).pipe(tap(() => {
-    this.store.dispatch(new dashboard.LoadAction());
+    this.store.dispatch(new portalConfiguration.LoadPortalConfigurationAction());
     this.store.dispatch(new dashboard.LoadDashboardNotificationAction());
   }));
 
@@ -43,6 +50,7 @@ export class DashboardEffects {
           return {
             dashboards: dashboards,
             currentUser: state.currentUser,
+            portalConfiguration: state.portalConfiguration,
             url: state.route.state.url
           };
         }),
@@ -68,28 +76,45 @@ export class DashboardEffects {
 
     const currentVisualization = action.payload.url.split('/')[4];
 
-    if (currentDashboardId) {
-      /**
-       * Navigate to the particular dashboard if comes from home
-       */
-      if (action.payload.url.indexOf('dashboards') === -1) {
-        this.router.navigate(['/dashboards/' + currentDashboardId]);
-      } else {
-        if (currentVisualization) {
-          this.store.dispatch(
-            new visualization.SetCurrentAction(currentVisualization)
-          );
-        } else {
-          this.store.dispatch(
-            new dashboard.SetCurrentAction(currentDashboardId)
-          );
-          this.store.dispatch(
-            new dashboard.LoadSharingDataAction(currentDashboardId)
-          );
+    const portalConfigurations = action.payload.portalConfiguration;
+    /**
+     * Control if the app will load with portal configurations from datastore or not
+  **/
+    if (portalConfigurations.isPortal && portalConfigurations) {
+      // navigate to the page set true
+      let navigateTo = '';
+      portalConfigurations.pages.forEach((page) => {
+        if (page.isHomePage) {
+          navigateTo = page.routeUrl;
         }
+      });
+      if (navigateTo !== ''){
+        this.router.navigate([navigateTo]);
       }
     } else {
-      this.router.navigate(['/']);
+      if (currentDashboardId) {
+        /**
+         * Navigate to the particular dashboard if comes from home
+         */
+        if (action.payload.url.indexOf('dashboards') === -1) {
+          this.router.navigate(['/dashboards/' + currentDashboardId]);
+        } else {
+          if (currentVisualization) {
+            this.store.dispatch(
+              new visualization.SetCurrentAction(currentVisualization)
+            );
+          } else {
+            this.store.dispatch(
+              new dashboard.SetCurrentAction(currentDashboardId)
+            );
+            this.store.dispatch(
+              new dashboard.LoadSharingDataAction(currentDashboardId)
+            );
+          }
+        }
+      } else {
+        this.router.navigate(['/']);
+      }
     }
   }));
 
@@ -270,7 +295,8 @@ export class DashboardEffects {
         (dashboardOptions: any) =>
           new dashboard.LoadOptionsSuccessAction({
             dashboardOptions,
-            currentUser: state.currentUser
+            currentUser: state.currentUser,
+            portalConfiguration: state.portalConfiguration,
           })
       ),
       catchError(() => of(new dashboard.LoadOptionsFailAction()))
@@ -303,9 +329,9 @@ export class DashboardEffects {
   );
 
   constructor(private actions$: Actions,
-    private store: Store<AppState>,
-    private router: Router,
-    private httpClient: HttpClientService) {
+              private store: Store<AppState>,
+              private router: Router,
+              private httpClient: HttpClientService) {
   }
 
   private _loadAll(): Observable<Dashboard[]> {
@@ -330,8 +356,8 @@ export class DashboardEffects {
   }
 
   private _getCurrentDashboardId(routeUrl: string,
-    dashboards: Dashboard[],
-    currentUserInfo: CurrentUserState) {
+                                 dashboards: Dashboard[],
+                                 currentUserInfo: CurrentUserState) {
     let currentDashboard = routeUrl.split('/')[2];
 
     if (_.find(dashboards, ['id', currentDashboard])) {
@@ -378,7 +404,7 @@ export class DashboardEffects {
                 _.map(
                   dashboardOptionResults,
                   (dashboardOptionResult: any,
-                    dashboardOptionIndex: number) => {
+                   dashboardOptionIndex: number) => {
                     return {
                       id: dashboardOptions[dashboardOptionIndex],
                       ...dashboardOptionResult
@@ -396,8 +422,8 @@ export class DashboardEffects {
   }
 
   private _bookmarkDashboard(dashboardId: string,
-    currentUserId: string,
-    bookmarked: boolean) {
+                             currentUserId: string,
+                             bookmarked: boolean) {
     return new Observable(observer => {
       this.httpClient.get(`dataStore/dashboards/${dashboardId}`).subscribe(
         (dashboardOption: any) => {

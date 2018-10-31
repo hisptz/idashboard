@@ -83,6 +83,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { VisualizationExportService } from './services/visualization-export.service';
 import { VisualizationErrorNotifierComponent } from './pages/dashboard/components/visualization-list/visualization-card/visualization-error-notifier/visualization-error-notifier.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { PortalComponent } from './pages/portal/portal.component';
+import { HomePortalComponent } from './pages/portal/home-portal/home-portal.component';
+import { StatisticsSummaryComponent } from './pages/portal/shared-components/statistics-summary/statistics-summary.component';
+import { DownloadsComponent } from './pages/portal/downloads/downloads.component';
+import { TopHeaderMenuComponent } from './pages/portal/shared-components/top-header-menu/top-header-menu.component';
+import { SliderComponent } from './pages/portal/shared-components/slider/slider.component';
+import { PortalThemesComponent } from './pages/portal/shared-components/portal-themes/portal-themes.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -136,7 +143,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     DashboardMenuBookmarkComponent,
     DashboardNotificationComponent,
     VisualizationErrorNotifierComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    PortalComponent,
+    HomePortalComponent,
+    StatisticsSummaryComponent,
+    DownloadsComponent,
+    TopHeaderMenuComponent,
+    SliderComponent,
+    PortalThemesComponent,
   ],
   imports: [
     BrowserModule,
