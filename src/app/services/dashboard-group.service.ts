@@ -9,13 +9,16 @@ import { DashboardSettings } from '../dashboard/models/dashboard-settings.model'
 
 @Injectable({ providedIn: 'root' })
 export class DashboardGroupService {
+  private _dataStoreUrl: string;
   constructor(
     private httpClient: NgxDhis2HttpClientService,
     private http: HttpClient
-  ) {}
+  ) {
+    this._dataStoreUrl = 'dataStore/dashboard-groups';
+  }
 
   loadAll(dashboardSettings: DashboardSettings) {
-    return this.httpClient.get('dataStore/dashboard-groups').pipe(
+    return this.httpClient.get(this._dataStoreUrl).pipe(
       catchError(() => of([])),
       mergeMap((dashboardGroupIds: Array<string>) => {
         const filteredDashboardGroupIds = _.filter(
@@ -44,7 +47,7 @@ export class DashboardGroupService {
         return forkJoin(
           _.map(filteredDashboardGroupIds, dashboardGroupId => {
             return this.httpClient.get(
-              `dataStore/dashboard-groups/${dashboardGroupId}`
+              `${this._dataStoreUrl}/${dashboardGroupId}`
             );
           })
         );
@@ -58,7 +61,7 @@ export class DashboardGroupService {
   ) {
     return this.httpClient
       .post(
-        `dataStore/dashboards/${dashboardSettings.id}_${dashboardGroup.id}`,
+        `${this._dataStoreUrl}/${dashboardSettings.id}_${dashboardGroup.id}`,
         dashboardGroup
       )
       .pipe(map(() => dashboardGroup));
