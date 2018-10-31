@@ -234,7 +234,6 @@ export class VisualizationObjectEffects {
       const spatialSupport = systemInfo && systemInfo.databaseInfo ? systemInfo.databaseInfo.spatialSupport : false;
       const visualizationFavoriteOptions =
         action.visualization && action.visualization.favorite ? action.visualization.favorite : null;
-
       if (visualizationFavoriteOptions && action.favorite) {
         if (visualizationFavoriteOptions.requireAnalytics) {
           // update global visualization configurations

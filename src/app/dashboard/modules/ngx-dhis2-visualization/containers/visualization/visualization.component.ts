@@ -156,8 +156,8 @@ export class VisualizationComponent implements OnInit, OnChanges {
     this.store.dispatch(new ToggleFullScreenAction(event.uiConfigId));
   }
 
-  onLoadVisualizationAnalytics(visualizationLayer: VisualizationLayer) {
-    this.store.dispatch(new LoadVisualizationAnalyticsAction(this.id, [visualizationLayer]));
+  onLoadVisualizationAnalytics(visualizationLayers: VisualizationLayer[]) {
+    this.store.dispatch(new LoadVisualizationAnalyticsAction(this.id, visualizationLayers));
   }
 
   onVisualizationLayerConfigUpdate(visualizationLayer: VisualizationLayer) {

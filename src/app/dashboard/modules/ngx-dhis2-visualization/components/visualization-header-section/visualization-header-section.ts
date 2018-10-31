@@ -38,7 +38,7 @@ export class VisualizationHeaderSectionComponent implements OnChanges {
   layerDataSelection;
 
   @Output()
-  visualizationLayerUpdate: EventEmitter<VisualizationLayer> = new EventEmitter<VisualizationLayer>();
+  visualizationLayerUpdate: EventEmitter<VisualizationLayer[]> = new EventEmitter<VisualizationLayer[]>();
 
   @Output()
   fullScreenAction: EventEmitter<any> = new EventEmitter<any>();
@@ -82,10 +82,7 @@ export class VisualizationHeaderSectionComponent implements OnChanges {
   }
 
   onFilterUpdateAction(dataSelections: VisualizationDataSelection[]) {
-    this.visualizationLayerUpdate.emit({
-      ...this.visualizationLayer,
-      dataSelections
-    });
+    this.visualizationLayerUpdate.emit(this.visualizationLayers);
   }
 
   onToggleNameInput(e) {
