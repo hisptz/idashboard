@@ -2822,7 +2822,7 @@
         "colTotals": false,
         "aggregationType": "DEFAULT",
         "hideSubtitle": false,
-        "legendDisplayStrategy": "BY_DATA_ITEM",
+        "legendDisplayStrategy": "FIXED",
         "colSubTotals": false,
         "rowTotals": false,
         "digitGroupSeparator": "SPACE",
@@ -2903,7 +2903,7 @@
           {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
-              "id": "dASLnPMS8L8"
+              "id": "HHpmA3PRXlJ"
             }
           },
           {
@@ -2957,7 +2957,7 @@
               "dimensionItemType": "DATA_ELEMENT"
             },
             {
-              "id": "dASLnPMS8L8",
+              "id": "HHpmA3PRXlJ",
               "name": "Prop. of cases investigated within 4 timeframe",
               "dimensionItemType": "INDICATOR"
             },
@@ -3004,7 +3004,7 @@
         "colTotals": false,
         "aggregationType": "DEFAULT",
         "hideSubtitle": false,
-        "legendDisplayStrategy": "BY_DATA_ITEM",
+        "legendDisplayStrategy": "FIXED",
         "colSubTotals": false,
         "rowTotals": false,
         "digitGroupSeparator": "SPACE",
@@ -3088,13 +3088,13 @@
           {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
-              "id": "RLxhxT7sO0R"
+              "id": "IS9VxwhkJXR"
             }
           },
           {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
-              "id": "FdfpxYmcsC3"
+              "id": "GxlrIgMyEf4"
             }
           },
           {
@@ -3142,12 +3142,12 @@
               "dimensionItemType": "DATA_ELEMENT"
             },
             {
-              "id": "RLxhxT7sO0R",
-              "name": "Foci identified, new and old (list of foci)",
+              "id": "IS9VxwhkJXR",
+              "name": "proportion of foci with response with timeframe",
               "dimensionItemType": "INDICATOR"
             },
             {
-              "id": "FdfpxYmcsC3",
+              "id": "GxlrIgMyEf4",
               "name": "Malaria deaths",
               "dimensionItemType": "INDICATOR"
             },
