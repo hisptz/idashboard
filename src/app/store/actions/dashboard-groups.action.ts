@@ -14,11 +14,15 @@ export enum DashboardGroupsActionTypes {
 
 export class InitializeDashboardGroupsAction implements Action {
   readonly type = DashboardGroupsActionTypes.InitializeDashboardGroups;
+  constructor(public dashboardSettings: any) {}
 }
 
 export class InitializeDashboardGroupsActionSuccess implements Action {
   readonly type = DashboardGroupsActionTypes.InitializeDashboardGroupSuccess;
-  constructor(public dashboardGroups: DashboardGroups[], public activeGroup: string) {}
+  constructor(
+    public dashboardGroups: DashboardGroups[],
+    public activeGroup: string
+  ) {}
 }
 
 export class LoadDashboardGroupsAction implements Action {
@@ -38,7 +42,11 @@ export class SetActiveDashboardGroupsActionFail implements Action {
 
 export class AddDashboardGroupsAction implements Action {
   readonly type = DashboardGroupsActionTypes.AddDashboardGroups;
-  constructor(public dashboardGroups: DashboardGroups, public currentUser: User, public systemInfo: SystemInfo) {}
+  constructor(
+    public dashboardGroups: DashboardGroups,
+    public currentUser: User,
+    public systemInfo: SystemInfo
+  ) {}
 }
 export class LoadDashboardGroupsFailAction implements Action {
   readonly type = DashboardGroupsActionTypes.LoadDashboardGroupsFail;

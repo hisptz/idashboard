@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { mergeMap, map, catchError, tap, take } from 'rxjs/operators';
+import {
+  mergeMap,
+  map,
+  catchError,
+  tap,
+  take,
+  switchMap
+} from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { DashboardSettingsService } from '../../services/dashboard-settings.service';
@@ -11,7 +18,8 @@ import {
   AddDashboardSettingsAction,
   LoadDashboardSettingsFailAction,
   LoadDashboardSettingsAction,
-  LoadDashboardsAction
+  LoadDashboardsAction,
+  InitializeDashboardGroupsAction
 } from '../actions';
 
 import { State } from '../reducers';
@@ -41,14 +49,14 @@ export class DashboardSettingsEffects {
   @Effect()
   dashboardSettingsLoaded$: Observable<any> = this.actions$.pipe(
     ofType(DashboardSettingsActionTypes.AddDashboardSettings),
-    map(
-      (action: AddDashboardSettingsAction) =>
-        new LoadDashboardsAction(
-          action.currentUser,
-          action.dashboardSettings,
-          action.systemInfo
-        )
-    )
+    switchMap((action: AddDashboardSettingsAction) => [
+      new LoadDashboardsAction(
+        action.currentUser,
+        action.dashboardSettings,
+        action.systemInfo
+      ),
+      new InitializeDashboardGroupsAction(action.dashboardSettings)
+    ])
   );
 
   constructor(

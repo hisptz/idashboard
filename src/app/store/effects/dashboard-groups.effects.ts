@@ -21,52 +21,9 @@ import {
   withLatestFrom,
   tap
 } from 'rxjs/operators';
+import { DashboardGroupService } from 'src/app/services/dashboard-group.service';
 
-const GROUPS_PAYLOAD = [
-  {
-    id: 'Xm4TNggmC8J',
-    name: 'Uncomplicated Malaria Diagnosis (OPD)',
-    dashboards: ['tFidynXMnDn', 'lUCZ9Rq344R', 'OMJ5l5Ic0C1', 'gLUc5SJjoXS']
-  },
-  {
-    id: 'kquEMGaUMyn',
-    name: 'Malaria Testing',
-    dashboards: ['emcZaaBYQ4j', 'n0ff9qrTqH9', 'kUMDv9RGdyq', 'jtK9L4yyaSL']
-  },
-  {
-    id: 'HOzTDHYZwiE',
-    name: 'Malaria Commodities (Pharm)',
-    dashboards: ['xfv6fKNeNuL', 'ElPSNI3mFf0', 'uDbJGRmnoPQ', 'Jj2trBJvOeG']
-  },
-  {
-    id: 'AKVXOZUiE12',
-    name: 'Severe Malaria Morbidity and Mortality (IPD)',
-    dashboards: ['UuyjEPGdeLK', 'nc6YfIQ4SRZ', 'nbDajKsJ2gG', 'W17wZSERoeB']
-  },
-  {
-    id: 'dCBBM28wKfV',
-    name: 'Preventive services (RCH)',
-    dashboards: ['skeLgxeb6HD', 'k6x9Pvvpt9u', 'uyOGOweH1bX', 'KhfYVW3ye34']
-  },
-  {
-    id: 'BXEq47PU58f',
-    name: 'Accountability Tool',
-    dashboards: ['azp3dWWf8dw']
-  },
-  {
-    id: 'DoSVwKTsNvZ',
-    name: 'MSDQI',
-    dashboards: [
-      'LTxG4cBXA5z',
-      'XIr3W6qZ2rm',
-      'vKoaF1ObPE1',
-      'VweVuqTIC7X',
-      'iTrpiuF4ipk',
-      'BwfRHTu8rDc',
-      'jJjlmwGr0cG'
-    ]
-  }
-];
+const GROUPS_PAYLOAD = [];
 
 @Injectable()
 export class DashboardGroupsEffects {
@@ -95,19 +52,25 @@ export class DashboardGroupsEffects {
     ofType<InitializeDashboardGroupsAction>(
       DashboardGroupsActionTypes.InitializeDashboardGroups
     ),
-    switchMap(() => [
-      new InitializeDashboardGroupsActionSuccess(
-        GROUPS_PAYLOAD,
-        GROUPS_PAYLOAD[0].id
-      )
-    ]),
+    switchMap((action: InitializeDashboardGroupsAction) =>
+      this.dashboardGroupService
+        .loadAll(action.dashboardSettings)
+        .pipe(
+          map(
+            dashboardGroups =>
+              new InitializeDashboardGroupsActionSuccess(
+                dashboardGroups,
+                dashboardGroups.length > 0 ? dashboardGroups[0].id : ''
+              )
+          )
+        )
+    ),
     catchError(error => of(new SetActiveDashboardGroupsActionFail(error)))
   );
 
-  // remember to put this at the end of all effects
-  @Effect()
-  init$: Observable<Action> = defer(() =>
-    of(new InitializeDashboardGroupsAction())
-  );
-  constructor(private actions$: Actions, private store: Store<State>) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store<State>,
+    private dashboardGroupService: DashboardGroupService
+  ) {}
 }
