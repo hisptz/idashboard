@@ -1,0 +1,20 @@
+<div class="col-md-12 top-menu-wrapper" *ngIf="portalPages">
+  <div class="row top-menu-wrapper-info">
+    <div class=" col-md-2 left-of-top-banner"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Coat_of_arms_of_Tanzania.svg/251px-Coat_of_arms_of_Tanzania.svg.png" alt="Coat of arms of Tanzania.svg" width="100" height="80"></div>
+    <div class="col-md-8 center-of-top-banner">
+      <h2>TANZANIA NATIONAL HEALTH PORTAL</h2>
+      <h5>MINISTRY OF HEALTH COMMUNITY DEVELOPMENT GENDER ELDERLY AND CHILDREN</h5>
+    </div>
+    <div class="col-md-2 right-of-top-banner">
+      <!--<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/125px-Flag_of_Tanzania.svg.png" width="100" height="80">-->
+      <img src="assets/img/tanzania_umbrella.gif"  width="80" height="80">
+    </div>
+  </div>
+  <div class="topnav top-menu-wrapper-menu" id="myTopnav">
+    <a style="width: 1px; padding: 0px"></a>
+    <a *ngFor="let page of portalPages" routerLinkActive="active-btn" (click)="setActiveClass(page.id)"  class="top-btn" routerLink="{{ page.routeUrl }}">{{ page.name }}</a>
+    <a class="icon" (click)="executeForNavigation()">
+      <img src="assets/icons/list.png" alt="">
+    </a>
+  </div>
+</div>
