@@ -1,0 +1,41 @@
+.holder {
+  background-color: #ffffff;
+  width:auto;
+  height:300px;
+  padding: 20px !important;
+  overflow:hidden;
+  font-family:Helvetica;
+}
+.holder .mask {
+  position: relative;
+  left: 0px;
+  top: 10px;
+  width: auto;
+  height:300px;
+  overflow: hidden;
+}
+
+
+.holder ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+  position: relative;
+}
+.holder ul li {
+  padding:10px 0px;
+}
+.holder ul li a {
+  color:darkred;
+  text-decoration:none;
+}
+
+.news-header {
+  color: #2A8FD1;
+  margin-top: 15px;
+  padding: 15px;
+}
+
+.news {
+  padding: 0px 10px
+}
