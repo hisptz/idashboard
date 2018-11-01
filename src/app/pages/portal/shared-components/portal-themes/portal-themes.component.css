@@ -1,0 +1,19 @@
+.summary-header {
+  padding: 25px 0px 0px 0px;
+}
+
+.summary-header h2 {
+  color: #2a8fd1;font-weight: 500;
+}
+
+.cards {
+  padding: 15px 0px 0px 0px;
+}
+
+.col-xs-12,
+.col-lg-3,
+.col-md-4,
+.col-md-3,
+.col-md-6 {
+  padding: 5px;
+}

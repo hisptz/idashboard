@@ -1,0 +1,10 @@
+
+  <div class="card" *ngIf="cardInfo">
+    <a routerLink="{{cardInfo.routeUrl}}">
+      <div class="card-header">{{cardInfo.header}}</div>
+      <div class="card-body" *ngIf="cardInfo.dataType == 'text'">
+        <h5 class="card-title">{{cardInfo.data}}</h5>
+        <p class="card-text">{{cardInfo.description}}</p>
+      </div>
+    </a>
+  </div>

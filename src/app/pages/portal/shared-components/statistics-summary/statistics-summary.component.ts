@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-statistics-summary',
@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticsSummaryComponent implements OnInit {
 
-  constructor() { }
+  @Input() statsSummaryGroups: Array<any>;
+  constructor() {
+  }
 
   ngOnInit() {
   }

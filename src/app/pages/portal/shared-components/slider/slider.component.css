@@ -68,3 +68,7 @@ carousel-indicators li {
   cursor: pointer;
   background-color: #2A8FD1;
 }
+
+.carousel {
+  background-color: #f9f7f7;
+}

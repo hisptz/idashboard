@@ -95,12 +95,12 @@
  margin-top: 10px;  display: inline-block; text-align: left;
 }
 
-.left-of-top-banner img, .right-of-top-banner img {vertical-align: bottom; margin-top: 10px}
+.left-of-top-banner img, .right-of-top-banner img {vertical-align: bottom; margin-top: 0px}
 
 .right-of-top-banner {
   display: inline-block; text-align: right;
 }
 
-.center-of-top-banner h5, h2 {
-  font-weight: 500; line-height: 1.2; color: #fff !important; text-align: center;margin-left: 0px; margin-top: 10px;
+.center-of-top-banner h6, h2 {
+  font-weight: 500; line-height: 1.2; color: #fff !important; text-align: center;margin-left: 0px; margin-top: 0px;
 }
