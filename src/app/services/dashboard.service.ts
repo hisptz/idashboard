@@ -40,6 +40,7 @@ export class DashboardService {
 
   loadFromDataStore(dashboardSettings: DashboardSettings) {
     return this.httpClient.get('dataStore/dashboards').pipe(
+      catchError(() => of([])),
       mergeMap((dashboardIds: Array<string>) => {
         const filteredDashboardIds = _.filter(
           dashboardIds,
@@ -69,8 +70,7 @@ export class DashboardService {
             return this.httpClient.get(`dataStore/dashboards/${dashboardId}`);
           })
         );
-      }),
-      catchError(() => of([]))
+      })
     );
   }
 
