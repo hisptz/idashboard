@@ -1,10 +1,24 @@
 
-  <div class="card" *ngIf="cardInfo">
+  <div class="card" *ngIf="cardInfo && cardInfo.dataType =='text'">
     <a routerLink="{{cardInfo.routeUrl}}">
       <div class="card-header">{{cardInfo.header}}</div>
-      <div class="card-body" *ngIf="cardInfo.dataType == 'text'">
-        <h5 class="card-title">{{cardInfo.data}}</h5>
+      <div class="card-body">
+        <h5 class="card-title" *ngIf="cardInfo.data">{{cardInfo.data}}</h5>
         <p class="card-text">{{cardInfo.description}}</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="card" *ngIf="cardInfo && cardInfo.dataType =='table'">
+    <a routerLink="{{cardInfo.routeUrl}}">
+      <div class="card-header">{{cardInfo.header}}</div>
+      <div class="card-body" *ngIf="cardInfo.rows.length == 0">
+        <h5 class="card-title" *ngIf="cardInfo.data">{{cardInfo.data}}</h5>
+        <p class="card-text">{{cardInfo.description}}</p>
+      </div>
+      <div class="card-body" *ngIf="cardInfo.rows.length > 0"  style="overflow-y: auto !important; height: 150px">
+        <h5 class="card-title" *ngIf="cardInfo.data">{{cardInfo.data}}</h5>
+        <app-table [data]="cardInfo.rows"></app-table>
       </div>
     </a>
   </div>

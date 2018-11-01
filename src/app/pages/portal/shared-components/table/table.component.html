@@ -1,0 +1,7 @@
+<table *ngIf="dataForTable" class="table table-bordered">
+  <tbody>
+  <tr *ngFor="let row of data">
+    <td *ngFor="let row of getDataForTable(row)">{{row}}</td>
+  </tr>
+  </tbody>
+</table>
