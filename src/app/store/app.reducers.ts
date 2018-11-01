@@ -11,14 +11,15 @@ import {VisualizationState} from './visualization/visualization.state';
 import {visualizationReducer} from './visualization/visualization.reducer';
 import {DictionaryState} from '../modules/dictionary/store/dictionary.state';
 import {dictionaryReducer} from '../modules/dictionary/store/dictionary.reducer';
-import {portalReducer} from './portal/portal.reducer';
-import {PortalConfigurationState} from './portal/portal.state';
+import {portalReducer, statsSummaryReducer} from './portal/portal.reducer';
+import {PortalConfigurationState, StatsSummaryState} from './portal/portal.state';
 
 export interface AppState {
   route: RouterReducerState;
   currentUser: CurrentUserState;
   dashboard: DashboardState;
   portalConfiguration: PortalConfigurationState;
+  statsSummary: StatsSummaryState;
   visualization: VisualizationState;
   metadataDictionary: DictionaryState[];
 }
@@ -27,6 +28,7 @@ export const reducers: ActionReducerMap<AppState> = {
   route: RouterReducer.routerReducer,
   currentUser: currentUserReducer,
   portalConfiguration: portalReducer,
+  statsSummary: statsSummaryReducer,
   dashboard: dashboardReducer,
   visualization: visualizationReducer,
   metadataDictionary: dictionaryReducer,
