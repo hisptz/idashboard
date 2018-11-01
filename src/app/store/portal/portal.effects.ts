@@ -7,19 +7,29 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
-import {PortalConfigurationState} from './portal.state';
+import {PortalConfigurationState, StatsSummaryState} from './portal.state';
 
 @Injectable()
 export class PortalEffects {
-
   @Effect()
   loadPortalConfiguration$ = this.actions$
     .ofType<portalActions.LoadPortalConfigurationAction>(portalActions.PortalActions.LOAD_PORTAL_CONFIGURATION)
     .pipe(
-      switchMap(() => this._loadPortalConfigurations().pipe(
+      switchMap(() => this._loadData('dataStore/observatory/portalConfigurations.json').pipe(
         map((portalConfigurationObj: PortalConfigurationState) =>
           new portalActions.LoadPortalConfigurationSuccessAction(portalConfigurationObj)),
         catchError((error) => of(new portalActions.LoadPortalConfigurationFailAction(error)))
+      ))
+    );
+
+  @Effect()
+  loadStatsSummary$ = this.actions$
+    .ofType<portalActions.LoadStatsSummaryAction>(portalActions.PortalActions.LOAD_STATS_SUMMARY)
+    .pipe(
+      switchMap(() => this._loadData('dataStore/observatory/statsSummaryData.json').pipe(
+        map((statsSummaryObj: StatsSummaryState) =>
+          new portalActions.LoadStatsSummarySuccessAction(statsSummaryObj)),
+        catchError((error) => of(new portalActions.LoadStatsSummaryFailAction(error)))
       ))
     );
 
@@ -27,8 +37,7 @@ export class PortalEffects {
               private httpClient: HttpClientService) {
   }
 
-  private _loadPortalConfigurations(): Observable<any> {
-    console.log('executed portal')
-    return this.httpClient.get(`dataStore/observatory/portalConfigurations.json`);
+  private _loadData(url): Observable<any> {
+    return this.httpClient.get(url);
   }
 }

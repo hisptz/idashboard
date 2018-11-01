@@ -90,6 +90,7 @@ import { DownloadsComponent } from './pages/portal/downloads/downloads.component
 import { TopHeaderMenuComponent } from './pages/portal/shared-components/top-header-menu/top-header-menu.component';
 import { SliderComponent } from './pages/portal/shared-components/slider/slider.component';
 import { PortalThemesComponent } from './pages/portal/shared-components/portal-themes/portal-themes.component';
+import { CardComponent } from './pages/portal/shared-components/card/card.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -151,6 +152,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TopHeaderMenuComponent,
     SliderComponent,
     PortalThemesComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,

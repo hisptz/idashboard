@@ -11,3 +11,7 @@ export interface PortalConfigurationState {
     }
     ];
 }
+
+export interface StatsSummaryState {
+  statsSummaryGroups: Array<any>;
+}
