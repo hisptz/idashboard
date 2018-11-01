@@ -1,7 +1,11 @@
 <div *ngIf="!portalConfigurations" class="loading-progress container">
   <app-progress-loader></app-progress-loader>
 </div>
-<div class="no-print container" *ngIf="portalConfigurations">
+<!-- Show custom dhis menu when it is dashboard-->
+<div class="no-print" *ngIf="portalConfigurations && !portalConfigurations.isPortal">
+  <app-menu></app-menu>
+</div>
+<div class="no-print container" *ngIf="portalConfigurations && portalConfigurations.isPortal">
   <app-top-header-menu [portalPages]="portalConfigurations.pages"></app-top-header-menu>
 </div>
 <section id="page-container" class="container">

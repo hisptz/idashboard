@@ -21,3 +21,12 @@
 .col-md-6 {
   padding: 5px;
 }
+
+.nav-tabs li a:hover {
+  color: #2A8FD1;
+}
+
+.nav-tabs li a {
+  color: #2A8FD1;
+}
+
