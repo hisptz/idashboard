@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {PortalConfigurationState, StatsSummaryState} from './portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState} from './portal.state';
 
 
 export enum PortalActions {
@@ -8,7 +8,10 @@ export enum PortalActions {
   LOAD_PORTAL_CONFIGURATION_FAIL = '[ Portal configurations ] Load Portal configurations fail',
   LOAD_STATS_SUMMARY = '[Stats summary] Load stats summary',
   LOAD_STATS_SUMMARY_SUCCESS = '[Stats summary] Load stats summary success',
-  LOAD_STATS_SUMMARY_FAIL = '[Stats summary] Load stats summary fail'
+  LOAD_STATS_SUMMARY_FAIL = '[Stats summary] Load stats summary fail',
+  LOAD_DOWNLOADS = '[Downloads] Load downloads',
+  LOAD_DOWNLOADS_SUCCESS = '[Downloads] Load downloads success',
+  LOAD_DOWNLOADS_FAIL = '[Downloads] Load downloads fail'
 }
 
 export class LoadPortalConfigurationAction implements Action {
@@ -47,9 +50,28 @@ export class LoadStatsSummaryFailAction implements Action {
   constructor(public payload: any) {}
 }
 
+export class LoadDownloadsAction implements Action {
+  readonly type = PortalActions.LOAD_DOWNLOADS;
+}
+
+export class LoadDownloadsSuccessAction implements Action {
+  readonly type = PortalActions.LOAD_DOWNLOADS_SUCCESS;
+
+  constructor(public payload: DownloadsState) {}
+}
+
+export class LoadDownloadsFailAction implements Action {
+  readonly type = PortalActions.LOAD_DOWNLOADS_FAIL;
+
+  constructor(public payload: any) {}
+}
+
 export type PortalConfigurationAction =  LoadPortalConfigurationAction
   | LoadPortalConfigurationSuccessAction
   | LoadPortalConfigurationFailAction
   | LoadStatsSummaryAction
   | LoadStatsSummarySuccessAction
-  | LoadStatsSummaryFailAction;
+  | LoadStatsSummaryFailAction
+  | LoadDownloadsAction
+  | LoadDownloadsSuccessAction
+  | LoadDownloadsFailAction;

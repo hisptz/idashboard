@@ -72,7 +72,7 @@ h3 {
   .card {
     padding-left: auto;
     padding-right: auto;
-    min-height: 200px;
+    min-height: 220px;
     box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.10), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
     -webkit-transition: .25s box-shadow;
     transition: .25s box-shadow;
@@ -83,7 +83,7 @@ h3 {
   .card {
     padding-left: auto;
     padding-right: auto;
-    min-height: 180px;
+    min-height: 250px;
     box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.10), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
     -webkit-transition: .25s box-shadow;
     transition: .25s box-shadow;

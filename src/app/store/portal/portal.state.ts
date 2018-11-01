@@ -15,3 +15,14 @@ export interface PortalConfigurationState {
 export interface StatsSummaryState {
   statsSummaryGroups: Array<any>;
 }
+
+export interface DownloadsState {
+  downloads: [
+    {
+      id: string,
+      name: string,
+      routeUrl: string,
+      downloadsOptions: Array<{}>
+    }
+    ];
+}
