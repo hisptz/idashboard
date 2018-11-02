@@ -93,6 +93,7 @@ import { PortalThemesComponent } from './pages/portal/shared-components/portal-t
 import { CardComponent } from './pages/portal/shared-components/card/card.component';
 import { TableComponent } from './pages/portal/shared-components/table/table.component';
 import { NewsComponent } from './pages/portal/shared-components/news/news.component';
+import { PageComponent } from './pages/portal/shared-components/page/page.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -157,6 +158,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardComponent,
     TableComponent,
     NewsComponent,
+    PageComponent,
   ],
   imports: [
     BrowserModule,

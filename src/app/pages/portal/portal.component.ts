@@ -20,6 +20,7 @@ export class PortalComponent implements OnInit {
   portalPages: any;
   portalThemes: any;
   allNews: any;
+  selectedPageInformation: any;
   statsSummary$: Observable<StatsSummaryState>;
   statsSummaryGroups: Array<any>;
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
@@ -31,14 +32,16 @@ export class PortalComponent implements OnInit {
   ngOnInit() {
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {
-        this.theSetPage = params['id'];
-        this.portalConfiguration$.subscribe((portalConfigurations) => {
-          if (portalConfigurations) {
-            this.portalConfigurations = portalConfigurations;
-            this.portalPages = portalConfigurations['pages'];
-            console.log('portal configuration', portalConfigurations.pages);
-          }
-        });
+        this.theSetPage = params['id']; const parentId = params['parentId'];
+        console.log('parentId', parentId);
+        if (!parentId) {
+          this.portalConfiguration$.subscribe((portalConfigurations) => {
+            if (portalConfigurations) {
+              this.portalConfigurations = portalConfigurations;
+              this.portalPages = portalConfigurations['pages'];
+            }
+          });
+        }
       });
     }
     if (this.statsSummary$) {
@@ -48,6 +51,16 @@ export class PortalComponent implements OnInit {
           this.statsSummaryGroups = statisticsSummary.statsSummaryGroups;
           this.portalThemes = statisticsSummary['themes'];
           this.allNews = statisticsSummary['news'];
+          const pages = statisticsSummary['pages'];
+          this.route.params.forEach((params: Params) => {
+            if (params['parentId']) {
+              pages.forEach((page) => {
+                if (page.id === params['id']) {
+                  this.selectedPageInformation = page;
+                }
+              });
+            }
+          });
         }
       });
     }

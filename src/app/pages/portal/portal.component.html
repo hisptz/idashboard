@@ -4,3 +4,6 @@
 <div *ngIf="theSetPage === 'downloads'">
   <app-downloads></app-downloads>
 </div>
+<div *ngIf="selectedPageInformation">
+  <app-page [page]="selectedPageInformation"></app-page>
+</div>
