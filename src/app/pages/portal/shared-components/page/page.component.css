@@ -1,0 +1,26 @@
+.container-summary-menu {
+  padding: 0px 10px 0px 10px
+}
+
+.page-contents, .container-summary-menu {
+  margin-top: 20px;
+}
+
+.container-summary-menu a {
+  color: #337ab7; text-decoration: none;
+}
+
+.message h2 {
+  text-align: left; font-weight: 600; color: #2A8FD1;
+}
+
+.menu-list-item {
+  position: relative;
+  display: block;
+  font-size: 1.1em;
+  padding: 10px 15px;
+  background-color: #2A8FD1;
+  color: #ffffff;
+  margin-bottom: -1px;
+  border-radius: 0 150px 150px 0;
+}
