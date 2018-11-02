@@ -9,6 +9,7 @@ export class HomePortalComponent implements OnInit {
 
   @Input() themes: any;
   @Input() statsSummaryGroups: any;
+  @Input() news: any;
   constructor() { }
 
   ngOnInit() {

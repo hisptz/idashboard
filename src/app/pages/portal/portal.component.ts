@@ -19,6 +19,7 @@ export class PortalComponent implements OnInit {
   theSetPage: string;
   portalPages: any;
   portalThemes: any;
+  allNews: any;
   statsSummary$: Observable<StatsSummaryState>;
   statsSummaryGroups: Array<any>;
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
@@ -46,6 +47,7 @@ export class PortalComponent implements OnInit {
           console.log(statisticsSummary);
           this.statsSummaryGroups = statisticsSummary.statsSummaryGroups;
           this.portalThemes = statisticsSummary['themes'];
+          this.allNews = statisticsSummary['news'];
         }
       });
     }

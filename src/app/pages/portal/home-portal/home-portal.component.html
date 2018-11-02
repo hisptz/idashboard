@@ -1,8 +1,10 @@
 <app-slider></app-slider>
 <app-statistics-summary [statsSummaryGroups]="statsSummaryGroups"></app-statistics-summary>
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-lg-9 col-md-12" *ngIf="themes">
     <app-portal-themes [themes]="themes"></app-portal-themes>
   </div>
-  <div class="col-md-3"></div>
+  <div class="col-lg-3 col-md-12" *ngIf="news">
+    <app-news [allNews]="news"></app-news>
+  </div>
 </div>
