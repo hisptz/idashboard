@@ -52,8 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getRandomInt(min, max) {
     min = Math.ceil(min);

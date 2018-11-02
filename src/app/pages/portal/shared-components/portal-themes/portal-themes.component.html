@@ -1,0 +1,12 @@
+<div>
+  <div class="summary-header">
+    <h2>Health portal themes</h2>
+  </div>
+  <div class="summary-info" *ngIf="themes">
+    <div class="row cards">
+      <div *ngFor="let theme of themes" class="col-lg-{{theme['cardSize']}} col-xs-12" [ngClass]="theme['cardSize'] <= 6 ? 'col-md-6' : 'col-md-12'">
+        <app-card [cardInfo]="theme"></app-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,16 @@
 #page-container {
-  margin-top: 60px;
+  margin-top: auto;
 }
 
 @media print {
   #page-container {
     margin-top: 0;
   }
+}
+
+
+/* Progress bar*/
+.loading-progress {
+  height: 120px;
+  border-radius: 2px;
 }
