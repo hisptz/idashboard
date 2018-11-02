@@ -13,3 +13,10 @@ a {
     color: #fff !important;
     background-color: #3779B6;
 }
+
+.download-content {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+    margin: 5px;
+}
