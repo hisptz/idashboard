@@ -28,6 +28,13 @@ h3 {
   padding: 10px !important;
 }
 
+.card-body h5 {
+  color: #2A8FD1;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 .card-header {
   color: #2a8fd1;
   background-color: #ffffff !important;

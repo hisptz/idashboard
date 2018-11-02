@@ -1,0 +1,16 @@
+<div class="news">
+  <div class="news-header">
+    <h2>News</h2>
+  </div>
+  <div class="holder">
+    <ul id="scrollingUl">
+      <li *ngFor="let news of allNews"><span *ngIf="news.id != ''"><b>Date: </b>{{news.newsDate}}</span><br>
+        <a routerLink="/news/{{news.id}}">
+          <p style="color: #141414;">
+            {{news.summary}}
+          </p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -91,11 +91,16 @@ import { TopHeaderMenuComponent } from './pages/portal/shared-components/top-hea
 import { SliderComponent } from './pages/portal/shared-components/slider/slider.component';
 import { PortalThemesComponent } from './pages/portal/shared-components/portal-themes/portal-themes.component';
 import { CardComponent } from './pages/portal/shared-components/card/card.component';
+<<<<<<< HEAD
 import { CensusComponent } from './pages/portal/downloads/census/census.component';
 import { UpdatesComponent } from './pages/portal/updates/updates.component';
 import { RouterModule } from '@angular/router';
 import { ScorecardComponent } from './pages/portal/downloads/scorecard/scorecard.component';
 import { HealthreportComponent } from './pages/portal/downloads/healthreport/healthreport.component';
+=======
+import { TableComponent } from './pages/portal/shared-components/table/table.component';
+import { NewsComponent } from './pages/portal/shared-components/news/news.component';
+>>>>>>> 641e3b5d2d7c30a0f270a7eb08e87af342a1c612
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -162,6 +167,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     UpdatesComponent,
     ScorecardComponent,
     HealthreportComponent,
+    TableComponent,
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
