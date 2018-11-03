@@ -2,7 +2,7 @@
   <app-home-portal [statsSummaryGroups]="statsSummaryGroups" [themes]="portalThemes" [news]="allNews"></app-home-portal>
 </div>
 <div *ngIf="theSetPage === 'downloads'">
-  <app-downloads></app-downloads>
+  <app-downloads [downloads]="downloads"></app-downloads>
 </div>
 <div *ngIf="selectedPageInformation">
   <app-page [page]="selectedPageInformation"></app-page>

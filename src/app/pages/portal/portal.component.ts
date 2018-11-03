@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {PortalConfigurationState, StatsSummaryState} from '../../store/portal/portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState} from '../../store/portal/portal.state';
 import {Observable} from 'rxjs/index';
-import {getPortalConfiguration, getStatsSummary} from '../../store/portal/portal.selectors';
+import {getDownloads, getPortalConfiguration, getStatsSummary} from '../../store/portal/portal.selectors';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/app.reducers';
 import {ActivatedRoute, Params} from '@angular/router';
-import * as statsSummary from '../../store/portal/portal.actions';
+import * as portalActions from '../../store/portal/portal.actions';
 
 @Component({
   selector: 'app-portal',
@@ -15,18 +15,22 @@ import * as statsSummary from '../../store/portal/portal.actions';
 export class PortalComponent implements OnInit {
 
   portalConfiguration$: Observable<PortalConfigurationState>;
+  downloads$: Observable<DownloadsState>;
+  statsSummary$: Observable<StatsSummaryState>;
   portalConfigurations: any;
   theSetPage: string;
   portalPages: any;
   portalThemes: any;
   allNews: any;
   selectedPageInformation: any;
-  statsSummary$: Observable<StatsSummaryState>;
   statsSummaryGroups: Array<any>;
+  downloads: any;
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
-    store.dispatch(new statsSummary.LoadStatsSummaryAction());
+    store.dispatch(new portalActions.LoadStatsSummaryAction());
+    store.dispatch(new portalActions.LoadDownloadsAction());
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
+    this.downloads$ = store.select(getDownloads);
   }
 
   ngOnInit() {
@@ -61,6 +65,14 @@ export class PortalComponent implements OnInit {
               });
             }
           });
+        }
+      });
+    }
+
+    if (this.downloads$) {
+      this.downloads$.subscribe((downloads) => {
+        if (downloads) {
+          this.downloads = downloads;
         }
       });
     }
