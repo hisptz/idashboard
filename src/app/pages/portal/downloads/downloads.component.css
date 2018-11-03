@@ -17,7 +17,6 @@ a {
 
 .tab {
   float: left;
-  border: 1px solid #ccc;
   background-color: #f1f1f1;
   /*width: 30%;*/
   height: auto;
@@ -51,9 +50,54 @@ a {
 /* Style the tab content */
 .tabcontent {
   float: left;
-  padding: 0px 12px;
-  border: 1px solid #ccc;
+  padding: 20px;
   /*width: 70%;*/
   border-left: none;
   height: auto;
+}
+
+.tabcontent h3 {
+  color: #000000 !important;
+}
+
+
+/* For top bar menu tabs*/
+
+/* Tabs*/
+section {
+  padding: 0px 0px;
+}
+
+section .section-title {
+  text-align: center;
+  color: #007b5e;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+#tabs{
+  background: transparent;
+  color: #eee;
+}
+#tabs h6.section-title{
+  color: #eee;
+}
+
+#tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #000000;
+  background-color: transparent;
+  border-color: transparent transparent green;
+  border-bottom: 4px solid green !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+#tabs .nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  color: #eee;
+  font-size: 20px;
+}
+
+.nav-link {
+  padding: 2px;
 }
