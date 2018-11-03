@@ -33,21 +33,23 @@
   <div class="summary-info">
     <ul class="nav nav-tabs" id="myTab2" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="first-tab" data-toggle="tab" href="#first" role="tab" aria-controls="rch" aria-selected="true">{{subPages[0].name}}</a>
+        <a class="nav-link active" id="first-tab" data-toggle="tab" href="#{{subPages[0].id}}" role="tab" aria-controls="rch" aria-selected="true">{{subPages[0].name}}</a>
       </li>
       <li class="nav-item" *ngFor="let subPage of subPages">
         <a class="nav-link" *ngIf="subPage.id !== subPages[0].id" id="downloads{{subPage.id}}-tab" data-toggle="tab" href="#{{subPage.id}}" role="tab" aria-selected="false">{{subPage.name}}</a>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent2">
-      <div class="tab-pane fade show active" id="first" role="tabpanel" aria-labelledby="rch-tab">
-        <div class="row cards">
-          <iframe *ngIf="subPages[0].link" [src]="trustedUrl(subPages[0].link)" width="100%" height="800" frameborder="0"></iframe>
+      <div class="tab-pane fade show active" id="{{subPages[0].id}}" role="tabpanel">
+        <div class="cards">
+          <div [innerHtml]="subPages[0].link | safeHtml"></div>
+          <!--<iframe *ngIf="subPages[0].link" [src]="trustedUrl(subPages[0].link)" width="100%" height="800" frameborder="0"></iframe>-->
         </div>
       </div>
-      <div *ngFor="let subPage of subPages" class="tab-pane fade" id="downloads{{subPage.id}}" role="tabpanel">
-        <div class="row cards" *ngIf="subPage.id != subPages[0].id">
-          <iframe *ngIf="subPage.link" [src]="trustedUrl(subPage.link)" width="100%" height="800" frameborder="0"></iframe>
+      <div *ngFor="let subPage of subPages" class="tab-pane fade" id="{{subPage.id}}" role="tabpanel">
+        <div class="cards" *ngIf="subPage.id != subPages[0].id">
+          <div [innerHtml]="subPage.link | safeHtml"></div>
+          <!--<iframe *ngIf="subPage.link" [src]="trustedUrl(subPage.link)" width="100%" height="800" frameborder="0"></iframe>-->
         </div>
       </div>
     </div>

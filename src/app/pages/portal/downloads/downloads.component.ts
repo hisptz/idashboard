@@ -13,10 +13,6 @@ export class DownloadsComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    if (this.downloads) {
-      console.log('downloads', this.downloads);
-      document.getElementById('defaultOpen').click();
-    }
   }
 
   openCity(evt, downloadOption) {
@@ -26,8 +22,14 @@ export class DownloadsComponent implements OnInit {
       tabcontent[i].style.display = 'none';
     }
     tablinks = document.getElementsByClassName('tablinks');
+    console.log('tab links', tablinks);
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(' active', '');
+      if (tablinks[i].id === 'btn-' + downloadOption) {
+        console.log('tablinks[i].id', tablinks[i].id);
+        console.log('downloadOption', 'btn-' + downloadOption);
+        document.getElementById(tablinks[i].id).classList.add('active');
+      }
     }
     document.getElementById(downloadOption).style.display = 'block';
     evt.currentTarget.className += ' active';

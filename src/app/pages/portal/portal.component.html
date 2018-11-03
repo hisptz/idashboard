@@ -1,5 +1,11 @@
 <div *ngIf="theSetPage === 'home' && statsSummaryGroups && portalThemes">
-  <app-home-portal [statsSummaryGroups]="statsSummaryGroups" [themes]="portalThemes" [news]="allNews"></app-home-portal>
+  <app-home-portal
+    [statsSummaryGroups]="statsSummaryGroups"
+    [themes]="portalThemes" [news]="allNews"
+    [currentUser$]="currentUser$"
+    [visualizationObjects$]="visualizationObjects$"
+  >
+  </app-home-portal>
 </div>
 <div *ngIf="theSetPage === 'downloads'">
   <app-downloads [downloads]="downloads"></app-downloads>

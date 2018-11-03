@@ -3,7 +3,7 @@
     margin-bottom: 10px;
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-gap: 0.5em;
     grid-auto-rows: minmax(400px, auto);
 }
@@ -30,13 +30,13 @@
 
 @media screen and (max-width: 1400px) {
     #dashboard-visualization-list {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
 @media screen and (max-width: 1200px) {
     #dashboard-visualization-list {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
     .visualization-card-container {
         grid-column: auto !important;

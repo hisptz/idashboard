@@ -6,6 +6,8 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../store/app.reducers';
 import {ActivatedRoute, Params} from '@angular/router';
 import * as portalActions from '../../store/portal/portal.actions';
+import {getCurrentUser} from '../../store/current-user/current-user.selectors';
+import {CurrentUserState} from '../../store/current-user/current-user.state';
 
 @Component({
   selector: 'app-portal',
@@ -15,6 +17,7 @@ import * as portalActions from '../../store/portal/portal.actions';
 export class PortalComponent implements OnInit {
 
   portalConfiguration$: Observable<PortalConfigurationState>;
+  visualizationObjects$: Observable<any>;
   downloads$: Observable<DownloadsState>;
   statsSummary$: Observable<StatsSummaryState>;
   portalConfigurations: any;
@@ -25,9 +28,11 @@ export class PortalComponent implements OnInit {
   selectedPageInformation: any;
   statsSummaryGroups: Array<any>;
   downloads: any;
+  currentUser$: Observable<CurrentUserState>;
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     store.dispatch(new portalActions.LoadDownloadsAction());
+    this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
     this.downloads$ = store.select(getDownloads);
@@ -55,6 +60,7 @@ export class PortalComponent implements OnInit {
           this.statsSummaryGroups = statisticsSummary.statsSummaryGroups;
           this.portalThemes = statisticsSummary['themes'];
           this.allNews = statisticsSummary['news'];
+          this.visualizationObjects$ = statisticsSummary['visualization'];
           const pages = statisticsSummary['pages'];
           this.route.params.forEach((params: Params) => {
             if (params['parentId']) {

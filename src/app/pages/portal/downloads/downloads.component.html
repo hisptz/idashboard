@@ -13,28 +13,41 @@
     <div class="row">
       <div class="col-lg-12 col-xs-12 ">
         <nav>
-          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a *ngFor="let download of downloads['downloads']" class="nav-item nav-link {{download.class}}" id="{{download.id}}-tab" data-toggle="tab" href="#{{download.id}}" role="tab" aria-controls="nav-home" aria-selected="true">{{download.name}}</a>
           </div>
         </nav>
-        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+        <div class="tab-content" id="nav-tabContent">
           <div  *ngFor="let download of downloads['downloads']" class="tab-pane fade show {{download.class}}" id="{{download.id}}" role="tabpanel" aria-labelledby="nav-home-tab">
             <div>
               <div class="col-lg-3 col-md-12 col-xs-12 tab">
                 <div>
-                  <button class="tablinks" (click)="openCity(event, download['components'][0].id)" id="defaultOpen">{{download['components'][0].name}}</button>
+                  <button class="tablinks active" (click)="openCity(event, download['components'][0].id)" id="defaultOpen">{{download['components'][0].name}}</button>
                 </div>
                 <div *ngFor="let downloadOption of download['components']">
                   <button *ngIf="downloadOption.id != download['components'][0].id" class="tablinks" (click)="openCity(event, downloadOption.id)" id="btn-{{downloadOption.id}}">{{downloadOption.name}}</button>
                 </div>
               </div>
-              <div *ngFor="let downloadOption of download['components']" id="{{downloadOption.id}}" class="tabcontent col-lg-9 col-md-12 col-xs-12">
-                <h3>{{downloadOption.name}}</h3>
-                <div *ngIf="downloadOption['subPages'].length == 0">
-                  <iframe *ngIf="downloadOption.link" [src]="trustedUrl(downloadOption.link)" width="100%" height="800" frameborder="0"></iframe>
+              <div id="{{download['components'][0].id}}" style="display: block" class="tabcontent col-lg-9 col-md-12 col-xs-12">
+                <h3>{{download['components'][0].name}}</h3>
+                <div *ngIf="download['components'][0]['subPages'].length == 0">
+                  <div [innerHtml]="download['components'][0].link | safeHtml"></div>
+                  <!--<iframe *ngIf="download['components'][0].link" [src]="trustedUrl(download['components'][0].link)" width="100%" height="800" frameborder="0"></iframe>-->
                 </div>
-                <div *ngIf="downloadOption['subPages'].length > 0">
-                  <app-statistics-summary [subPages]="downloadOption['subPages']"></app-statistics-summary>
+                <div *ngIf="download['components'][0]['subPages'].length > 0">
+                  <app-statistics-summary [subPages]="download['components'][0]['subPages']"></app-statistics-summary>
+                </div>
+              </div>
+              <div *ngFor="let downloadOption of download['components']"  style="display: none" id="{{downloadOption.id}}"class="tabcontent col-lg-9 col-md-12 col-xs-12">
+                <div *ngIf="download.id !== download['components'][0].id"  >
+                  <h3>{{downloadOption.name}}</h3>
+                  <div *ngIf="downloadOption['subPages'].length == 0">
+                    <div [innerHtml]="downloadOption.link | safeHtml"></div>
+                    <!--<iframe *ngIf="downloadOption.link" [src]="trustedUrl(downloadOption.link)" width="100%" height="800" frameborder="0"></iframe>-->
+                  </div>
+                  <div *ngIf="downloadOption['subPages'].length > 0">
+                    <app-statistics-summary [subPages]="downloadOption['subPages']"></app-statistics-summary>
+                  </div>
                 </div>
               </div>
             </div>

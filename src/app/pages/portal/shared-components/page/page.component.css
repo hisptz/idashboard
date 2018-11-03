@@ -24,3 +24,11 @@
   margin-bottom: -1px;
   border-radius: 0 150px 150px 0;
 }
+
+.container-summary-menu h4 {
+  font-size: 1em;
+}
+
+p {
+  text-align: justify;
+}
