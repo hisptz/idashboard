@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-statistics-summary',
@@ -8,10 +9,15 @@ import {Component, Input, OnInit} from '@angular/core';
 export class StatisticsSummaryComponent implements OnInit {
 
   @Input() statsSummaryGroups: Array<any>;
-  constructor() {
+  @Input() subPages: any;
+  constructor(private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
   }
 
+  trustedUrl(url) {
+    console.log(url);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
 }

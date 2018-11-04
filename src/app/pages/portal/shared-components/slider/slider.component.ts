@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-slider',
@@ -7,6 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SliderComponent implements OnInit {
 
+  @Input() visualizationObjects$: any;
+  @Input() currentUser$: any;
+  dashboardAccess: {
+    delete: true
+    externalize: true
+    manage: true
+    read: true
+    update: true
+    write: true
+  }
   constructor() { }
 
   ngOnInit() {

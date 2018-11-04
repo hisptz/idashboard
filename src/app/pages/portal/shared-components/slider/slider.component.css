@@ -47,11 +47,10 @@
 }
 
 .corousel-img {
-  height: 100%; padding: 5px 5px 5px 30px; text-align: right;
+  height: 300px;padding: 5px 55px 5px 30px; text-align: right;
 }
 
 .corousel-img img {
-  height: 300px;
   width: 100%;
 }
 
@@ -71,4 +70,8 @@ carousel-indicators li {
 
 .carousel {
   background-color: #f9f7f7;
+}
+
+p{
+  text-align: justify;
 }

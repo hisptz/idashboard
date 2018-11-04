@@ -1,15 +1,92 @@
+
+.col-lg-9, .col-lg-3 {
+  padding: 5px 0;
+}
+
 .nav .nav-item {
-    background-color: #3779B6 !important;
-    margin: 5px;
-    border-radius: 5px;
+    background-color: transparent;
+    /*margin: 5px;*/
+    /*border-radius: 5px;*/
 }
 
-a .nav-link {
-    background-color: #3779B6 !important;
-    color: #fff !important;
+
+.tab {
+  float: left;
+  background-color: transparent;
+  /*width: 30%;*/
+  height: auto;
 }
 
-a {
-    color: #fff !important;
-    background-color: #3779B6;
+/* Style the buttons inside the tab */
+.tab button {
+  display: block;
+  background-color: #2A8FD1;
+  color: black;
+  padding: 8px 6px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
 }
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #3779B6;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #3779B6;
+}
+
+/* Style the tab content */
+.tabcontent {
+  float: left;
+  padding: 20px;
+  /*width: 70%;*/
+  border-left: none;
+  height: auto;
+}
+
+.tabcontent h3 {
+  text-align: left;
+  color: #000000 !important;
+}
+
+
+/* For top bar menu tabs*/
+
+/* Tabs*/
+section {
+  padding: 0px 0px;
+}
+
+
+#tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #000000;
+  background-color: transparent;
+  border-color: transparent transparent green;
+  border-bottom: 4px solid green !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+#tabs .nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  font-size: 20px;
+}
+
+.nav-link {
+  padding: 2px;
+}
+
+.nav-tabs a {
+  color: #222222;
+  padding-right: 15px;
+}
+
+

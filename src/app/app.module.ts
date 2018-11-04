@@ -98,6 +98,7 @@ import { ScorecardComponent } from './pages/portal/downloads/scorecard/scorecard
 import { HealthreportComponent } from './pages/portal/downloads/healthreport/healthreport.component';
 import { TableComponent } from './pages/portal/shared-components/table/table.component';
 import { NewsComponent } from './pages/portal/shared-components/news/news.component';
+import { PageComponent } from './pages/portal/shared-components/page/page.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -165,7 +166,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ScorecardComponent,
     HealthreportComponent,
     TableComponent,
-    NewsComponent
+    NewsComponent,
+    PageComponent,
   ],
   imports: [
     BrowserModule,

@@ -100,17 +100,25 @@ h3 {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1180px) {
   .card {
     padding-left: auto;
     padding-right: auto;
-    min-height: 180px;
+    min-height:260px;
     box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.10), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
     -webkit-transition: .25s box-shadow;
     transition: .25s box-shadow;
   }
-  .card-top .card-block {
-    text-align: center;
+}
+
+@media (max-width: 1000px) {
+  .card {
+    padding-left: auto;
+    padding-right: auto;
+    min-height:180px;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.10), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
+    -webkit-transition: .25s box-shadow;
+    transition: .25s box-shadow;
   }
 }
 
