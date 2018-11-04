@@ -165,7 +165,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ScorecardComponent,
     HealthreportComponent,
     TableComponent,
-    NewsComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,
