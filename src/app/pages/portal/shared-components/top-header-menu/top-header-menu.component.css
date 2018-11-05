@@ -101,9 +101,14 @@
   display: inline-block; text-align: right;
 }
 
-.center-of-top-banner h6, h3 {
-  font-weight: 500; line-height: 1.2; color: #000000 !important; text-align: center;margin-left: 0px; margin-top: 0px;
+.center-of-top-banner h5, h3 {
+  line-height: 1.2; color: #000000 !important; text-align: center;margin-left: 0px; margin-top: 5px;
 }
+.center-of-top-banner h3{
+  font-weight: 500;
+}
+
+.center-of-top-banner h5 { font-weight: 500}
 
 @media screen and (max-width: 970px) {
   .right-of-top-banner, .left-of-top-banner {
@@ -111,3 +116,16 @@
   }
 }
 
+@media (min-width: 992px) {
+  .col-lg-2 {
+    -ms-flex: 0 0 10%;
+    flex: 0 0 10%;
+    max-width: 10%;
+  }
+
+  .col-lg-8 {
+    -ms-flex: 0 0 80%;
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+}
