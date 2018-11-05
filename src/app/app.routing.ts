@@ -14,6 +14,7 @@ export const routes: Routes = [
     path: '',
     component: HomeComponent
   },
+  
   {
     path: 'pages/:parentId/:id',
     component: PortalComponent
