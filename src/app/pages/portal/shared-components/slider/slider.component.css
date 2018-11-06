@@ -42,7 +42,7 @@
   padding: 25px 5px 5px 30px;text-align: left;
 }
 
-.corousel-text h2 {
+.corousel-text h3 {
   color: #2A8FD1;
 }
 
@@ -69,7 +69,9 @@ carousel-indicators li {
 }
 
 .carousel {
-  background-color: #f9f7f7;
+  background-color: #fefefe00;
+  margin-top: 1rem!important;
+  border: solid 1px #F6F0F5;
 }
 
 p{

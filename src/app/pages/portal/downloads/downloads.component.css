@@ -52,7 +52,7 @@
 }
 
 .tabcontent h3 {
-  text-align: left;
+  text-align: center;
   color: #000000 !important;
 }
 
@@ -71,7 +71,6 @@ section {
   border-color: transparent transparent green;
   border-bottom: 4px solid green !important;
   font-size: 20px;
-  font-weight: bold;
 }
 #tabs .nav-tabs .nav-link {
   border: 1px solid transparent;

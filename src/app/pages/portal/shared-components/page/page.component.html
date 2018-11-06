@@ -6,12 +6,14 @@
     </div>
   </div>
   <div class="col-lg-9 col-md-12 col-sx-12 page-contents">
-    <h4 style="text-align: left;">{{page.name}}</h4>
-    <div *ngIf="page.contents.length > 0">
-      <p *ngFor="let paragraph of page.contents">{{paragraph}}</p>
-    </div>
-    <div *ngIf="page.contents.length === 0" class="message">
-      <h2>{{page.message}}</h2>
+    <div id="contents">
+      <h4 style="text-align: left;">{{page.name}}</h4>
+      <div *ngIf="page.contents.length > 0">
+        <p *ngFor="let paragraph of page.contents">{{paragraph}}</p>
+      </div>
+      <div *ngIf="page.contents.length === 0" class="message">
+        <h2>{{page.message}}</h2>
+      </div>
     </div>
   </div>
 </div>
