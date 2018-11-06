@@ -83,7 +83,8 @@ export class DataMappingContainerComponent implements OnInit, OnDestroy {
     this.dataGroups = [
       { id: 'all', name: '[ All ]' },
       { id: 'de', name: '[ Data elements ]' },
-      { id: 'in', name: '[ Indicators ]' }
+      { id: 'in', name: '[ Indicators ]' },
+      { id: 'ds', name: '[ Data sets ]' }
     ];
     this.selectedItems$ = of(this._selectedItems);
     this.selectedFuctionRuleIds = this.selectedItems.map(
