@@ -121,7 +121,8 @@
 
 .center-of-top-banner h5 { font-weight: 500}
 
-@media screen and (max-width: 970px) {
+
+@media screen and (max-width: 1000px) {
   .right-of-top-banner, .left-of-top-banner {
     display: none;
   }
@@ -146,4 +147,50 @@
   padding-right: 0px !important;
   padding-left: 0px !important;
   margin-top: 2px;
+}
+
+.right {
+  cursor: pointer;
+}
+
+.modal-header {
+  text-align: left;
+  display: block;
+  padding: 10px 10px 0 10px;
+}
+
+.modal-header p {
+  margin-bottom: 0.2rem !important;
+}
+
+.modal-footer {
+  padding: 0 !important;
+}
+label {
+  display: block;
+}
+
+.modal-body {
+  height: 250px; overflow: auto;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.275rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #000;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+  background-color: #2A8FD1 !important;
+}
+.btn-primary:hover {
+  background-color: #2A8FD1;
 }
