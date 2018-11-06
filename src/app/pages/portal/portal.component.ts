@@ -50,13 +50,14 @@ export class PortalComponent implements OnInit {
               this.portalPages = portalConfigurations['pages'];
             }
           });
+        } else if (parentId === params['parentId']) {
+          this.theSetPage = params['parentId'];
         }
       });
     }
     if (this.statsSummary$) {
       this.statsSummary$.subscribe((statisticsSummary) => {
         if (statisticsSummary) {
-          console.log(statisticsSummary);
           this.statsSummaryGroups = statisticsSummary.statsSummaryGroups;
           this.portalThemes = statisticsSummary['themes'];
           this.allNews = statisticsSummary['news'];

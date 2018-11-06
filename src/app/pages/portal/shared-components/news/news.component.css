@@ -3,7 +3,7 @@
   width:auto;
   height:300px;
   margin-top: -20px;
-  padding: 20px !important;
+  padding: 0px !important;
   overflow:hidden;
   font-family:Helvetica;
 }
@@ -39,4 +39,25 @@
 
 .news {
   padding: 0px 10px
+}
+
+.scrollingUl li h5 {
+  font-weight: bold;
+}
+
+.news-category {
+  font-weight: 600;
+}
+
+.card-header h6 {
+  color: #cecece !important; font-size: 0.6em;
+}
+
+.card-header h5 {
+  color: #222222 !important; font-size: 0.8em;
+}
+
+.card-body p {
+  color: #222222 !important;
+  text-align: justify;
 }

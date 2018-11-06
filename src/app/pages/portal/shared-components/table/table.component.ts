@@ -12,7 +12,6 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('data', this.data)
     if (this.data) {
       const rows = [];
       this.data.forEach((row) => {

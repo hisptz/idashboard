@@ -1,15 +1,22 @@
 <div class="news">
   <div class="news-header">
-    <h2>News</h2>
+    <h2>News & Events</h2>
   </div>
-  <div class="holder">
-    <ul id="scrollingUl">
-      <li *ngFor="let news of allNews"><span *ngIf="news.id != ''"><b>Date: </b>{{news.newsDate}}</span><br>
-        <a routerLink="">
-          <p style="color: #141414;">
-            {{news.summary}}
-          </p>
-        </a>
+  <div class="holder" *ngIf="allNews">
+    <ul  id="scrollingUl">
+      <li *ngFor="let news of allNews">
+        <div class="card" *ngIf="news.id !== ''">
+          <a routerLink="/pages/updates/{{news.id}}">
+            <div class="card-header">
+              <h5 class="news-category">{{news.category}}</h5>
+              <h5 class="news-heading">{{news.heading}} <span *ngIf="news.isItNew" style="margin-left: 10px"><img src="assets/img/new.png" height="30px" width="40px"></span></h5>
+              <h6>{{news.newsDate}}</h6>
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{news.summary}}</p>
+            </div>
+          </a>
+        </div>
       </li>
     </ul>
   </div>

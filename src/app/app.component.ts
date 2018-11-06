@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setTitle('Health portal');
+    this.setTitle('Tanzania national health portal');
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {
         this.theSetPage = params['id'];
@@ -34,7 +34,6 @@ export class AppComponent implements OnInit {
           if (portalConfigurations) {
             this.portalConfigurations = portalConfigurations;
             this.portalPages = portalConfigurations['pages'];
-            console.log('portal configuration', portalConfigurations.pages);
           }
         });
       });

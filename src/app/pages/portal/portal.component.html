@@ -7,8 +7,16 @@
   >
   </app-home-portal>
 </div>
-<div *ngIf="theSetPage === 'downloads'">
+<div *ngIf="downloads && theSetPage === 'downloads'">
   <app-downloads [downloads]="downloads"></app-downloads>
+</div>
+
+<div *ngIf="allNews && theSetPage === 'updates'">
+  <app-updates [allNews]="allNews"></app-updates>
+</div>
+
+<div *ngIf="theSetPage === 'faqs'">
+  <app-faqs></app-faqs>
 </div>
 <div *ngIf="selectedPageInformation">
   <app-page [page]="selectedPageInformation"></app-page>

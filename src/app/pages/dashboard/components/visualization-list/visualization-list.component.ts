@@ -22,10 +22,5 @@ export class VisualizationListComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.visualizationObjects) {
-      console.log('visualizationObjects', this.visualizationObjects[15]);
-      console.log('CurrentUserState', this.currentUser);
-      console.log('dashboardAccess', this.dashboardAccess);
-    }
   }
 }

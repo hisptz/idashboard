@@ -12,7 +12,6 @@ export class TopHeaderMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('here portalPages', this.portalPages);
   }
 
 
