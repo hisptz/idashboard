@@ -12,7 +12,7 @@ export class LoadDataSets implements Action {
 }
 export class LoadDataSetSuccess implements Action {
   readonly type = DataSetActionTypes.LoadDataSetsSuccess;
-  constructor(public payload: DataSet[]) {}
+  constructor(public payload: Array<DataSet>) {}
 }
 export class LoadDataSetFail implements Action {
   readonly type = DataSetActionTypes.LoadDataSetsFail;

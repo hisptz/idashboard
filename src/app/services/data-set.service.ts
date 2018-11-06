@@ -16,18 +16,3 @@ export class DataSetService {
       .pipe(map((res: any) => res.dataSets || []));
   }
 }
-
-// _.flattenDeep(
-//   _.map(res.dataSets, dataSet => {
-//     return [
-//       {
-//         id: `${dataSet.id}.ACTUAL_REPORTS`,
-//         name: `${dataSet.name} [Actual reports]`
-//       },
-//       {
-//         id: `${dataSet.id}`,
-//         name: `${dataSet.name}`
-//       }
-//     ];
-//   })
-// );
