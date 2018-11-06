@@ -13,16 +13,20 @@ import { SlicePipe } from '@angular/common';
 })
 export class PeriodFilterComponent implements OnInit {
   periodTypes: any[];
-  @Input() selectedPeriodType = '';
-  @Input() selectedPeriods: any[] = [];
+  @Input()
+  selectedPeriodType = '';
+  @Input()
+  selectedPeriods: any[] = [];
   @Input()
   periodConfig: any = {
     resetOnPeriodTypeChange: false,
     emitOnSelection: false,
-    singleSelection: false
+    singleSelection: true
   };
-  @Output() periodFilterUpdate = new EventEmitter();
-  @Output() periodFilterClose = new EventEmitter();
+  @Output()
+  periodFilterUpdate = new EventEmitter();
+  @Output()
+  periodFilterClose = new EventEmitter();
   availablePeriods: any[];
   periods$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   selectedPeriods$: Observable<any>;
@@ -45,16 +49,10 @@ export class PeriodFilterComponent implements OnInit {
 
   ngOnInit() {
     if (!this.selectedPeriodType || this.selectedPeriodType === '') {
-      this.selectedPeriodType = this.periodService.deduceSelectedPeriodType(
-        this.selectedPeriods
-      );
+      this.selectedPeriodType = this.periodService.deduceSelectedPeriodType(this.selectedPeriods);
     }
 
-    this._periods = this.getPeriods(
-      this.selectedPeriodType,
-      this.selectedYear,
-      this.selectedPeriods
-    );
+    this._periods = this.getPeriods(this.selectedPeriodType, this.selectedYear, this.selectedPeriods);
     this.periods$.next(this._periods);
   }
 
@@ -90,10 +88,7 @@ export class PeriodFilterComponent implements OnInit {
       this.deselectAllPeriods(e);
     }
     e.stopPropagation();
-    const periodIndex = _.findIndex(
-      this._periods,
-      _.find(this._periods, ['id', period.id])
-    );
+    const periodIndex = _.findIndex(this._periods, _.find(this._periods, ['id', period.id]));
 
     if (periodIndex !== -1) {
       if (period.selected) {
@@ -102,24 +97,13 @@ export class PeriodFilterComponent implements OnInit {
            * Check if corresponding period is in the list of selected period type
            */
           period.selected = !period.selected;
-          this._periods = [
-            ...this._periods.slice(0, periodIndex),
-            period,
-            ...this._periods.slice(periodIndex + 1)
-          ];
+          this._periods = [...this._periods.slice(0, periodIndex), period, ...this._periods.slice(periodIndex + 1)];
         } else {
-          this._periods = [
-            ...this._periods.slice(0, periodIndex),
-            ...this._periods.slice(periodIndex + 1)
-          ];
+          this._periods = [...this._periods.slice(0, periodIndex), ...this._periods.slice(periodIndex + 1)];
         }
       } else {
         period.selected = !period.selected;
-        this._periods = [
-          ...this._periods.slice(0, periodIndex),
-          period,
-          ...this._periods.slice(periodIndex + 1)
-        ];
+        this._periods = [...this._periods.slice(0, periodIndex), period, ...this._periods.slice(periodIndex + 1)];
       }
 
       this.periods$.next(this._periods);
@@ -136,11 +120,7 @@ export class PeriodFilterComponent implements OnInit {
       ? []
       : this._periods.filter(period => period.selected);
 
-    this._periods = this.getPeriods(
-      periodType,
-      this.selectedYear,
-      selectedPeriods
-    );
+    this._periods = this.getPeriods(periodType, this.selectedYear, selectedPeriods);
     this.periods$.next(this._periods);
   }
 

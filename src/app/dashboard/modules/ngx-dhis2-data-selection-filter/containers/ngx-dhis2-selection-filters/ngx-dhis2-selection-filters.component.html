@@ -17,22 +17,32 @@
       </button>
       <!--end of data filter button-->
       <!--Legend configuration button-->
-      <span  *ngIf="currentVisualizationType && currentVisualizationType ==='TABLE'">
+      <span *ngIf="currentVisualizationType && currentVisualizationType ==='TABLE'">
         <button *ngIf="filterConfig?.showDataFilter" [ngClass]="{'selection-filter-btn': true,'active-filter': _selectedFilter === 'LEGEND_CONFIGURATION' }"
-        [title]="'Configure legend' | translate" (click)="toggleCurrentFilter($event, 'LEGEND_CONFIGURATION')">
-        <img [src]="dataIcon" alt="">&nbsp;{{'Legend Configration' | translate}}&nbsp;
-        <img [ngClass]="{'arrow-up': _selectedFilter === 'LEGEND_CONFIGURATION'}" [src]="arrowDownIcon" alt="">
-      </button>
-      </span>      
+          [title]="'Configure legend' | translate" (click)="toggleCurrentFilter($event, 'LEGEND_CONFIGURATION')">
+          <img [src]="dataIcon" alt="">&nbsp;{{'Legend Configration' | translate}}&nbsp;
+          <img [ngClass]="{'arrow-up': _selectedFilter === 'LEGEND_CONFIGURATION'}" [src]="arrowDownIcon" alt="">
+        </button>
+      </span>
       <!--end of Legend configuration button-->
       <!--period filter button-->
       <button *ngIf="filterConfig?.showPeriodFilter" [ngClass]="{
         'selection-filter-btn': true,
-        'active-filter': _selectedFilter === 'PERIOD'
+        'active-filter': _selectedFilter === 'PERIOD_REF'
         }"
-        [title]="'Filter by period' | translate" (click)="toggleCurrentFilter($event, 'PERIOD')">
-        <img [src]="periodIcon" alt="">&nbsp;{{'Period' | translate}}&nbsp;
-        <img [ngClass]="{'arrow-up': _selectedFilter === 'PERIOD'}" [src]="arrowDownIcon" alt="">
+        [title]="'Filter by period' | translate" (click)="toggleCurrentFilter($event, 'PERIOD_REF')">
+        <img [src]="periodIcon" alt="">&nbsp;{{'Reference Period' | translate}}&nbsp;
+        <img [ngClass]="{'arrow-up': _selectedFilter === 'PERIOD_REF'}" [src]="arrowDownIcon" alt="">
+      </button>
+      <!--end of period filter button-->
+      <!--period filter button-->
+      <button *ngIf="filterConfig?.showPeriodFilter" [ngClass]="{
+        'selection-filter-btn': true,
+        'active-filter': _selectedFilter === 'PERIOD_ACTUAL'
+        }"
+        [title]="'Filter by period' | translate" (click)="toggleCurrentFilter($event, 'PERIOD_ACTUAL')">
+        <img [src]="periodIcon" alt="">&nbsp;{{'Actual Period' | translate}}&nbsp;
+        <img [ngClass]="{'arrow-up': _selectedFilter === 'PERIOD_ACTUAL'}" [src]="arrowDownIcon" alt="">
       </button>
       <!--end of period filter button-->
 
@@ -82,10 +92,14 @@
     <!-- <app-data-filter *ngIf="_selectedFilter === 'DATA'" [selectedItems]="selectedData" (dataFilterClose)="onFilterClose($event, 'DATA')"
       (dataFilterUpdate)="onFilterUpdate($event, 'DATA')"></app-data-filter> -->
     <!--end of data filter-->
+    <!--period filter-->
+    <app-period-filter *ngIf="_selectedFilter === 'PERIOD_REF'" [selectedPeriods]="selectedReferencePeriods"
+      (periodFilterClose)="onFilterClose($event, 'PERIOD_REF')" (periodFilterUpdate)="onFilterUpdate($event, 'PERIOD_REF')"></app-period-filter>
+    <!--end of period filter-->
 
     <!--period filter-->
-    <app-period-filter *ngIf="_selectedFilter === 'PERIOD'" [selectedPeriods]="selectedPeriods" (periodFilterClose)="onFilterClose($event, 'PERIOD')"
-      (periodFilterUpdate)="onFilterUpdate($event, 'PERIOD')"></app-period-filter>
+    <app-period-filter *ngIf="_selectedFilter === 'PERIOD_ACTUAL'" [selectedPeriods]="selectedActualPeriods"
+      (periodFilterClose)="onFilterClose($event, 'PERIOD_ACTUAL')" (periodFilterUpdate)="onFilterUpdate($event, 'PERIOD_ACTUAL')"></app-period-filter>
     <!--end of period filter-->
 
     <!--org unit filter-->
