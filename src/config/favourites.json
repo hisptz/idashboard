@@ -727,6 +727,13 @@
         "type": "gp",
         "color": "#7c3506",
         "id": "iOuPl5kmN4D"
+      }, {
+        "name": "Reporting completeness",
+        "span": 1,
+        "row_span": 2,
+        "type": "dx",
+        "color": "#FFFF00",
+        "id": "xTsHkGqsUlW"
       }
     ],
     "columns": [{
@@ -807,6 +814,11 @@
           "id": "IS9VxwhkJXR",
           "dimensionItem": "IS9VxwhkJXR",
           "displayName": "proportion of foci with response within N4 days of diagnosis",
+          "dimensionItemType": "INDICATOR"
+        }, {
+          "id": "xTsHkGqsUlW",
+          "dimensionItem": "xTsHkGqsUlW",
+          "displayName": "% completeness(OPD)",
           "dimensionItemType": "INDICATOR"
         }
       ]
