@@ -2611,104 +2611,165 @@
       "UH47dKFqTRK": "#FF9A60",
       "OcBiqoUWLYy": "#FF9A60",
       "NywGy6uMS5r": "#FF9A60",
-      "UyuDDeXuIbr": "#FF9A60"
+      "UyuDDeXuIbr": "#FF9A60",
+      "GLqY4EV4iOG": "#C0D4E9",
+      "Gg0z2s1QM3F": "#C0D4E9",
+      "xTsHkGqsUlW": "#C0D4E9",
+      "oPu5OSqr6p9": "#C0D4E9",
+      "WLKT9cTihxj": "#C0D4E9",
+      "VaxcbRkQbZA": "#C0D4E9"
     },
     "columnGroups": [{
-      "name": "Pop. at risk",
-      "span": 1,
-      "row_span": 2,
-      "type": "dx",
-      "color": "#FF9A60",
-      "id": "ZCCrHrs1Ta2"
-    }, {
-      "name": "Treatment with ACT",
-      "span": 3,
-      "row_span": 1,
-      "type": "gp",
-      "color": "#CCCD5F",
-      "id": "lxAvmpSPV2y"
-    }, {
-      "name": "No. of RDTs",
-      "span": 1,
-      "row_span": 2,
-      "type": "dx",
-      "color": "#FFFB00",
-      "id": "iaQuylCoH3u"
-    }, {
-      "name": "Diagnosis",
-      "span": 1,
-      "row_span": 1,
-      "type": "gp",
-      "color": "#CCCD5F",
-      "id": "aCAvP2NqgCh"
-    }, {
-      "name": "LLIN distributed at district level(annual)",
-      "span": 2,
-      "row_span": 1,
-      "type": "gp",
-      "color": "#CCCD5F",
-      "id": "iOuPl5kmN4D"
-    }, {
-      "name": "Indoor Residual Spraying(annual)",
-      "span": 2,
-      "row_span": 1,
-      "type": "gp",
-      "color": "#CCCD5F",
-      "id": "m2I8YBn5Z89"
-    }],
+        "name": "Pop. at risk",
+        "span": 1,
+        "row_span": 2,
+        "type": "dx",
+        "color": "#FF9A60",
+        "id": "ZCCrHrs1Ta2"
+      },
+      {
+        "name": "Reporting completeness (OPD)",
+        "span": 3,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#9ACF98",
+        "id": "BArAWVucQ7O"
+      },
+      {
+        "name": "Reporting completeness (IPD)",
+        "span": 3,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#9ACF98",
+        "id": "nirqA2CnDU0"
+      },
+      {
+        "name": "Treatment with ACT",
+        "span": 3,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#CCCD5F",
+        "id": "lxAvmpSPV2y"
+      }, {
+        "name": "No. of RDTs",
+        "span": 1,
+        "row_span": 2,
+        "type": "dx",
+        "color": "#FFFB00",
+        "id": "iaQuylCoH3u"
+      }, {
+        "name": "Diagnosis",
+        "span": 1,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#CCCD5F",
+        "id": "aCAvP2NqgCh"
+      }, {
+        "name": "LLIN distributed at district level(annual)",
+        "span": 2,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#CCCD5F",
+        "id": "iOuPl5kmN4D"
+      }, {
+        "name": "Indoor Residual Spraying(annual)",
+        "span": 2,
+        "row_span": 1,
+        "type": "gp",
+        "color": "#CCCD5F",
+        "id": "m2I8YBn5Z89"
+      }
+    ],
     "columns": [{
       "dimension": "dx",
       "items": [{
-        "id": "ZCCrHrs1Ta2",
-        "dimensionItem": "ZCCrHrs1Ta2",
-        "displayName": "Proportion of population at risk",
-        "dimensionItemType": "INDICATOR"
-      }, {
-        "id": "l7gcisIvTBN",
-        "dimensionItem": "l7gcisIvTBN",
-        "displayName": "No of ACT distributed to patients",
-        "dimensionItemType": "DATA_ELEMENT"
-      }, {
-        "id": "M91K9z70dl4",
-        "dimensionItem": "M91K9z70dl4",
-        "displayName": "No. P.f cases treated with ACT",
-        "dimensionItemType": "DATA_ELEMENT"
-      }, {
-        "id": "HFWOXsnDJo7",
-        "dimensionItem": "HFWOXsnDJo7",
-        "displayName": "Cases potentially treated with ACT(%)",
-        "dimensionItemType": "DATA_ELEMENT"
-      }, {
-        "id": "iaQuylCoH3u",
-        "dimensionItem": "iaQuylCoH3u",
-        "displayName": "No of RDTs distributed",
-        "dimensionItemType": "INDICATOR"
-      }, {
-        "id": "OMYp5Suv6P2",
-        "dimensionItem": "OMYp5Suv6P2",
-        "displayName": "RDT/ACT ration",
-        "dimensionItemType": "INDICATOR"
-      }, {
-        "id": "UH47dKFqTRK",
-        "dimensionItem": "UH47dKFqTRK",
-        "displayName": "No. LLIN distributed",
-        "dimensionItemType": "DATA_ELEMENT"
-      }, {
-        "id": "OcBiqoUWLYy",
-        "dimensionItem": "OcBiqoUWLYy",
-        "displayName": "% of population potentially covered with LLIN",
-        "dimensionItemType": "INDICATOR"
-      }, {
-        "id": "NywGy6uMS5r",
-        "dimensionItem": "NywGy6uMS5r",
-        "displayName": "No of Population protected with IRS",
-        "dimensionItemType": "INDICATOR"
-      }, {
-        "id": "UyuDDeXuIbr",
-        "dimensionItem": "UyuDDeXuIbr",
-        "displayName": "% of Population protected with IRS",
-        "dimensionItemType": "INDICATOR"
-      }]
+          "id": "ZCCrHrs1Ta2",
+          "dimensionItem": "ZCCrHrs1Ta2",
+          "displayName": "Proportion of population at risk",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "GLqY4EV4iOG",
+          "dimensionItem": "GLqY4EV4iOG",
+          "displayName": "No. of Health facilities reports expected (OPD)",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "Gg0z2s1QM3F",
+          "dimensionItem": "Gg0z2s1QM3F",
+          "displayName": "No. of Health facilities reports received (OPD)",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "xTsHkGqsUlW",
+          "dimensionItem": "xTsHkGqsUlW",
+          "displayName": "% completeness(OPD)",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "oPu5OSqr6p9",
+          "dimensionItem": "oPu5OSqr6p9",
+          "displayName": "No. of Health facilities reports expected (IPD)",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "WLKT9cTihxj",
+          "dimensionItem": "WLKT9cTihxj",
+          "displayName": "No. of Health facilities reports received (IPD)",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "VaxcbRkQbZA",
+          "dimensionItem": "VaxcbRkQbZA",
+          "displayName": "% completeness(IPD)",
+          "dimensionItemType": "INDICATOR"
+        }, {
+          "id": "l7gcisIvTBN",
+          "dimensionItem": "l7gcisIvTBN",
+          "displayName": "No of ACT distributed to patients",
+          "dimensionItemType": "DATA_ELEMENT"
+        }, {
+          "id": "M91K9z70dl4",
+          "dimensionItem": "M91K9z70dl4",
+          "displayName": "No. P.f cases treated with ACT",
+          "dimensionItemType": "DATA_ELEMENT"
+        }, {
+          "id": "HFWOXsnDJo7",
+          "dimensionItem": "HFWOXsnDJo7",
+          "displayName": "Cases potentially treated with ACT(%)",
+          "dimensionItemType": "DATA_ELEMENT"
+        }, {
+          "id": "iaQuylCoH3u",
+          "dimensionItem": "iaQuylCoH3u",
+          "displayName": "No of RDTs distributed",
+          "dimensionItemType": "INDICATOR"
+        }, {
+          "id": "OMYp5Suv6P2",
+          "dimensionItem": "OMYp5Suv6P2",
+          "displayName": "RDT/ACT ration",
+          "dimensionItemType": "INDICATOR"
+        }, {
+          "id": "UH47dKFqTRK",
+          "dimensionItem": "UH47dKFqTRK",
+          "displayName": "No. LLIN distributed",
+          "dimensionItemType": "DATA_ELEMENT"
+        }, {
+          "id": "OcBiqoUWLYy",
+          "dimensionItem": "OcBiqoUWLYy",
+          "displayName": "% of population potentially covered with LLIN",
+          "dimensionItemType": "INDICATOR"
+        }, {
+          "id": "NywGy6uMS5r",
+          "dimensionItem": "NywGy6uMS5r",
+          "displayName": "No of Population protected with IRS",
+          "dimensionItemType": "INDICATOR"
+        }, {
+          "id": "UyuDDeXuIbr",
+          "dimensionItem": "UyuDDeXuIbr",
+          "displayName": "% of Population protected with IRS",
+          "dimensionItemType": "INDICATOR"
+        }
+      ]
     }],
     "dataElementDimensions": [],
     "categoryDimensions": [],
@@ -2718,18 +2779,27 @@
     "favorites": [],
     "groups": {
       "headers": [{
-        "name": "Treatment with ACT",
-        "dx": ["l7gcisIvTBN", "M91K9z70dl4", "HFWOXsnDJo7"]
-      }, {
-        "name": "Diagnosis",
-        "dx": ["OMYp5Suv6P2"]
-      }, {
-        "name": "LLIN distributed at district level(annual)",
-        "dx": ["UH47dKFqTRK", "OcBiqoUWLYy"]
-      }, {
-        "name": "Indoor Residual Spraying(annual)",
-        "dx": ["NywGy6uMS5r", "UyuDDeXuIbr"]
-      }],
+          "name": "Reporting completeness (OPD)",
+          "dx": ["GLqY4EV4iOG", "Gg0z2s1QM3F", "xTsHkGqsUlW"]
+        },
+        {
+          "name": "Reporting completeness (IPD)",
+          "dx": ["oPu5OSqr6p9", "WLKT9cTihxj", "VaxcbRkQbZA"]
+        },
+        {
+          "name": "Treatment with ACT",
+          "dx": ["l7gcisIvTBN", "M91K9z70dl4", "HFWOXsnDJo7"]
+        }, {
+          "name": "Diagnosis",
+          "dx": ["OMYp5Suv6P2"]
+        }, {
+          "name": "LLIN distributed at district level(annual)",
+          "dx": ["UH47dKFqTRK", "OcBiqoUWLYy"]
+        }, {
+          "name": "Indoor Residual Spraying(annual)",
+          "dx": ["NywGy6uMS5r", "UyuDDeXuIbr"]
+        }
+      ],
       "levels": 1
     },
     "dataDimensionItems": [{
