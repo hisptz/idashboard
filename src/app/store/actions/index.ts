@@ -9,4 +9,5 @@ export * from './data-elements.action';
 export * from './function-rule.action';
 export * from './function.action';
 export * from './indicators.action';
+export * from './data-set.actions';
 export * from './data-item-mapping.actions';

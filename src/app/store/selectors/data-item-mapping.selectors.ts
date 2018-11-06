@@ -4,8 +4,9 @@ import * as _ from 'lodash';
 
 import { getAllSystemDataElements } from './data-elements.selectors';
 import { getAllIndicators } from './indicators.selectors';
-import { DataElement, Indicator } from '../../models';
+import { DataElement, Indicator, DataSet } from '../../models';
 import { DataItemMappingState } from '../reducers/data-item-mapping.reducer';
+import { getAllDataSets } from './data-set-selectors';
 
 export const getDataItemMappingEntityState = createSelector(
   getRootState,
@@ -20,13 +21,22 @@ export const getCurrentDataItemMappingGroup = createSelector(
 export const getCurrentDataFilterItems = createSelector(
   getAllSystemDataElements,
   getAllIndicators,
+  getAllDataSets,
   getCurrentDataItemMappingGroup,
-  (dataElements: DataElement[], indicators: Indicator[], group) => {
+  (
+    dataElements: DataElement[],
+    indicators: Indicator[],
+    dataSets: DataSet[],
+    group
+  ) => {
     let dataFilterItems = [];
     if (group) {
       if (group.id === 'all') {
         dataFilterItems = _.sortBy(
-          _.concat(dataFilterItems, _.concat(dataElements, indicators)),
+          _.concat(
+            dataFilterItems,
+            _.concat(dataElements, _.concat(indicators, dataSets))
+          ),
           'name'
         );
       } else if (group.id === 'de') {
@@ -39,6 +49,8 @@ export const getCurrentDataFilterItems = createSelector(
           _.concat(dataFilterItems, indicators),
           'name'
         );
+      } else if (group.id === 'ds') {
+        dataFilterItems = _.sortBy(_.concat(dataFilterItems, dataSets), 'name');
       }
     }
     return dataFilterItems;

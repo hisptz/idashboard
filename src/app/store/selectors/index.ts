@@ -9,4 +9,5 @@ export * from './function-rule.selectors';
 export * from './function.selectors';
 export * from './data-elements.selectors';
 export * from './indicators.selectors';
+export * from './data-set-selectors';
 export * from './data-item-mapping.selectors';

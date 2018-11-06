@@ -10,6 +10,7 @@ import { DataElementEffects } from './data-elements.effects';
 import { FunctionRuleEffects } from './function-rules.effects';
 import { FunctionEffects } from './function.effects';
 import { IndicatorsEffects } from './indicators.effects';
+import { DataSetEffects } from './data-set.effects';
 
 export const effects: any[] = [
   RouterEffects,
@@ -23,5 +24,6 @@ export const effects: any[] = [
   DataElementEffects,
   IndicatorsEffects,
   FunctionRuleEffects,
-  FunctionEffects
+  FunctionEffects,
+  DataSetEffects
 ];

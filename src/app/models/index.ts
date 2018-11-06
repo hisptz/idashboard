@@ -5,3 +5,4 @@ export * from './legend-set.model';
 export * from './data-element';
 export * from './function-rule';
 export * from './indicator';
+export * from './data-set';
