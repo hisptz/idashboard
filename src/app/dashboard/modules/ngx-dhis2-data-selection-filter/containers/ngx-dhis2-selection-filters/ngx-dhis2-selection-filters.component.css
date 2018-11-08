@@ -68,15 +68,15 @@
   margin-left: 3px;
 }
 
-.selection-filter-btn-list > button {
+.selection-filter-btn-list>button {
   margin-left: 3px;
 }
 
-.selection-filter-btn-list > button > img {
+.selection-filter-btn-list>button>img {
   height: 13px;
 }
 
-.selection-filter-btn-list > button:first-child {
+.selection-filter-btn-list>button:first-child {
   margin-left: 0;
 }
 
