@@ -22,20 +22,6 @@ export function getStandardizedDashboards(dashboards: any[], currentUser: User, 
       access: dashboard.access,
       globalSelections: [
         {
-          dimension: 'pe',
-          layout: 'rows',
-          items: [
-            {
-              id: 'THIS_YEAR',
-              ref_type: 'PERIOD_ACTUAL'
-            },
-            {
-              id: 'LAST_YEAR',
-              ref_type: 'PERIOD_REF'
-            }
-          ]
-        },
-        {
           dimension: 'ou',
           layout: 'filters',
           items: [
