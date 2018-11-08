@@ -1,5 +1,173 @@
 {
   "configuration": {
-    "legendSets": []
+    "legendSets": [{
+        "id": "dHt43srjYsF_xTsHkGqsUlW",
+        "visualizationLayerId": "dHt43srjYsF",
+        "dimensionItemId": "xTsHkGqsUlW",
+        "name": "% completeness(OPD)",
+        "legends": [{
+            "id": "fc8Rg5R8Urx",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": 0,
+            "endValue": 50
+          },
+          {
+            "id": "2R9GYhmaLNa",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": 50,
+            "endValue": 80
+          },
+          {
+            "id": "5eoL2K4XD8E",
+            "color": "#008000",
+            "name": "Green",
+            "startValue": 80,
+            "endValue": 101
+          }
+        ]
+      },
+      {
+        "id": "dHt43srjYsF_VaxcbRkQbZA",
+        "visualizationLayerId": "dHt43srjYsF",
+        "dimensionItemId": "VaxcbRkQbZA",
+        "name": "% completeness(IPD)",
+        "legends": [{
+            "id": "uezOnUQCRF7",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": 0,
+            "endValue": 50
+          },
+          {
+            "id": "SRq8fgvRuKQ",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": 50,
+            "endValue": 80
+          },
+          {
+            "id": "lmt6HBNxYuD",
+            "color": "#008000",
+            "name": "Green",
+            "startValue": 80,
+            "endValue": 101
+          }
+        ]
+      },
+      {
+        "id": "dHt43srjYsF_HFWOXsnDJo7",
+        "visualizationLayerId": "dHt43srjYsF",
+        "dimensionItemId": "HFWOXsnDJo7",
+        "name": "Cases potentially treated with ACT(%)",
+        "legends": [{
+            "id": "ctwyBuH8qLI",
+            "color": "#ff0000",
+            "name": "Untitled",
+            "startValue": 0,
+            "endValue": 40
+          },
+          {
+            "id": "xNEa4Bh2blm",
+            "color": "#ffff00",
+            "name": "Untitled",
+            "startValue": 40,
+            "endValue": 70
+          },
+          {
+            "id": "vzA1NPF2H2n",
+            "color": "#008000",
+            "name": "Untitled",
+            "startValue": 70,
+            "endValue": 101
+          }
+        ]
+      },
+      {
+        "id": "dHt43srjYsF_OcBiqoUWLYy",
+        "visualizationLayerId": "dHt43srjYsF",
+        "dimensionItemId": "OcBiqoUWLYy",
+        "name": "% of population potentially covered with LLIN",
+        "legends": [{
+            "id": "RbT1bQNiAiq",
+            "color": "#ff0000",
+            "name": "Untitled",
+            "startValue": 0,
+            "endValue": 40
+          },
+          {
+            "id": "bfwZ3pVyYwy",
+            "color": "#ffff00",
+            "name": "Untitled",
+            "startValue": 40,
+            "endValue": 70
+          },
+          {
+            "id": "lBNAw5xPbTH",
+            "color": "#008000",
+            "name": "Untitled",
+            "startValue": 70,
+            "endValue": 101
+          }
+        ]
+      },
+      {
+        "id": "dHt43srjYsF_UyuDDeXuIbr",
+        "visualizationLayerId": "dHt43srjYsF",
+        "dimensionItemId": "UyuDDeXuIbr",
+        "name": "% of Population protected with IRS",
+        "legends": [{
+            "id": "2NL9LP4aPXt",
+            "color": "#ff0000",
+            "name": "Untitled",
+            "startValue": 0,
+            "endValue": 40
+          },
+          {
+            "id": "W8GOpOeDCO7",
+            "color": "#ffff00",
+            "name": "Untitled",
+            "startValue": 40,
+            "endValue": 70
+          },
+          {
+            "id": "NdNm5uUOMfT",
+            "color": "#008000",
+            "name": "Untitled",
+            "startValue": 70,
+            "endValue": 101
+          }
+        ]
+      },
+      {
+        "id": "s6UwlCxG5nW_xTsHkGqsUlW",
+        "visualizationLayerId": "s6UwlCxG5nW",
+        "dimensionItemId": "xTsHkGqsUlW",
+        "name": "% completeness(OPD)",
+        "legends": [{
+            "id": "h5JGgFiywI6",
+            "color": "#ff0000",
+            "name": "Untitled",
+            "startValue": 0,
+            "endValue": 50
+          },
+          {
+            "id": "2b8rPzH8cSo",
+            "color": "#ffff00",
+            "name": "Untitled",
+            "startValue": 50,
+            "endValue": 80
+          },
+          {
+            "id": "kxsWDNzna9d",
+            "color": "#008000",
+            "name": "Untitled",
+            "startValue": 80,
+            "endValue": 101
+          }
+        ]
+      }
+    ]
   }
 }
