@@ -27,7 +27,7 @@ export class LegendSetService {
           this.appConfigurationService
             .getDefaultLegends()
             .subscribe(legendSets => {
-              observer.next(legendSets);
+              observer.next(this.getSanitizedLegendSets(legendSets));
               observer.complete();
             });
         }

@@ -279,7 +279,7 @@
         "id": "AvQDluaf46N",
         "name": "Total malaria cases (confirmed+presumed)",
         "description": "Total number of cases reported as malaria (confirmed with either microscopy or RDT, and presumed clinically as malaria in absence of diagnosis)",
-        "json": "{\"expression\":\"((((#{enVf9I39FRZ} + #{vTRrNdOOT9g}) + (#{cE8SDxizo5s} - (#{DPNsg3wjxGm} + #{pmRn0GsUfr6})))/(1))*1)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null,\"cE8SDxizo5s\":null,\"DPNsg3wjxGm\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"cE8SDxizo5s\":\"Number of suspected malaria cases\",\"DPNsg3wjxGm\":\"Number of malaria cases tested with microscopy \",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"}}"
+        "json": "{\"expression\":\"(#{enVf9I39FRZ} + #{vTRrNdOOT9g})\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"}}"
       },
       {
         "id": "RqGYc77Xhek",

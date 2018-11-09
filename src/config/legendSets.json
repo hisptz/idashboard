@@ -9,7 +9,7 @@
             "id": "fc8Rg5R8Urx",
             "color": "#ff0000",
             "name": "Red",
-            "startValue": 0,
+            "startValue": null,
             "endValue": 50
           },
           {
@@ -24,7 +24,7 @@
             "color": "#008000",
             "name": "Green",
             "startValue": 80,
-            "endValue": 101
+            "endValue": null
           }
         ]
       },
@@ -37,7 +37,7 @@
             "id": "uezOnUQCRF7",
             "color": "#ff0000",
             "name": "Red",
-            "startValue": 0,
+            "startValue": null,
             "endValue": 50
           },
           {
@@ -52,7 +52,7 @@
             "color": "#008000",
             "name": "Green",
             "startValue": 80,
-            "endValue": 101
+            "endValue": null
           }
         ]
       },
@@ -65,7 +65,7 @@
             "id": "ctwyBuH8qLI",
             "color": "#ff0000",
             "name": "Untitled",
-            "startValue": 0,
+            "startValue": null,
             "endValue": 40
           },
           {
@@ -80,7 +80,7 @@
             "color": "#008000",
             "name": "Untitled",
             "startValue": 70,
-            "endValue": 101
+            "endValue": null
           }
         ]
       },
@@ -93,7 +93,7 @@
             "id": "RbT1bQNiAiq",
             "color": "#ff0000",
             "name": "Untitled",
-            "startValue": 0,
+            "startValue": null,
             "endValue": 40
           },
           {
@@ -108,7 +108,7 @@
             "color": "#008000",
             "name": "Untitled",
             "startValue": 70,
-            "endValue": 101
+            "endValue": null
           }
         ]
       },
@@ -121,7 +121,7 @@
             "id": "2NL9LP4aPXt",
             "color": "#ff0000",
             "name": "Untitled",
-            "startValue": 0,
+            "startValue": null,
             "endValue": 40
           },
           {
@@ -136,7 +136,7 @@
             "color": "#008000",
             "name": "Untitled",
             "startValue": 70,
-            "endValue": 101
+            "endValue": null
           }
         ]
       },
@@ -165,6 +165,63 @@
             "name": "Untitled",
             "startValue": 80,
             "endValue": 101
+          }
+        ]
+      },
+
+      {
+        "id": "EFuehVGA7qF_fj29hAOSNDk",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "fj29hAOSNDk",
+        "name": "Annual blood examination rate",
+        "legends": [{
+            "id": "YTRB1S6KuVc",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "Q7V5sW3ivLZ",
+            "color": "#ffff00",
+            "name": "Yello",
+            "startValue": "0",
+            "endValue": 20
+          },
+          {
+            "id": "WHhQFRqgDqG",
+            "color": "#008000",
+            "name": "Greeb",
+            "startValue": 20,
+            "endValue": null
+          }
+        ]
+      },
+      {
+        "id": "EFuehVGA7qF_RqGYc77Xhek",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "RqGYc77Xhek",
+        "name": "% of suspected cases tested",
+        "legends": [{
+            "id": "vw0lawTSpmZ",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "50"
+          },
+          {
+            "id": "6xrCupKVEUx",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "50",
+            "endValue": "80"
+          },
+          {
+            "id": "umXCeBvMFtE",
+            "color": "#008000",
+            "name": "Green",
+            "startValue": "80",
+            "endValue": null
           }
         ]
       }
