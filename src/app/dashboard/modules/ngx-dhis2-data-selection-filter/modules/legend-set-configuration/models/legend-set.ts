@@ -8,8 +8,8 @@ export interface LegendSet {
 
 export interface Legend {
   id: string;
-  endValue: number;
+  endValue: any;
   color: string;
   name: string;
-  startValue: number;
+  startValue: any;
 }

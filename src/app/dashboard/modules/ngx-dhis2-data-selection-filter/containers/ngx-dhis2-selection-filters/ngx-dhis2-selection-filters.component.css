@@ -68,15 +68,15 @@
   margin-left: 3px;
 }
 
-.selection-filter-btn-list > button {
+.selection-filter-btn-list>button {
   margin-left: 3px;
 }
 
-.selection-filter-btn-list > button > img {
+.selection-filter-btn-list>button>img {
   height: 13px;
 }
 
-.selection-filter-btn-list > button:first-child {
+.selection-filter-btn-list>button:first-child {
   margin-left: 0;
 }
 
@@ -92,7 +92,6 @@
   -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.12);
   padding: 5px;
-  min-width: 400px;
   min-height: 350px;
   z-index: 2000;
 }

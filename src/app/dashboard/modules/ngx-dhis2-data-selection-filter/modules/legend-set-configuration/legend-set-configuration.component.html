@@ -1,3 +1,5 @@
-<app-legend-set-container [visualizationLayerId]="visualizationLayerId" [selectedItems]="selectedItems"
-  [legendSetEntities]="legendSetEntities$|async" (legendSetConfigurationClose)="onLegendSetConfigurationClose()"
-  (legendSetConfigurationSave)="onLegendSetConfigurationSave($event)"></app-legend-set-container>
+<div class="legend-set-container">
+  <app-legend-set-container [visualizationLayerId]="visualizationLayerId" [selectedItems]="selectedItems"
+    [legendSetEntities]="legendSetEntities$|async" (legendSetConfigurationClose)="onLegendSetConfigurationClose()"
+    (legendSetConfigurationSave)="onLegendSetConfigurationSave($event)"></app-legend-set-container>
+</div>
