@@ -46,7 +46,6 @@ export class LegendSetService {
           : legend.endValue;
       });
     });
-    console.log(legendSets);
     return legendSets;
   }
 
