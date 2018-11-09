@@ -149,7 +149,7 @@
             "id": "h5JGgFiywI6",
             "color": "#ff0000",
             "name": "Untitled",
-            "startValue": 0,
+            "startValue": null,
             "endValue": 50
           },
           {
@@ -168,7 +168,6 @@
           }
         ]
       },
-
       {
         "id": "EFuehVGA7qF_fj29hAOSNDk",
         "visualizationLayerId": "EFuehVGA7qF",
@@ -222,6 +221,62 @@
             "name": "Green",
             "startValue": "80",
             "endValue": null
+          }
+        ]
+      },
+      {
+        "id": "s6UwlCxG5nW_nx6lSAN1YmB",
+        "visualizationLayerId": "s6UwlCxG5nW",
+        "dimensionItemId": "nx6lSAN1YmB",
+        "name": "Proportion of cases investigated within N2 days of diagnosis",
+        "legends": [{
+            "id": "93gIL2ye1gx",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "03nzzao9u30",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "0",
+            "endValue": "20"
+          },
+          {
+            "id": "xv0IoCntbg2",
+            "color": "#008800",
+            "name": "Green",
+            "startValue": "20",
+            "endValue": null
+          }
+        ]
+      },
+      {
+        "id": "s6UwlCxG5nW_IS9VxwhkJXR",
+        "visualizationLayerId": "s6UwlCxG5nW",
+        "dimensionItemId": "IS9VxwhkJXR",
+        "name": "proportion of foci with response within N4 days of diagnosis",
+        "legends": [{
+            "id": "QQMZPwVs6vM",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "d6OtcItxmVH",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "0",
+            "endValue": 20
+          },
+          {
+            "id": "efsjOiYtVGH",
+            "color": "#008800",
+            "name": "Green",
+            "startValue": 20,
+            "endValue": 40
           }
         ]
       }
