@@ -12,7 +12,13 @@ export function getMergedDataSelections(
         newDataSelections,
         ['dimension', dataSelection.dimension]
       );
-      return matchingDataSelection || dataSelection;
+      if (matchingDataSelection) {
+        dataSelection = {
+          ...dataSelection,
+          items: matchingDataSelection.items
+        };
+      }
+      return dataSelection;
     }
   );
 }
