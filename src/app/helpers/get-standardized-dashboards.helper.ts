@@ -3,7 +3,11 @@ import * as _ from 'lodash';
 import { User, SystemInfo } from '../models';
 import { getDashboardBookmarkStatus } from './get-dashboard-bookmark-status.helper';
 
-export function getStandardizedDashboards(dashboards: any[], currentUser: User, systemInfo: SystemInfo): Dashboard[] {
+export function getStandardizedDashboards(
+  dashboards: any[],
+  currentUser: User,
+  systemInfo: SystemInfo
+): Dashboard[] {
   return _.map(dashboards || [], dashboard => {
     const orgUnits =
       currentUser.dataViewOrganisationUnits.length > 0
@@ -18,9 +22,26 @@ export function getStandardizedDashboards(dashboards: any[], currentUser: User, 
       supportBookmark: dashboard.hasOwnProperty('favorite'),
       bookmarked: dashboard.hasOwnProperty('favorite')
         ? dashboard.favorite
-        : getDashboardBookmarkStatus(dashboard.favorites, currentUser ? currentUser.id : ''),
+        : getDashboardBookmarkStatus(
+            dashboard.favorites,
+            currentUser ? currentUser.id : ''
+          ),
       access: dashboard.access,
       globalSelections: [
+        {
+          dimension: 'pe',
+          layout: 'rows',
+          items: [
+            {
+              id: 'THIS_YEAR',
+              ref_type: 'PERIOD_ACTUAL'
+            },
+            {
+              id: 'LAST_YEAR',
+              ref_type: 'PERIOD_REF'
+            }
+          ]
+        },
         {
           dimension: 'ou',
           layout: 'filters',
