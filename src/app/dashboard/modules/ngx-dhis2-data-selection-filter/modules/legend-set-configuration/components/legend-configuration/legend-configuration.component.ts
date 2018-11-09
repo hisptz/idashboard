@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Legend } from '../../models/legend-set';
-import { DELETE_ICON } from '../../icons';
+import { DELETE_ICON, GREATER_THAN_ICON, LESS_THAN_ICON } from '../../icons';
 
 @Component({
   selector: 'app-legend-configuration',
@@ -14,9 +14,11 @@ export class LegendConfigurationComponent implements OnInit {
   color: string;
   name: string;
   startValue: number;
-  endValue: number;
+  endValue: any;
 
-  arrowDownIcon: string;
+  deleteIcon: string;
+  lessThanIcon: string;
+  greaterThanIcon: string;
 
   @Output()
   legendUpdates = new EventEmitter();
@@ -25,7 +27,9 @@ export class LegendConfigurationComponent implements OnInit {
   deleteLegend = new EventEmitter();
 
   constructor() {
-    this.arrowDownIcon = DELETE_ICON;
+    this.deleteIcon = DELETE_ICON;
+    this.lessThanIcon = LESS_THAN_ICON;
+    this.greaterThanIcon = GREATER_THAN_ICON;
   }
 
   onColorSelect(color: string) {
@@ -33,13 +37,35 @@ export class LegendConfigurationComponent implements OnInit {
     this.onLegendUpdate();
   }
 
+  setNegativeInfinity() {
+    this.startValue = -1.7976931348623157e10308;
+    setTimeout(() => {
+      this.onLegendUpdate();
+    }, 50);
+  }
+
+  setPositiveInfinity() {
+    this.endValue = 1.7976931348623157e10308;
+    this.onLegendUpdate();
+  }
+
   onLegendUpdate() {
     const { id } = this.legend;
     const color = this.color;
     const name = this.name;
-    const startValue = this.startValue;
-    const endValue = this.endValue;
-    this.legendUpdates.emit({ id, color, name, startValue, endValue });
+    const startValue =
+      this.startValue &&
+      (!isNaN(this.startValue) || this.startValue === Number.NEGATIVE_INFINITY)
+        ? this.startValue
+        : null;
+    const endValue =
+      this.endValue &&
+      (!isNaN(this.endValue) || this.endValue === Number.POSITIVE_INFINITY)
+        ? this.endValue
+        : null;
+    if (startValue && endValue) {
+      this.legendUpdates.emit({ id, color, name, startValue, endValue });
+    }
   }
 
   onDeleteLegend() {

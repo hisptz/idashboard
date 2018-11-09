@@ -4,11 +4,17 @@
   </div>
   <div class="legend-input-container">
     <input (blur)="onLegendUpdate()" type="text" class="legend-input legend-name-input" [(ngModel)]="name">&nbsp;
-    <input (blur)="onLegendUpdate()" type="number" class="legend-input legend-start-end-value-input" [(ngModel)]="startValue">
+    <input (blur)="onLegendUpdate()" type="text" class="legend-input legend-start-end-value-input" [(ngModel)]="startValue">
+    <button title="Set negative infinity on start value" class="legend-button" (click)="setNegativeInfinity()">
+      <img [src]="lessThanIcon" alt="">
+    </button>
     <span style="padding: 0.375rem 0.75rem;">-</span>
-    <input (blur)="onLegendUpdate()" type="number" class="legend-input legend-start-end-value-input" [(ngModel)]="endValue">
-    <button title="Delete legend" class="delete-legend-button" (click)="onDeleteLegend()">
-      <img [src]="arrowDownIcon" alt="">
+    <button title="Set positive infinity on end value" class="legend-button" (click)="setPositiveInfinity()">
+      <img [src]="greaterThanIcon" alt="">
+    </button>
+    <input (blur)="onLegendUpdate()" type="text" class="legend-input legend-start-end-value-input" [(ngModel)]="endValue">
+    <button title="Delete legend" class="legend-button" (click)="onDeleteLegend()">
+      <img [src]="deleteIcon" alt="">
     </button>
   </div>
 </div>
