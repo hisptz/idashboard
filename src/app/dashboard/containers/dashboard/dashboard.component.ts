@@ -21,6 +21,7 @@ import {
   getDashboardObjectLoaded
 } from '../../../store';
 import { Dashboard, DashboardGroups } from '../../models';
+import { LoadFunctions } from '../../modules/ngx-dhis2-data-selection-filter/modules/data-filter/store/actions/function.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -52,6 +53,7 @@ export class DashboardComponent implements OnInit {
   constructor(private store: Store<State>) {
     // initialize dashboads settings
     store.dispatch(new InitializeDashboardSettingsAction());
+    store.dispatch(new LoadFunctions());
 
     this.dashboards$ = store.select(getAllGroupDashboards);
     this.currentDashboardId$ = store.select(getCurrentDashboardId);

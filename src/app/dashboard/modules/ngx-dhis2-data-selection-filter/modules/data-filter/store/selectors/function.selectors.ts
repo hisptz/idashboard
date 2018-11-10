@@ -68,6 +68,12 @@ export const getFunctions = createSelector(
     })
 );
 
+export const getFunctionById = functionId =>
+  createSelector(
+    fromFunction.getFunctionEntities,
+    (functionEntities: any) => functionEntities[functionId]
+  );
+
 export const getSelectedFunctions = createSelector(
   fromFunction.getAllFunctions,
   fromFunctionRuleReducer.getFunctionRuleEntities,

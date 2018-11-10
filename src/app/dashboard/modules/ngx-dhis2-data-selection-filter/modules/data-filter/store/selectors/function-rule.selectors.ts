@@ -32,3 +32,9 @@ export const getFunctionRulesForActiveFunction = createSelector(
       functionRule => functionRule !== null
     )
 );
+
+export const getFunctionRuleById = functionRuleId =>
+  createSelector(
+    fromFunctionRuleReducer.getFunctionRuleEntities,
+    (functionRuleEntities: any) => functionRuleEntities[functionRuleId]
+  );

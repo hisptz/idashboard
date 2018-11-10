@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { Observable, of, forkJoin, throwError } from 'rxjs';
+import { Observable, of, forkJoin, throwError, pipe } from 'rxjs';
 import { NgxDhis2HttpClientService } from '@hisptz/ngx-dhis2-http-client';
 
 import { VisualizationDataSelection } from '../models';
@@ -33,6 +33,10 @@ export class AnalyticsService {
       ),
       this._getFunctionAnalytics(
         this._getDataSelectionByDxType(dataSelections || [], 'FUNCTION_RULE')
+      ).pipe(
+        tap((analytics: any) => {
+          console.log(analytics);
+        })
       )
     ).pipe(
       map((analyticsResults: any[]) =>
@@ -51,20 +55,19 @@ export class AnalyticsService {
     const analyticsUrl = !layerType
       ? getAnalyticsUrl(dataSelections, 'thematic', config)
       : layerType === 'thematic' || layerType === 'event'
-        ? getAnalyticsUrl(dataSelections, layerType, config)
-        : '';
+      ? getAnalyticsUrl(dataSelections, layerType, config)
+      : '';
     return analyticsUrl !== ''
       ? this.http.get(analyticsUrl).pipe(
-          mergeMap(
-            (analytics: any) =>
-              analytics.count && analytics.count < 2000
-                ? this.http.get(
-                    getAnalyticsUrl(dataSelections, layerType, {
-                      ...config,
-                      eventClustering: false
-                    })
-                  )
-                : of(analytics)
+          mergeMap((analytics: any) =>
+            analytics.count && analytics.count < 2000
+              ? this.http.get(
+                  getAnalyticsUrl(dataSelections, layerType, {
+                    ...config,
+                    eventClustering: false
+                  })
+                )
+              : of(analytics)
           )
         )
       : of(null);

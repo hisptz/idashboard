@@ -51,11 +51,36 @@ function getStandardizedDimensions(
       legendSet: dimensionObject.legendSet ? dimensionObject.legendSet.id : '',
       optionSet: dimensionObjectInfo ? dimensionObjectInfo.optionSet : null,
       items: _.map(dimensionObject.items, item => {
-        return {
-          id: item.dimensionItem || item.id,
-          name: item.displayName,
-          type: getDimensionItemType(dimensionObject.dimension, item)
-        };
+        switch (dimensionObject.dimension) {
+          case 'dx':
+            const dimensionItemType = getDimensionItemType(
+              dimensionObject.dimension,
+              item
+            );
+
+            const splitedItemId = (item.dimensionItem || item.id).split('.');
+
+            return dimensionItemType === 'FUNCTION_RULE' ||
+              dimensionItemType === 'FUNCTION'
+              ? {
+                  id: splitedItemId[1],
+                  functionObject: { id: splitedItemId[0] },
+                  name: item.displayName,
+                  type: dimensionItemType
+                }
+              : {
+                  id: item.dimensionItem || item.id,
+                  name: item.displayName,
+                  type: dimensionItemType
+                };
+
+          default:
+            return {
+              id: item.dimensionItem || item.id,
+              name: item.displayName,
+              type: getDimensionItemType(dimensionObject.dimension, item)
+            };
+        }
       })
     };
   });
@@ -78,12 +103,12 @@ function getDimensionItemType(dimension: string, dimensionItem: any) {
           : (dimensionItem.dimensionItem || dimensionItem.id).indexOf(
               'GROUP'
             ) !== -1
-            ? 'ORGANISATION_UNIT_GROUP'
-            : (dimensionItem.dimensionItem || dimensionItem.id).indexOf(
-                'USER'
-              ) !== -1
-              ? 'USER_ORGANISATION_UNIT'
-              : '')
+          ? 'ORGANISATION_UNIT_GROUP'
+          : (dimensionItem.dimensionItem || dimensionItem.id).indexOf(
+              'USER'
+            ) !== -1
+          ? 'USER_ORGANISATION_UNIT'
+          : '')
       );
     }
     default:
