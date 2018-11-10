@@ -33,10 +33,6 @@ export class AnalyticsService {
       ),
       this._getFunctionAnalytics(
         this._getDataSelectionByDxType(dataSelections || [], 'FUNCTION_RULE')
-      ).pipe(
-        tap((analytics: any) => {
-          console.log(analytics);
-        })
       )
     ).pipe(
       map((analyticsResults: any[]) =>
