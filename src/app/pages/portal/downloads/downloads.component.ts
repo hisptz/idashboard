@@ -13,6 +13,7 @@ export class DownloadsComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
+    console.log('CAINAM DOWNLOAD TS: ' + JSON.stringify(this.downloads));
   }
 
   openCity(evt, downloadOption) {

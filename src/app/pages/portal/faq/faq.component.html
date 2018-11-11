@@ -1,0 +1,30 @@
+<section id="tabs" *ngIf="portalFAQ">
+  <div class="container">
+    <div class="row">
+      <h2 class="header-info">{{ portalFAQ['faq'].title }}</h2>
+      <p class="header-info faq-desc"> {{ portalFAQ['faq'].desc }} </p>
+    </div>
+    <div>
+      <p>Mama</p>
+    </div>
+    <div class="row">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a id="nav-item" *ngFor="let faqMenuItem of portalFAQ['faq'].faqMenu" class="nav-item nav-link {{ faqMenuItem.class }}"
+            id="{{faqMenuItem.id}}-tab" data-toggle="tab" href="#{{faqMenuItem.id}}" role="tab" aria-controls="nav-home"
+            aria-selected="true">{{faqMenuItem.name}}</a>
+            <p> {{ idx }} {{ faqMenuItem.name }} </p>
+        </div>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="tab-content" id="nav-tabContent">
+        <div *ngFor="let faqMenuItem of portalFAQ['faq'].faqMenu; let idx = index" id="{{faqMenuItem.id}}">
+          <div *ngFor="let faqMenuItemData of portalFAQ['faq'].faqMenu[idx].faqqn">
+            <p> {{ idx }} {{ faqMenuItemData.title }} </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

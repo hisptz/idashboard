@@ -19,9 +19,9 @@ export class TopHeaderMenuComponent implements OnInit {
   setActiveClass(id) {
     const items = document.getElementsByClassName('top-btn');
     for (let count = 0; count < items.length; count++) {
-      document.getElementById(items[count].id).style.backgroundColor = '#2390D2';
+      // document.getElementById(items[count].id).style.backgroundColor = '#2390D2';
     }
-    document.getElementById(id).style.backgroundColor = '#3779B6';
+    // document.getElementById(id).style.backgroundColor = '#3779B6';
   }
 
   executeForNavigation () {

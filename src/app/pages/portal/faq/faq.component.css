@@ -1,0 +1,16 @@
+.header-info {
+    padding: 5px;
+}
+
+.faq-desc {
+    font-size: 1.2rem;
+}
+
+.nav-tabs {
+    background: linear-gradient(to bottom,rgba(255,255,255,.76) 30%,rgba(254,255,255,.76) 31%,#d2e5ef 100%) !important;
+}
+
+.nav-tabs .active{
+    background: linear-gradient(to bottom,rgba(255,255,255,.76) 30%,rgba(254,255,255,.76) 31%,#2282b6 100%) !important;
+}
+

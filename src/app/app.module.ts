@@ -99,6 +99,7 @@ import { HealthreportComponent } from './pages/portal/downloads/healthreport/hea
 import { TableComponent } from './pages/portal/shared-components/table/table.component';
 import { NewsComponent } from './pages/portal/shared-components/news/news.component';
 import { PageComponent } from './pages/portal/shared-components/page/page.component';
+import { FaqComponent } from './pages/portal/faq/faq.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -168,6 +169,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     NewsComponent,
     PageComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule,
