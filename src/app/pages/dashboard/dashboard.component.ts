@@ -38,11 +38,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.visualizationObjects$) {
-      this.visualizationObjects$.subscribe((vis) => {
-        console.log('current visualization', JSON.stringify(vis[16]));
-      });
-    }
   }
 
 }

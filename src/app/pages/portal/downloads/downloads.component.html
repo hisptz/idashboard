@@ -30,22 +30,22 @@
               </div>
               <div id="{{download['components'][0].id}}" style="display: block" class="tabcontent col-lg-9 col-md-12 col-xs-12">
                 <h3>{{download['components'][0].name}}</h3>
-                <div *ngIf="download['components'][0]['subPages'].length == 0">
+                <div *ngIf="download['components'][0]['subPages'].length == 0" class="div-iframe">
                   <div [innerHtml]="download['components'][0].link | safeHtml"></div>
                   <!--<iframe *ngIf="download['components'][0].link" [src]="trustedUrl(download['components'][0].link)" width="100%" height="800" frameborder="0"></iframe>-->
                 </div>
-                <div *ngIf="download['components'][0]['subPages'].length > 0">
+                <div *ngIf="download['components'][0]['subPages'].length > 0"  class="div-iframe">
                   <app-statistics-summary [subPages]="download['components'][0]['subPages']"></app-statistics-summary>
                 </div>
               </div>
               <div *ngFor="let downloadOption of download['components']"  style="display: none" id="{{downloadOption.id}}"class="tabcontent col-lg-9 col-md-12 col-xs-12">
                 <div *ngIf="download.id !== download['components'][0].id"  >
                   <h3>{{downloadOption.name}}</h3>
-                  <div *ngIf="downloadOption['subPages'].length == 0">
+                  <div *ngIf="downloadOption['subPages'].length == 0"  class="div-iframe">
                     <div [innerHtml]="downloadOption.link | safeHtml"></div>
                     <!--<iframe *ngIf="downloadOption.link" [src]="trustedUrl(downloadOption.link)" width="100%" height="800" frameborder="0"></iframe>-->
                   </div>
-                  <div *ngIf="downloadOption['subPages'].length > 0">
+                  <div *ngIf="downloadOption['subPages'].length > 0"  class="div-iframe">
                     <app-statistics-summary [subPages]="downloadOption['subPages']"></app-statistics-summary>
                   </div>
                 </div>

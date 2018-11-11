@@ -84,11 +84,14 @@ export class DashboardEffects {
       // navigate to the page set true
       let navigateTo = '';
       portalConfigurations.pages.forEach((page) => {
-        if (page.isHomePage) {
+        if (this.router.url !== '/') {
+          console.log(this.router.url)
+          navigateTo = this.router.url;
+        } else if (page.isHomePage) {
           navigateTo = page.routeUrl;
         }
       });
-      if (navigateTo !== ''){
+      if (navigateTo !== '') {
         this.router.navigate([navigateTo]);
       }
     } else {

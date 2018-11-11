@@ -17,3 +17,17 @@
 .col-md-6 {
   padding: 5px;
 }
+
+.row {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -5px !important;
+  margin-left: -5px !important;
+}
+
+.summary-info {
+  margin-top: -20px !important
+}

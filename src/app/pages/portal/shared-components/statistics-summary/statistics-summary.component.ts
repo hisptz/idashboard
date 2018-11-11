@@ -17,7 +17,6 @@ export class StatisticsSummaryComponent implements OnInit {
   }
 
   trustedUrl(url) {
-    console.log(url);
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

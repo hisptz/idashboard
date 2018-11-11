@@ -1,22 +1,78 @@
 <div class="col-md-12 top-menu-wrapper" *ngIf="portalPages">
   <div class="row top-menu-wrapper-info">
     <div class=" col-lg-2 col-md-12 left-of-top-banner">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Coat_of_arms_of_Tanzania.svg/251px-Coat_of_arms_of_Tanzania.svg.png" alt="Coat of arms of Tanzania.svg" width="100" height="80">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Coat_of_arms_of_Tanzania.svg/251px-Coat_of_arms_of_Tanzania.svg.png" alt="Coat of arms of Tanzania.svg">
     </div>
     <div class="col-lg-8 col-md-12 center-of-top-banner">
       <h3>TANZANIA NATIONAL HEALTH PORTAL</h3>
-      <h6>MINISTRY OF HEALTH COMMUNITY DEVELOPMENT GENDER ELDERLY AND CHILDREN</h6>
+      <h5>MINISTRY OF HEALTH COMMUNITY DEVELOPMENT GENDER ELDERLY AND CHILDREN</h5>
     </div>
     <div class="col-lg-2 col-md-12 right-of-top-banner">
       <!--<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/125px-Flag_of_Tanzania.svg.png" width="100" height="80">-->
-      <img src="assets/img/tanzania_umbrella.gif"  width="100" height="80">
+      <img src="assets/img/tanzania_umbrella.gif">
     </div>
   </div>
+</div>
+<div class="col-md-12 menus">
   <div class="topnav top-menu-wrapper-menu" id="myTopnav">
-    <a style="width: 1px; padding: 0px"></a>
-    <a *ngFor="let page of portalPages" routerLinkActive="active-btn" (click)="setActiveClass(page.id)"  class="top-btn" routerLink="{{ page.routeUrl }}">{{ page.name }}</a>
+    <a class="left" style="width: 1px; padding: 0px"></a>
+    <a *ngFor="let page of portalPages" routerLinkActive="active-btn" (click)="setActiveClass(page.id)"  class="top-btn left" routerLink="{{ page.routeUrl }}">
+      <span>
+        <img *ngIf="page['imgSrc'] !== ''" [src]="page['imgSrc']">
+        {{ page.name }}
+      </span>
+    </a>
+    <a class="right" data-toggle="modal" data-target="#myModal">
+      <span>
+        <img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOuSURBVFhH5ZhZiFRHFIYnbqhExF0jYsQNV0RRiRBRyWII+iIoCuK+gggi4psrxIC4YVwCRgl5EvOW5EEUVPRFwQVxjYkGIkSJCIpKxO37avoy6Z7p6bq3u52H+eGDPqf71q1bXefUObemOagnTIZZsBQWwQwYAx3gvasFfAY/wF/wthFewXnYBIOgqmoFrs4d8OYv4TRsgdkwEVw1+QKWwT64CcmEf4PxUHGNg8vgTf6EVdAZYjUC9sAzeANHoAtURGvB1XoMK8GVzKrucAicpNujrNVsCd+Bq3YGekOl5BZ4CM9hmo4scv84uR+htY4K62O4Bf/B5zrSaA04uZ/gAx1Vkinqd3BvDtERI/dFEqFtdKRQW2hf+zFag+EJXAOvb1QGgNFqQHykI0JOaCP8Aa663IcdEBupc8HrNgSrES0Gf7giWKXVES5CMrFCnHTsg54Eg8a/vUF5QrgfHDQ2lXwPTsS0sRcm5NiZ8/ndUYjRWPD33warAXl8+YPVwSqtTmAEes0BHQVKUpTHnSsdI/f9A2gwa5hAvWHXYJXWcPDYew1DdRToK3CCMlpHhBaAv58arAKZ2X2CtCoWeTMhmeAAHRHypHFrbA/W/+RGdqCtwSpf5s5T4Jj3cnasrsPZ2o91mgQONidY5cuqJ1k968Q0+hke1X6skxNzsE+DVZ76g4nX8Y7rSKld4LV5h4SVsM5RwcouB7VAdSyLgV6QVpvB6/PKuSR6zEXlKBncjf61jgz6BhwjLzUlETclWNnUDV6A41iQZtV+MHXlBZZlugMvD1Y2+XCOIZ/oyCj3rZGfJ7svM741YFYlgSZ9dWSQq/YP/BKsAl2AG7UfM6kPGGxLoGTZVETDwAdcF6wCJRt8ZLCaRpZtzsEmq54GgtG3O1jp5dnsCkoPHSllBeVxeylYRfQrWH57JqbVekj2YJYUMx+8dmGwisjocxWtbNKqnAl+CH+D1VHJBs0c5iS/DFa8TDMHc7hd0sh6MvrBPGLcCxaO/XRUWUk/4rueaPmqw71oC1C0R6iALEwtkm3U0naDNdPBi+1RqvFmah44/m3wmMwkX1E8BcsnB6yEDAj3qX+rHWHZ/5Ad/1VwwBPg359F5jkf0mh1rMOQ+m8tpnZgU23f6uD2LpZoMfnSBO4LzLvgte7rrKVYSXlC2Lca4d7MdGQPcQzshX2ZuQ0smaxKPPj9nVwBH6oaL6LqyZsYgXZf5+BfSCYi1nOumFWJB7+r2ORy0jbz0lxUU/MOW5XrQM0pRN4AAAAASUVORK5CYII=">
+        Need help
+      </span>
+    </a>
     <a class="icon" (click)="executeForNavigation()">
       <img src="assets/icons/list.png" alt="">
     </a>
   </div>
 </div>
+
+<!--Modal-->
+
+
+<div class="col-md-12">
+  <div class="modal fade" id="myModal" role="dialog" style=" margin: auto; margin-top: 50px;">
+    <div class="modal-dialog" style="width: 70%;">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="">
+        <div class="modal-header">
+          <h6 class="modal-title">Have any feedback, suggestion or question?</h6>
+          <p>We would love to hear from you.</p>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="name">Your name (optional)</label>
+              <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+              <label for="email">Your email (optional)</label>
+              <input type="text" class="form-control" id="email">
+            </div>
+
+            <div class="form-group">
+              <label for="message">Tell us </label>
+              <textarea type="text" rows="4" class="form-control" id="message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-default" data-dismiss="modal">X</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="btn-default" data-dismiss="modal">X</button>-->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--End of modal-->

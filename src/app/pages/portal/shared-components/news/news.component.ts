@@ -15,7 +15,7 @@ export class NewsComponent implements OnInit {
   ngOnInit() {
     $.fn.liScroll = function(settings) {
       settings = $.extend({
-        travelocity: 0.03
+        travelocity: 0.02
       }, settings);
       return this.each(function() {
         const $strip = $(this);

@@ -64,6 +64,9 @@ section {
   padding: 0px 0px;
 }
 
+.nav-tabs {
+  border: none;
+}
 
 #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
   color: #000000;
@@ -71,7 +74,6 @@ section {
   border-color: transparent transparent green;
   border-bottom: 4px solid green !important;
   font-size: 20px;
-  font-weight: bold;
 }
 #tabs .nav-tabs .nav-link {
   border: 1px solid transparent;
@@ -87,6 +89,10 @@ section {
 .nav-tabs a {
   color: #222222;
   padding-right: 15px;
+}
+
+.div-iframe {
+  border-top: solid 1px #dddcdc
 }
 
 
