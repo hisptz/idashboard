@@ -24,7 +24,7 @@
 }
 
 .dashboard-header {
-  margin-top: 30px;
+  /*margin-top: 30px;*/
 }
 
 @media print {
@@ -42,4 +42,13 @@
   margin-bottom: 15px;
   height: 7px;
   border-radius: 2px;
+}
+
+
+.container-fluid {
+  width: 100%;
+   padding-right: 0;
+   padding-left: 0;
+  margin-right: auto;
+  margin-left: auto;
 }

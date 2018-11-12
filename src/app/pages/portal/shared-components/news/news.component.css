@@ -12,7 +12,7 @@
   left: 0px;
   top: 10px;
   width: auto;
-  height:300px;
+  height:600px;
   overflow: hidden;
 }
 
@@ -47,6 +47,10 @@
 
 .news-category {
   font-weight: 600;
+}
+
+.card-header {
+  background-color: #ffffff;
 }
 
 .card-header h6 {

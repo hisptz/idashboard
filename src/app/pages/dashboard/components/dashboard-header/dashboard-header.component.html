@@ -5,17 +5,17 @@
         [currentDashboardTitle]="(currentDashboard$ | async)?.name"></app-current-dashboard-title>
     </div>
     <div class="dashboard-options">
-      <div
-        class="current-dashboard-share-button"
-        *ngIf="(currentDashboard$ | async)?.access.manage"
-      >
-        <app-current-dashboard-share-section></app-current-dashboard-share-section>
-      </div>
+      <!--<div-->
+        <!--class="current-dashboard-share-button"-->
+        <!--*ngIf="(currentDashboard$ | async)?.access.manage"-->
+      <!--&gt;-->
+        <!--<app-current-dashboard-share-section></app-current-dashboard-share-section>-->
+      <!--</div>-->
 
-      <div class="current-dashboard-bookmark-button">
-        <app-current-dashboard-bookmark-button
-          [currentDashboard]="(currentDashboard$ | async)"></app-current-dashboard-bookmark-button>
-      </div>
+      <!--<div class="current-dashboard-bookmark-button">-->
+        <!--<app-current-dashboard-bookmark-button-->
+          <!--[currentDashboard]="(currentDashboard$ | async)"></app-current-dashboard-bookmark-button>-->
+      <!--</div>-->
       <div class="current-dashboard-global-filter">
         <app-dashboard-global-filter
           [currentDashboardId]="(currentDashboard$ | async)?.id"></app-dashboard-global-filter>
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="dashboard-search-block no-print">
-    <app-dashboard-item-search [dashboardAccess]="(currentDashboard$ | async)?.access"></app-dashboard-item-search>
-  </div>
+  <!--<div class="dashboard-search-block no-print">-->
+    <!--<app-dashboard-item-search [dashboardAccess]="(currentDashboard$ | async)?.access"></app-dashboard-item-search>-->
+  <!--</div>-->
 </div>
