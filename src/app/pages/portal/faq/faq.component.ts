@@ -17,6 +17,10 @@ export class FaqComponent implements OnInit {
     console.log('CAINAM FAQS TS: ' + JSON.stringify(this.portalFAQ));
   }
 
+  openOtherFAQItems(event, id) {
+    console.log("I'm CLicked By Cainam");
+  }
+
   openCity(evt, elementID, data) {
     if (data.faq.faqMenu.id === elementID) {
       console.log('CAINAM TESTING: ' + JSON.stringify(data.faq.faqMenu.id));

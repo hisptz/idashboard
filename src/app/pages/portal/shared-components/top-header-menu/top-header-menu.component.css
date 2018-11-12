@@ -12,6 +12,11 @@
   }
 }
 
+
+#myTopnav a {
+  font-size: 17px !important;
+}
+
 .footer {
   padding: 10px;
   margin-top: 10px;
