@@ -12,14 +12,34 @@
         <div class="row">
           <div class="col-md-5">
             <div class="corousel-text">
-              <h3>{{visualizationObjects$[0].name}}</h3>
-              <p>{{visualizationObjects$[0].description}}</p>
+              <h3>{{visualizationObjects$[0][0].name}}</h3>
+              <p>{{visualizationObjects$[0][0].description}}</p>
             </div>
           </div>
           <div class="col-md-7">
             <div class="corousel-img">
               <app-visualization-list
-                [visualizationObjects]="visualizationObjects$"
+                [visualizationObjects]="visualizationObjects$[0]"
+                [currentUser]="currentUser$ | async"
+                [dashboardAccess]="dashboardAccess"
+              ></app-visualization-list>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="corousel-text">
+              <h3>{{visualizationObjects$[1][0].name}}</h3>
+              <p>{{visualizationObjects$[1][0].description}}</p>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="corousel-img">
+              <app-visualization-list
+                [visualizationObjects]="visualizationObjects$[1]"
                 [currentUser]="currentUser$ | async"
                 [dashboardAccess]="dashboardAccess"
               ></app-visualization-list>

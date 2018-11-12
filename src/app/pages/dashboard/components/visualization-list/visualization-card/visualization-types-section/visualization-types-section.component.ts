@@ -9,6 +9,7 @@ export class VisualizationTypesSectionComponent implements OnInit {
 
   @Input() currentVisualization: string;
   @Output() onCurrentVisualizationChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onShowInfoChange: EventEmitter<string> = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit() {
@@ -19,4 +20,8 @@ export class VisualizationTypesSectionComponent implements OnInit {
     this.onCurrentVisualizationChange.emit(type);
   }
 
+  onShowInfoSelect(e, status) {
+    e.stopPropagation();
+    this.onShowInfoChange.emit(status);
+  }
 }

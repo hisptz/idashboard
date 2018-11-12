@@ -1,0 +1,25 @@
+.footer-links h4 {
+  color: #2A8FD1;
+}
+
+.footer-links a {
+  color: #2A8FD1 !important;
+}
+
+.footer-bar {
+  height: 35px;
+  background-color: #2A8FD1;
+  color: #FFFFFF;
+}
+
+.footer-bar p {
+  text-align: center;
+  font-size: 1em;
+}
+
+.footer {
+  background-color: #ffffff;
+  background-image: linear-gradient(#ffffff 50%, #DAE9F1 85%, #DAE9F1 90%);
+}
+
+.col-lg-6 {}

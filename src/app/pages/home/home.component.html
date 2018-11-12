@@ -1,34 +1,71 @@
-<div class="container">
-  <div class="welcoming-block">
-    <div>
-      <!--Welcoming image-->
-      <div class="welcome-img-block">
-        <img src="assets/img/welcome.png" class="img-fluid welcome-img" alt="">
-      </div>
-      <!--end of welcoming image-->
 
-      <!--Loading block-->
-      <div class="loading-block" *ngIf="dashboardsLoading$ | async">
-        <div class="loading-progress">
-          <app-progress-loader></app-progress-loader>
+<div class="container-fluid" style="margin-top: 80px">
+  <h1 class="text-center" style="margin-bottom: 30px">WELCOME TO THE TANZANIA NATIONAL HEALTH PORTAL</h1>
+
+  <div class="container">
+    <p class="lead text-center">
+      This is a public national health portal for Tanzania. Information available:
+    </p>
+    <div class="card-deck"  style="margin-left: 30px; margin-right: 60px">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">RCH & HMIS Indicators</h4>
+          <p class="card-text">
+            Visualize RCH & HMIS Indicators for Antenatal care, ANC Integration, Labor and
+            delivery, Newborn care, Post natal care, GBV and VAC and Cervical cancer.
+          </p>
         </div>
-        <h4 class="text-center"><b>{{welcomingMessage.title | translate}}</b></h4>
-        <h5 class="text-center" [innerHtml]="welcomingMessage.description | translate"></h5>
       </div>
-      <!--end of loading block-->
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">Program Indicators</h4>
+          <p class="card-text">
+            Visualize Program Indicators for Malaria, Vaccine, Nutrition, HIV/AIDS, Non
+            communicable disease, Tracer medicine, TB&Leprosy, Family Planning.
+          </p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">Resources</h4>
+          <p class="card-text">
+            Get resources like Census data, Community Surveys, Facility Surveys, Health Program Reports,
+            HMIS Annual Reports, Policies, Guidelines and Strategies, Registers and Scorecards.
 
-      <!--dashboard place holder-->
-      <div class="dashboard-placeholder" *ngIf="dashboardsLoaded$ | async">
-        <h4><b>{{welcomingTitle | translate}}</b></h4>
-        <h5>{{welcomingDescription | translate}}</h5>
-        <button
-          (click)="onCreateDashboard($event)"
-          [disabled]="dashboardsCreating$ | async"
-          class="btn btn-primary btn-lg">{{((dashboardsCreating$ | async) ? 'Adding Dashboard...':
-          'Add Dashboard') | translate}}
-        </button>
+          </p>
+        </div>
       </div>
-      <!--end of dashboard place holder-->
     </div>
   </div>
+
+  <div class="container" style="max-height: 120px;overflow: hidden">
+    <div class="row" style="margin: 50px">
+      <div class="col">
+        <img src="assets/img/table.png" alt="tables">
+      </div>
+      <div class="col">
+        <img src="assets/img/column.png" alt="column chart">
+      </div>
+      <div class="col">
+        <img src="assets/img/line.png" alt="line chart">
+      </div>
+      <div class="col">
+        <img src="assets/img/combined.png" alt="combined bar and line chart">
+      </div>
+      <div class="col">
+        <img src="assets/img/pie.png" alt="pie chart">
+      </div>
+      <div class="col">
+        <img src="assets/img/radar.png" alt="radar chart">
+      </div>
+      <div class="col">
+        <img src="assets/img/map.png" alt="maps">
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <p class="lead text-center">Loading data please wait...</p>
+  </div>
+
 </div>

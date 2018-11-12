@@ -34,12 +34,14 @@ export class VisualizationCardComponent implements OnInit {
   currentVisualization: string;
   loaded: boolean;
   showDeleteDialog: boolean;
+  showInfo: boolean;
 
   @ViewChild(ChartListComponent) chartList: ChartListComponent;
   @ViewChild(TableListComponent) tableList: TableListComponent;
 
   constructor(private store: Store<AppState>) {
     this.showDeleteDialog = false;
+    this.showInfo = false;
   }
 
   ngOnInit() {
@@ -57,6 +59,10 @@ export class VisualizationCardComponent implements OnInit {
         id: this.visualizationObject.id
       })
     );
+  }
+
+  setInfoStatus(status) {
+    this.showInfo = status;
   }
 
   getSelectedItems(filters: any[], dimension: string) {

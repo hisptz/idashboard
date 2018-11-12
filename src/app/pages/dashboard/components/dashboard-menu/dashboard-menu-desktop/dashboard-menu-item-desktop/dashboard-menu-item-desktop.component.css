@@ -5,6 +5,7 @@
 
 .dashboard-menu-name-desktop {
     display: inline-flex;
+  background-color: transparent;
     text-overflow: ellipsis;
     padding: 10px 7px 5px 8px;
     cursor: pointer;
@@ -16,8 +17,8 @@
 
 .active-dashboard,
 .dashboard-menu-name-desktop:hover {
-    background: #f1f1f1;
-    color: #222;
+    background: #6EB3E2;
+    color: #FFFFFF;
 }
 
 .dashboard-item-dropdown-desktop {

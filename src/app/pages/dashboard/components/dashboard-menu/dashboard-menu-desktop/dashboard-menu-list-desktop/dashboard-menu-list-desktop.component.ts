@@ -52,10 +52,10 @@ export class DashboardMenuListDesktopComponent implements OnInit {
           for (let count = 0; count < items.length; count++) {
             if (items[count].id !== '') {
               document.getElementById(items[count].id).style.backgroundColor = '#FFF';
-              document.getElementById(items[count].id).style.color = '#3779B6';
+              document.getElementById(items[count].id).style.color = '#6EB3E2';
             }
           }
-          document.getElementById(id).style.backgroundColor = '#3779B6';
+          document.getElementById(id).style.backgroundColor = '#6EB3E2';
           document.getElementById(id).style.color = '#FFF';
         });
       });
@@ -67,7 +67,7 @@ export class DashboardMenuListDesktopComponent implements OnInit {
     for (let count = 0; count < items.length; count++) {
       if (items[count].id !== '') {
         document.getElementById(items[count].id).style.backgroundColor = '#FFF';
-        document.getElementById(items[count].id).style.color = '#3779B6';
+        document.getElementById(items[count].id).style.color = '#000';
       }
     }
 
@@ -75,11 +75,11 @@ export class DashboardMenuListDesktopComponent implements OnInit {
     for (let count = 0; count < mainMenuItems.length; count++) {
       if (items[count].id !== '') {
         document.getElementById(mainMenuItems[count].id).style.backgroundColor = '#FFF';
-        document.getElementById(mainMenuItems[count].id).style.color = '#3779B6';
+        document.getElementById(mainMenuItems[count].id).style.color = '#000';
       }
     }
-    document.getElementById(id).style.backgroundColor = '#3779B6';
-    document.getElementById(id).style.color = '#FFF';
+    document.getElementById(id).style.backgroundColor = '#FFF';
+    document.getElementById(id).style.color = '#000';
   }
 
   setStylesMainMenu(id) {
@@ -87,14 +87,14 @@ export class DashboardMenuListDesktopComponent implements OnInit {
     for (let count = 0; count < mainMenuItems.length; count++) {
       if (mainMenuItems[count].id !== '') {
         document.getElementById(mainMenuItems[count].id).style.backgroundColor = '#FFF';
-        document.getElementById(mainMenuItems[count].id).style.color = '#3779B6';
+        document.getElementById(mainMenuItems[count].id).style.color = '#000';
       }
     }
     const items = document.getElementsByClassName('menu-btn');
     for (let count = 0; count < items.length; count++) {
       if (items[count].id !== '') {
         document.getElementById(items[count].id).style.backgroundColor = '#FFF';
-        document.getElementById(items[count].id).style.color = '#6EB3E2';
+        document.getElementById(items[count].id).style.color = '#000';
       }
     }
     document.getElementById(id).style.backgroundColor = '#6EB3E2';

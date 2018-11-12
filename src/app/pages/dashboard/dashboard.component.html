@@ -26,23 +26,23 @@
       ></app-visualization-list>
     </div>
   </div>
-  <div class="welcoming-block" *ngIf="(visualizationObjects$ | async).length === 0">
-    <div>
-      <!--Welcoming image-->
-      <div class="welcome-img-block">
-        <img src="assets/img/welcome.png" class="img-fluid welcome-img" alt="">
-      </div>
-      <!--end of welcoming image-->
-      <div class="col-md-6 offset-md-3" *ngIf="visualizationLoading$ | async">
-        <div class="loading-progress">
-          <app-progress-loader></app-progress-loader>
-        </div>
-      </div>
-      <div class="col-md-8 offset-md-2">
-        <h4 class="text-center"><b>{{welcomingTitle | translate}}</b></h4>
-        <h5 *ngIf="visualizationLoading$ | async" class="text-center" [innerHtml]="welcomingDescription | translate"></h5>
-        <h5 *ngIf="!(visualizationLoading$ | async)" class="text-muted text-center">{{emptyVisualizationMessage | translate}}</h5>
-      </div>
-    </div>
-  </div>
+  <!--<div class="welcoming-block" *ngIf="(visualizationObjects$ | async).length === 0">-->
+    <!--<div>-->
+      <!--&lt;!&ndash;Welcoming image&ndash;&gt;-->
+      <!--<div class="welcome-img-block">-->
+        <!--<img src="assets/img/welcome.png" class="img-fluid welcome-img" alt="">-->
+      <!--</div>-->
+      <!--&lt;!&ndash;end of welcoming image&ndash;&gt;-->
+      <!--<div class="col-md-6 offset-md-3" *ngIf="visualizationLoading$ | async">-->
+        <!--<div class="loading-progress">-->
+          <!--<app-progress-loader></app-progress-loader>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-md-8 offset-md-2">-->
+        <!--<h4 class="text-center"><b>{{welcomingTitle | translate}}</b></h4>-->
+        <!--<h5 *ngIf="visualizationLoading$ | async" class="text-center" [innerHtml]="welcomingDescription | translate"></h5>-->
+        <!--<h5 *ngIf="!(visualizationLoading$ | async)" class="text-muted text-center">{{emptyVisualizationMessage | translate}}</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 </div>

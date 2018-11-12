@@ -3,7 +3,7 @@
 }
 
 .summary-header {
-  padding: 10px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
 .summary-header h2 {
@@ -12,6 +12,10 @@
 
 .cards {
   padding: 10px 0px 0px 0px;
+}
+
+.summary-info {
+  margin-bottom: 30px;
 }
 
 .col-xs-12,

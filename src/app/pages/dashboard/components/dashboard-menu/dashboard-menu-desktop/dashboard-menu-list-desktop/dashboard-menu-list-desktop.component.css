@@ -46,9 +46,9 @@
   display: block;
 }
 
-.dropdown:hover .dropbtn {
-  background-color: #6EB3E2;
-  color: #ffffff;
+.dropdown:hover {
+  background-color: #6EB3E2 !important;
+  color: #ffffff !important;
 }
 
 .dropbtn {

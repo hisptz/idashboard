@@ -138,11 +138,11 @@ export class DashboardMenuItemDesktopComponent implements OnInit {
     const items = document.getElementsByClassName('dropbtn-div');
     for (let count = 0; count < items.length; count++) {
       if (items[count].id !== '') {
-        document.getElementById(items[count].id).style.backgroundColor = 'transparent';
+        document.getElementById(items[count].id).style.backgroundColor = '#FFF';
         document.getElementById(items[count].id).style.color = '#000';
       }
     }
-    document.getElementById(id).style.backgroundColor = '#6EB3E2';
+    document.getElementById(id).style.backgroundColor = '#FFF';
     document.getElementById(id).style.color = '#000';
   }
 }

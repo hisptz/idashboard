@@ -11,3 +11,6 @@
 <section id="page-container" class="container">
   <router-outlet></router-outlet>
 </section>
+<div class="container footer" *ngIf="portalConfigurations && portalConfigurations.isPortal">
+  <app-footer></app-footer>
+</div>
