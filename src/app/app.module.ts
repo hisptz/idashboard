@@ -100,7 +100,6 @@ import { TableComponent } from './pages/portal/shared-components/table/table.com
 import { NewsComponent } from './pages/portal/shared-components/news/news.component';
 import { PageComponent } from './pages/portal/shared-components/page/page.component';
 import { FaqComponent } from './pages/portal/faq/faq.component';
-import { FaqsComponent } from './pages/portal/faqs/faqs.component';
 import { CreateAbsoluteUrlPipe } from './pipes/create-absolute-url.pipe';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
@@ -172,7 +171,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     NewsComponent,
     PageComponent,
     FaqComponent,
-    FaqsComponent,
     CreateAbsoluteUrlPipe,
   ],
   imports: [
