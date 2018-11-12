@@ -5,7 +5,6 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {FullScreenDashboardItemViewComponent} from './pages/full-screen-dashboard-item-view/full-screen-dashboard-item-view.component';
 import {PortalComponent} from './pages/portal/portal.component';
 import {UpdatesComponent} from './pages/portal/updates/updates.component';
-import {FaqsComponent} from './pages/portal/faqs/faqs.component';
 
 export const routes: Routes = [
   {

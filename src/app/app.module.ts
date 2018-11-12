@@ -99,7 +99,7 @@ import { HealthreportComponent } from './pages/portal/downloads/healthreport/hea
 import { TableComponent } from './pages/portal/shared-components/table/table.component';
 import { NewsComponent } from './pages/portal/shared-components/news/news.component';
 import { PageComponent } from './pages/portal/shared-components/page/page.component';
-import { FaqsComponent } from './pages/portal/faqs/faqs.component';
+import { FaqComponent } from './pages/portal/faq/faq.component';
 import { CreateAbsoluteUrlPipe } from './pipes/create-absolute-url.pipe';
 import { FooterComponent } from './pages/portal/shared-components/footer/footer.component';
 
@@ -171,7 +171,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     NewsComponent,
     PageComponent,
-    FaqsComponent,
+    FaqComponent,
     CreateAbsoluteUrlPipe,
     FooterComponent,
   ],

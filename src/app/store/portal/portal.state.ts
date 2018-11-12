@@ -1,6 +1,5 @@
-
 export interface PortalConfigurationState {
-  isPortal: boolean;
+  isPortal: boolean,
   pages: [
     {
       id: string,
@@ -9,11 +8,11 @@ export interface PortalConfigurationState {
       routeUrl: string,
       idName: string,
     }
-    ];
+  ],
 }
 
 export interface StatsSummaryState {
-  statsSummaryGroups: Array<any>;
+  statsSummaryGroups: Array<any>,
 }
 
 export interface DownloadsState {
@@ -22,7 +21,20 @@ export interface DownloadsState {
       id: string,
       name: string,
       routeUrl: string,
-      downloadsOptions: Array<{}>
+      downloadsOptions: Array<{}>,
     }
-    ];
+  ],
 }
+
+// START: FAQ MODEL - Custom Data Model
+export interface FAQState {
+  faq: [
+    {
+      title: string,
+      desc: string,
+      faqMenu: Array<{}>
+    }
+  ],
+}
+
+// ENDS: FAQ MODEL - Custom Data Model

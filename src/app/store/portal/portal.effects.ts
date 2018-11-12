@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState} from './portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState} from './portal.state';
 
 @Injectable()
 export class PortalEffects {
@@ -43,6 +43,21 @@ export class PortalEffects {
         catchError((error) => of(new portalActions.LoadDownloadsFailAction(error)))
       ))
     );
+
+  // START: FAQ EFFECTS
+
+  @Effect()
+  loadFAQS$ = this.actions$
+    .ofType<portalActions.LoadFAQAction>(portalActions.PortalActions.LOAD_FAQ)
+    .pipe(
+      switchMap(() => this._loadData('dataStore/observatory/faqSection.json').pipe(
+        map((faqStateObject: FAQState) =>
+          new portalActions.LoadFAQSuccessAction(faqStateObject)),
+        catchError((error) => of(new portalActions.LoadFAQFailAction(error)))
+      ))
+    );
+  
+  // ENDS: FAQ EFFECTS
 
   constructor(private actions$: Actions,
               private httpClient: HttpClientService) {

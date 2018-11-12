@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState} from '../../store/portal/portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState} from '../../store/portal/portal.state';
 import {Observable} from 'rxjs/index';
-import {getDownloads, getPortalConfiguration, getStatsSummary} from '../../store/portal/portal.selectors';
+import {getDownloads, getPortalConfiguration, getStatsSummary, getFAQs} from '../../store/portal/portal.selectors';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/app.reducers';
 import {ActivatedRoute, Params} from '@angular/router';
 import * as portalActions from '../../store/portal/portal.actions';
 import {getCurrentUser} from '../../store/current-user/current-user.selectors';
 import {CurrentUserState} from '../../store/current-user/current-user.state';
+import { faqReducer } from '../../store/portal/portal.reducer';
 
 @Component({
   selector: 'app-portal',
@@ -19,6 +20,7 @@ export class PortalComponent implements OnInit {
   portalConfiguration$: Observable<PortalConfigurationState>;
   visualizationObjects$: Observable<any>;
   downloads$: Observable<DownloadsState>;
+  portalFAQs$: Observable<FAQState>;
   statsSummary$: Observable<StatsSummaryState>;
   portalConfigurations: any;
   theSetPage: string;
@@ -28,14 +30,17 @@ export class PortalComponent implements OnInit {
   selectedPageInformation: any;
   statsSummaryGroups: Array<any>;
   downloads: any;
+  portalFAQs: any;
   currentUser$: Observable<CurrentUserState>;
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     store.dispatch(new portalActions.LoadDownloadsAction());
+    store.dispatch(new portalActions.LoadFAQAction());
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
     this.downloads$ = store.select(getDownloads);
+    this.portalFAQs$ = store.select(getFAQs);
   }
 
   ngOnInit() {
@@ -55,6 +60,7 @@ export class PortalComponent implements OnInit {
         }
       });
     }
+    
     if (this.statsSummary$) {
       this.statsSummary$.subscribe((statisticsSummary) => {
         if (statisticsSummary) {
@@ -80,9 +86,18 @@ export class PortalComponent implements OnInit {
       this.downloads$.subscribe((downloads) => {
         if (downloads) {
           this.downloads = downloads;
+          // console.log('CAINAM DOWNLOADS: ' + JSON.stringify(downloads));
+        }
+      });
+    }
+
+    if (this.portalFAQs$) {
+      this.portalFAQs$.subscribe((faq) => {
+        if (faq) {
+          this.portalFAQs = faq;
+          console.log('CAINAM FAQS: ' + JSON.stringify(faq));
         }
       });
     }
   }
-
 }

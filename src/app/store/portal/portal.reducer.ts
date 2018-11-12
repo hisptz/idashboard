@@ -1,5 +1,5 @@
 import {PortalConfigurationAction, PortalActions} from './portal.actions';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState} from './portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState} from './portal.state';
 
 export function portalReducer(state: PortalConfigurationState = null, action: PortalConfigurationAction) {
   switch (action.type) {
@@ -27,3 +27,17 @@ export function downloadsReducer(state: DownloadsState = null, action: PortalCon
       return state;
   }
 }
+
+// START: FAQ REDUCER
+
+export function faqReducer(state: FAQState = null, action: PortalConfigurationAction): FAQState {
+  switch (action.type) {
+    case PortalActions.LOAD_FAQ_SUCCESS:
+      return {...action.payload};
+    default:
+      return state;
+  }
+}
+
+// END: FAQ REDUCER
+
