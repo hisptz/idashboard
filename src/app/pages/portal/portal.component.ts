@@ -55,12 +55,10 @@ export class PortalComponent implements OnInit {
               this.portalPages = portalConfigurations['pages'];
             }
           });
-        } else if (parentId === params['parentId']) {
-          this.theSetPage = params['parentId'];
         }
       });
     }
-    
+
     if (this.statsSummary$) {
       this.statsSummary$.subscribe((statisticsSummary) => {
         if (statisticsSummary) {

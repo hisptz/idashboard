@@ -12,7 +12,7 @@
 </div>
 <div *ngIf="theSetPage === 'faq'">
   <app-faq [portalFAQ]="portalFAQs"></app-faq>
-
+</div>
 <div *ngIf="allNews && theSetPage === 'updates'">
   <app-updates [allNews]="allNews"></app-updates>
 </div>
@@ -23,5 +23,3 @@
 <div *ngIf="selectedPageInformation">
   <app-page [page]="selectedPageInformation"></app-page>
 </div>
-
-
