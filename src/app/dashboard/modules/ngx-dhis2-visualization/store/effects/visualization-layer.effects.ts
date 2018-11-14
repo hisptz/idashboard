@@ -83,7 +83,7 @@ export class VisualizationLayerEffects {
                     ({ dimension }) => dimension === 'pe'
                   );
                   const { config } = visualizationLayer;
-                  console.log({ peSelection });
+
                   const peItems = config.useReferencePeriod
                     ? peSelection.items
                     : peSelection.items.filter(
@@ -97,6 +97,8 @@ export class VisualizationLayerEffects {
                     id,
                     name,
                     type: functionRuleEntities[id] ? 'FUNCTION_RULE' : type,
+                    useReferencePeriod: config.useReferencePeriod,
+                    peSelection: newPeSelection,
                     ruleDefinition: functionRuleEntities[id],
                     functionObject
                   }));
