@@ -83,7 +83,6 @@ export class VisualizationLayerEffects {
                     ({ dimension }) => dimension === 'pe'
                   );
                   const { config } = visualizationLayer;
-
                   const peItems = config.useReferencePeriod
                     ? peSelection.items
                     : peSelection.items.filter(

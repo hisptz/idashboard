@@ -195,7 +195,6 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
     const updatedPeitems = selectedDimension.items.map(item =>
       item.ref_type === ref_type ? { ...items[0], ref_type } : item
     );
-    console.log(updatedPeitems);
     const newUpdatedObject =
       dimension === 'pe'
         ? { ...selectedDimension, items: updatedPeitems }

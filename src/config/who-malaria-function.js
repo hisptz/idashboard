@@ -5,15 +5,8 @@ var expressionMapping = parameters.rule.json.expressionMapping;
 var namesMapping = parameters.rule.json.namesMapping
 var expression = parameters.rule.json.expression;
 //get perameter for actual and reference periods
-var peSelection = parameters.peSelection;
+var peSelection = parameters.peSelection.items;
 var useReferencePeriod = parameters.useReferencePeriod
-if (useReferencePeriod) {
-  console.log({
-    useReferencePeriod,
-    peSelection,
-    name: parameters.rule.name
-  })
-}
 
 // get all uids form expression
 var dataElements = getUidsFromExpression(expression);
@@ -23,11 +16,53 @@ var mappingStatus = getDataElementMappingStatus(dataElements, expressionMapping)
 if (mappingStatus.areAllMapped) {
   //get analytics results
   var dx = dataElements.join(";");
-  loadingAndEvaluateAnalyticsData(dx, expression, dataElements);
+  //handling referenc and actual periods
+  if (useReferencePeriod && peSelection.length > 1) {
+    var actualPeriod = peSelection[0].id;
+    var referencePeriod = peSelection[peSelection.length - 1].id;
+    // handlining inidcator with actual and reference periods
+    loadingAndEvaluateActualAndReferenceIndicator(dx, actualPeriod, referencePeriod);
+
+    // handling indicators with calculation with reference and actual periods
+  } else {
+    //handling for only actual period
+    loadingAndEvaluateAnalyticsData(dx, expression, dataElements);
+  }
+
 } else {
   // return error message with unmapped de
   var errorMessage = getMissingDataElementsMappingErrorMessage(mappingStatus.dataElementWithoutMapping, namesMapping)
   parameters.error(errorMessage);
+}
+
+function loadingAndEvaluateActualAndReferenceIndicator(dx, actualPeriod, referencePeriod) {
+  $.ajax({
+    url: `../../../api/analytics.json?dimension=dx:${dx}&dimension=pe:${actualPeriod}&dimension=ou:${parameters.ou}`,
+    type: "GET",
+    success: function (analyticsResultsForActual) {
+      //evaluate expression and and get new analytic object
+      // parameters.success(getSanitizedAnalytict(analyticsResults, parameters));
+
+      $.ajax({
+        url: `../../../api/analytics.json?dimension=dx:${dx}&dimension=pe:${referencePeriod}&dimension=ou:${parameters.ou}`,
+        type: "GET",
+        success: function (analyticsResultsForReference) {
+          console.log({
+            analyticsResultsForActual,
+            analyticsResultsForReference
+          })
+          //evaluate expression and and get new analytic object
+          // parameters.success(getSanitizedAnalytict(analyticsResults, parameters));
+        },
+        error: function (error) {
+          parameters.error(error);
+        }
+      })
+    },
+    error: function (error) {
+      parameters.error(error);
+    }
+  })
 }
 
 function loadingAndEvaluateAnalyticsData(dx, expression, dataElements) {
@@ -36,7 +71,6 @@ function loadingAndEvaluateAnalyticsData(dx, expression, dataElements) {
     type: "GET",
     success: function (analyticsResults) {
       //evaluate expression and and get new analytic object
-
       parameters.success(getSanitizedAnalytict(analyticsResults, parameters));
     },
     error: function (error) {
@@ -95,59 +129,7 @@ function getMissingDataElementsMappingErrorMessage(dataElementsIds, namesMapping
 }
 
 function getSanitizedAnalytict(analyticsResults, parameters) {
-  var analytics = {
-    "headers": [{
-      "name": "dx",
-      "column": "Data",
-      "valueType": "TEXT",
-      "type": "java.lang.String",
-      "hidden": false,
-      "meta": true
-    }, {
-      "name": "pe",
-      "column": "Period",
-      "valueType": "TEXT",
-      "type": "java.lang.String",
-      "hidden": false,
-      "meta": true
-    }, {
-      "name": "ou",
-      "column": "Organisation unit",
-      "valueType": "TEXT",
-      "type": "java.lang.String",
-      "hidden": false,
-      "meta": true
-    }, {
-      "name": "value",
-      "column": "Value",
-      "valueType": "NUMBER",
-      "type": "java.lang.Double",
-      "hidden": false,
-      "meta": false
-    }],
-    "metaData": {
-      "items": {
-        "dx": {
-          "name": "Data"
-        },
-        "pe": {
-          "name": "Period"
-        },
-        "ou": {
-          "name": "Organisation unit"
-        }
-      },
-      "dimensions": {
-        "dx": [],
-        "pe": [],
-        "ou": [],
-        "co": []
-      }
-    },
-    "rows": [],
-    "width": 4,
-    "height": 0
-  };
+  var analytics = getEmptyAnalytics();
   var ous = [];
   var periods = [];
   if (analyticsResults && analyticsResults.metaData && analyticsResults.metaData.dimensions) {
@@ -176,7 +158,6 @@ function getSanitizedAnalytict(analyticsResults, parameters) {
       });
     }
   }
-
   var rule = parameters.rule;
   analytics.metaData.items[rule.id] = {
     "name": rule.name
@@ -240,4 +221,60 @@ function getEvaluatedValueOfRule(expression, keyValuePair) {
     }
   });
   return evaluatedValue.toFixed(1);
+}
+
+function getEmptyAnalytics() {
+  return {
+    "headers": [{
+      "name": "dx",
+      "column": "Data",
+      "valueType": "TEXT",
+      "type": "java.lang.String",
+      "hidden": false,
+      "meta": true
+    }, {
+      "name": "pe",
+      "column": "Period",
+      "valueType": "TEXT",
+      "type": "java.lang.String",
+      "hidden": false,
+      "meta": true
+    }, {
+      "name": "ou",
+      "column": "Organisation unit",
+      "valueType": "TEXT",
+      "type": "java.lang.String",
+      "hidden": false,
+      "meta": true
+    }, {
+      "name": "value",
+      "column": "Value",
+      "valueType": "NUMBER",
+      "type": "java.lang.Double",
+      "hidden": false,
+      "meta": false
+    }],
+    "metaData": {
+      "items": {
+        "dx": {
+          "name": "Data"
+        },
+        "pe": {
+          "name": "Period"
+        },
+        "ou": {
+          "name": "Organisation unit"
+        }
+      },
+      "dimensions": {
+        "dx": [],
+        "pe": [],
+        "ou": [],
+        "co": []
+      }
+    },
+    "rows": [],
+    "width": 4,
+    "height": 0
+  };
 }

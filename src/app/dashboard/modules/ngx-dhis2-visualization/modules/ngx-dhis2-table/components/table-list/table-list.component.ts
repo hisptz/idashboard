@@ -30,7 +30,7 @@ export class TableListComponent implements OnInit {
           this.visualizationType
         ),
         tableId: layer.id,
-        analyticsObject: this.getLayerAnalytics(
+        analyticsObject: this.getLayerAnalytic(
           layer.analytics,
           layer.layout,
           layer.config.useReferencePeriod
@@ -39,7 +39,7 @@ export class TableListComponent implements OnInit {
     }
   }
 
-  getLayerAnalytics(analytics, layout, useReferencePeriod) {
+  getLayerAnalytic(analytics, layout, useReferencePeriod) {
     if (
       !useReferencePeriod &&
       analytics &&
