@@ -14,6 +14,7 @@ export class StatisticsSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('stats summary', this.statsSummaryGroups);
   }
 
   trustedUrl(url) {

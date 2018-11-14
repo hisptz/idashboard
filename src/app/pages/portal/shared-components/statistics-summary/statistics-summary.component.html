@@ -1,28 +1,30 @@
-<div class="row" *ngIf="statsSummaryGroups" style="margin-top: 20px">
-  <div class="summary-header">
-    <h2>Statistics summary</h2>
-  </div>
-  <div class="summary-info">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="rch-tab" data-toggle="tab" href="#rch" role="tab" aria-controls="rch" aria-selected="true">{{statsSummaryGroups[0].name}}</a>
-      </li>
-      <li class="nav-item" *ngFor="let group of statsSummaryGroups">
-        <a class="nav-link" *ngIf="group.id !== statsSummaryGroups[0].id" id="{{group.id}}-tab" data-toggle="tab" href="#{{group.id}}" role="tab" aria-selected="false">{{group.name}}</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="rch" role="tabpanel" aria-labelledby="rch-tab">
-        <div class="row cards">
-          <div *ngFor="let statistics of statsSummaryGroups[0]['statistics']" class="col-lg-{{statistics['cardSize']}} col-xs-12" [ngClass]="statistics['cardSize'] <= 6 ? 'col-md-6' : 'col-md-12'">
-            <app-card [cardInfo]="statistics"></app-card>
+<div *ngIf="statsSummaryGroups" >
+  <div class="row" style="margin-top: 20px" *ngFor="let statsSummaryGroup of statsSummaryGroups">
+    <div class="summary-header">
+      <h2>Statistics ({{statsSummaryGroup.name}})</h2>
+    </div>
+    <div class="summary-info">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="{{statsSummaryGroup['dataGroups'][0].id}}-tab" data-toggle="tab" href="#{{statsSummaryGroup['dataGroups'][0].id}}" role="tab" aria-controls="rch" aria-selected="true">{{statsSummaryGroup['dataGroups'][0].name}}</a>
+        </li>
+        <li class="nav-item" *ngFor="let group of statsSummaryGroup['dataGroups']">
+          <a class="nav-link" *ngIf="group.id !== statsSummaryGroup['dataGroups'][0].id" id="{{group.id}}-tab" data-toggle="tab" href="#{{group.id}}" role="tab" aria-selected="false">{{group.name}}</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="{{statsSummaryGroup['dataGroups'][0].id}}" role="tabpanel">
+          <div class="row cards">
+            <div *ngFor="let statistics of statsSummaryGroup['dataGroups'][0]['statistics']" class="col-lg-{{statistics['cardSize']}} col-xs-12" [ngClass]="statistics['cardSize'] <= 6 ? 'col-md-6' : 'col-md-12'">
+              <app-card [cardInfo]="statistics"></app-card>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngFor="let group of statsSummaryGroups" class="tab-pane fade" id="{{group.id}}" role="tabpanel">
-        <div class="row cards" *ngIf="group.id != statsSummaryGroups[0].id">
-          <div *ngFor="let statistics of group['statistics']" class="col-lg-{{statistics['cardSize']}} col-xs-12" [ngClass]="statistics['cardSize'] <= 6 ? 'col-md-6' : 'col-md-12'">
-            <app-card [cardInfo]="statistics"></app-card>
+        <div *ngFor="let group of statsSummaryGroup['dataGroups']"class="tab-pane fade" id="{{group.id}}" role="tabpanel">
+          <div class="row cards" *ngIf="group.id != statsSummaryGroup['dataGroups'][0].id">
+            <div *ngFor="let statistics of group['statistics']" class="col-lg-{{statistics['cardSize']}} col-xs-12" [ngClass]="statistics['cardSize'] <= 6 ? 'col-md-6' : 'col-md-12'">
+              <app-card [cardInfo]="statistics"></app-card>
+            </div>
           </div>
         </div>
       </div>
