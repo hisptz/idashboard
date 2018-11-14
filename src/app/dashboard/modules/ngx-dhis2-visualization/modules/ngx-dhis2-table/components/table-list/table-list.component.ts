@@ -24,10 +24,70 @@ export class TableListComponent implements OnInit {
   ngOnInit() {
     if (this.visualizationLayers && this.visualizationLayers.length > 0) {
       this.tableLayers = this.visualizationLayers.map(layer => ({
-        tableConfiguration: getTableConfiguration(layer.config || {}, layer.layout, this.visualizationType),
+        tableConfiguration: getTableConfiguration(
+          layer.config || {},
+          layer.layout,
+          this.visualizationType
+        ),
         tableId: layer.id,
-        analyticsObject: layer.analytics
+        analyticsObject: this.getLayerAnalytics(
+          layer.analytics,
+          layer.layout,
+          layer.config.useReferencePeriod
+        )
       }));
     }
+  }
+
+  getLayerAnalytics(analytics, layout, useReferencePeriod) {
+    if (
+      !useReferencePeriod &&
+      analytics &&
+      analytics.metaData &&
+      analytics.metaData.pe.length > 1
+    ) {
+      const columnValue =
+        layout && layout.columns && layout.columns.length > 0
+          ? layout.columns[0]
+          : '';
+      const rowValue =
+        layout && layout.rows && layout.rows.length > 0 ? layout.rows[0] : '';
+      if (columnValue === 'pe' && rowValue === 'dx') {
+        const periods = analytics.metaData.pe;
+        const names = analytics.metaData.names;
+        const customPeName = `${names[periods[0]]} - ${
+          names[periods[periods.length - 1]]
+        }`;
+        const customPe = `${periods[0]}_${periods[periods.length - 1]}`;
+        analytics.metaData.pe = [customPe];
+        analytics.metaData.names[customPe] = customPeName;
+        const sanitizedRows = this.getSanitizedRowsByPeAndDx(
+          analytics.rows,
+          customPe
+        );
+        analytics.rows = sanitizedRows;
+      }
+    }
+    return analytics;
+  }
+
+  getSanitizedRowsByPeAndDx(rows, customPe) {
+    const sanitizedRows = [];
+    const sumOffPeAndDxObjet = {};
+    rows.map(row => {
+      if (row.length === 4) {
+        const id = `${row[0]}_${row[2]}`;
+        if (!sumOffPeAndDxObjet[id]) {
+          sumOffPeAndDxObjet[id] = 0;
+        }
+        sumOffPeAndDxObjet[id] += parseFloat(row[3]);
+      }
+    });
+    Object.keys(sumOffPeAndDxObjet).map(idObject => {
+      const ids = idObject.split('_');
+      const value = parseFloat(sumOffPeAndDxObjet[idObject]).toFixed(1);
+      sanitizedRows.push([ids[0], customPe, ids[1], value]);
+    });
+    return sanitizedRows;
   }
 }

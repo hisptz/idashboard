@@ -1,5 +1,6 @@
 export interface TableConfiguration {
   title: string;
+  tableId?: string;
   subtitle: string;
   showColumnTotal: boolean;
   showColumnSubtotal: boolean;

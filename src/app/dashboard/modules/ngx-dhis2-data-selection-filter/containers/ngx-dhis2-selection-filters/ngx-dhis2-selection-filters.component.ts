@@ -68,13 +68,17 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   get selectedReferencePeriods(): any[] {
     const dataObject = _.find(this.dataSelections, ['dimension', 'pe']);
-    const referencedataItems = dataObject ? dataObject.items.filter(item => item.ref_type === 'PERIOD_REF') : [];
+    const referencedataItems = dataObject
+      ? dataObject.items.filter(item => item.ref_type === 'PERIOD_REF')
+      : [];
     return referencedataItems;
   }
 
   get selectedActualPeriods(): any[] {
     const dataObject = _.find(this.dataSelections, ['dimension', 'pe']);
-    const actualdataItems = dataObject ? dataObject.items.filter(item => item.ref_type === 'PERIOD_ACTUAL') : [];
+    const actualdataItems = dataObject
+      ? dataObject.items.filter(item => item.ref_type === 'PERIOD_ACTUAL')
+      : [];
     return actualdataItems;
   }
 
@@ -109,12 +113,12 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
       (this.filterConfig.showDataFilter
         ? 'DATA'
         : this.filterConfig.showPeriodFilter
-          ? 'PERIOD'
-          : this.filterConfig.showOrgUnitFilter
-            ? 'ORG_UNIT'
-            : this.filterConfig.showLayout
-              ? 'LAYOUT'
-              : '')
+        ? 'PERIOD'
+        : this.filterConfig.showOrgUnitFilter
+        ? 'ORG_UNIT'
+        : this.filterConfig.showLayout
+        ? 'LAYOUT'
+        : '')
     );
   }
 
@@ -139,9 +143,17 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   onFilterClose(selectedItems, selectedFilter) {
     if (selectedItems && selectedItems.items.length > 0) {
-      this.dataSelections = !_.find(this.dataSelections, ['dimension', selectedItems.dimension])
+      this.dataSelections = !_.find(this.dataSelections, [
+        'dimension',
+        selectedItems.dimension
+      ])
         ? [...this.dataSelections, { ...selectedItems, layout: 'columns' }]
-        : [...this.updateDataSelectionWithNewSelections(this.dataSelections, selectedItems)];
+        : [
+            ...this.updateDataSelectionWithNewSelections(
+              this.dataSelections,
+              selectedItems
+            )
+          ];
     }
     if (this._selectedFilter === selectedFilter) {
       this._selectedFilter = '';
@@ -151,28 +163,47 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
 
   onFilterUpdate(updatedItems, selectedFilter) {
     const selectedItems =
-      updatedItems.dimension === 'pe' ? { ...updatedItems, ref_type: selectedFilter } : updatedItems;
-    this.dataSelections = !_.find(this.dataSelections, ['dimension', selectedItems.dimension])
+      updatedItems.dimension === 'pe'
+        ? { ...updatedItems, ref_type: selectedFilter }
+        : updatedItems;
+    this.dataSelections = !_.find(this.dataSelections, [
+      'dimension',
+      selectedItems.dimension
+    ])
       ? [...this.dataSelections, { ...selectedItems, layout: 'columns' }]
-      : [...this.updateDataSelectionWithNewSelections(this.dataSelections, selectedItems)];
+      : [
+          ...this.updateDataSelectionWithNewSelections(
+            this.dataSelections,
+            selectedItems
+          )
+        ];
 
     this.filterUpdate.emit(this.dataSelections);
     this._selectedFilter = '';
     this.showFilterBody = false;
   }
 
-  updateDataSelectionWithNewSelections(dataSelections: any[], selectedObject: any): any[] {
-    const selectedDimension = _.find(dataSelections, ['dimension', selectedObject.dimension]);
+  updateDataSelectionWithNewSelections(
+    dataSelections: any[],
+    selectedObject: any
+  ): any[] {
+    const selectedDimension = _.find(dataSelections, [
+      'dimension',
+      selectedObject.dimension
+    ]);
     const { items, dimension, ref_type } = selectedObject;
-    const updatedPeitems = selectedDimension.items.map(
-      item => (item.ref_type === ref_type ? { ...items[0], ref_type } : item)
+    const updatedPeitems = selectedDimension.items.map(item =>
+      item.ref_type === ref_type ? { ...items[0], ref_type } : item
     );
+    console.log(updatedPeitems);
     const newUpdatedObject =
       dimension === 'pe'
         ? { ...selectedDimension, items: updatedPeitems }
         : { ...selectedDimension, ...selectedObject };
 
-    const selectedDimensionIndex = selectedDimension ? dataSelections.indexOf(selectedDimension) : -1;
+    const selectedDimensionIndex = selectedDimension
+      ? dataSelections.indexOf(selectedDimension)
+      : -1;
     return selectedDimension
       ? [
           ...dataSelections.slice(0, selectedDimensionIndex),
@@ -180,7 +211,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
           ...dataSelections.slice(selectedDimensionIndex + 1)
         ]
       : dataSelections
-        ? [...dataSelections, selectedObject]
-        : [selectedObject];
+      ? [...dataSelections, selectedObject]
+      : [selectedObject];
   }
 }
