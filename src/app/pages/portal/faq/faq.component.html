@@ -1,4 +1,4 @@
-<!-- 
+<!--
 <section id="tabs" *ngIf="portalFAQ">
   <div>
     <div class="row">
@@ -48,11 +48,11 @@
   </div>
 </section> -->
 
-<section id="tabs" *ngIf="portalFAQ">
+<section id="tabs" *ngIf="portalFAQs">
   <div class="container">
     <div class="row">
-      <h4 class="header-info">{{ portalFAQ['faq'].title }}</h4>
-      <p class="faq-desc"> {{ portalFAQ['faq'].desc }} </p>
+      <h4 class="header-info">{{ portalFAQs['faq'].title }}</h4>
+      <p class="faq-desc"> {{ portalFAQs['faq'].desc }} </p>
     </div>
     <div>
     </div>
@@ -68,9 +68,9 @@
     </div> -->
     <div class="row">
       <div class="row">
-        <div class="col-md-12" *ngFor="let faqMenuItem of portalFAQ['faq'].faqMenu; let idx = index">
+        <div class="col-md-12" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu; let idx = index">
           <h5 class="">{{ faqMenuItem.name }}</h5>
-          <div *ngFor="let faqMenuItemData of portalFAQ['faq'].faqMenu[idx].faqqn">
+          <div *ngFor="let faqMenuItemData of portalFAQs['faq'].faqMenu[idx].faqqn">
             <div>
               <a class="" data-toggle="collapse" href="#{{ faqMenuItemData.id }}" role="button" aria-expanded="false"
                 aria-controls="">

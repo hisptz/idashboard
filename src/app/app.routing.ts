@@ -4,7 +4,11 @@ import {HomeComponent} from './pages/home/home.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {FullScreenDashboardItemViewComponent} from './pages/full-screen-dashboard-item-view/full-screen-dashboard-item-view.component';
 import {PortalComponent} from './pages/portal/portal.component';
+import {HomePortalComponent} from './pages/portal/home-portal/home-portal.component';
+import {PageComponent} from './pages/portal/shared-components/page/page.component';
 import {UpdatesComponent} from './pages/portal/updates/updates.component';
+import {FaqComponent} from './pages/portal/faq/faq.component';
+import {DownloadsComponent} from './pages/portal/downloads/downloads.component';
 
 export const routes: Routes = [
   {
@@ -12,12 +16,28 @@ export const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'pages/:parentId/:id',
-    component: PortalComponent
+    path: 'pages/home',
+    component: HomePortalComponent,
   },
   {
-    path: 'pages/:id',
-    component: PortalComponent
+    path: 'pages/home/:id',
+    component: PageComponent,
+  },
+  {
+    path: 'pages/updates',
+    component: UpdatesComponent,
+  },
+  {
+    path: 'pages/updates/:id',
+    component: UpdatesComponent,
+  },
+  {
+    path: 'pages/faq',
+    component: FaqComponent,
+  },
+  {
+    path: 'pages/downloads',
+    component: DownloadsComponent,
   },
   {
     path: 'dashboards/:id',

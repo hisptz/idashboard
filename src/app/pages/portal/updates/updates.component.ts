@@ -14,19 +14,31 @@ import * as portalActions from '../../../store/portal/portal.actions';
 })
 export class UpdatesComponent implements OnInit {
 
-  @Input() allNews: any;
+  statsSummary$: Observable<StatsSummaryState>;
+  allNews: any;
   news: any;
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+    store.dispatch(new portalActions.LoadStatsSummaryAction());
+    this.statsSummary$ = store.select(getStatsSummary);
   }
 
   ngOnInit() {
-    this.route.params.forEach((params: Params) => {
-      this.allNews.forEach((news) => {
-        if (news.id === params['id']) {
-          this.news = news;
+    if (this.statsSummary$) {
+      this.statsSummary$.subscribe((summaryInfo) => {
+        if (summaryInfo) {
+          this.allNews = summaryInfo['news'];
+          this.route.params.forEach((params: Params) => {
+            if (params['id']) {
+              this.allNews.forEach((news) => {
+                if (news.id === params['id']) {
+                  this.news = news;
+                }
+              });
+            }
+          });
         }
       });
-    });
+    }
   }
 
 }

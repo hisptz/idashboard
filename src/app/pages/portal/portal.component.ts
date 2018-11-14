@@ -84,7 +84,6 @@ export class PortalComponent implements OnInit {
       this.downloads$.subscribe((downloads) => {
         if (downloads) {
           this.downloads = downloads;
-          // console.log('CAINAM DOWNLOADS: ' + JSON.stringify(downloads));
         }
       });
     }
@@ -93,7 +92,6 @@ export class PortalComponent implements OnInit {
       this.portalFAQs$.subscribe((faq) => {
         if (faq) {
           this.portalFAQs = faq;
-          console.log('CAINAM FAQS: ' + JSON.stringify(faq));
         }
       });
     }

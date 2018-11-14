@@ -1,18 +1,18 @@
-<div class="row" *ngIf="page">
+<div class="row" *ngIf="selectedPageInformation">
   <div class="col-lg-3 col-md-12 col-sx-12">
     <div class="container-summary-menu">
-      <h4><a href="#/pages/home">Home</a> / <b> {{page.name}}</b></h4>
-      <div class="menu-list-item" id="{{page.id}}">{{page.name}}</div>
+      <h4><a href="#/pages/home">Home</a> / <b> {{selectedPageInformation.name}}</b></h4>
+      <div class="menu-list-item" id="{{selectedPageInformation.id}}">{{selectedPageInformation.name}}</div>
     </div>
   </div>
   <div class="col-lg-9 col-md-12 col-sx-12 page-contents">
     <div id="contents">
-      <h4 style="text-align: left;">{{page.name}}</h4>
-      <div *ngIf="page.contents.length > 0">
-        <p *ngFor="let paragraph of page.contents">{{paragraph}}</p>
+      <h4 style="text-align: left;">{{selectedPageInformation.name}}</h4>
+      <div *ngIf="selectedPageInformation.contents.length > 0">
+        <p *ngFor="let paragraph of selectedPageInformation.contents">{{paragraph}}</p>
       </div>
-      <div *ngIf="page.contents.length === 0" class="message">
-        <h2>{{page.message}}</h2>
+      <div *ngIf="selectedPageInformation.contents.length === 0" class="message">
+        <h2>{{selectedPageInformation.message}}</h2>
       </div>
     </div>
   </div>

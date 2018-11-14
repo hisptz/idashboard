@@ -1,5 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
+import {getDownloads} from '../../../store/portal/portal.selectors';
+import * as portalActions from '../../../store/portal/portal.actions';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../store/app.reducers';
+import {Observable} from 'rxjs/index';
+import {DownloadsState} from '../../../store/portal/portal.state';
 
 
 @Component({
@@ -9,11 +15,21 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class DownloadsComponent implements OnInit {
 
-  @Input() downloads: any;
-  constructor(private sanitizer: DomSanitizer) { }
+  downloads$: Observable<DownloadsState>;
+  downloads: any;
+  constructor(private store: Store<AppState>, private sanitizer: DomSanitizer) {
+    store.dispatch(new portalActions.LoadDownloadsAction());
+    this.downloads$ = store.select(getDownloads);
+  }
 
   ngOnInit() {
-    console.log('CAINAM DOWNLOAD TS: ' + JSON.stringify(this.downloads));
+    if (this.downloads$) {
+      this.downloads$.subscribe((downloads) => {
+        if (downloads) {
+          this.downloads = downloads;
+        }
+      });
+    }
   }
 
   openCity(evt, downloadOption) {
