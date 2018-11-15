@@ -50,7 +50,7 @@ export class UpdatesComponent implements OnInit {
         'Content-Type':  'application/text',
       })
     }
-    this.httpClient.get('../../../extract', httpOptions).subscribe((data) => {
+    this.httpClient.get('../../../dhis/extract', httpOptions).subscribe((data) => {
       console.log(data);
       try {
         this._newsFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
