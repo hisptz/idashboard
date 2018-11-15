@@ -28,7 +28,6 @@ if (mappingStatus.areAllMapped) {
     //handling for only actual period
     loadingAndEvaluateAnalyticsData(dx, expression, dataElements);
   }
-
 } else {
   // return error message with unmapped de
   var errorMessage = getMissingDataElementsMappingErrorMessage(mappingStatus.dataElementWithoutMapping, namesMapping)
@@ -40,19 +39,15 @@ function loadingAndEvaluateActualAndReferenceIndicator(dx, actualPeriod, referen
     url: `../../../api/analytics.json?dimension=dx:${dx}&dimension=pe:${actualPeriod}&dimension=ou:${parameters.ou}`,
     type: "GET",
     success: function (analyticsResultsForActual) {
-      //evaluate expression and and get new analytic object
-      // parameters.success(getSanitizedAnalytict(analyticsResults, parameters));
 
       $.ajax({
         url: `../../../api/analytics.json?dimension=dx:${dx}&dimension=pe:${referencePeriod}&dimension=ou:${parameters.ou}`,
         type: "GET",
         success: function (analyticsResultsForReference) {
-          console.log({
-            analyticsResultsForActual,
-            analyticsResultsForReference
-          })
           //evaluate expression and and get new analytic object
-          // parameters.success(getSanitizedAnalytict(analyticsResults, parameters));
+          analyticsResultsForActual = getSanitizedAnalytict(analyticsResultsForActual, parameters);
+          analyticsResultsForReference = getSanitizedAnalytict(analyticsResultsForReference, parameters);
+          parameters.success(getMergedAnalyticsForActualAndReferencePeriods(analyticsResultsForActual, analyticsResultsForReference));
         },
         error: function (error) {
           parameters.error(error);
@@ -64,6 +59,76 @@ function loadingAndEvaluateActualAndReferenceIndicator(dx, actualPeriod, referen
     }
   })
 }
+
+function getMergedAnalyticsForActualAndReferencePeriods(analyticsResultsForActual, analyticsResultsForReference) {
+  analyticsResultsForReference = getSanitizedAnalytictForMultiplePeriods(analyticsResultsForReference)
+  analyticsResultsForActual = getSanitizedAnalytictForMultiplePeriods(analyticsResultsForActual)
+  analyticsResultsForReference.metaData.dimensions.ou = analyticsResultsForReference.metaData.dimensions.ou.concat(analyticsResultsForActual.metaData.dimensions.ou).filter(onlyUniqueItemsOnArray)
+  analyticsResultsForReference.metaData.dimensions.pe = analyticsResultsForReference.metaData.dimensions.pe.concat(analyticsResultsForActual.metaData.dimensions.pe).filter(onlyUniqueItemsOnArray)
+  analyticsResultsForReference.metaData.dimensions.dx = analyticsResultsForReference.metaData.dimensions.dx.concat(analyticsResultsForActual.metaData.dimensions.dx).filter(onlyUniqueItemsOnArray)
+  const items = analyticsResultsForActual.metaData.items;
+  Object.keys(items).map(key => {
+    analyticsResultsForReference.metaData.items[key] = items[key];
+  })
+  analyticsResultsForReference.rows = analyticsResultsForReference.rows.concat(analyticsResultsForActual.rows);
+  console.log({
+    analyticsResultsForReference
+  })
+  return analyticsResultsForReference;
+}
+
+function getSanitizedAnalytictForMultiplePeriods(analytics) {
+  const periods = analytics.metaData.dimensions.pe;
+  if (periods.length > 1) {
+    const names = {};
+    const items = analytics.metaData.items;
+    Object.keys(items).map(key => {
+      if (items[key] && items[key].name) {
+        names[key] = items[key].name;
+      }
+    })
+    const customPeName = `${names[periods[0]]} - ${
+        names[periods[periods.length - 1]]
+      }`;
+    const customPe = `${periods[0]}_${periods[periods.length - 1]}`;
+    analytics.metaData.dimensions.pe = [customPe];
+    analytics.metaData.items[customPe] = {
+      name: customPeName
+    }
+    const sanitizedRows = getSanitizedRowsByPeAndDx(
+      analytics.rows,
+      customPe
+    );
+    analytics.rows = sanitizedRows;
+  }
+
+  return analytics;
+}
+
+function getSanitizedRowsByPeAndDx(rows, customPe) {
+  const sanitizedRows = [];
+  const sumOffPeAndDxObjet = {};
+  rows.map(row => {
+    if (row.length === 4) {
+      const id = `${row[0]}_${row[2]}`;
+      if (!sumOffPeAndDxObjet[id]) {
+        sumOffPeAndDxObjet[id] = 0;
+      }
+      sumOffPeAndDxObjet[id] += parseFloat(row[3]);
+    }
+  });
+  Object.keys(sumOffPeAndDxObjet).map(idObject => {
+    const ids = idObject.split('_');
+    const value = parseFloat(sumOffPeAndDxObjet[idObject]).toFixed(1);
+    sanitizedRows.push([ids[0], customPe, ids[1], value]);
+  });
+  return sanitizedRows;
+}
+
+function onlyUniqueItemsOnArray(value, index, self) {
+  return self.indexOf(value) === index;
+}
+
 
 function loadingAndEvaluateAnalyticsData(dx, expression, dataElements) {
   $.ajax({
