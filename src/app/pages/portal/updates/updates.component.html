@@ -1,14 +1,17 @@
 <div class="row" *ngIf="allNews">
-  <div class="col-lg-9 col-md-6 col-xs-12" *ngIf="news">
-    <div class="selected-news">
+  <div class="col-lg-3 col-md-6 col-xs-12">
+    <app-news [allNews]="allNews"></app-news>
+  </div>
+  <div class="col-lg-9 col-md-6 col-xs-12">
+    <div *ngIf="news" class="selected-news">
       <h4>{{news.heading}}</h4>
       <h6><span class="news-category">{{news.category}}</span><span class="news-date">{{news.newsDate}}</span></h6>
       <div>
         <p *ngFor="let description of news.description">{{description}}</p>
       </div>
     </div>
-  </div>
-  <div class="col-lg-3 col-md-6 col-xs-12">
-    <app-news [allNews]="allNews"></app-news>
+    <div class="news-from-external-sources" *ngIf="_newsFromExternalSource">
+      <div [innerHtml]="_newsFromExternalSource"></div>
+    </div>
   </div>
 </div>

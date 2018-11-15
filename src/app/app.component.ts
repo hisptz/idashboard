@@ -1,5 +1,5 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {Title} from '@angular/platform-browser';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {DomSanitizer, SafeHtml, Title} from '@angular/platform-browser';
 import {AppState} from './store/app.reducers';
 import {Store} from '@ngrx/store';
 import * as currentUser from './store/current-user/current-user.actions';
@@ -7,6 +7,7 @@ import {getPortalConfiguration} from './store/portal/portal.selectors';
 import {Observable} from 'rxjs/Observable';
 import {PortalConfigurationState} from './store/portal/portal.state';
 import {ActivatedRoute, Params} from '@angular/router';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
