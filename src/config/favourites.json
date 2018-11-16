@@ -1840,16 +1840,21 @@
     "columnsStyles": {
       "ZCCrHrs1Ta2": "#A9D6A9",
       "gTPP0wYkXBA": "#CBDDEE",
+      "VD4CKS8uRsA": "#CBDDEE",
       "AvQDluaf46N": "#CBDDEE",
+      "d6FUocDoKFP": "#CBDDEE",
       "IPI8Xmc1nnT": "#CBDDEE",
+      "ufvoNFHpEyQ": "#CBDDEE",
       "fj29hAOSNDk": "#A9D6A9",
       "RqGYc77Xhek": "#A9D6A9",
       "v0WZQQ6gKAX": "#CCCD5F",
-      "GxlrIgMyEf4": "#CCCD5F"
+      "opjQGRn9KXM": "#CCCD5F",
+      "GxlrIgMyEf4": "#CCCD5F",
+      "CfvHk9Kk1da": "#CCCD5F"
     },
     "columnGroups": [{
         "name": "Out-patient",
-        "span": 12,
+        "span": 15,
         "row_span": 1,
         "type": "gp",
         "color": "#009A65",
@@ -1857,7 +1862,7 @@
       },
       {
         "name": "In-patient",
-        "span": 4,
+        "span": 6,
         "row_span": 1,
         "type": "gp",
         "color": "#B87048",
@@ -1877,6 +1882,11 @@
             "dimensionItem": "gTPP0wYkXBA",
             "displayName": "Total malaria confirmed cases",
             "dimensionItemType": "INDICATOR"
+          }, {
+            "id": "VD4CKS8uRsA",
+            "dimensionItem": "VD4CKS8uRsA",
+            "displayName": "Confirmed cases decline(%)",
+            "dimensionItemType": "INDICATOR"
           },
           {
             "id": "AvQDluaf46N",
@@ -1885,8 +1895,20 @@
             "dimensionItemType": "INDICATOR"
           },
           {
+            "id": "d6FUocDoKFP",
+            "dimensionItem": "d6FUocDoKFP",
+            "displayName": "Total cases decline (%)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
             "id": "IPI8Xmc1nnT",
             "dimensionItem": "IPI8Xmc1nnT",
+            "displayName": "Test positivity rate (RDT)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "ufvoNFHpEyQ",
+            "dimensionItem": "ufvoNFHpEyQ",
             "displayName": "Test positivity rate (RDT)",
             "dimensionItemType": "INDICATOR"
           },
@@ -1909,10 +1931,21 @@
             "dimensionItemType": "DATA_ELEMENT"
           },
           {
+            "id": "opjQGRn9KXM",
+            "dimensionItem": "opjQGRn9KXM",
+            "displayName": "Inpatient case decline (%)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
             "id": "GxlrIgMyEf4",
             "dimensionItem": "GxlrIgMyEf4",
             "displayName": "Number of malaria deaths",
             "dimensionItemType": "DATA_ELEMENT"
+          }, {
+            "id": "CfvHk9Kk1da",
+            "dimensionItem": "CfvHk9Kk1da",
+            "displayName": "Deaths decline(%)",
+            "dimensionItemType": "INDICATOR"
           }
         ]
       },
@@ -1954,13 +1987,30 @@
       {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
+          "id": "VD4CKS8uRsA"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
           "id": "AvQDluaf46N"
         }
       },
       {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
+          "id": "d6FUocDoKFP"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
           "id": "IPI8Xmc1nnT"
+        }
+      }, {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "ufvoNFHpEyQ"
         }
       },
       {
@@ -1982,9 +2032,20 @@
         }
       },
       {
+        "dataDimensionItemType": "INDICATOR",
+        "dataElement": {
+          "id": "opjQGRn9KXM"
+        }
+      },
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "dataElement": {
           "id": "GxlrIgMyEf4"
+        }
+      }, {
+        "dataDimensionItemType": "INDICATOR",
+        "dataElement": {
+          "id": "CfvHk9Kk1da"
         }
       }
     ],

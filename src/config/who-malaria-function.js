@@ -118,8 +118,10 @@ function loadingAndEvaluateCustomExpressionCalculations(
               }
             }
           });
+          console.log(parameters.rule.name);
+          console.log(resultAnalytics)
+          parameters.success(resultAnalytics);
         }
-        parameters.success(resultAnalytics);
       })
       .catch(error => {
         parameters.error(error);
@@ -135,14 +137,14 @@ function getAnalyticDataBasedCustomExpressionCalculations(
   actualPeriod,
   referencePeriod
 ) {
-  const dx = getUidsFromExpression(expression);
-  const pe = !(actualPeriod || referencePeriod) ?
-    parameters.pe :
-    indexOf(actualExpressionKey[expressionKey] > -1) && actualPeriod ?
-    actualPeriod :
-    indexOf(refExpressionKey[expressionKey]) > -1 && referencePeriod ?
-    referencePeriod :
-    parameters.pe;
+  const dx = getUidsFromExpression(expression).join(';');
+  let pe = parameters.pe;
+  if (refExpressionKey.indexOf(expressionKey) > -1 && referencePeriod) {
+    pe = referencePeriod;
+  }
+  if (actualExpressionKey.indexOf(expressionKey) > -1 && actualPeriod) {
+    pe = actualPeriod;
+  }
   const ou = parameters.ou;
   const url = `../../../api/analytics.json?dimension=dx:${dx}&dimension=pe:${pe}&dimension=ou:${ou}`;
   return new Promise((resolve, reject) => {
@@ -195,12 +197,11 @@ function loadingAndEvaluateActualAndReferenceIndicator(
             analyticsResultsForReference,
             parameters
           );
-          parameters.success(
-            getMergedAnalyticsForActualAndReferencePeriods(
-              analyticsResultsForReference,
-              analyticsResultsForActual
-            )
-          );
+          const resultAnalytics = getMergedAnalyticsForActualAndReferencePeriods(
+            analyticsResultsForReference,
+            analyticsResultsForActual
+          )
+          parameters.success(resultAnalytics);
         },
         error: function (error) {
           parameters.error(error);
