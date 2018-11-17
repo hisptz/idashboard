@@ -47,7 +47,7 @@
 /* Style the tab content */
 .tabcontent {
   float: left;
-  padding: 20px;
+  padding: 20px 20px 20px 0;
   /*width: 70%;*/
   border-left: none;
   height: auto;
@@ -102,7 +102,7 @@ section {
 }
 
 .btn-tablinks {
-  padding: 10px;
+  padding: 10px 10px 10px 0;
 }
 
 
