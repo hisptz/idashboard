@@ -65,7 +65,7 @@ export class HomePortalComponent implements OnInit {
         'Content-Type':  'application/text',
       })
     }
-    this.httpClient.get('../extract/who-factbuffects', httpOptions).subscribe((data) => {
+    this.httpClient.get('../portal-middleware/extract/who-factbuffects', httpOptions).subscribe((data) => {
       console.log(data);
       try {
         this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
