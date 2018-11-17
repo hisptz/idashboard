@@ -20,15 +20,17 @@
         <div class="tab-content" id="nav-tabContent">
           <div  *ngFor="let download of downloads['downloads']" class="tab-pane fade show {{download.class}}" id="{{download.id}}" role="tabpanel" aria-labelledby="nav-home-tab">
             <div>
-              <div class="col-lg-3 col-md-12 col-xs-12 tab">
-                <div>
-                  <button class="tablinks active" (click)="openCity(event, download['components'][0].id)" id="defaultOpen">{{download['components'][0].name}}</button>
-                </div>
-                <div *ngFor="let downloadOption of download['components']">
-                  <button *ngIf="downloadOption.id != download['components'][0].id" class="tablinks" (click)="openCity(event, downloadOption.id)" id="btn-{{downloadOption.id}}">{{downloadOption.name}}</button>
+              <div class="col-lg-12 col-md-12 col-xs-12 tab">
+                <div class="row">
+                  <div style="min-width: 50px" class="btn-tablinks">
+                    <button class="tablinks active" (click)="openCity(event, download['components'][0].id)" id="btn-{{download['components'][0].id}}">{{download['components'][0].name}}</button>
+                  </div>
+                  <div  style="min-width: 50px" class="btn-tablinks" *ngFor="let downloadOption of getOtherDownloads(download['components'][0], download['components'])">
+                    <button *ngIf="downloadOption.id != download['components'][0].id" class="tablinks" (click)="openCity(event, downloadOption.id)" id="btn-{{downloadOption.id}}">{{downloadOption.name}}</button>
+                  </div>
                 </div>
               </div>
-              <div id="{{download['components'][0].id}}" style="display: block" class="tabcontent col-lg-9 col-md-12 col-xs-12">
+              <div id="{{download['components'][0].id}}" style="display: block" class="tabcontent col-lg-12 col-md-12 col-xs-12">
                 <h3>{{download['components'][0].name}}</h3>
                 <div *ngIf="download['components'][0]['subPages'].length == 0" class="div-iframe">
                   <div [innerHtml]="download['components'][0].link | safeHtml"></div>

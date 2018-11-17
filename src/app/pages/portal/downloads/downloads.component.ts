@@ -32,6 +32,18 @@ export class DownloadsComponent implements OnInit {
     }
   }
 
+  getOtherDownloads(firstDownload, allDownloads) {
+    const otherDownloads = [];
+    allDownloads.forEach((download) => {
+      if (download.id !== firstDownload.id) {
+        otherDownloads.push(download);
+      }
+    });
+    if (otherDownloads.length > 0) {
+      return otherDownloads;
+    }
+  }
+
   openCity(evt, downloadOption) {
     let i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName('tabcontent');

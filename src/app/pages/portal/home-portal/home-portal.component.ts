@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {DownloadsState, FAQState, PortalConfigurationState, StatsSummaryState} from '../../../store/portal/portal.state';
 import {Observable} from 'rxjs/index';
@@ -8,6 +8,8 @@ import {CurrentUserState} from '../../../store/current-user/current-user.state';
 import {getCurrentUser} from '../../../store/current-user/current-user.selectors';
 import * as portalActions from '../../../store/portal/portal.actions';
 import {AppState} from '../../../store/app.reducers';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-portal',
@@ -29,7 +31,9 @@ export class HomePortalComponent implements OnInit {
   selectedPageInformation: any;
   statsSummaryGroups: Array<any>;
   currentUser$: Observable<CurrentUserState>;
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  _htmlFromExternalSource: SafeHtml;
+  hasScriptSet: boolean;
+  constructor(private store: Store<AppState>, private httpClient: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     store.dispatch(new portalActions.LoadDownloadsAction());
     store.dispatch(new portalActions.LoadFAQAction());
@@ -55,6 +59,23 @@ export class HomePortalComponent implements OnInit {
         }
       });
     }
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/text',
+      })
+    }
+    this.httpClient.get('../extract/who-factbuffects', httpOptions).subscribe((data) => {
+      console.log(data);
+      try {
+        this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
+          data['data']
+        );
+        this.hasScriptSet = true;
+      } catch (e) {
+        console.log(JSON.stringify(e));
+      }
+    });
 
     if (this.statsSummary$) {
       this.statsSummary$.subscribe((statisticsSummary) => {
