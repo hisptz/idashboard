@@ -9,7 +9,7 @@ export function drawTable(
   tableId?: string
 ) {
   const legendClasses = tableConfiguration.legendSet ? tableConfiguration.legendSet.legends : null;
-  const { columnsStyles = {}, columnGroups = [] } = tableConfiguration;
+  const { columnsStyles = {}, columnGroups = [], declineIndicators } = tableConfiguration;
 
   const table = {
     headers: columnGroups.length ? [{ items: [...columnGroups], style: '' }] : [],
@@ -73,18 +73,21 @@ export function drawTable(
     }
 
     for (const columnItem of tableConfiguration.columns) {
-      const dimension = calculateColSpan(analyticsObject, tableConfiguration.columns, columnItem);
+      const dimension = calculateColSpan(analyticsObject, tableConfiguration.columns, columnItem, [
+        ...declineIndicators
+      ]);
       const groupsIds = columnGroups.map(({ id }) => id) || [];
       const currentColumnItems = prepareSingleCategories(analyticsObject, columnItem).filter(
-        ({ uid }) => !groupsIds.includes(uid)
+        ({ uid }) => !groupsIds.includes(uid) && uid !== 'ref_actule_pe'
       );
+
       const headerItem = [];
       for (let i = 0; i < dimension.duplication; i++) {
         for (const currentItem of currentColumnItems) {
           headerItem.push({
             name: currentItem.name,
-            row_span: 1,
-            span: dimension.col_span,
+            row_span: !declineIndicators.includes(currentItem.uid) ? 1 : 2,
+            span: !declineIndicators.includes(currentItem.uid) ? dimension.col_span : 1,
             type: currentItem.type,
             color: columnsStyles[currentItem.uid],
             id: currentItem.uid
@@ -137,7 +140,7 @@ export function drawTable(
     const rows_length = tableConfiguration.rows.length;
     const row_items_array = [];
     for (let i = 0; i < rows_length; i++) {
-      const dimension = calculateColSpan(analyticsObject, tableConfiguration.rows, tableConfiguration.rows[i]);
+      const dimension = calculateColSpan(analyticsObject, tableConfiguration.rows, tableConfiguration.rows[i], []);
       const currentRowItems = prepareSingleCategories(analyticsObject, tableConfiguration.rows[i]);
       row_items_array.push({ items: currentRowItems, dimensions: dimension });
     }
@@ -184,23 +187,30 @@ export function drawTable(
           }
         }
         for (const colItem of table_columns_array) {
-          const dataItem = [];
-          for (const val of rowItem) {
-            dataItem.push({ type: val.type, value: val.uid });
+          const dxUid = colItem.find(({ type }) => type === 'dx').uid;
+          const peUid = colItem.find(({ type }) => type === 'pe').uid;
+          const isDeclineIndicator = declineIndicators.includes(dxUid);
+          const isDeclinePeriod = peUid === 'ref_actule_pe';
+          const fillDataInArow = (isDeclineIndicator && isDeclinePeriod) || (!isDeclineIndicator && !isDeclinePeriod);
+          if (fillDataInArow) {
+            const dataItem = [];
+            for (const val of rowItem) {
+              dataItem.push({ type: val.type, value: val.uid });
+            }
+            for (const val of colItem) {
+              dataItem.push({ type: val.type, value: val.uid });
+            }
+            item.items.push({
+              name: '',
+              val: getDataValue(analyticsObject, dataItem),
+              color: getDataValueColor(
+                getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, tableId),
+                getDataValue(analyticsObject, dataItem)
+              ),
+              row_span: '1',
+              display: true
+            });
           }
-          for (const val of colItem) {
-            dataItem.push({ type: val.type, value: val.uid });
-          }
-          item.items.push({
-            name: '',
-            val: getDataValue(analyticsObject, dataItem),
-            color: getDataValueColor(
-              getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, tableId),
-              getDataValue(analyticsObject, dataItem)
-            ),
-            row_span: '1',
-            display: true
-          });
         }
         if (tableConfiguration.hasOwnProperty('hideEmptyRows') && tableConfiguration.hideEmptyRows) {
           if (!checkZeros(tableConfiguration.rows.length, item.items)) {
@@ -256,17 +266,21 @@ function getTitleIndex(analyticsObjectHeaders, name: string) {
   return index;
 }
 
-function calculateColSpan(analyticsObject, array, item) {
+function calculateColSpan(analyticsObject, array, item, excludedItems = []) {
   const indexOfItem = array.indexOf(item);
   const array_length = array.length;
   const last_index = array_length - 1;
   const dimensions = { col_span: 1, duplication: 1 };
   for (let i = last_index; i > indexOfItem; i--) {
-    const arr = prepareSingleCategories(analyticsObject, array[i]);
+    const arr = prepareSingleCategories(analyticsObject, array[i]).filter(
+      ({ uid }) => !excludedItems.includes(uid) && uid !== 'ref_actule_pe'
+    );
     dimensions.col_span = dimensions.col_span * arr.length;
   }
   for (let i = 0; i < indexOfItem; i++) {
-    const arr = prepareSingleCategories(analyticsObject, array[i]);
+    const arr = prepareSingleCategories(analyticsObject, array[i]).filter(
+      ({ uid }) => !excludedItems.includes(uid) && uid !== 'ref_actule_pe'
+    );
     dimensions.duplication = dimensions.duplication * arr.length;
   }
   return dimensions;

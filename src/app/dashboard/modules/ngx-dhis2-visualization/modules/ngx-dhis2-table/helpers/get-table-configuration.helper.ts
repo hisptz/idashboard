@@ -4,8 +4,8 @@ export function getTableConfiguration(favoriteObject: any, visualizationLayout: 
     title: favoriteObject.hasOwnProperty('displayName')
       ? favoriteObject.displayName
       : favoriteObject.hasOwnProperty('name')
-        ? favoriteObject.name
-        : '',
+      ? favoriteObject.name
+      : '',
     subtitle: favoriteObject.hasOwnProperty('subtitle') ? favoriteObject.subtitle : '',
     showColumnTotal: favoriteObject.hasOwnProperty('colTotal') ? favoriteObject.colTotal : true,
     showColumnSubtotal: favoriteObject.hasOwnProperty('colSubtotal') ? favoriteObject.colSubtotal : true,
@@ -23,7 +23,8 @@ export function getTableConfiguration(favoriteObject: any, visualizationLayout: 
     columnGroups: favoriteObject.columnGroups,
     legendSet: favoriteObject.legendSet || null,
     legendDisplayStrategy: favoriteObject.legendDisplayStrategy,
-    styles: favoriteObject.styles
+    styles: favoriteObject.styles,
+    declineIndicators: favoriteObject.declineIndicators
   };
 }
 
