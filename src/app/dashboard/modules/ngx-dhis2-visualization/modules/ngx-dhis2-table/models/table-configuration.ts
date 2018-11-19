@@ -18,4 +18,5 @@ export interface TableConfiguration {
   columnGroups?: any;
   styles: any;
   declineIndicators: any;
+  onlyUseActualPeriod: Array<any>;
 }

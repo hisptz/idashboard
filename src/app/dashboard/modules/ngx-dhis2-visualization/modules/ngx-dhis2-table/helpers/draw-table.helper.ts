@@ -187,8 +187,8 @@ export function drawTable(
           }
         }
         for (const colItem of table_columns_array) {
-          const dxUid = colItem.find(({ type }) => type === 'dx').uid;
-          const peUid = colItem.find(({ type }) => type === 'pe').uid;
+          const dxUid = colItem.find(({ type }) => type === 'dx') && colItem.find(({ type }) => type === 'dx').uid;
+          const peUid = colItem.find(({ type }) => type === 'pe') && colItem.find(({ type }) => type === 'pe').uid;
           const isDeclineIndicator = declineIndicators.includes(dxUid);
           const isDeclinePeriod = peUid === 'ref_actule_pe';
           const fillDataInArow = (isDeclineIndicator && isDeclinePeriod) || (!isDeclineIndicator && !isDeclinePeriod);

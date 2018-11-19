@@ -24,7 +24,8 @@ export function getTableConfiguration(favoriteObject: any, visualizationLayout: 
     legendSet: favoriteObject.legendSet || null,
     legendDisplayStrategy: favoriteObject.legendDisplayStrategy,
     styles: favoriteObject.styles,
-    declineIndicators: favoriteObject.declineIndicators
+    declineIndicators: favoriteObject.declineIndicators || [],
+    onlyUseActualPeriod: favoriteObject.onlyUseActualPeriod || []
   };
 }
 

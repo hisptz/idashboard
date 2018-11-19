@@ -29,7 +29,6 @@ export class TableItemComponent implements OnInit {
   ngOnInit() {
     if (this.analyticsObject && this.tableConfiguration) {
       this.tableObject = drawTable(this.analyticsObject, this.tableConfiguration, this.legendSets, this.tableId);
-      console.log(this.tableObject);
     }
   }
   sortData(tableObject, n, isLastItem) {

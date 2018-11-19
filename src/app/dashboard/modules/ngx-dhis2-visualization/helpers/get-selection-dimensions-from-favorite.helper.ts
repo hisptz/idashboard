@@ -35,6 +35,7 @@ function getStandardizedDimensions(dimensions: any[], dataElements: any[], dimen
         return {
           id: item.dimensionItem || item.id,
           name: item.displayName || item.name,
+          ref_type: item.ref_type,
           type: getDimensionItemType(dimensionObject.dimension, item)
         };
       })
@@ -54,10 +55,10 @@ function getDimensionItemType(dimension: string, dimensionItem: any) {
         ((dimensionItem.dimensionItem || dimensionItem.id).indexOf('LEVEL') !== -1
           ? 'ORGANISATION_UNIT_LEVEL'
           : (dimensionItem.dimensionItem || dimensionItem.id).indexOf('GROUP') !== -1
-            ? 'ORGANISATION_UNIT_GROUP'
-            : (dimensionItem.dimensionItem || dimensionItem.id).indexOf('USER') !== -1
-              ? 'USER_ORGANISATION_UNIT'
-              : '')
+          ? 'ORGANISATION_UNIT_GROUP'
+          : (dimensionItem.dimensionItem || dimensionItem.id).indexOf('USER') !== -1
+          ? 'USER_ORGANISATION_UNIT'
+          : '')
       );
     }
     default:
