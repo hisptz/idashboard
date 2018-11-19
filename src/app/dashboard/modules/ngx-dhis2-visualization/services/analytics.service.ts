@@ -4,41 +4,24 @@ import { Observable, of, forkJoin, throwError } from 'rxjs';
 import { NgxDhis2HttpClientService } from '@hisptz/ngx-dhis2-http-client';
 
 import { VisualizationDataSelection } from '../models';
-import {
-  getAnalyticsUrl,
-  getSanitizedAnalytics,
-  getStandardizedAnalyticsObject,
-  getMergedAnalytics
-} from '../helpers';
+import { getAnalyticsUrl, getSanitizedAnalytics, getStandardizedAnalyticsObject, getMergedAnalytics } from '../helpers';
 import { mergeMap, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
   constructor(private http: NgxDhis2HttpClientService) {}
 
-  getAnalytics(
-    dataSelections: VisualizationDataSelection[],
-    layerType: string,
-    config?: any
-  ) {
+  getAnalytics(dataSelections: VisualizationDataSelection[], layerType: string, config?: any) {
     return forkJoin(
       this._getNormalAnalytics(
-        this._getDataSelectionByDxType(
-          dataSelections || [],
-          'FUNCTION_RULE',
-          false
-        ),
+        this._getDataSelectionByDxType(dataSelections || [], 'FUNCTION_RULE', false),
         layerType,
         config
       ),
-      this._getFunctionAnalytics(
-        this._getDataSelectionByDxType(dataSelections || [], 'FUNCTION_RULE')
-      )
+      this._getFunctionAnalytics(this._getDataSelectionByDxType(dataSelections || [], 'FUNCTION_RULE'))
     ).pipe(
       map((analyticsResults: any[]) =>
-        getMergedAnalytics(
-          this._getSanitizedAnalyticsArray(analyticsResults, dataSelections)
-        )
+        getMergedAnalytics(this._getSanitizedAnalyticsArray(analyticsResults, dataSelections))
       )
     );
   }
@@ -74,14 +57,10 @@ export class AnalyticsService {
       return of(null);
     }
     const ouObject = _.find(dataSelections, ['dimension', 'ou']);
-    const ouValue = ouObject
-      ? _.join(_.map(ouObject.items, item => item.id), ';')
-      : '';
+    const ouValue = ouObject ? _.join(_.map(ouObject.items, item => item.id), ';') : '';
 
     const peObject = _.find(dataSelections, ['dimension', 'pe']);
-    const peValue = peObject
-      ? _.join(_.map(peObject.items, item => item.id), ';')
-      : '';
+    const peValue = peObject ? _.join(_.map(peObject.items, item => item.id), ';') : '';
 
     const dxObject = _.find(dataSelections, ['dimension', 'dx']);
 
@@ -91,6 +70,7 @@ export class AnalyticsService {
 
     const functionAnalyticsPromises = _.map(dxObject.items, (dxItem: any) => {
       let functionPromise = of(null);
+      const { items } = dxItem.peSelection;
       try {
         const functionRuleJson =
           typeof dxItem.ruleDefinition.json === 'string'
@@ -98,7 +78,7 @@ export class AnalyticsService {
             : dxItem.ruleDefinition.json;
         functionPromise = this._runFunction(
           {
-            pe: peValue,
+            pe: items.map(({ id }) => id).join(';'),
             ou: ouValue,
             useReferencePeriod: dxItem.useReferencePeriod,
             peSelection: dxItem.peSelection,
@@ -124,34 +104,18 @@ export class AnalyticsService {
 
     return forkJoin(functionAnalyticsPromises).pipe(
       map((analyticsResults: any[]) =>
-        getMergedAnalytics(
-          this._getSanitizedAnalyticsArray(analyticsResults, dataSelections)
-        )
+        getMergedAnalytics(this._getSanitizedAnalyticsArray(analyticsResults, dataSelections))
       )
     );
   }
 
-  private _getSanitizedAnalyticsArray(
-    analyticsResults: any[],
-    dataSelections: VisualizationDataSelection[]
-  ) {
-    return _.map(
-      _.filter(
-        analyticsResults,
-        analyticsResultObject => analyticsResultObject !== null
-      ),
-      analytics =>
-        getSanitizedAnalytics(
-          getStandardizedAnalyticsObject(analytics, true),
-          dataSelections
-        )
+  private _getSanitizedAnalyticsArray(analyticsResults: any[], dataSelections: VisualizationDataSelection[]) {
+    return _.map(_.filter(analyticsResults, analyticsResultObject => analyticsResultObject !== null), analytics =>
+      getSanitizedAnalytics(getStandardizedAnalyticsObject(analytics, true), dataSelections)
     );
   }
 
-  private _runFunction(
-    functionParameters: any,
-    functionString: string
-  ): Observable<any> {
+  private _runFunction(functionParameters: any, functionString: string): Observable<any> {
     return new Observable(observer => {
       if (!this._isError(functionString)) {
         try {
@@ -205,17 +169,11 @@ export class AnalyticsService {
     dxType: string,
     useEqualOperator: boolean = true
   ): VisualizationDataSelection[] {
-    const dxDataSelection: VisualizationDataSelection = _.find(dataSelections, [
-      'dimension',
-      'dx'
-    ]);
+    const dxDataSelection: VisualizationDataSelection = _.find(dataSelections, ['dimension', 'dx']);
 
-    const dxDataSelectionSelectionIndex = dataSelections.indexOf(
-      dxDataSelection
-    );
-    const dxItems = _.filter(
-      dxDataSelection ? dxDataSelection.items : [],
-      item => (useEqualOperator ? item.type === dxType : item.type !== dxType)
+    const dxDataSelectionSelectionIndex = dataSelections.indexOf(dxDataSelection);
+    const dxItems = _.filter(dxDataSelection ? dxDataSelection.items : [], item =>
+      useEqualOperator ? item.type === dxType : item.type !== dxType
     );
     return dxDataSelectionSelectionIndex !== -1
       ? dxItems.length > 0
