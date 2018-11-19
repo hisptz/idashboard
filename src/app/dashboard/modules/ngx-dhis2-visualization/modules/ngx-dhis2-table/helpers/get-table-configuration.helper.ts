@@ -1,5 +1,10 @@
 import { TableConfiguration } from '../models/table-configuration';
-export function getTableConfiguration(favoriteObject: any, visualizationLayout: any, type: string): TableConfiguration {
+export function getTableConfiguration(
+  favoriteObject: any,
+  visualizationLayout: any,
+  type: string,
+  dataSelections: any
+): TableConfiguration {
   return {
     title: favoriteObject.hasOwnProperty('displayName')
       ? favoriteObject.displayName
@@ -25,7 +30,9 @@ export function getTableConfiguration(favoriteObject: any, visualizationLayout: 
     legendDisplayStrategy: favoriteObject.legendDisplayStrategy,
     styles: favoriteObject.styles,
     declineIndicators: favoriteObject.declineIndicators || [],
-    onlyUseActualPeriod: favoriteObject.onlyUseActualPeriod || []
+    onlyUseActualPeriod: favoriteObject.onlyUseActualPeriod || [],
+    peValues: dataSelections.find(({ dimension }) => dimension === 'pe'),
+    useReferencePeriod: favoriteObject.useReferencePeriod || false
   };
 }
 

@@ -9,7 +9,20 @@ export function drawTable(
   tableId?: string
 ) {
   const legendClasses = tableConfiguration.legendSet ? tableConfiguration.legendSet.legends : null;
-  const { columnsStyles = {}, columnGroups = [], declineIndicators } = tableConfiguration;
+  const {
+    columnsStyles = {},
+    columnGroups = [],
+    declineIndicators,
+    useReferencePeriod,
+    peValues: favPeValues,
+    onlyUseActualPeriod
+  } = tableConfiguration;
+
+  const referencePeriodIndex =
+    favPeValues && favPeValues.items && favPeValues.items.findIndex(({ ref_type }) => ref_type === 'PERIOD_REF');
+  const peArray = analyticsObject && analyticsObject.metaData && analyticsObject.metaData.pe;
+
+  const referencePeriod = useReferencePeriod && peArray && peArray[referencePeriodIndex];
 
   const table = {
     headers: columnGroups.length ? [{ items: [...columnGroups], style: '' }] : [],
@@ -74,7 +87,8 @@ export function drawTable(
 
     for (const columnItem of tableConfiguration.columns) {
       const dimension = calculateColSpan(analyticsObject, tableConfiguration.columns, columnItem, [
-        ...declineIndicators
+        ...declineIndicators,
+        ...onlyUseActualPeriod
       ]);
       const groupsIds = columnGroups.map(({ id }) => id) || [];
       const currentColumnItems = prepareSingleCategories(analyticsObject, columnItem).filter(
@@ -86,8 +100,8 @@ export function drawTable(
         for (const currentItem of currentColumnItems) {
           headerItem.push({
             name: currentItem.name,
-            row_span: !declineIndicators.includes(currentItem.uid) ? 1 : 2,
-            span: !declineIndicators.includes(currentItem.uid) ? dimension.col_span : 1,
+            row_span: ![...declineIndicators, ...onlyUseActualPeriod].includes(currentItem.uid) ? 1 : 2,
+            span: ![...declineIndicators, ...onlyUseActualPeriod].includes(currentItem.uid) ? dimension.col_span : 1,
             type: currentItem.type,
             color: columnsStyles[currentItem.uid],
             id: currentItem.uid
@@ -189,10 +203,11 @@ export function drawTable(
         for (const colItem of table_columns_array) {
           const dxUid = colItem.find(({ type }) => type === 'dx') && colItem.find(({ type }) => type === 'dx').uid;
           const peUid = colItem.find(({ type }) => type === 'pe') && colItem.find(({ type }) => type === 'pe').uid;
+          const dxUseActual = onlyUseActualPeriod.includes(dxUid) && peUid === referencePeriod;
           const isDeclineIndicator = declineIndicators.includes(dxUid);
           const isDeclinePeriod = peUid === 'ref_actule_pe';
           const fillDataInArow = (isDeclineIndicator && isDeclinePeriod) || (!isDeclineIndicator && !isDeclinePeriod);
-          if (fillDataInArow) {
+          if (fillDataInArow && !dxUseActual) {
             const dataItem = [];
             for (const val of rowItem) {
               dataItem.push({ type: val.type, value: val.uid });

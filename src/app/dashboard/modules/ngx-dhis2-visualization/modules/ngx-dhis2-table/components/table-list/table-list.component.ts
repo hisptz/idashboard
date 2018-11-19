@@ -27,44 +27,27 @@ export class TableListComponent implements OnInit {
         tableConfiguration: getTableConfiguration(
           layer.config || {},
           layer.layout,
-          this.visualizationType
+          this.visualizationType,
+          layer.dataSelections
         ),
         tableId: layer.id,
-        analyticsObject: this.getLayerAnalytic(
-          layer.analytics,
-          layer.layout,
-          layer.config.useReferencePeriod
-        )
+        analyticsObject: this.getLayerAnalytic(layer.analytics, layer.layout, layer.config.useReferencePeriod)
       }));
     }
   }
 
   getLayerAnalytic(analytics, layout, useReferencePeriod) {
-    if (
-      !useReferencePeriod &&
-      analytics &&
-      analytics.metaData &&
-      analytics.metaData.pe.length > 1
-    ) {
-      const columnValue =
-        layout && layout.columns && layout.columns.length > 0
-          ? layout.columns[0]
-          : '';
-      const rowValue =
-        layout && layout.rows && layout.rows.length > 0 ? layout.rows[0] : '';
+    if (!useReferencePeriod && analytics && analytics.metaData && analytics.metaData.pe.length > 1) {
+      const columnValue = layout && layout.columns && layout.columns.length > 0 ? layout.columns[0] : '';
+      const rowValue = layout && layout.rows && layout.rows.length > 0 ? layout.rows[0] : '';
       if (columnValue === 'pe' && rowValue === 'dx') {
         const periods = analytics.metaData.pe;
         const names = analytics.metaData.names;
-        const customPeName = `${names[periods[0]]} - ${
-          names[periods[periods.length - 1]]
-        }`;
+        const customPeName = `${names[periods[0]]} - ${names[periods[periods.length - 1]]}`;
         const customPe = `${periods[0]}_${periods[periods.length - 1]}`;
         analytics.metaData.pe = [customPe];
         analytics.metaData.names[customPe] = customPeName;
-        const sanitizedRows = this.getSanitizedRowsByPeAndDx(
-          analytics.rows,
-          customPe
-        );
+        const sanitizedRows = this.getSanitizedRowsByPeAndDx(analytics.rows, customPe);
         analytics.rows = sanitizedRows;
       }
     } else {
