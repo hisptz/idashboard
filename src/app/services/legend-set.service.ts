@@ -51,11 +51,6 @@ export class LegendSetService {
 
   updateLegendSets(legendSets: LegendSet[]): Observable<any> {
     const legendUrl = `dataStore/legendSets/configuration`;
-    const filteredLegendSets = _.filter(
-      legendSets,
-      (legendSet: LegendSet) => legendSet.legends.length > 0
-    );
-    console.log(filteredLegendSets);
     return this.http.put(legendUrl, { legendSets });
   }
 }

@@ -164,7 +164,7 @@
             "color": "#008000",
             "name": "Untitled",
             "startValue": 80,
-            "endValue": 101
+            "endValue": null
           }
         ]
       },
@@ -276,7 +276,189 @@
             "color": "#008800",
             "name": "Green",
             "startValue": 20,
+            "endValue": null
+          }
+        ]
+      },
+      {
+        "id": "EFuehVGA7qF_ZCCrHrs1Ta2",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "ZCCrHrs1Ta2",
+        "name": "Proportion of population at risk",
+        "legends": []
+      },
+      {
+        "id": "EFuehVGA7qF_gTPP0wYkXBA",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "gTPP0wYkXBA",
+        "name": "Total malaria confirmed cases",
+        "legends": []
+      },
+      {
+        "id": "EFuehVGA7qF_VD4CKS8uRsA",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "VD4CKS8uRsA",
+        "name": "Confirmed cases decline(%)",
+        "legends": [{
+            "id": "FtCirSboFCC",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "Fo1TiGT9oW2",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "0",
+            "endValue": 20
+          },
+          {
+            "id": "aacHdGPBaYC",
+            "color": "#008800",
+            "name": "Green",
+            "startValue": 20,
+            "endValue": null
+          }
+        ]
+      },
+      {
+        "id": "EFuehVGA7qF_AvQDluaf46N",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "AvQDluaf46N",
+        "name": "Total malaria cases (confirmed+presumed)",
+        "legends": []
+      },
+      {
+        "id": "EFuehVGA7qF_d6FUocDoKFP",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "d6FUocDoKFP",
+        "name": "Total cases decline (%)",
+        "legends": [{
+            "id": "rxPHFGGetT2",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "mFgNIPyAE7i",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "0",
+            "endValue": 20
+          },
+          {
+            "id": "RBlKOra7Dgk",
+            "color": "#008800",
+            "name": "Green",
+            "startValue": 20,
+            "endValue": null
+          }
+        ]
+      },
+      {
+        "id": "EFuehVGA7qF_IPI8Xmc1nnT",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "IPI8Xmc1nnT",
+        "name": "Test positivity rate (RDT)",
+        "legends": []
+      },
+      {
+        "id": "EFuehVGA7qF_ufvoNFHpEyQ",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "ufvoNFHpEyQ",
+        "name": "Test positivity rate (RDT)",
+        "legends": [{
+            "id": "8hyNKzoP8W3",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "cX6sjYHTRqH",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "0",
+            "endValue": 20
+          },
+          {
+            "id": "b8SyT2Cj7zE",
+            "color": "#008800",
+            "name": "Green",
+            "startValue": 20,
             "endValue": 40
+          }
+        ]
+      },
+      {
+        "id": "EFuehVGA7qF_v0WZQQ6gKAX",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "v0WZQQ6gKAX",
+        "name": "Number of inpatient malaria cases",
+        "legends": []
+      },
+      {
+        "id": "EFuehVGA7qF_opjQGRn9KXM",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "opjQGRn9KXM",
+        "name": "Inpatient case decline (%)",
+        "legends": [{
+            "id": "Fr5juPmKbLM",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "1z4n6l3Jlm3",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "0",
+            "endValue": 20
+          },
+          {
+            "id": "lCa0doXXlxq",
+            "color": "#008800",
+            "name": "Green",
+            "startValue": 20,
+            "endValue": null
+          }
+        ]
+      },
+      {
+        "id": "EFuehVGA7qF_GxlrIgMyEf4",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "GxlrIgMyEf4",
+        "name": "Number of malaria deaths",
+        "legends": []
+      },
+      {
+        "id": "EFuehVGA7qF_CfvHk9Kk1da",
+        "visualizationLayerId": "EFuehVGA7qF",
+        "dimensionItemId": "CfvHk9Kk1da",
+        "name": "Deaths decline(%)",
+        "legends": [{
+            "id": "30gl8XRT4Gz",
+            "color": "#ff0000",
+            "name": "Red",
+            "startValue": null,
+            "endValue": "0"
+          },
+          {
+            "id": "kYsEERxlH4b",
+            "color": "#ffff00",
+            "name": "Yellow",
+            "startValue": "0",
+            "endValue": 20
+          },
+          {
+            "id": "HKPUdELuayx",
+            "color": "#fff",
+            "name": "Untitled",
+            "startValue": 20,
+            "endValue": null
           }
         ]
       }
