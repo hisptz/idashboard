@@ -67,6 +67,7 @@ export class TableListComponent implements OnInit {
         );
         analytics.rows = sanitizedRows;
       }
+    } else {
     }
     return analytics;
   }

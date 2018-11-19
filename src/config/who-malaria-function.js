@@ -9,6 +9,7 @@ const peSelection = parameters.peSelection.items;
 const useReferencePeriod = parameters.useReferencePeriod;
 const isCalculationBasedOnRefAndActual =
   parameters.rule.json.isCalculationBasedOnRefAndActual;
+const shouldSumResultValue = parameters.shouldSumResultValue;
 // get all uids form expression
 var dataElements = getUidsFromExpression(expression);
 //checking for all de uids has mapper
@@ -21,21 +22,29 @@ if (mappingStatus.areAllMapped) {
   var dx = dataElements.join(';');
   //handling referenc and actual periods
   if (useReferencePeriod && peSelection.length > 1) {
-    const actualPeriod = peSelection[0].id;
-    const referencePeriod = peSelection[peSelection.length - 1].id;
+    const actualPeriod = peSelection.filter(item => item.ref_type === 'PERIOD_ACTUAL').map(({
+      id
+    }) => id).join(';');
+    const referencePeriod = peSelection.filter(item => item.ref_type === 'PERIOD_REF').map(({
+      id
+    }) => id).join(';');
     // handling indicators with calculation with reference and actual periods
-    if (isCalculationBasedOnRefAndActual) {
-      loadingAndEvaluateCustomExpressionCalculations(
-        actualPeriod,
-        referencePeriod
-      );
+    if (actualPeriod && referencePeriod) {
+      if (isCalculationBasedOnRefAndActual) {
+        loadingAndEvaluateCustomExpressionCalculations(
+          actualPeriod,
+          referencePeriod
+        );
+      } else {
+        // handlining inidcator with actual and reference periods
+        loadingAndEvaluateActualAndReferenceIndicator(
+          dx,
+          actualPeriod,
+          referencePeriod
+        );
+      }
     } else {
-      // handlining inidcator with actual and reference periods
-      loadingAndEvaluateActualAndReferenceIndicator(
-        dx,
-        actualPeriod,
-        referencePeriod
-      );
+      loadingAndEvaluateAnalyticsData(dx, expression, dataElements);
     }
   } else {
     //handling for only actual period
@@ -226,9 +235,7 @@ function getMergedAnalyticsForActualAndReferencePeriods(
     analyticsResultsForReference.metaData.dimensions.ou = analyticsResultsForReference.metaData.dimensions.ou
       .concat(analyticsResultsForActual.metaData.dimensions.ou)
       .filter(onlyUniqueItemsOnArray);
-    analyticsResultsForReference.metaData.dimensions.pe = analyticsResultsForReference.metaData.dimensions.pe
-      .concat(analyticsResultsForActual.metaData.dimensions.pe)
-      .filter(onlyUniqueItemsOnArray);
+    analyticsResultsForReference.metaData.dimensions.pe = analyticsResultsForReference.metaData.dimensions.pe.concat(analyticsResultsForActual.metaData.dimensions.pe).filter(onlyUniqueItemsOnArray);
     analyticsResultsForReference.metaData.dimensions.dx = analyticsResultsForReference.metaData.dimensions.dx
       .concat(analyticsResultsForActual.metaData.dimensions.dx)
       .filter(onlyUniqueItemsOnArray);
@@ -304,7 +311,11 @@ function loadingAndEvaluateAnalyticsData(dx, expression, dataElements) {
     type: 'GET',
     success: function (analyticsResults) {
       //evaluate expression and and get new analytic object
-      parameters.success(getSanitizedAnalytict(analyticsResults, parameters));
+      var analytic = getSanitizedAnalytict(analyticsResults, parameters);
+      if (shouldSumResultValue) {
+        analytic = getSanitizedAnalytictForMultiplePeriods(analytic)
+      }
+      parameters.success(analytic);
     },
     error: function (error) {
       parameters.error(error);

@@ -1876,6 +1876,11 @@
       "CfvHk9Kk1da",
       "ufvoNFHpEyQ"
     ],
+    "onlyUseActualPeriod": [
+      "ZCCrHrs1Ta2",
+      "fj29hAOSNDk",
+      "RqGYc77Xhek"
+    ],
     "columns": [{
         "dimension": "dx",
         "items": [{
@@ -1961,18 +1966,18 @@
       {
         "dimension": "pe",
         "items": [{
-            "id": "THIS_YEAR",
-            "dimensionItem": "THIS_YEAR",
-            "displayName": "THIS_YEAR",
-            "dimensionItemType": "PERIOD"
-          },
-          {
-            "id": "LAST_YEAR",
-            "dimensionItem": "LAST_YEAR",
-            "displayName": "LAST_YEAR",
-            "dimensionItemType": "PERIOD"
-          }
-        ]
+          "id": "LAST_YEAR",
+          "dimensionItem": "LAST_YEAR",
+          "displayName": "LAST_YEAR",
+          "ref_type": "PERIOD_REF",
+          "dimensionItemType": "PERIOD"
+        }, {
+          "id": "THIS_YEAR",
+          "dimensionItem": "THIS_YEAR",
+          "displayName": "THIS_YEAR",
+          "ref_type": "PERIOD_ACTUAL",
+          "dimensionItemType": "PERIOD"
+        }]
       }
     ],
     "dataElementDimensions": [],
