@@ -5,31 +5,31 @@
         "id": "VD4CKS8uRsA",
         "name": "Confirmed cases decline(%)",
         "description": "",
-        "json": "{\"expression\":\"(((((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g})))/(1))*1)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g})))/(1))*1)\",\"refExpressionDx\":\"(((((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g})))/(1))*1)\",\"customExpression\":\"(-100* ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
+        "json": "{\"expression\":\"(((((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g})))/(1))*1)\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g})))/(1))*1)\",\"refExpressionDx\":\"(((((#{enVf9I39FRZ})) + ((#{vTRrNdOOT9g})))/(1))*1)\",\"customExpression\":\"(-1 * ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
       },
       {
         "id": "d6FUocDoKFP",
         "name": "Total cases decline (%)",
         "description": "",
-        "json": "{\"expression\":\"(#{enVf9I39FRZ} + #{vTRrNdOOT9g})\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(#{enVf9I39FRZ} + #{vTRrNdOOT9g})\",\"refExpressionDx\":\"(#{enVf9I39FRZ} + #{vTRrNdOOT9g})\",\"customExpression\":\"(-100* ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
+        "json": "{\"expression\":\"(#{enVf9I39FRZ} + #{vTRrNdOOT9g})\",\"expressionMapping\":{\"enVf9I39FRZ\":null,\"vTRrNdOOT9g\":null},\"namesMapping\":{\"enVf9I39FRZ\":\"Number of malaria cases positive with microscopy \",\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(#{enVf9I39FRZ} + #{vTRrNdOOT9g})\",\"refExpressionDx\":\"(#{enVf9I39FRZ} + #{vTRrNdOOT9g})\",\"customExpression\":\"(-1 * ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
       },
       {
         "id": "ufvoNFHpEyQ",
         "name": "TPR decline (%)",
         "description": "",
-        "json": "{\"expression\":\"(((#{vTRrNdOOT9g})/(#{pmRn0GsUfr6}))*100)\",\"expressionMapping\":{\"vTRrNdOOT9g\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((#{vTRrNdOOT9g})/(#{pmRn0GsUfr6}))*100)\",\"refExpressionDx\":\"(((#{vTRrNdOOT9g})/(#{pmRn0GsUfr6}))*100)\",\"customExpression\":\"(-100* ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
+        "json": "{\"expression\":\"(((#{vTRrNdOOT9g})/(#{pmRn0GsUfr6}))*100)\",\"expressionMapping\":{\"vTRrNdOOT9g\":null,\"pmRn0GsUfr6\":null},\"namesMapping\":{\"vTRrNdOOT9g\":\"Number of malaria cases positive with RDT\",\"pmRn0GsUfr6\":\"Number of malaria cases tested with RDT\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((#{vTRrNdOOT9g})/(#{pmRn0GsUfr6}))*100)\",\"refExpressionDx\":\"(((#{vTRrNdOOT9g})/(#{pmRn0GsUfr6}))*100)\",\"customExpression\":\"(-1 * ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
       },
       {
         "id": "opjQGRn9KXM",
         "name": "Inpatient case decline (%)",
         "description": "",
-        "json": "{\"expression\":\"(((#{v0WZQQ6gKAX})/(1))*1)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((#{v0WZQQ6gKAX})/(1))*1)\",\"refExpressionDx\":\"(((#{v0WZQQ6gKAX})/(1))*1)\",\"customExpression\":\"(-100* ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
+        "json": "{\"expression\":\"(((#{v0WZQQ6gKAX})/(1))*1)\",\"expressionMapping\":{\"v0WZQQ6gKAX\":null},\"namesMapping\":{\"v0WZQQ6gKAX\":\"Number of inpatient malaria cases\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((#{v0WZQQ6gKAX})/(1))*1)\",\"refExpressionDx\":\"(((#{v0WZQQ6gKAX})/(1))*1)\",\"customExpression\":\"(-1 * ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
       },
       {
         "id": "CfvHk9Kk1da",
         "name": "Deaths decline(%)",
         "description": "",
-        "json": "{\"expression\":\"(((#{GxlrIgMyEf4})/(1))*1)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((#{GxlrIgMyEf4})/(1))*1)\",\"refExpressionDx\":\"(((#{GxlrIgMyEf4})/(1))*1)\",\"customExpression\":\"(-100* ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
+        "json": "{\"expression\":\"(((#{GxlrIgMyEf4})/(1))*1)\",\"expressionMapping\":{\"GxlrIgMyEf4\":null},\"namesMapping\":{\"GxlrIgMyEf4\":\"Number of malaria deaths\"},\"isCalculationBasedOnRefAndActual\":true,\"actualExpressionDx\":\"(((#{GxlrIgMyEf4})/(1))*1)\",\"refExpressionDx\":\"(((#{GxlrIgMyEf4})/(1))*1)\",\"customExpression\":\"(-1 * ((#{refExpressionDx} - #{actualExpressionDx} )/(#{refExpressionDx})))\",\"actualExpressionKey\":[\"actualExpressionDx\"],\"refExpressionKey\":[\"refExpressionDx\"]}"
       },
       {
         "id": "GLqY4EV4iOG",
