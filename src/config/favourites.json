@@ -1854,7 +1854,7 @@
     },
     "columnGroups": [{
         "name": "Out-patient",
-        "span": 15,
+        "span": 12,
         "row_span": 1,
         "type": "gp",
         "color": "#009A65",
@@ -2401,16 +2401,18 @@
         "columns": [{
           "dimension": "pe",
           "items": [{
-              "id": "THIS_YEAR",
-              "name": "THIS_YEAR",
-              "dimensionItemType": "PERIOD"
-            },
-            {
-              "id": "LAST_YEAR",
-              "name": "LAST_YEAR",
-              "dimensionItemType": "PERIOD"
-            }
-          ]
+            "id": "LAST_YEAR",
+            "dimensionItem": "LAST_YEAR",
+            "displayName": "LAST_YEAR",
+            "ref_type": "PERIOD_REF",
+            "dimensionItemType": "PERIOD"
+          }, {
+            "id": "THIS_YEAR",
+            "dimensionItem": "THIS_YEAR",
+            "displayName": "THIS_YEAR",
+            "ref_type": "PERIOD_ACTUAL",
+            "dimensionItemType": "PERIOD"
+          }]
         }],
         "dataElementDimensions": [],
         "categoryDimensions": [],
