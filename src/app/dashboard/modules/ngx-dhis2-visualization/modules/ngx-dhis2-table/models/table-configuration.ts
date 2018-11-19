@@ -2,6 +2,8 @@ export interface TableConfiguration {
   title: string;
   tableId?: string;
   subtitle: string;
+  peValues?: any;
+  useReferencePeriod?: any;
   showColumnTotal: boolean;
   showColumnSubtotal: boolean;
   showRowTotal: boolean;

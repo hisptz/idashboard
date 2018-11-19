@@ -232,10 +232,31 @@ function getMergedAnalyticsForActualAndReferencePeriods(
     analyticsResultsForActual = getSanitizedAnalytictForMultiplePeriods(
       analyticsResultsForActual
     );
+    shouldStartWithActual = peSelection.findIndex(({
+      ref_type
+    }) => ref_type === 'PERIOD_REF') > 0;
+    const actualPes = analyticsResultsForActual.metaData.dimensions.pe;
+    const refPes = analyticsResultsForReference.metaData.dimensions.pe;
+    const mergedPe = [];
+    if (shouldStartWithActual) {
+      actualPes.map(pe => {
+        mergedPe.push(pe)
+      })
+      refPes.map(pe => {
+        mergedPe.push(pe)
+      })
+    } else {
+      refPes.map(pe => {
+        mergedPe.push(pe)
+      })
+      actualPes.map(pe => {
+        mergedPe.push(pe)
+      })
+    }
     analyticsResultsForReference.metaData.dimensions.ou = analyticsResultsForReference.metaData.dimensions.ou
       .concat(analyticsResultsForActual.metaData.dimensions.ou)
       .filter(onlyUniqueItemsOnArray);
-    analyticsResultsForReference.metaData.dimensions.pe = analyticsResultsForReference.metaData.dimensions.pe.concat(analyticsResultsForActual.metaData.dimensions.pe).filter(onlyUniqueItemsOnArray);
+    analyticsResultsForReference.metaData.dimensions.pe = mergedPe.filter(onlyUniqueItemsOnArray);
     analyticsResultsForReference.metaData.dimensions.dx = analyticsResultsForReference.metaData.dimensions.dx
       .concat(analyticsResultsForActual.metaData.dimensions.dx)
       .filter(onlyUniqueItemsOnArray);
