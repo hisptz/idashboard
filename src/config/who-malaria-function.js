@@ -118,8 +118,6 @@ function loadingAndEvaluateCustomExpressionCalculations(
               }
             }
           });
-          console.log(parameters.rule.name);
-          console.log(resultAnalytics)
           parameters.success(resultAnalytics);
         }
       })
