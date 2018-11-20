@@ -102,6 +102,9 @@ import { PageComponent } from './pages/portal/shared-components/page/page.compon
 import { FaqComponent } from './pages/portal/faq/faq.component';
 import { CreateAbsoluteUrlPipe } from './pipes/create-absolute-url.pipe';
 import { FooterComponent } from './pages/portal/shared-components/footer/footer.component';
+import { VisualizationSliderComponent } from './pages/portal/visualization-slider/visualization-slider.component';
+import { VisualizationSliderFullScreenComponent } from './pages/portal/visualization-slider/visualization-slider-full-screen/visualization-slider-full-screen.component';
+import { VisualizationSliderResizeComponent } from './pages/portal/visualization-slider/visualization-slider-resize/visualization-slider-resize.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -174,6 +177,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     FaqComponent,
     CreateAbsoluteUrlPipe,
     FooterComponent,
+    VisualizationSliderComponent,
+    VisualizationSliderFullScreenComponent,
+    VisualizationSliderResizeComponent,
   ],
   imports: [
     BrowserModule,

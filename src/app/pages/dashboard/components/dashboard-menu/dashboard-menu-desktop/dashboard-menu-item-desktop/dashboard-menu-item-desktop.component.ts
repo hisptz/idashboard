@@ -133,7 +133,6 @@ export class DashboardMenuItemDesktopComponent implements OnInit {
 
   setActiveClass(id) {
     this.mainMenu = this.menu.name;
-    console.log(this.menu);
     this.mainMenuId.emit(this.menu.name);
     const items = document.getElementsByClassName('dropbtn-div');
     for (let count = 0; count < items.length; count++) {

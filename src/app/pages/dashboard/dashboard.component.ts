@@ -9,10 +9,6 @@ import { Visualization } from '../../store/visualization/visualization.state';
 import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
 import { Dashboard } from '../../store/dashboard/dashboard.state';
 import { getCurrentDashboard } from '../../store/dashboard/dashboard.selectors';
-import {ActivatedRoute, Params} from '@angular/router';
-import {PortalConfigurationState, StatsSummaryState} from '../../store/portal/portal.state';
-import {getPortalConfiguration, getStatsSummary} from '../../store/portal/portal.selectors';
-import * as portalActions from '../../store/portal/portal.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,20 +23,11 @@ export class DashboardComponent implements OnInit {
   welcomingTitle: string;
   welcomingDescription: string;
   emptyVisualizationMessage: string;
-  theSetPage: string;
-  portalPages: any;
-  portalConfiguration$: Observable<PortalConfigurationState>;
-  portalConfigurations: any;
-  statsSummary$: Observable<StatsSummaryState>;
-  allNews: any;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
-    store.dispatch(new portalActions.LoadStatsSummaryAction());
-    this.statsSummary$ = store.select(getStatsSummary);
+  constructor(private store: Store<AppState>) {
     this.visualizationObjects$ = store.select(
       visualizationSelectors.getCurrentDashboardVisualizationObjects
     );
-    this.portalConfiguration$ = store.select(getPortalConfiguration);
     this.currentUser$ = store.select(getCurrentUser);
     this.visualizationLoading$ = store.select(visualizationSelectors.getVisualizationLoadingState);
     this.currentDashboard$ = store.select(getCurrentDashboard);
@@ -51,25 +38,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.portalConfiguration$) {
-      this.route.params.forEach((params: Params) => {
-        this.theSetPage = params['id'];
-        this.portalConfiguration$.subscribe((portalConfigurations) => {
-          if (portalConfigurations) {
-            this.portalConfigurations = portalConfigurations;
-            this.portalPages = portalConfigurations['pages'];
-          }
-        });
-      });
-    }
-
-    if (this.statsSummary$) {
-      this.statsSummary$.subscribe((summaryInfo) => {
-        if (summaryInfo) {
-          this.allNews = summaryInfo['news'];
-        }
-      });
-    }
   }
 
 }

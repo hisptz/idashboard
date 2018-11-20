@@ -9,6 +9,8 @@ import {PageComponent} from './pages/portal/shared-components/page/page.componen
 import {UpdatesComponent} from './pages/portal/updates/updates.component';
 import {FaqComponent} from './pages/portal/faq/faq.component';
 import {DownloadsComponent} from './pages/portal/downloads/downloads.component';
+import {VisualizationSliderComponent} from './pages/portal/visualization-slider/visualization-slider.component';
+import {VisualizationSliderFullScreenComponent} from './pages/portal/visualization-slider/visualization-slider-full-screen/visualization-slider-full-screen.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +40,10 @@ export const routes: Routes = [
   {
     path: 'pages/downloads',
     component: DownloadsComponent,
+  },
+  {
+    path: 'pages/visualization-slider/full-screen',
+    component: VisualizationSliderFullScreenComponent
   },
   {
     path: 'dashboards/:id',

@@ -1,0 +1,135 @@
+.full-screen-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1500;
+  height: 100vh;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.carousel-control-next {
+  position: absolute;
+  top: 30px;
+  bottom: 30px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 5%;
+  color: #fff;
+  text-align: center;
+  opacity: 0.5;
+}
+
+
+.carousel-control-prev {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 5%;
+  color: #fff;
+  text-align: center;
+  opacity: 0.5;
+}
+
+.corousel-text {
+  padding: 25px 5px 5px 30px;text-align: left;
+}
+
+.corousel-text h3 {
+  color: #2A8FD1;
+}
+
+.corousel-img {
+  height: 300px;padding: 5px 55px 5px 30px; text-align: right;
+}
+
+.corousel-img img {
+  width: 100%;
+}
+
+carousel-indicators li {
+  position: relative;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  width: 10px;
+  height: 10px;
+  margin-right: 3px;
+  border-radius: 10px;
+  margin-left: 3px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: #2A8FD1;
+}
+
+.carousel {
+  background-color: #fefefe00;
+  margin-top: 1rem!important;
+  border: solid 1px #F6F0F5;
+}
+
+p{
+  text-align: justify;
+}
+
+.resize-btn {
+  float: right;
+  right: 0;
+}
+
+div.a {
+  width: 200px;
+  height: 60px;
+  color: #2A8FD1;
+  font-weight: bold;
+  -ms-transform: rotate(10deg); /* IE 9 */
+  -webkit-transform: rotate(10deg); /* Safari 3-8 */
+  transform: rotate(10deg);
+}
+
+div.d {
+  width: 200px;
+  height: 60px;
+  color: #3c763d;
+  -ms-transform: skewY(150deg); /* IE 9 */
+  -webkit-transform: skewY(150deg); /* Safari 3-8 */
+  transform: skewY(150deg);
+}
+
+div.b {
+  width: auto;
+  height: 20px;
+  color: #2A8FD1;
+  font-size: 1.4em;
+  -ms-transform: skewY(10deg); /* IE 9 */
+  -webkit-transform: skewY(10deg); /* Safari 3-8 */
+  transform: skewY(10deg);
+}
+
+div.c {
+  width: auto;
+  height: 60px;
+  -ms-transform: scaleY(1.5); /* IE 9 */
+  -webkit-transform: scaleY(1.5); /* Safari 3-8 */
+  transform: scaleY(1.5);
+}
