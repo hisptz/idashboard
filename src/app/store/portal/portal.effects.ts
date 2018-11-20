@@ -7,7 +7,8 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState} from './portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, ExternalSourcesState} from './portal.state';
+import * as dashboard from '../dashboard/dashboard.actions';
 
 @Injectable()
 export class PortalEffects {
@@ -56,14 +57,25 @@ export class PortalEffects {
         catchError((error) => of(new portalActions.LoadFAQFailAction(error)))
       ))
     );
-  
+
   // ENDS: FAQ EFFECTS
+
+  @Effect()
+  dataFromExternalSource$ = this.actions$
+    .ofType<portalActions.LoadExtractedDataFromExternalSourcesAction>(portalActions.PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE)
+    .pipe(
+      switchMap((action: any) => this._loadData(action.payload).pipe(
+        map((dataObject: ExternalSourcesState) =>
+        new portalActions.LoadExtractedDataFromExternalSourcesSuccessAction(dataObject))
+      ))
+    );
 
   constructor(private actions$: Actions,
               private httpClient: HttpClientService) {
   }
 
   private _loadData(url): Observable<any> {
+    console.log('load data url', url);
     return this.httpClient.get(url);
   }
 }

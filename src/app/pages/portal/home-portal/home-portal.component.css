@@ -9,3 +9,11 @@
 .fact-buffets-from-external-sources {
   margin-top: 20px;
 }
+
+.container {
+  width: 100%;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: auto;
+  margin-left: auto;
+}

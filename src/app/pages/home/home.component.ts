@@ -8,6 +8,7 @@ import {
 } from '../../store/dashboard/dashboard.selectors';
 import { WELCOMING_DESCRIPTION, WELCOMING_TITLE } from '../../constants/welcoming-messages.constants';
 import { CreateAction } from '../../store/dashboard/dashboard.actions';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
   dashboardsCount$: Observable<number>;
   dashboardsCreating$: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.dashboardsLoading$ = store.select(getDashboardLoading);
     this.dashboardsLoaded$ = store.select(getDashboardLoaded);
     this.dashboardsCount$ = store.select(getAllDashboardCount);

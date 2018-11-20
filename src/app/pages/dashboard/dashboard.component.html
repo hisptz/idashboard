@@ -1,3 +1,7 @@
+<div class="no-print container" *ngIf="portalConfigurations && portalConfigurations.isPortal">
+  <app-top-header-menu [portalPages]="portalConfigurations.pages" [allNews]="allNews"></app-top-header-menu>
+</div>
+
 <div class="container-fluid dashboard-container">
   <div>
     <router-outlet></router-outlet>

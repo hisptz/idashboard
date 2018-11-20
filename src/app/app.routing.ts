@@ -32,7 +32,7 @@ export const routes: Routes = [
     component: UpdatesComponent,
   },
   {
-    path: 'pages/faq',
+    path: 'pages/faqs',
     component: FaqComponent,
   },
   {

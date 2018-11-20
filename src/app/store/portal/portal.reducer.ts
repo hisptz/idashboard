@@ -1,5 +1,5 @@
 import {PortalConfigurationAction, PortalActions} from './portal.actions';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState} from './portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, ExternalSourcesState} from './portal.state';
 
 export function portalReducer(state: PortalConfigurationState = null, action: PortalConfigurationAction) {
   switch (action.type) {
@@ -41,3 +41,16 @@ export function faqReducer(state: FAQState = null, action: PortalConfigurationAc
 
 // END: FAQ REDUCER
 
+
+export function loadDataFromExternalSourcesReducer(state: ExternalSourcesState = null, action: PortalConfigurationAction) {
+  switch (action.type) {
+    case PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE_SUCCESS:
+      console.log('data from external sources', action.payload)
+      return {...action.payload};
+    case PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE:
+      console.log('id of the data to be loaded', action.payload);
+      return state;
+    default:
+      return state;
+  }
+}

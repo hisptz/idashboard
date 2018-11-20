@@ -1,3 +1,11 @@
+.container {
+  width: 100%;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .dashboard-container {
   /*width: 21cm;*/
 }

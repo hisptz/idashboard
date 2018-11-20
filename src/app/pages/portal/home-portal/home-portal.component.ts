@@ -1,8 +1,20 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {DownloadsState, FAQState, PortalConfigurationState, StatsSummaryState} from '../../../store/portal/portal.state';
+import {
+  DownloadsState,
+  ExternalSourcesState,
+  FAQState,
+  PortalConfigurationState,
+  StatsSummaryState
+} from '../../../store/portal/portal.state';
 import {Observable} from 'rxjs/index';
-import {getDownloads, getFAQs, getPortalConfiguration, getStatsSummary} from '../../../store/portal/portal.selectors';
+import {
+  getDataFromExternalSource,
+  getDownloads,
+  getFAQs,
+  getPortalConfiguration,
+  getStatsSummary
+} from '../../../store/portal/portal.selectors';
 import {Store} from '@ngrx/store';
 import {CurrentUserState} from '../../../store/current-user/current-user.state';
 import {getCurrentUser} from '../../../store/current-user/current-user.selectors';
@@ -27,6 +39,8 @@ export class HomePortalComponent implements OnInit {
   theSetPage: string;
   portalPages: any;
   portalThemes: any;
+  location = {};
+  dataFromExternalSource$: Observable<ExternalSourcesState>;
   allNews: any;
   selectedPageInformation: any;
   statsSummaryGroups: Array<any>;
@@ -37,14 +51,21 @@ export class HomePortalComponent implements OnInit {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     store.dispatch(new portalActions.LoadDownloadsAction());
     store.dispatch(new portalActions.LoadFAQAction());
+    store.dispatch(new portalActions.LoadExtractedDataFromExternalSourcesFailAction('../portal-middleware/extract/who-factbuffects'));
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
     this.downloads$ = store.select(getDownloads);
     this.portalFAQs$ = store.select(getFAQs);
+    this.dataFromExternalSource$ = store.select(getDataFromExternalSource);
   }
 
   ngOnInit() {
+
+    if (window.navigator.geolocation) {
+      console.log('here for the navigator');
+      window.navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    }
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {
         this.theSetPage = params['id']; const parentId = params['parentId'];
@@ -66,7 +87,6 @@ export class HomePortalComponent implements OnInit {
       })
     }
     this.httpClient.get('../portal-middleware/extract/who-factbuffects', httpOptions).subscribe((data) => {
-      console.log(data);
       try {
         this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
           data['data']
@@ -97,6 +117,18 @@ export class HomePortalComponent implements OnInit {
         }
       });
     }
+
+    if (this.dataFromExternalSource$) {
+      this.dataFromExternalSource$.subscribe((dataFromExternalSource) => {
+        if (dataFromExternalSource) {
+          console.log('dataFromExternalSource', dataFromExternalSource);
+        }
+      })
+    }
   }
 
+  setPosition(position) {
+    this.location = position.coords;
+    console.log('position.coords', position.coords);
+  }
 }

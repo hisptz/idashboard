@@ -7,7 +7,13 @@
     margin-top: 0;
   }
 }
-
+.container {
+  width: 100%;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: auto;
+  margin-left: auto;
+}
 
 /* Progress bar*/
 .loading-progress {
@@ -15,13 +21,7 @@
   border-radius: 2px;
 }
 
-.container {
-  width: 100%;
-  padding-right: 0px !important;
-  padding-left: 0px !important;
-  margin-right: auto;
-  margin-left: auto;
-}
+
 
 .footer {
   margin-top: 30px;
