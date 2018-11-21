@@ -10,7 +10,7 @@
 }
 
 .list-card-item:hover {
-  background-color: #2A8FD1;
+  background-color: #2A8FD1 !important;
   color: #FFFFFF !important;
 }
 
