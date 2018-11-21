@@ -105,6 +105,7 @@ import { FooterComponent } from './pages/portal/shared-components/footer/footer.
 import { VisualizationSliderComponent } from './pages/portal/visualization-slider/visualization-slider.component';
 import { VisualizationSliderFullScreenComponent } from './pages/portal/visualization-slider/visualization-slider-full-screen/visualization-slider-full-screen.component';
 import { VisualizationSliderResizeComponent } from './pages/portal/visualization-slider/visualization-slider-resize/visualization-slider-resize.component';
+import { GetDataComponent } from './pages/portal/shared-components/get-data/get-data.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -180,6 +181,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     VisualizationSliderComponent,
     VisualizationSliderFullScreenComponent,
     VisualizationSliderResizeComponent,
+    GetDataComponent,
   ],
   imports: [
     BrowserModule,

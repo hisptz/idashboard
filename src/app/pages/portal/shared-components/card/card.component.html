@@ -3,7 +3,8 @@
     <a routerLink="{{cardInfo.routeUrl}}">
       <div class="card-header">{{cardInfo.header}}</div>
       <div class="card-body">
-        <h5 class="card-title" *ngIf="cardInfo.data">{{cardInfo.data}}</h5>
+        <h5 class="card-title" *ngIf="cardInfo.data && !cardInfo.dimensionsSet">{{cardInfo.data}}</h5>
+        <h5 class="card-title" *ngIf="cardInfo.data && cardInfo.dimensionsSet"><app-get-data [dataDimensions]="cardInfo.dimensions"></app-get-data></h5>
         <p class="card-text">{{cardInfo.description}}</p>
       </div>
     </a>

@@ -16,9 +16,7 @@ export class TopHeaderMenuComponent implements OnInit {
   ngOnInit() {
     if (this.allNews && this.portalPages) {
       this.allNews.forEach((news) => {
-        console.log(this.portalPages);
         if (news.isItNew === true) {
-          console.log('news', this.allNews);
           const pagesArr = [];
           this.portalPages.forEach((page) => {
             if (page.id === 'TY89iyga57SQ') {
@@ -30,14 +28,11 @@ export class TopHeaderMenuComponent implements OnInit {
                 'isHomePage': page.isHomePage,
                 'name': page.name
               };
-              console.log(newPage);
               pagesArr.push(newPage);
             } else {
-              console.log('p', page);
               pagesArr.push(page);
             }
             this.pages = pagesArr;
-            console.log('pages new', this.pages);
           });
         }
       });

@@ -17,7 +17,10 @@ export enum PortalActions {
   LOAD_DATA_FROM_EXTERNAL_SOURCE_FAIL = '[Data from external source]Load Data from external source fail',
   LOAD_FAQ = '[FAQ] Load downloads',
   LOAD_FAQ_SUCCESS = '[FAQ] Load downloads success',
-  LOAD_FAQ_FAIL = '[FAQ] Load downloads fail'
+  LOAD_FAQ_FAIL = '[FAQ] Load downloads fail',
+  LOAD_DATA = '[Data] load data',
+  LOAD_DATA_SUCCESS = '[Data] load data success',
+  LOAD_DATA_FAIL = '[Data] load data fail'
 }
 
 export class LoadPortalConfigurationAction implements Action {
@@ -93,7 +96,7 @@ export class LoadFAQFailAction implements Action {
 
 export class LoadExtractedDataFromExternalSourcesAction implements Action {
   readonly type = PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE;
-  constructor(public payload: string) {}
+  constructor(public payload: any) {}
 }
 
 export class LoadExtractedDataFromExternalSourcesSuccessAction implements Action {
@@ -106,6 +109,22 @@ export class LoadExtractedDataFromExternalSourcesFailAction implements Action {
   constructor(public payload: any) {}
 }
 
+// Load data
+export class LoadDataAction implements Action {
+  readonly type = PortalActions.LOAD_DATA;
+  constructor (public payload: any) {}
+}
+
+
+export class LoadDataSuccessAction implements Action {
+  readonly type = PortalActions.LOAD_DATA_SUCCESS;
+  constructor (public payload: any) {}
+}
+
+export class LoadDataFailAction implements Action {
+  readonly type = PortalActions.LOAD_DATA_FAIL;
+  constructor (public payload: any) {}
+}
 
 
 
@@ -123,4 +142,7 @@ export type PortalConfigurationAction =  LoadPortalConfigurationAction
   | LoadFAQFailAction
   | LoadExtractedDataFromExternalSourcesAction
   | LoadExtractedDataFromExternalSourcesSuccessAction
-  | LoadExtractedDataFromExternalSourcesFailAction;
+  | LoadExtractedDataFromExternalSourcesFailAction
+  | LoadDataAction
+  | LoadDataSuccessAction
+  | LoadDataFailAction;

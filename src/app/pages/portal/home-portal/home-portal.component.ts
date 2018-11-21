@@ -51,7 +51,7 @@ export class HomePortalComponent implements OnInit {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     store.dispatch(new portalActions.LoadDownloadsAction());
     store.dispatch(new portalActions.LoadFAQAction());
-    store.dispatch(new portalActions.LoadExtractedDataFromExternalSourcesFailAction('../portal-middleware/extract/who-factbuffects'));
+    store.dispatch(new portalActions.LoadExtractedDataFromExternalSourcesAction('../portal-middleware/extract/who-factbuffects'));
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
@@ -62,6 +62,18 @@ export class HomePortalComponent implements OnInit {
 
   ngOnInit() {
 
+    if (this.dataFromExternalSource$) {
+      this.dataFromExternalSource$.subscribe((dataFromExternalSource) => {
+        try {
+          this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
+            dataFromExternalSource['data']
+          );
+          this.hasScriptSet = true;
+        } catch (e) {
+          console.log(JSON.stringify(e));
+        }
+      });
+    }
     if (window.navigator.geolocation) {
       console.log('here for the navigator');
       window.navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
@@ -80,22 +92,6 @@ export class HomePortalComponent implements OnInit {
         }
       });
     }
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/text',
-      })
-    }
-    this.httpClient.get('../portal-middleware/extract/who-factbuffects', httpOptions).subscribe((data) => {
-      try {
-        this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
-          data['data']
-        );
-        this.hasScriptSet = true;
-      } catch (e) {
-        console.log(JSON.stringify(e));
-      }
-    });
 
     if (this.statsSummary$) {
       this.statsSummary$.subscribe((statisticsSummary) => {
@@ -123,7 +119,7 @@ export class HomePortalComponent implements OnInit {
         if (dataFromExternalSource) {
           console.log('dataFromExternalSource', dataFromExternalSource);
         }
-      })
+      });
     }
   }
 

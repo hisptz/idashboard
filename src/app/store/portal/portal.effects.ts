@@ -5,10 +5,11 @@ import * as portalActions from '../portal/portal.actions';
 import 'rxjs/add/operator/switchMap';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
 import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, ExternalSourcesState} from './portal.state';
-import * as dashboard from '../dashboard/dashboard.actions';
+import {AppState} from '../app.reducers';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class PortalEffects {
@@ -60,22 +61,48 @@ export class PortalEffects {
 
   // ENDS: FAQ EFFECTS
 
+  // Effect for Data from external source (extracted by the middleware)
   @Effect()
   dataFromExternalSource$ = this.actions$
     .ofType<portalActions.LoadExtractedDataFromExternalSourcesAction>(portalActions.PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE)
     .pipe(
       switchMap((action: any) => this._loadData(action.payload).pipe(
-        map((dataObject: ExternalSourcesState) =>
-        new portalActions.LoadExtractedDataFromExternalSourcesSuccessAction(dataObject))
+        map((dataObject: any) =>
+        new portalActions.LoadExtractedDataFromExternalSourcesSuccessAction(dataObject)),
+        catchError((error) => of(new portalActions.LoadExtractedDataFromExternalSourcesFailAction(error)))
       ))
     );
 
-  constructor(private actions$: Actions,
+  // Effect for data analytics
+  @Effect()
+  dataAnalytics$ = this.actions$
+    .ofType(portalActions.PortalActions.LOAD_DATA)
+    .pipe(
+      // tap((action: any) => {
+      // console.log('payload', action.payload);
+      //   const data$ = this._analyticsData(action.payload);
+      //   if (data$) {
+      //     data$.subscribe((data) => {
+      //       console.log(JSON.stringify(data));
+      //     });
+      //   }
+      //   this.store.dispatch(new portalActions.LoadDataSuccessAction({'id': 'jose', 'name': 'Josepjat'}));
+      // })
+      switchMap((action: any) => this._analyticsData(action.payload).pipe(
+        map((analyticsObj: any) => new portalActions.LoadDataSuccessAction(analyticsObj))
+      ))
+    )
+
+  constructor(private actions$: Actions, private store: Store<AppState>,
               private httpClient: HttpClientService) {
   }
 
   private _loadData(url): Observable<any> {
-    console.log('load data url', url);
+    return this.httpClient.get(url);
+  }
+
+  private _analyticsData(dataDimensions): Observable<any> {
+    const url = '../api/analytics.json?dimension=dx:' + dataDimensions['indicatorId'] + '&dimension=pe:' + dataDimensions['period'] + '&filter=ou:' + dataDimensions['orgUnitId'] + '&displayProperty=NAME&skipMeta=false';
     return this.httpClient.get(url);
   }
 }

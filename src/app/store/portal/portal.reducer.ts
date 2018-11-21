@@ -1,5 +1,5 @@
 import {PortalConfigurationAction, PortalActions} from './portal.actions';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, ExternalSourcesState} from './portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, ExternalSourcesState, DataState} from './portal.state';
 
 export function portalReducer(state: PortalConfigurationState = null, action: PortalConfigurationAction) {
   switch (action.type) {
@@ -45,12 +45,32 @@ export function faqReducer(state: FAQState = null, action: PortalConfigurationAc
 export function loadDataFromExternalSourcesReducer(state: ExternalSourcesState = null, action: PortalConfigurationAction) {
   switch (action.type) {
     case PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE_SUCCESS:
-      console.log('data from external sources', action.payload)
       return {...action.payload};
-    case PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE:
-      console.log('id of the data to be loaded', action.payload);
-      return state;
+    case PortalActions.LOAD_DATA_FROM_EXTERNAL_SOURCE: {
+      return {
+        ...state
+      };
+    }
     default:
       return state;
+  }
+}
+
+export function loadAnalyticsData(state: DataState = null, action: PortalConfigurationAction) {
+  switch (action.type) {
+    case PortalActions.LOAD_DATA_SUCCESS: {
+      // const newObj = {};
+      // newObj[action.payload.rows[0][0]] = action.payload;
+      // return {
+      //   ...state,
+      //   ...newObj
+      // };
+      return {...action.payload};
+    }
+    case PortalActions.LOAD_DATA: {
+      return {
+        ...state
+      };
+    }
   }
 }

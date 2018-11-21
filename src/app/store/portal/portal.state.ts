@@ -43,3 +43,11 @@ export interface FAQState {
 export interface ExternalSourcesState {
   data: any;
 }
+
+export interface DataState {
+  headers: any;
+  metaData: any;
+  rows: any;
+  height: number;
+  width: number;
+}
