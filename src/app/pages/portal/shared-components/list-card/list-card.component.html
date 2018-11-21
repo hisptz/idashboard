@@ -1,6 +1,6 @@
 <div class="list-card-item" (click)="showQuestionsById(listObject.id)" id="{{listObject.id}}">
   <span *ngIf="listObject['imgSrc']">
-    <img src="{{listObject['imgSrc']}}" height="16" width="26">
+    <img src="{{listObject['imgSrc']}}" height="16" width="20">
   </span>
   <span  *ngIf="!listObject['imgSrc']">
     {{listObject['symbol']}}
