@@ -6,7 +6,7 @@
   <app-menu></app-menu>
 </div>
 <div class="no-print container" *ngIf="portalConfigurations && portalConfigurations.isPortal">
-  <app-top-header-menu [portalPages]="portalConfigurations.pages" [allNews]="allNews"></app-top-header-menu>
+  <app-top-header-menu [portalConfigurations]="portalConfigurations" [allNews]="allNews"></app-top-header-menu>
 </div>
 <section id="page-container" class="container">
   <router-outlet></router-outlet>

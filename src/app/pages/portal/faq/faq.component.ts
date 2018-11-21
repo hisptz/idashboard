@@ -17,6 +17,7 @@ export class FaqComponent implements OnInit {
 
   portalFAQs: any;
   portalFAQs$: Observable<FAQState>;
+  activeDivId: string;
   constructor(private store: Store<AppState>, private faqSanitizer: DomSanitizer) {
     store.dispatch(new portalActions.LoadFAQAction());
     this.portalFAQs$ = store.select(getFAQs);
@@ -26,37 +27,16 @@ export class FaqComponent implements OnInit {
     if (this.portalFAQs$) {
       this.portalFAQs$.subscribe((faq) => {
         if (faq) {
+          this.activeDivId = faq['faq']['faqMenu'][0].id;
+          console.log('active id', this.activeDivId)
           this.portalFAQs = faq;
-          console.log('CAINAM FAQS TS: ' + JSON.stringify(this.portalFAQs));
         }
       });
     }
   }
 
-  openOtherFAQItems(event, id) {
-    console.log("I'm CLicked By Cainam");
-  }
-
-  openCity(evt, elementID, data) {
-    if (data.faq.faqMenu.id === elementID) {
-      console.log('CAINAM TESTING: ' + JSON.stringify(data.faq.faqMenu.id));
-    } else {
-      console.log('CAINAM TESTING: ' + JSON.stringify(data.faq));
-    }
-
-    // let i, tabcontent, tablinks;
-    // tabcontent = document.getElementsByClassName('tabcontent');
-    // for (i = 0; i < tabcontent.length; i++) {
-
-    // }
-
-    // document.getElementById(tabIndex).style.display = 'block';
-    // evt.currentTarget.className += ' active';
-  }
-
-  trustedUrl(url) {
-    console.log(url);
-    return this.faqSanitizer.bypassSecurityTrustResourceUrl(url);
+  shownQuestionsById(id) {
+    this.activeDivId = id;
   }
 
 }

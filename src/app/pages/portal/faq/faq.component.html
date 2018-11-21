@@ -1,111 +1,33 @@
-<!--
-<section id="tabs" *ngIf="portalFAQ">
-  <div>
-    <div class="row">
-      <div class="col-lg-12 col-xs-12 ">
-        <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a *ngFor="let portalFAQItem of portalFAQ['faq'].faqMenu" class="nav-item nav-link {{portalFAQItem.class}}" id="{{portalFAQItem.id}}-tab" data-toggle="tab" href="#{{portalFAQItem.id}}" role="tab" aria-controls="nav-home" aria-selected="true">{{portalFAQItem.name}}</a>
-          </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-          <div  *ngFor="let portalFAQItem of portalFAQ['faq']" class="tab-pane fade show {{portalFAQItem.class}}" id="{{portalFAQItem.id}}" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div>
-              <div class="col-lg-3 col-md-12 col-xs-12 tab">
-                <div>
-                  <button class="tablinks active" (click)="openCity(event, portalFAQItem['faqMenu'][0].id)" id="defaultOpen">{{portalFAQItem['faqMenu'][0].name}}</button>
-                </div>
-                <div *ngFor="let portalFAQItemOptions of portalFAQItem['faqMenu']">
-                  <button *ngIf="portalFAQItemOptions.id != portalFAQItem['faqMenu'][0].id" class="tablinks" (click)="openCity(event, portalFAQItemOptions.id)" id="btn-{{portalFAQItemOptions.id}}">{{portalFAQItemOptions.name}}</button>
-                </div>
-              </div>
-              <div id="{{portalFAQItem['faqMenu'][0].id}}" style="display: block" class="tabcontent col-lg-9 col-md-12 col-xs-12">
-                <h3>{{download['components'][0].name}}</h3>
-                <div *ngIf="portalFAQItem['faqMenu'][0]['faqqn'].length == 0" class="div-iframe">
-                  <div [innerHtml]="portalFAQItem['faqMenu'][0].title | safeHtml"></div>
-                </div>
-                <div *ngIf="portalFAQItem['faqMenu'][0]['faqqn'].length > 0"  class="div-iframe">
-                  <app-statistics-summary [subPages]="portalFAQItem['faqMenu'][0]['faqqn']"></app-statistics-summary>
-                </div>
-              </div>
-              <div *ngFor="let downloadOption of download['components']"  style="display: none" id="{{downloadOption.id}}"class="tabcontent col-lg-9 col-md-12 col-xs-12">
-                <div *ngIf="download.id !== download['components'][0].id"  >
-                  <h3>{{downloadOption.name}}</h3>
-                  <div *ngIf="downloadOption['subPages'].length == 0"  class="div-iframe">
-                    <div [innerHtml]="downloadOption.link | safeHtml"></div>
-                  </div>
-                  <div *ngIf="downloadOption['subPages'].length > 0"  class="div-iframe">
-                    <app-statistics-summary [subPages]="downloadOption['subPages']"></app-statistics-summary>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section> -->
-
 <section id="tabs" *ngIf="portalFAQs">
   <div class="container">
     <div class="row">
       <h4 class="header-info">{{ portalFAQs['faq'].title }}</h4>
       <p class="faq-desc"> {{ portalFAQs['faq'].desc }} </p>
     </div>
-    <div>
-    </div>
-    <!-- <div class="row">
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a id="nav-item" *ngFor="let faqMenuItem of portalFAQ['faq'].faqMenu" class="nav-item nav-link {{ faqMenuItem.class }}"
-            id="{{faqMenuItem.id}}-tab" data-toggle="tab" href="#{{faqMenuItem.id}}" role="tab" aria-controls="nav-home"
-            aria-selected="true" (click)="openOtherFAQItems(event, faqMenuItem.id)">{{faqMenuItem.name}}</a>
-          <p> {{ idx }} {{ faqMenuItem.name }} </p>
-        </div>
-      </nav>
-    </div> -->
     <div class="row">
       <div class="row">
+        <div class="col-md-12 lists">
+          <app-list-card [listObject]="faqMenuItem" [activeDivId]="activeDivId" (questionGroupId)="shownQuestionsById($event)" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu"></app-list-card>
+        </div>
         <div class="col-md-12" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu; let idx = index">
-          <h5 class="">{{ faqMenuItem.name }}</h5>
-          <div *ngFor="let faqMenuItemData of portalFAQs['faq'].faqMenu[idx].faqqn">
-            <div>
-              <a class="" data-toggle="collapse" href="#{{ faqMenuItemData.id }}" role="button" aria-expanded="false"
-                aria-controls="">
-                - {{ faqMenuItemData.title }}
-              </a>
-            </div>
-            <div class="collapse" id="{{ faqMenuItemData.id }}">
-              <div class="card card-body">
-                {{ faqMenuItemData.answer }}
+          <!--<h5 class="">{{ faqMenuItem.name }}</h5>-->
+          <div *ngIf="faqMenuItem.id == activeDivId">
+            <div *ngFor="let faqMenuItemData of portalFAQs['faq'].faqMenu[idx].faqqn">
+              <div class="qns-list">
+                <a data-toggle="collapse" href="#{{ faqMenuItemData.id }}" role="button" aria-expanded="false"
+                   aria-controls="">
+                  - {{ faqMenuItemData.title }}
+                </a>
+              </div>
+              <div class="collapse" id="{{ faqMenuItemData.id }}">
+                <div class="card card-body">
+                  {{ faqMenuItemData.answer }}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-    <!-- <div class="row">
-      <div class="tab-content" id="nav-tabContent">
-        <div id="{{ faqMenuItemData.id }}" *ngFor="let faqMenuItem of portalFAQ['faq'].faqMenu; let idx = index">
-          <div *ngFor="let faqMenuItemData of portalFAQ['faq'].faqMenu[idx].faqqn">
-            <div>
-              <a class="" data-toggle="collapse" href="#{{ faqMenuItemData.id }}" role="button" aria-expanded="false"
-                aria-controls="">
-                {{ idx }} {{ faqMenuItemData.title }}
-              </a>
-            </div>
-            <div class="collapse" id="{{ faqMenuItemData.id }}">
-              <div class="card card-body">
-                {{ idx }} {{ faqMenuItemData.answer }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </section>

@@ -7,18 +7,20 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TopHeaderMenuComponent implements OnInit {
 
-  @Input() portalPages: any;
+  @Input() portalConfigurations: any;
   @Input() allNews: any;
   pages: Array<any>;
+  headerInfo: any;
   constructor() {
   }
 
   ngOnInit() {
-    if (this.allNews && this.portalPages) {
+    if (this.allNews && this.portalConfigurations) {
+      this.headerInfo = this.portalConfigurations['header'];
       this.allNews.forEach((news) => {
         if (news.isItNew === true) {
           const pagesArr = [];
-          this.portalPages.forEach((page) => {
+          this.portalConfigurations['pages'].forEach((page) => {
             if (page.id === 'TY89iyga57SQ') {
               const routerUrl = page.routeUrl;
               const newPage = {

@@ -35,3 +35,11 @@ h5 {
     margin: 5px;
     font-size: 17px;
 }
+
+section #tabs {
+  padding-bottom: 30px;
+}
+
+.qns-list a {
+  color: #2A8FD1 !important;
+}
