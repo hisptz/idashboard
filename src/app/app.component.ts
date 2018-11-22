@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   theSetPage: string;
   portalPages: any;
   allNews: any;
+  footerData: any;
   constructor(private titleService: Title, private router: Router, private store: Store<AppState>, private route: ActivatedRoute) {
     store.dispatch(new currentUser.LoadAction());
     store.dispatch(new portalActions.LoadStatsSummaryAction());
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit {
           if (portalConfigurations) {
             this.portalConfigurations = portalConfigurations;
             this.portalPages = portalConfigurations['pages'];
+            this.footerData = portalConfigurations['footer'];
           }
         });
       });
