@@ -8,7 +8,9 @@ export function drawTable(
   legendSets: LegendSet[],
   tableId?: string
 ) {
-  const legendClasses = tableConfiguration.legendSet ? tableConfiguration.legendSet.legends : null;
+  const legendClasses = tableConfiguration.legendSet
+    ? tableConfiguration.legendSet.legends
+    : null;
   const {
     columnsStyles = {},
     columnGroups = [],
@@ -19,13 +21,18 @@ export function drawTable(
   } = tableConfiguration;
 
   const referencePeriodIndex =
-    favPeValues && favPeValues.items && favPeValues.items.findIndex(({ ref_type }) => ref_type === 'PERIOD_REF');
-  const peArray = analyticsObject && analyticsObject.metaData && analyticsObject.metaData.pe;
+    favPeValues &&
+    favPeValues.items &&
+    favPeValues.items.findIndex(({ ref_type }) => ref_type === 'PERIOD_REF');
+  const peArray =
+    analyticsObject && analyticsObject.metaData && analyticsObject.metaData.pe;
 
-  const referencePeriod = useReferencePeriod && peArray && peArray[referencePeriodIndex];
-
+  const referencePeriod =
+    useReferencePeriod && peArray && peArray[referencePeriodIndex];
   const table = {
-    headers: columnGroups.length ? [{ items: [...columnGroups], style: '' }] : [],
+    headers: columnGroups.length
+      ? [{ items: [...columnGroups], style: '' }]
+      : [],
     columns: [],
     rows: [],
     titles: {
@@ -37,7 +44,9 @@ export function drawTable(
   };
   if (tableConfiguration.hasOwnProperty('title')) {
     table['title'] = tableConfiguration.title;
-    table['titleColor'] = tableConfiguration.styles ? tableConfiguration.styles.header : null;
+    table['titleColor'] = tableConfiguration.styles
+      ? tableConfiguration.styles.header
+      : null;
   }
   if (tableConfiguration.hasOwnProperty('subtitle')) {
     table['subtitle'] = tableConfiguration.subtitle;
@@ -47,11 +56,15 @@ export function drawTable(
       items: [],
       style: ''
     };
-    tableConfiguration.columns[tableConfiguration.columns.indexOf('pe')] = 'eventdate';
-    tableConfiguration.columns[tableConfiguration.columns.indexOf('ou')] = 'ouname';
+    tableConfiguration.columns[tableConfiguration.columns.indexOf('pe')] =
+      'eventdate';
+    tableConfiguration.columns[tableConfiguration.columns.indexOf('ou')] =
+      'ouname';
     for (const item of tableConfiguration.columns) {
       table.headers[0].items.push({
-        name: analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)].column,
+        name:
+          analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)]
+            .column,
         span: 1
       });
     }
@@ -77,21 +90,31 @@ export function drawTable(
     if (tableConfiguration.showDimensionLabels) {
       table.titlesAvailable = true;
       for (const item of tableConfiguration.columns) {
-        const titleColumns = analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)].column;
+        const titleColumns =
+          analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)]
+            .column;
         table.titles.column.push(titleColumns);
       }
       for (const item of tableConfiguration.rows) {
-        table.titles.rows.push(analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)].column);
+        table.titles.rows.push(
+          analyticsObject.headers[getTitleIndex(analyticsObject.headers, item)]
+            .column
+        );
       }
     }
 
     for (const columnItem of tableConfiguration.columns) {
-      const dimension = calculateColSpan(analyticsObject, tableConfiguration.columns, columnItem, [
-        ...declineIndicators,
-        ...onlyUseActualPeriod
-      ]);
+      const dimension = calculateColSpan(
+        analyticsObject,
+        tableConfiguration.columns,
+        columnItem,
+        [...declineIndicators, ...onlyUseActualPeriod]
+      );
       const groupsIds = columnGroups.map(({ id }) => id) || [];
-      const currentColumnItems = prepareSingleCategories(analyticsObject, columnItem).filter(
+      const currentColumnItems = prepareSingleCategories(
+        analyticsObject,
+        columnItem
+      ).filter(
         ({ uid }) => !groupsIds.includes(uid) && uid !== 'ref_actule_pe'
       );
 
@@ -100,8 +123,16 @@ export function drawTable(
         for (const currentItem of currentColumnItems) {
           headerItem.push({
             name: currentItem.name,
-            row_span: ![...declineIndicators, ...onlyUseActualPeriod].includes(currentItem.uid) ? 1 : 2,
-            span: ![...declineIndicators, ...onlyUseActualPeriod].includes(currentItem.uid) ? dimension.col_span : 1,
+            row_span: ![...declineIndicators, ...onlyUseActualPeriod].includes(
+              currentItem.uid
+            )
+              ? 1
+              : 2,
+            span: ![...declineIndicators, ...onlyUseActualPeriod].includes(
+              currentItem.uid
+            )
+              ? dimension.col_span
+              : 1,
             type: currentItem.type,
             color: columnsStyles[currentItem.uid],
             id: currentItem.uid
@@ -125,7 +156,10 @@ export function drawTable(
     const column_length = tableConfiguration.columns.length;
     const column_items_array = [];
     for (let i = 0; i < column_length; i++) {
-      const currentRowItems = prepareSingleCategories(analyticsObject, tableConfiguration.columns[i]);
+      const currentRowItems = prepareSingleCategories(
+        analyticsObject,
+        tableConfiguration.columns[i]
+      );
       column_items_array.push(currentRowItems);
     }
     let table_columns_array = [];
@@ -154,8 +188,16 @@ export function drawTable(
     const rows_length = tableConfiguration.rows.length;
     const row_items_array = [];
     for (let i = 0; i < rows_length; i++) {
-      const dimension = calculateColSpan(analyticsObject, tableConfiguration.rows, tableConfiguration.rows[i], []);
-      const currentRowItems = prepareSingleCategories(analyticsObject, tableConfiguration.rows[i]);
+      const dimension = calculateColSpan(
+        analyticsObject,
+        tableConfiguration.rows,
+        tableConfiguration.rows[i],
+        []
+      );
+      const currentRowItems = prepareSingleCategories(
+        analyticsObject,
+        tableConfiguration.rows[i]
+      );
       row_items_array.push({ items: currentRowItems, dimensions: dimension });
     }
     let table_rows_array = [];
@@ -201,12 +243,19 @@ export function drawTable(
           }
         }
         for (const colItem of table_columns_array) {
-          const dxUid = colItem.find(({ type }) => type === 'dx') && colItem.find(({ type }) => type === 'dx').uid;
-          const peUid = colItem.find(({ type }) => type === 'pe') && colItem.find(({ type }) => type === 'pe').uid;
-          const dxUseActual = onlyUseActualPeriod.includes(dxUid) && peUid === referencePeriod;
+          const dxUid =
+            colItem.find(({ type }) => type === 'dx') &&
+            colItem.find(({ type }) => type === 'dx').uid;
+          const peUid =
+            colItem.find(({ type }) => type === 'pe') &&
+            colItem.find(({ type }) => type === 'pe').uid;
+          const dxUseActual =
+            onlyUseActualPeriod.includes(dxUid) && peUid === referencePeriod;
           const isDeclineIndicator = declineIndicators.includes(dxUid);
           const isDeclinePeriod = peUid === 'ref_actule_pe';
-          const fillDataInArow = (isDeclineIndicator && isDeclinePeriod) || (!isDeclineIndicator && !isDeclinePeriod);
+          const fillDataInArow =
+            (isDeclineIndicator && isDeclinePeriod) ||
+            (!isDeclineIndicator && !isDeclinePeriod);
           if (fillDataInArow && !dxUseActual) {
             const dataItem = [];
             for (const val of rowItem) {
@@ -219,7 +268,13 @@ export function drawTable(
               name: '',
               val: getDataValue(analyticsObject, dataItem),
               color: getDataValueColor(
-                getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, tableId),
+                getLegendSets(
+                  dataItem,
+                  legendClasses,
+                  legendSets,
+                  tableConfiguration,
+                  tableId
+                ),
                 getDataValue(analyticsObject, dataItem)
               ),
               row_span: '1',
@@ -227,7 +282,10 @@ export function drawTable(
             });
           }
         }
-        if (tableConfiguration.hasOwnProperty('hideEmptyRows') && tableConfiguration.hideEmptyRows) {
+        if (
+          tableConfiguration.hasOwnProperty('hideEmptyRows') &&
+          tableConfiguration.hideEmptyRows
+        ) {
           if (!checkZeros(tableConfiguration.rows.length, item.items)) {
             table.rows.push(item);
           }
@@ -254,7 +312,10 @@ export function drawTable(
           display: true
         });
       }
-      if (tableConfiguration.hasOwnProperty('hideEmptyRows') && tableConfiguration.hideEmptyRows) {
+      if (
+        tableConfiguration.hasOwnProperty('hideEmptyRows') &&
+        tableConfiguration.hideEmptyRows
+      ) {
         if (!checkZeros(tableConfiguration.rows.length, item.items)) {
           table.rows.push(item);
         }
@@ -301,7 +362,11 @@ function calculateColSpan(analyticsObject, array, item, excludedItems = []) {
   return dimensions;
 }
 
-function prepareSingleCategories(initialAnalytics, itemIdentifier, preDefinedItems = []) {
+function prepareSingleCategories(
+  initialAnalytics,
+  itemIdentifier,
+  preDefinedItems = []
+) {
   const analyticsObject = sanitizeIncomingAnalytics(initialAnalytics);
   const structure = [];
   if (preDefinedItems.length === 0) {
@@ -350,7 +415,9 @@ function getDataValue(analyticsObject, dataItems = []) {
   for (const value of analyticsObject.rows) {
     let counter = 0;
     for (const item of dataItems) {
-      if (value[getTitleIndex(analyticsObject.headers, item.type)] === item.value) {
+      if (
+        value[getTitleIndex(analyticsObject.headers, item.type)] === item.value
+      ) {
         counter++;
       }
     }
@@ -358,7 +425,9 @@ function getDataValue(analyticsObject, dataItems = []) {
       if (isNaN(value[getTitleIndex(analyticsObject.headers, 'value')])) {
         num = value[getTitleIndex(analyticsObject.headers, 'value')];
       } else {
-        num += parseFloat(value[getTitleIndex(analyticsObject.headers, 'value')]);
+        num += parseFloat(
+          value[getTitleIndex(analyticsObject.headers, 'value')]
+        );
       }
     }
   }
@@ -373,18 +442,28 @@ function getDataValueColor(legendItems: any = [], value) {
     legendItems.find(
       (item, index) =>
         Number(value) >= Number(item.startValue) &&
-        (Number(value) < Number(item.endValue) || (isLast(index) && Number(value) === Number(item.endValue)))
+        (Number(value) < Number(item.endValue) ||
+          (isLast(index) && Number(value) === Number(item.endValue)))
     );
 
   return dataItem && dataItem.color;
 }
 
-function getLegendSets(dataItem, legendClasses, legendSets, configuration, tableId) {
+function getLegendSets(
+  dataItem,
+  legendClasses,
+  legendSets,
+  configuration,
+  tableId
+) {
   const { legendDisplayStrategy } = configuration;
   if (legendDisplayStrategy === USE_BY_DATA_ITEM_LEGEND) {
     const dx = dataItem.find(dItem => dItem.type === 'dx');
     const legendSetId = `${tableId}_${dx.value}`;
-    const legendSet = legendSetId && legendSets && legendSets.find(({ id }) => id === legendSetId);
+    const legendSet =
+      legendSetId &&
+      legendSets &&
+      legendSets.find(({ id }) => id === legendSetId);
     return legendSet && legendSet.legends;
   }
   return legendClasses;

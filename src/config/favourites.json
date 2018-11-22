@@ -1854,7 +1854,7 @@
     },
     "columnGroups": [{
         "name": "Out-patient",
-        "span": 15,
+        "span": 12,
         "row_span": 1,
         "type": "gp",
         "color": "#009A65",
@@ -1869,6 +1869,18 @@
         "id": "lxAvmpSPV2y"
       }
     ],
+    "declineIndicators": [
+      "VD4CKS8uRsA",
+      "d6FUocDoKFP",
+      "opjQGRn9KXM",
+      "CfvHk9Kk1da",
+      "ufvoNFHpEyQ"
+    ],
+    "onlyUseActualPeriod": [
+      "ZCCrHrs1Ta2",
+      "fj29hAOSNDk",
+      "RqGYc77Xhek"
+    ],
     "columns": [{
         "dimension": "dx",
         "items": [{
@@ -1882,7 +1894,8 @@
             "dimensionItem": "gTPP0wYkXBA",
             "displayName": "Total malaria confirmed cases",
             "dimensionItemType": "INDICATOR"
-          }, {
+          },
+          {
             "id": "VD4CKS8uRsA",
             "dimensionItem": "VD4CKS8uRsA",
             "displayName": "Confirmed cases decline(%)",
@@ -1909,7 +1922,7 @@
           {
             "id": "ufvoNFHpEyQ",
             "dimensionItem": "ufvoNFHpEyQ",
-            "displayName": "Test positivity rate (RDT)",
+            "displayName": "TPR decline %",
             "dimensionItemType": "INDICATOR"
           },
           {
@@ -1941,7 +1954,8 @@
             "dimensionItem": "GxlrIgMyEf4",
             "displayName": "Number of malaria deaths",
             "dimensionItemType": "DATA_ELEMENT"
-          }, {
+          },
+          {
             "id": "CfvHk9Kk1da",
             "dimensionItem": "CfvHk9Kk1da",
             "displayName": "Deaths decline(%)",
@@ -1952,18 +1966,18 @@
       {
         "dimension": "pe",
         "items": [{
-            "id": "THIS_YEAR",
-            "dimensionItem": "THIS_YEAR",
-            "displayName": "THIS_YEAR",
-            "dimensionItemType": "PERIOD"
-          },
-          {
-            "id": "LAST_YEAR",
-            "dimensionItem": "LAST_YEAR",
-            "displayName": "LAST_YEAR",
-            "dimensionItemType": "PERIOD"
-          }
-        ]
+          "id": "LAST_YEAR",
+          "dimensionItem": "LAST_YEAR",
+          "displayName": "LAST_YEAR",
+          "ref_type": "PERIOD_REF",
+          "dimensionItemType": "PERIOD"
+        }, {
+          "id": "THIS_YEAR",
+          "dimensionItem": "THIS_YEAR",
+          "displayName": "THIS_YEAR",
+          "ref_type": "PERIOD_ACTUAL",
+          "dimensionItemType": "PERIOD"
+        }]
       }
     ],
     "dataElementDimensions": [],
@@ -2007,7 +2021,8 @@
         "indicator": {
           "id": "IPI8Xmc1nnT"
         }
-      }, {
+      },
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "ufvoNFHpEyQ"
@@ -2042,7 +2057,8 @@
         "dataElement": {
           "id": "GxlrIgMyEf4"
         }
-      }, {
+      },
+      {
         "dataDimensionItemType": "INDICATOR",
         "dataElement": {
           "id": "CfvHk9Kk1da"
@@ -2385,16 +2401,18 @@
         "columns": [{
           "dimension": "pe",
           "items": [{
-              "id": "THIS_YEAR",
-              "name": "THIS_YEAR",
-              "dimensionItemType": "PERIOD"
-            },
-            {
-              "id": "LAST_YEAR",
-              "name": "LAST_YEAR",
-              "dimensionItemType": "PERIOD"
-            }
-          ]
+            "id": "LAST_YEAR",
+            "dimensionItem": "LAST_YEAR",
+            "displayName": "LAST_YEAR",
+            "ref_type": "PERIOD_REF",
+            "dimensionItemType": "PERIOD"
+          }, {
+            "id": "THIS_YEAR",
+            "dimensionItem": "THIS_YEAR",
+            "displayName": "THIS_YEAR",
+            "ref_type": "PERIOD_ACTUAL",
+            "dimensionItemType": "PERIOD"
+          }]
         }],
         "dataElementDimensions": [],
         "categoryDimensions": [],

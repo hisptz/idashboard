@@ -50,6 +50,7 @@ export class TableListComponent implements OnInit {
         const sanitizedRows = this.getSanitizedRowsByPeAndDx(analytics.rows, customPe);
         analytics.rows = sanitizedRows;
       }
+    } else {
     }
     return analytics;
   }
