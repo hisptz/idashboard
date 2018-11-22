@@ -48,7 +48,11 @@ export function getMergedAnalytics(splitedAnalyticsArray: any[]) {
               if (metadata[metadataKey]) {
                 const metadataIdIndex = _.indexOf(metadata[metadataKey], metadataId);
                 if (metadataIdIndex === -1) {
-                  metadata[metadataKey].push(metadataId);
+                  if (metadataKey === 'pe' && metadataId !== 'ref_actule_pe') {
+                    metadata[metadataKey] = [metadataId, ...metadata[metadataKey]];
+                  } else {
+                    metadata[metadataKey].push(metadataId);
+                  }
                 }
               } else {
                 metadata[metadataKey] = [];
