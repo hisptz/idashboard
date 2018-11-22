@@ -1,9 +1,9 @@
-<div class="list-card-item" (click)="showQuestionsById(listObject.id)" id="{{listObject.id}}">
+<div class="list-mega-btn" (click)="showQuestionsById(listObject.id)" id="{{listObject.id}}">
   <span *ngIf="listObject['imgSrc']">
     <img src="{{listObject['imgSrc']}}" height="16" width="20">
   </span>
   <span  *ngIf="!listObject['imgSrc']">
     {{listObject['symbol']}}
   </span>
-  <h4 class="list-card-item-name">{{listObject.name}}</h4>
+  <h4 class="list-mega-btn-name">{{listObject.name}}</h4>
 </div>

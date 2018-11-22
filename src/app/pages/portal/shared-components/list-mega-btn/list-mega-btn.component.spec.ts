@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListCardComponent } from './list-card.component';
+import { ListMegaBtnComponent } from './list-mega-btn.component';
 
-describe('ListCardComponent', () => {
-  let component: ListCardComponent;
-  let fixture: ComponentFixture<ListCardComponent>;
+describe('ListMegaBtnComponent', () => {
+  let component: ListMegaBtnComponent;
+  let fixture: ComponentFixture<ListMegaBtnComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListCardComponent ]
+      declarations: [ ListMegaBtnComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListCardComponent);
+    fixture = TestBed.createComponent(ListMegaBtnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

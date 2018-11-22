@@ -1,0 +1,13 @@
+<div class="list-card-with-open">
+  <div class="lists-title">
+    <a data-toggle="collapse" href="#{{ listObj.id }}" role="button" aria-expanded="false"
+       aria-controls="">
+      - {{ listObj.title }}
+    </a>
+  </div>
+  <div class="collapse" id="{{ listObj.id }}">
+    <div class="card card-body">
+      {{ listObj.answer }}
+    </div>
+  </div>
+</div>

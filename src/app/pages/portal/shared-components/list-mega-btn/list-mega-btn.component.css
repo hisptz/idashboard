@@ -1,4 +1,4 @@
-.list-card-item {
+.list-mega-btn {
   min-width: 50px;
   height: 80px;
   display: inline-block;
@@ -9,16 +9,16 @@
   cursor: pointer;
 }
 
-.list-card-item:hover {
+.list-mega-btn:hover {
   background-color: #2A8FD1 !important;
   color: #FFFFFF !important;
 }
 
-.list-card-item-name {
+.list-mega-btn-name {
   text-align: center;
   color: inherit;
 }
 
-.list-card-item span {
+.list-mega-btn span {
   margin-bottom: 4px;
 }

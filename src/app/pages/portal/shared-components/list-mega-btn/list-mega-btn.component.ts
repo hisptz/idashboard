@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-list-card',
-  templateUrl: './list-card.component.html',
-  styleUrls: ['./list-card.component.css']
+  selector: 'app-list-mega-btn',
+  templateUrl: './list-mega-btn.component.html',
+  styleUrls: ['./list-mega-btn.component.css']
 })
-export class ListCardComponent implements OnInit {
+export class ListMegaBtnComponent implements OnInit {
 
   @Input() listObject: any;
   @Input() activeDivId: string;
@@ -21,7 +21,7 @@ export class ListCardComponent implements OnInit {
 
   showQuestionsById(id) {
     this.questionGroupId.emit(id);
-    const classDom = document.getElementsByClassName('list-card-item');
+    const classDom = document.getElementsByClassName('list-mega-btn');
     for (let count = 0; count < classDom.length; count++) {
       document.getElementById(classDom[count].id).style.backgroundColor = '#eee';
       document.getElementById(classDom[count].id).style.color = '#222222';
@@ -29,4 +29,5 @@ export class ListCardComponent implements OnInit {
     document.getElementById(id).style.backgroundColor = '#2A8FD1';
     document.getElementById(id).style.color = '#FFFFFF';
   }
+
 }
