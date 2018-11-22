@@ -39,18 +39,14 @@ export function getMergedAnalytics(splitedAnalyticsArray: any[]) {
         if (metadataKey === 'names') {
           const metadataNamesKeys = _.keys(metadataKeyValues);
           _.each(metadataNamesKeys, metadataNameKey => {
-            metadataNames[metadataNameKey] =
-              analyticsObject.metaData.names[metadataNameKey];
+            metadataNames[metadataNameKey] = analyticsObject.metaData.names[metadataNameKey];
           });
         } else {
           const metadataIds = analyticsObject.metaData[metadataKey];
           if (metadataIds.length > 0) {
             _.each(metadataIds, metadataId => {
               if (metadata[metadataKey]) {
-                const metadataIdIndex = _.indexOf(
-                  metadata[metadataKey],
-                  metadataId
-                );
+                const metadataIdIndex = _.indexOf(metadata[metadataKey], metadataId);
                 if (metadataIdIndex === -1) {
                   metadata[metadataKey].push(metadataId);
                 }
