@@ -21,6 +21,4 @@ export interface TableConfiguration {
   styles: any;
   declineIndicators: any;
   onlyUseActualPeriod: Array<any>;
-  useReferencePeriod: boolean;
-  peValues: any;
 }
