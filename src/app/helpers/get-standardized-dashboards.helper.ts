@@ -40,9 +40,14 @@ export function getStandardizedDashboards(dashboards: any[], currentUser: User, 
           layout: 'filters',
           items: [
             {
-              id: orgUnits[0] ? orgUnits[0].id : '',
-              name: orgUnits[0] ? orgUnits[0].name : '',
-              type: 'ORGANISATION_UNIT'
+              id: 'USER_ORGUNIT',
+              name: 'User Org-unit',
+              type: 'USER_ORGANISATION_UNIT'
+            },
+            {
+              id: 'USER_ORGUNIT_CHILDREN',
+              name: 'User Sub-units',
+              type: 'USER_ORGANISATION_UNIT'
             }
           ]
         }
