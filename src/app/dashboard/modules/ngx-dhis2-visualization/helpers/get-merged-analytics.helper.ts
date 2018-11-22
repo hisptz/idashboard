@@ -15,76 +15,44 @@ export function getMergedAnalytics(splitedAnalyticsArray: any[]) {
     return splitedAnalyticsArray[0] || null;
   }
 
-  /**
-   * Get headers
-   */
-  const headers = _.map(splitedAnalyticsArray, analyticsObject => {
-    return {
-      headersLength: analyticsObject.headers.length,
-      headers: analyticsObject.headers
-    };
-  }).sort((a, b) => b.headersLength - a.headersLength)[0].headers;
-
-  /**
-   * Get metadata information and rows
-   */
-  const metadataNames: any = {};
-  const metadata: any = {};
-  let mergedRows: any[] = [];
-  _.each(splitedAnalyticsArray, (analyticsObject: any) => {
-    if (analyticsObject) {
-      const metadataKeys = _.keys(analyticsObject.metaData);
-      _.each(metadataKeys, metadataKey => {
-        const metadataKeyValues = analyticsObject.metaData[metadataKey];
-        if (metadataKey === 'names') {
-          const metadataNamesKeys = _.keys(metadataKeyValues);
-          _.each(metadataNamesKeys, metadataNameKey => {
-            metadataNames[metadataNameKey] = analyticsObject.metaData.names[metadataNameKey];
-          });
-        } else {
-          const metadataIds = analyticsObject.metaData[metadataKey];
-          if (metadataIds.length > 0) {
-            _.each(metadataIds, metadataId => {
-              if (metadata[metadataKey]) {
-                const metadataIdIndex = _.indexOf(metadata[metadataKey], metadataId);
-                if (metadataIdIndex === -1) {
-                  if (metadataKey === 'pe' && metadataId !== 'ref_actule_pe') {
-                    metadata[metadataKey] = [metadataId, ...metadata[metadataKey]];
-                  } else {
-                    metadata[metadataKey].push(metadataId);
-                  }
-                }
-              } else {
-                metadata[metadataKey] = [];
-                metadata[metadataKey].push(metadataId);
-              }
-            });
-          } else {
-            metadata[metadataKey] = [];
-          }
-        }
-      });
-
-      /**
-       * Get rows
-       */
-      const rows = _.map(analyticsObject.rows, row => {
-        const rowObject = {};
-        _.each(analyticsObject.headers, (header, headerIndex) => {
-          rowObject[header.name] = row[headerIndex];
-        });
-
-        return _.map(headers, header => rowObject[header.name] || '');
-      });
-
-      mergedRows = [...mergedRows, ...rows];
+  let mergedHeaders = [];
+  const mergedMetadata = {};
+  let allAnalyticsRows = [];
+  splitedAnalyticsArray.forEach(analytics => {
+    const { headers, metaData, rows } = analytics;
+    if (headers.length > mergedHeaders.length) {
+      mergedHeaders = headers;
     }
+    const metaDataKeys = Object.keys(metaData);
+    metaDataKeys.forEach(key => {
+      const keyValues = metaData[key];
+      if (isObject(keyValues)) {
+        mergedMetadata[key] = { ...mergedMetadata[key], ...keyValues };
+      } else {
+        const values = mergedMetadata[key]
+          ? key === 'pe' && !keyValues.includes('ref_actule_pe')
+            ? [...keyValues, ...mergedMetadata[key]]
+            : [...mergedMetadata[key], ...keyValues]
+          : keyValues;
+
+        mergedMetadata[key] = values.filter((item, pos, mergedArray) => mergedArray.indexOf(item) === pos);
+      }
+    });
+    const analyticRows = rows.map(row =>
+      Object.assign({}, ...row.map((item, index) => ({ [headers[index].name]: item })))
+    );
+
+    allAnalyticsRows = [...allAnalyticsRows, ...analyticRows];
   });
 
-  metadata.names = metadataNames;
+  const mergedRows = allAnalyticsRows.map(row => mergedHeaders.map(header => row[header.name] || ''));
   return {
-    headers: headers,
-    metaData: metadata,
+    headers: mergedHeaders,
+    metaData: mergedMetadata,
     rows: mergedRows
   };
 }
+
+const isObject = a => {
+  return !!a && a.constructor === Object;
+};
