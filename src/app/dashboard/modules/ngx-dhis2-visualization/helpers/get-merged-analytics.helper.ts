@@ -30,22 +30,31 @@ export function getMergedAnalytics(splitedAnalyticsArray: any[]) {
         mergedMetadata[key] = { ...mergedMetadata[key], ...keyValues };
       } else {
         const values = mergedMetadata[key]
-          ? key === 'pe' && !keyValues.includes('ref_actual_pe')
+          ? key === 'pe' &&
+            !keyValues.includes('ref_actual_pe') &&
+            !keyValues.includes('change_current_year')
             ? [...keyValues, ...mergedMetadata[key]]
             : [...mergedMetadata[key], ...keyValues]
           : keyValues;
 
-        mergedMetadata[key] = values.filter((item, pos, mergedArray) => mergedArray.indexOf(item) === pos);
+        mergedMetadata[key] = values.filter(
+          (item, pos, mergedArray) => mergedArray.indexOf(item) === pos
+        );
       }
     });
     const analyticRows = rows.map(row =>
-      Object.assign({}, ...row.map((item, index) => ({ [headers[index].name]: item })))
+      Object.assign(
+        {},
+        ...row.map((item, index) => ({ [headers[index].name]: item }))
+      )
     );
 
     allAnalyticsRows = [...allAnalyticsRows, ...analyticRows];
   });
 
-  const mergedRows = allAnalyticsRows.map(row => mergedHeaders.map(header => row[header.name] || ''));
+  const mergedRows = allAnalyticsRows.map(row =>
+    mergedHeaders.map(header => row[header.name] || '')
+  );
   return {
     headers: mergedHeaders,
     metaData: mergedMetadata,
