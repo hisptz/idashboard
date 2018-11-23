@@ -107,7 +107,7 @@ function loadingAndEvaluateCustomExpressionCalculations(
               resultAnalytics
             );
           }
-          customePe = 'ref_actule_pe';
+          customePe = 'ref_actual_pe';
           const periods = resultAnalytics.metaData.dimensions.pe;
           let rows = JSON.stringify(resultAnalytics.rows);
           periods.map(pe => {
