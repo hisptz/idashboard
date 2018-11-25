@@ -91,7 +91,7 @@ export function drawTable(
       ]);
       const groupsIds = columnGroups.map(({ id }) => id) || [];
       const currentColumnItems = prepareSingleCategories(analyticsObject, columnItem).filter(
-        ({ uid }) => !groupsIds.includes(uid) && uid !== 'ref_actule_pe'
+        ({ uid }) => !groupsIds.includes(uid) && uid !== 'ref_actual_pe'
       );
 
       const headerItem = [];
@@ -204,7 +204,7 @@ export function drawTable(
           const peUid = colItem.find(({ type }) => type === 'pe') && colItem.find(({ type }) => type === 'pe').uid;
           const dxUseActual = onlyUseActualPeriod.includes(dxUid) && peUid === referencePeriod;
           const isDeclineIndicator = declineIndicators.includes(dxUid);
-          const isDeclinePeriod = peUid === 'ref_actule_pe';
+          const isDeclinePeriod = peUid === 'ref_actual_pe';
           const fillDataInArow = (isDeclineIndicator && isDeclinePeriod) || (!isDeclineIndicator && !isDeclinePeriod);
           if (fillDataInArow && !dxUseActual) {
             const dataItem = [];
@@ -287,13 +287,13 @@ function calculateColSpan(analyticsObject, array, item, excludedItems = []) {
   const dimensions = { col_span: 1, duplication: 1 };
   for (let i = last_index; i > indexOfItem; i--) {
     const arr = prepareSingleCategories(analyticsObject, array[i]).filter(
-      ({ uid }) => !excludedItems.includes(uid) && uid !== 'ref_actule_pe'
+      ({ uid }) => !excludedItems.includes(uid) && uid !== 'ref_actual_pe'
     );
     dimensions.col_span = dimensions.col_span * arr.length;
   }
   for (let i = 0; i < indexOfItem; i++) {
     const arr = prepareSingleCategories(analyticsObject, array[i]).filter(
-      ({ uid }) => !excludedItems.includes(uid) && uid !== 'ref_actule_pe'
+      ({ uid }) => !excludedItems.includes(uid) && uid !== 'ref_actual_pe'
     );
     dimensions.duplication = dimensions.duplication * arr.length;
   }

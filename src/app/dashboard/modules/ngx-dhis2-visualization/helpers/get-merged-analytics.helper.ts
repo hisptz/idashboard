@@ -30,7 +30,7 @@ export function getMergedAnalytics(splitedAnalyticsArray: any[]) {
         mergedMetadata[key] = { ...mergedMetadata[key], ...keyValues };
       } else {
         const values = mergedMetadata[key]
-          ? key === 'pe' && !keyValues.includes('ref_actule_pe')
+          ? key === 'pe' && !keyValues.includes('ref_actual_pe')
             ? [...keyValues, ...mergedMetadata[key]]
             : [...mergedMetadata[key], ...keyValues]
           : keyValues;
