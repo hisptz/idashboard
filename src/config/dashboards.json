@@ -19,23 +19,25 @@
       "id": "M5zQapPyTZI",
       "name": "admin admin"
     },
-    "dashboardItems": [{
-      "id": "Isa51DFqB6k",
-      "shape": "FULL_WIDTH",
-      "type": "REPORT_TABLE",
-      "name": "Surveillance data by districts",
-      "title": "Surveillance data by districts",
-      "x": 0,
-      "w": 60,
-      "y": 0,
-      "h": 25,
-      "reportTable": {
-        "id": "s6UwlCxG5nW"
-      },
-      "reports": [],
-      "resources": [],
-      "users": []
-    }]
+    "dashboardItems": [
+      {
+        "id": "Isa51DFqB6k",
+        "shape": "FULL_WIDTH",
+        "type": "REPORT_TABLE",
+        "name": "Surveillance data by districts",
+        "title": "Surveillance data by districts",
+        "x": 0,
+        "w": 60,
+        "y": 0,
+        "h": 25,
+        "reportTable": {
+          "id": "s6UwlCxG5nW"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      }
+    ]
   },
   "who-malaria_zMdUF7qxNEt": {
     "lastUpdated": "2018-08-21T04:14:20.289",
@@ -59,26 +61,26 @@
       "id": "M5zQapPyTZI",
       "name": "admin admin"
     },
-    "dashboardItems": [{
-      "id": "odoShFXb17g",
-      "shape": "FULL_WIDTH",
-      "type": "REPORT_TABLE",
-      "name": "Surveillance data by districts",
-      "title": "Surveillance data by districts",
-      "x": 0,
-      "w": 60,
-      "y": 0,
-      "h": 25,
-      "reportTable": {
-        "id": "EFuehVGA7qF"
-      },
-      "reports": [],
-      "resources": [],
-      "users": []
-    }],
-    "bookmarks": [
-      "M5zQapPyTZI"
-    ]
+    "dashboardItems": [
+      {
+        "id": "odoShFXb17g",
+        "shape": "FULL_WIDTH",
+        "type": "REPORT_TABLE",
+        "name": "Surveillance data by districts",
+        "title": "Surveillance data by districts",
+        "x": 0,
+        "w": 60,
+        "y": 0,
+        "h": 25,
+        "reportTable": {
+          "id": "EFuehVGA7qF"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      }
+    ],
+    "bookmarks": ["M5zQapPyTZI"]
   },
   "who-malaria_b8F1kKlV9Fk": {
     "lastUpdated": "2018-08-01T09:31:26.483",
@@ -100,7 +102,8 @@
       "id": "jB4WJmaNuGT",
       "name": "Olav Poppe"
     },
-    "dashboardItems": [{
+    "dashboardItems": [
+      {
         "id": "TPiaBPTjHN9",
         "shape": "FULL_WIDTH",
         "type": "REPORT_TABLE",
@@ -217,7 +220,8 @@
       "id": "jB4WJmaNuGT",
       "name": "Olav Poppe"
     },
-    "dashboardItems": [{
+    "dashboardItems": [
+      {
         "id": "EFQH9naV7bu",
         "shape": "FULL_WIDTH",
         "type": "REPORT_TABLE",
@@ -374,9 +378,7 @@
         "users": []
       }
     ],
-    "bookmarks": [
-      "M5zQapPyTZI"
-    ]
+    "bookmarks": ["M5zQapPyTZI"]
   },
   "who-malaria_QT4gSejEGCE": {
     "lastUpdated": "2018-08-21T04:14:20.289",
@@ -400,25 +402,67 @@
       "id": "M5zQapPyTZI",
       "name": "admin admin"
     },
-    "dashboardItems": [{
-      "id": "MQfuNJs1O6x",
-      "shape": "FULL_WIDTH",
-      "type": "REPORT_TABLE",
-      "name": "Surveillance data by districts",
-      "title": "Surveillance data by districts",
-      "x": 0,
-      "w": 60,
-      "y": 0,
-      "h": 25,
-      "reportTable": {
-        "id": "dHt43srjYsF"
-      },
-      "reports": [],
-      "resources": [],
-      "users": []
-    }],
-    "bookmarks": [
-      "M5zQapPyTZI"
+    "dashboardItems": [
+      {
+        "id": "MQfuNJs1O6x",
+        "shape": "FULL_WIDTH",
+        "type": "REPORT_TABLE",
+        "name": "Surveillance data by districts",
+        "title": "Surveillance data by districts",
+        "x": 0,
+        "w": 60,
+        "y": 0,
+        "h": 25,
+        "reportTable": {
+          "id": "dHt43srjYsF"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      }
+    ],
+    "bookmarks": ["M5zQapPyTZI"]
+  },
+  "who-malaria_q7foJnVr6Tg": {
+    "lastUpdated": "2018-08-21T04:14:20.289",
+    "created": "2018-08-13T07:52:08.865",
+    "name": "Bulletin Page 4",
+    "id": "who-malaria_q7foJnVr6Tg",
+    "namespace": "who-malaria",
+    "displayDescription": "Bulletin Page 4",
+    "displayName": "Bulletin Page 4",
+    "description": "Bulletin Page 4",
+    "favorite": false,
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "M5zQapPyTZI",
+      "name": "admin admin"
+    },
+    "dashboardItems": [
+      {
+        "id": "MQfuNJs1O6x",
+        "shape": "FULL_WIDTH",
+        "type": "REPORT_TABLE",
+        "name": "Funding and Operations",
+        "title": "Funding and Operations",
+        "x": 0,
+        "w": 60,
+        "y": 0,
+        "h": 25,
+        "reportTable": {
+          "id": "dHt43srjYsF"
+        },
+        "reports": [],
+        "resources": [],
+        "users": []
+      }
     ]
   }
 }
