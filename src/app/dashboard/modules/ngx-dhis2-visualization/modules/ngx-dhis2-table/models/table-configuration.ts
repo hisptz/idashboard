@@ -3,7 +3,8 @@ export interface TableConfiguration {
   tableId?: string;
   subtitle: string;
   peValues?: any;
-  useReferencePeriod?: any;
+  useReferencePeriod?: boolean;
+  skipSummationOnMultiplePeriod?: boolean;
   showColumnTotal: boolean;
   showColumnSubtotal: boolean;
   showRowTotal: boolean;

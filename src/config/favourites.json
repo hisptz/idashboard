@@ -3433,6 +3433,7 @@
   "ZVioCmjr4bz": {
     "lastUpdated": "2018-08-21T13:06:09.329",
     "useReferencePeriod": true,
+    "skipSummationOnMultiplePeriod": true,
     "id": "ZVioCmjr4bz",
     "created": "2018-08-21T10:33:59.976",
     "name": "Funding and Operations",

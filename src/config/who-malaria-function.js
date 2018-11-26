@@ -7,6 +7,7 @@ const expression = parameters.rule.json.expression;
 //get perameter for actual and reference periods
 const peSelection = parameters.peSelection.items;
 const useReferencePeriod = parameters.useReferencePeriod;
+const skipSummationOnMultiplePeriod = parameters.skipSummationOnMultiplePeriod
 const isCalculationBasedOnRefAndActual =
   parameters.rule.json.isCalculationBasedOnRefAndActual;
 const shouldSumResultValue = parameters.shouldSumResultValue;

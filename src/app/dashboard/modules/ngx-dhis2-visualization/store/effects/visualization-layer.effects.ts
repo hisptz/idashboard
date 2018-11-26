@@ -84,6 +84,7 @@ export class VisualizationLayerEffects {
                   );
                   const { config } = visualizationLayer;
                   const onlyUseActualPeriod = config.onlyUseActualPeriod || [];
+                  const { skipSummationOnMultiplePeriod } = config;
                   const peItems = config.useReferencePeriod
                     ? peSelection.items
                     : peSelection.items.filter(
@@ -96,6 +97,8 @@ export class VisualizationLayerEffects {
                   const items = dxSelection.items.map(({ id, name, type }) => ({
                     id,
                     name,
+                    skipSummationOnMultiplePeriod:
+                      skipSummationOnMultiplePeriod || false,
                     type: functionRuleEntities[id] ? 'FUNCTION_RULE' : type,
                     shouldSumResultValue:
                       onlyUseActualPeriod && config.useReferencePeriod,
