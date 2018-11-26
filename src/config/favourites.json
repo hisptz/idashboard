@@ -3414,6 +3414,147 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
+    "filters": [],
+    "rows": [{
+      "dimension": "ou",
+      "items": [{
+          "id": "USER_ORGUNIT",
+          "dimensionItem": "USER_ORGUNIT",
+          "displayName": "USER_ORGUNIT"
+        },
+        {
+          "id": "USER_ORGUNIT_CHILDREN",
+          "dimensionItem": "USER_ORGUNIT_CHILDREN",
+          "displayName": "USER_ORGUNIT_CHILDREN"
+        }
+      ]
+    }]
+  },
+  "ZVioCmjr4bz": {
+    "lastUpdated": "2018-08-21T13:06:09.329",
+    "useReferencePeriod": true,
+    "id": "ZVioCmjr4bz",
+    "created": "2018-08-21T10:33:59.976",
+    "name": "Funding and Operations",
+    "publicAccess": "rw------",
+    "legendDisplayStyle": "FILL",
+    "hideEmptyColumns": false,
+    "subscribed": false,
+    "rowSubTotals": false,
+    "showDimensionLabels": true,
+    "sortOrder": 0,
+    "fontSize": "NORMAL",
+    "favorite": false,
+    "topLimit": 0,
+    "displayName": "Funding and Operations",
+    "showHierarchy": false,
+    "cumulative": false,
+    "hideTitle": false,
+    "skipRounding": false,
+    "numberType": "VALUE",
+    "hideEmptyRows": false,
+    "parentGraphMap": {
+      "GD7TowwI46c": ""
+    },
+    "styles": {
+      "header": "#e2931d"
+    },
+    "displayDensity": "NORMAL",
+    "completedOnly": false,
+    "colTotals": false,
+    "aggregationType": "DEFAULT",
+    "hideSubtitle": false,
+    "legendDisplayStrategy": "BY_DATA_ITEM",
+    "colSubTotals": false,
+    "rowTotals": false,
+    "digitGroupSeparator": "SPACE",
+    "regression": false,
+    "reportParams": {
+      "paramGrandParentOrganisationUnit": false,
+      "paramReportingPeriod": false,
+      "paramOrganisationUnit": false,
+      "paramParentOrganisationUnit": false
+    },
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": true,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "lastUpdatedBy": {
+      "id": "M5zQapPyTZI"
+    },
+    "user": {
+      "displayName": "admin admin",
+      "userCredentials": {
+        "username": "admin"
+      }
+    },
+    "dataElementGroupSetDimensions": [],
+    "attributeDimensions": [],
+    "translations": [],
+    "interpretations": [],
+    "userGroupAccesses": [],
+    "subscribers": [],
+    "columns": [{
+      "dimension": "pe",
+      "items": [{
+          "id": "LAST_5_YEARS",
+          "dimensionItem": "LAST_5_YEARS",
+          "displayName": "LAST_5_YEARS",
+          "ref_type": "PERIOD_ACTUAL",
+          "dimensionItemType": "PERIOD"
+        },
+        {
+          "id": "THIS_YEAR",
+          "dimensionItem": "THIS_YEAR",
+          "displayName": "THIS_YEAR",
+          "ref_type": "PERIOD_ACTUAL",
+          "dimensionItemType": "PERIOD"
+        }
+      ]
+    }],
+    "dataElementDimensions": [],
+    "categoryDimensions": [],
+    "programIndicatorDimensions": [],
+    "attributeValues": [],
+    "userAccesses": [],
+    "favorites": [],
+    "dataDimensionItems": [{
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "gTPP0wYkXBA"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "SEi6VEB5DO0"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "IPI8Xmc1nnT"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "v0WZQQ6gKAX"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "GxlrIgMyEf4"
+        }
+      }
+    ],
+    "categoryOptionGroupSetDimensions": [],
+    "organisationUnitGroupSetDimensions": [],
     "filters": [{
       "dimension": "ou",
       "items": [{
@@ -3423,13 +3564,33 @@
       }]
     }],
     "rows": [{
-      "dimension": "pe",
+      "dimension": "dx",
       "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
+          "id": "gTPP0wYkXBA",
+          "name": "Total malaria confirmed cases",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "SEi6VEB5DO0",
+          "name": "Annual parasite incidence(API)",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "IPI8Xmc1nnT",
+          "name": "Test positivity rate(TPR)",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "v0WZQQ6gKAX",
+          "name": "Number of inpatient malaria cases",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "GxlrIgMyEf4",
+          "name": "Number of malaria deaths",
+          "dimensionItemType": "DATA_ELEMENT"
+        }
+      ]
     }]
   }
 }

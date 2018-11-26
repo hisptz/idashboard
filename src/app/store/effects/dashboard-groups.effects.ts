@@ -20,7 +20,12 @@ const GROUPS_PAYLOAD = [
   {
     id: 'Xm4TNggmC8J',
     name: 'Malaria Burden Reduction Bulletin',
-    dashboards: ['who-malaria_sLldHZZgnFx', 'who-malaria_zMdUF7qxNEt', 'who-malaria_QT4gSejEGCE']
+    dashboards: [
+      'who-malaria_sLldHZZgnFx',
+      'who-malaria_zMdUF7qxNEt',
+      'who-malaria_QT4gSejEGCE',
+      'who-malaria_q7foJnVr6Tg'
+    ]
   },
   {
     id: 'bxI7Q1agaN5',
