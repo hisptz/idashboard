@@ -3523,33 +3523,45 @@
     "userAccesses": [],
     "favorites": [],
     "dataDimensionItems": [{
-        "dataDimensionItemType": "INDICATOR",
+        "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
-          "id": "gTPP0wYkXBA"
+          "id": "PQA10xCuDqo"
         }
       },
       {
-        "dataDimensionItemType": "INDICATOR",
+        "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
-          "id": "SEi6VEB5DO0"
+          "id": "PAbp5CFUJEP"
         }
       },
       {
-        "dataDimensionItemType": "INDICATOR",
+        "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
-          "id": "IPI8Xmc1nnT"
+          "id": "bMshElFlkIT"
         }
       },
       {
         "dataDimensionItemType": "DATA_ELEMENT",
         "dataElement": {
-          "id": "v0WZQQ6gKAX"
+          "id": "UnUlBgLykAj"
         }
       },
       {
         "dataDimensionItemType": "DATA_ELEMENT",
         "dataElement": {
-          "id": "GxlrIgMyEf4"
+          "id": "j470ZcksHc2"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "ifhhKPHYssI"
+        }
+      },
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "dataElement": {
+          "id": "sx6VVUpEY1r"
         }
       }
     ],
@@ -3566,28 +3578,38 @@
     "rows": [{
       "dimension": "dx",
       "items": [{
-          "id": "gTPP0wYkXBA",
-          "name": "Total malaria confirmed cases",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "SEi6VEB5DO0",
-          "name": "Annual parasite incidence(API)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "IPI8Xmc1nnT",
-          "name": "Test positivity rate(TPR)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "v0WZQQ6gKAX",
-          "name": "Number of inpatient malaria cases",
+          "id": "PQA10xCuDqo",
+          "name": "Total Needs",
           "dimensionItemType": "DATA_ELEMENT"
         },
         {
-          "id": "GxlrIgMyEf4",
-          "name": "Number of malaria deaths",
+          "id": "PAbp5CFUJEP",
+          "name": "Domestic Funding",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "bMshElFlkIT",
+          "name": "External Funding",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "UnUlBgLykAj",
+          "name": "Net Gap",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "j470ZcksHc2",
+          "name": "Global Fund",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "ifhhKPHYssI",
+          "name": "PMI/ USAID",
+          "dimensionItemType": "DATA_ELEMENT"
+        },
+        {
+          "id": "sx6VVUpEY1r",
+          "name": "Others",
           "dimensionItemType": "DATA_ELEMENT"
         }
       ]
