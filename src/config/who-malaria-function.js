@@ -278,7 +278,7 @@ function getMergedAnalyticsForActualAndReferencePeriods(
 
 function getSanitizedAnalytictForMultiplePeriods(analytics) {
   const periods = analytics.metaData.dimensions.pe;
-  if (periods.length > 1) {
+  if (periods.length > 1 && !skipSummationOnMultiplePeriod) {
     const names = {};
     const items = analytics.metaData.items;
     Object.keys(items).map(key => {
