@@ -3414,20 +3414,22 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [],
-    "rows": [{
+    "filters": [{
       "dimension": "ou",
       "items": [{
-          "id": "USER_ORGUNIT",
-          "dimensionItem": "USER_ORGUNIT",
-          "displayName": "USER_ORGUNIT"
-        },
-        {
-          "id": "USER_ORGUNIT_CHILDREN",
-          "dimensionItem": "USER_ORGUNIT_CHILDREN",
-          "displayName": "USER_ORGUNIT_CHILDREN"
-        }
-      ]
+        "id": "USER_ORGUNIT",
+        "dimensionItem": "USER_ORGUNIT",
+        "displayName": "USER_ORGUNIT"
+      }]
+    }],
+    "rows": [{
+      "dimension": "pe",
+      "items": [{
+        "id": "LAST_12_MONTHS",
+        "dimensionItem": "LAST_12_MONTHS",
+        "displayName": "LAST_12_MONTHS",
+        "dimensionItemType": "PERIOD"
+      }]
     }]
   },
   "ZVioCmjr4bz": {

@@ -82,6 +82,11 @@ export class VisualizationLayerEffects {
                   const peSelection = visualizationLayer.dataSelections.find(
                     ({ dimension }) => dimension === 'pe'
                   );
+                  const isOuInFilters = visualizationLayer.config.filters.find(
+                    ({ dimension }) => dimension === 'ou'
+                  )
+                    ? true
+                    : false;
                   const { config } = visualizationLayer;
                   const onlyUseActualPeriod = config.onlyUseActualPeriod || [];
                   const { skipSummationOnMultiplePeriod } = config;
@@ -97,6 +102,7 @@ export class VisualizationLayerEffects {
                   const items = dxSelection.items.map(({ id, name, type }) => ({
                     id,
                     name,
+                    isOuInFilters,
                     skipSummationOnMultiplePeriod:
                       skipSummationOnMultiplePeriod || false,
                     type: functionRuleEntities[id] ? 'FUNCTION_RULE' : type,

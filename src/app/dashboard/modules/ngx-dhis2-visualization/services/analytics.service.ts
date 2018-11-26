@@ -92,6 +92,7 @@ export class AnalyticsService {
     const functionAnalyticsPromises = _.map(dxObject.items, (dxItem: any) => {
       let functionPromise = of(null);
       const { items } = dxItem.peSelection;
+      const { isOuInFilters } = dxItem;
       const { skipSummationOnMultiplePeriod } = dxItem;
       try {
         const functionRuleJson =
@@ -105,6 +106,7 @@ export class AnalyticsService {
             shouldSumResultValue: dxItem.shouldSumResultValue,
             useReferencePeriod: dxItem.useReferencePeriod,
             skipSummationOnMultiplePeriod,
+            isOuInFilters,
             peSelection: dxItem.peSelection,
             rule: {
               ...dxItem.ruleDefinition,
