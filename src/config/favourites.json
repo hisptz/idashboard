@@ -2616,6 +2616,31 @@
             "dataElement": {
               "id": "GxlrIgMyEf4"
             }
+          }, {
+            "dataDimensionItemType": "INDICATOR",
+            "indicator": {
+              "id": "YDqD4CuPJGq"
+            }
+          }, {
+            "dataDimensionItemType": "INDICATOR",
+            "indicator": {
+              "id": "rmu9kA4Ti2U"
+            }
+          }, {
+            "dataDimensionItemType": "INDICATOR",
+            "indicator": {
+              "id": "cPucRw8LCZT"
+            }
+          }, {
+            "dataDimensionItemType": "INDICATOR",
+            "indicator": {
+              "id": "TcyzseQs9rK"
+            }
+          }, {
+            "dataDimensionItemType": "INDICATOR",
+            "indicator": {
+              "id": "jx3YNvNxSIq"
+            }
           }
         ],
         "categoryOptionGroupSetDimensions": [],
@@ -2654,6 +2679,31 @@
               "id": "GxlrIgMyEf4",
               "name": "Number of malaria deaths",
               "dimensionItemType": "DATA_ELEMENT"
+            }, {
+              "id": "YDqD4CuPJGq",
+              "name": "Annual parasite incidence (API) - % change",
+              "dataDimensionItemType": "INDICATOR"
+            },
+            {
+              "id": "rmu9kA4Ti2U",
+              "name": "Test positivity rate(TPR) - % change",
+              "dataDimensionItemType": "INDICATOR"
+            },
+            {
+              "id": "cPucRw8LCZT",
+              "name": "Number of inpatient malaria cases - % change",
+              "dataDimensionItemType": "INDICATOR"
+            },
+            {
+              "id": "TcyzseQs9rK",
+              "name": "Number of malaria deaths - % change",
+              "dataDimensionItemType": "INDICATOR"
+            },
+            {
+              "id": "jx3YNvNxSIq",
+              "name": "Confirmed cases - % change",
+              "dataDimensionItemType": "INDICATOR"
+
             }
           ]
         }]

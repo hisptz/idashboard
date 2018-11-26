@@ -10,6 +10,7 @@ const useReferencePeriod = parameters.useReferencePeriod;
 const isCalculationBasedOnRefAndActual =
   parameters.rule.json.isCalculationBasedOnRefAndActual;
 const shouldSumResultValue = parameters.shouldSumResultValue;
+const customRuleDefinition = parameters.rule.json.customRuleDefinition;
 // get all uids form expression
 var dataElements = getUidsFromExpression(expression);
 //checking for all de uids has mapper
@@ -107,7 +108,9 @@ function loadingAndEvaluateCustomExpressionCalculations(
               resultAnalytics
             );
           }
-          customePe = 'ref_actual_pe';
+          const id = (customRuleDefinition && customRuleDefinition.id) ? customRuleDefinition.id : parameters.rule.id;
+          const name = (customRuleDefinition && customRuleDefinition.name) ? customRuleDefinition.name : parameters.rule.name;
+          const customePe = (customRuleDefinition && customRuleDefinition.periodKey) ? customRuleDefinition.periodKey : 'ref_actual_pe';
           const periods = resultAnalytics.metaData.dimensions.pe;
           let rows = JSON.stringify(resultAnalytics.rows);
           periods.map(pe => {
@@ -115,13 +118,13 @@ function loadingAndEvaluateCustomExpressionCalculations(
           });
           resultAnalytics.metaData.dimensions.pe = [customePe];
           resultAnalytics.metaData.items[customePe] = {
-            name: ''
+            name: (customRuleDefinition && customRuleDefinition.periodName) ? customRuleDefinition.periodName : ""
           };
           resultAnalytics.rows = JSON.parse(rows);
           resultAnalytics = getSanitizedAnalytict(resultAnalytics, {
             rule: {
-              id: parameters.rule.id,
-              name: parameters.rule.name,
+              id,
+              name,
               json: {
                 expression: customExpression
               }
@@ -293,7 +296,6 @@ function getSanitizedAnalytictForMultiplePeriods(analytics) {
     const sanitizedRows = getSanitizedRowsByPeAndDx(analytics.rows, customPe);
     analytics.rows = sanitizedRows;
   }
-
   return analytics;
 }
 
@@ -306,7 +308,9 @@ function getSanitizedRowsByPeAndDx(rows, customPe) {
       if (!sumOffPeAndDxObjet[id]) {
         sumOffPeAndDxObjet[id] = 0;
       }
-      sumOffPeAndDxObjet[id] += parseFloat(row[3]);
+      const value = parseFloat(row[3]);
+      const sum = sumOffPeAndDxObjet[id] + value;
+      sumOffPeAndDxObjet[id] = sum;
     }
   });
   Object.keys(sumOffPeAndDxObjet).map(idObject => {
@@ -403,7 +407,7 @@ function getMissingDataElementsMappingErrorMessage(
   return errorMessage;
 }
 
-function getSanitizedAnalytict(analyticsResults, parameters, shouldSkip) {
+function getSanitizedAnalytict(analyticsResults, parameters) {
   var analytics = getEmptyAnalytics();
   var ous = [];
   var periods = [];
