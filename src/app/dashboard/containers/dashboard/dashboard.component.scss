@@ -1,6 +1,7 @@
 .dashboard-container {
   .dashboard-menu-container {
     position: fixed;
+    height: 136px;
     top: 48px;
     left: 0;
     right: 0;
@@ -8,5 +9,30 @@
     z-index: 1350;
     min-height: 50px;
     background-color: #ffffff;
+  }
+  .dashboard-content {
+    margin-top: 196px;
+  }
+}
+
+@media print {
+  .dashboard-container {
+    .dashboard-menu-container {
+      position: fixed;
+      height: 48px;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: #ffffff;
+    }
+
+    .dashboard-content {
+      margin-top: 60px;
+    }
+
+    .container-fluid.dashboard-container {
+      padding: 0;
+    }
   }
 }

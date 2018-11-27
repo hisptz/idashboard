@@ -1,13 +1,22 @@
-<div class="visualization-header-section-container">
+<div class="visualization-header-section-container d-print-none">
   <div class="visualization-filters" *ngIf="showFilters">
-    <ngx-dhis2-selection-filters [visualizationLayerId]="visualizationLayer?.id" [currentVisualizationType]="currentVisualizationType"
-      [dataSelections]="layerDataSelection" [layout]="visualizationLayer?.layout" (filterUpdate)="onFilterUpdateAction($event)"
-      [selectionFilterConfig]="selectionFilterConfig">
+    <ngx-dhis2-selection-filters
+      [visualizationLayerId]="visualizationLayer?.id"
+      [currentVisualizationType]="currentVisualizationType"
+      [dataSelections]="layerDataSelection"
+      [layout]="visualizationLayer?.layout"
+      (filterUpdate)="onFilterUpdateAction($event)"
+      [selectionFilterConfig]="selectionFilterConfig"
+    >
     </ngx-dhis2-selection-filters>
     &nbsp;
   </div>
   <div *ngIf="!showFilters"></div>
   <div class="visualization-resize" *ngIf="!hideResizeButtons" [@open]>
-    <app-visualization-resize-section [id]="id" [fullScreen]="fullScreen" (toggleFullScreen)="onFullScreenAction($event)"></app-visualization-resize-section>
+    <app-visualization-resize-section
+      [id]="id"
+      [fullScreen]="fullScreen"
+      (toggleFullScreen)="onFullScreenAction($event)"
+    ></app-visualization-resize-section>
   </div>
 </div>

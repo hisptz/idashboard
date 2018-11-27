@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/scss/bootstrap.scss';
+@import 'variables';
+@import 'print';
+@import 'node_modules/bootstrap/scss/bootstrap';
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -11,4 +13,26 @@
 
 ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact; /*Chrome, Safari */
+    color-adjust: exact; /*Firefox*/
+  }
+
+  .container-fluid {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  .table td,
+  .table th {
+    background-color: inherit;
+  }
 }
