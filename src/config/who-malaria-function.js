@@ -424,7 +424,7 @@ function getMissingDataElementsMappingErrorMessage(
     }
   });
   errorMessage.message +=
-    missingDataElementNames.join(',') + ' have not been mapped';
+    missingDataElementNames.join(', ') + ' have not been mapped';
   return errorMessage;
 }
 
