@@ -3511,7 +3511,7 @@
       "dimensionItem": "LAST_5_YEARS",
       "displayName": "LAST_5_YEARS",
       "skipSummationOnMultiplePeriod": true,
-      "ref_type": "PERIOD_ACTUAL",
+      "ref_type": "PERIOD_REF",
       "dimensionItemType": "PERIOD"
     }],
     "columns": [{

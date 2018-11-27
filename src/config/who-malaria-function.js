@@ -9,7 +9,6 @@ const isCalculationBasedOnRefAndActual =
 const peSelection = parameters.peSelection.items;
 const {
   useReferencePeriod,
-  skipSummationOnMultiplePeriod,
   shouldSumResultValue,
   filters
 } = parameters;
@@ -26,7 +25,8 @@ const isPeInFilters = filters.find(
     dimension
   }) => dimension === 'pe'
 ) ? true : false;
-
+const shouldSkipSumOnActualPeriod = peSelection.filter(item => item.ref_type === 'PERIOD_ACTUAL').filter(item => item.skipSummationOnMultiplePeriod).length > 0;
+const shouldSkipSumOnreferencePeriod = peSelection.filter(item => item.ref_type === 'PERIOD_REF').filter(item => item.skipSummationOnMultiplePeriod).length > 0;
 // get all uids form expression
 const dataElements = getUidsFromExpression(expression);
 //checking for all de uids has mapper
@@ -246,11 +246,11 @@ function getMergedAnalyticsForActualAndReferencePeriods(
   analyticsResultsForActual
 ) {
   analyticsResultsForReference = getSanitizedAnalytictForMultiplePeriods(
-    analyticsResultsForReference
+    analyticsResultsForReference, shouldSkipSumOnreferencePeriod
   );
   if (analyticsResultsForActual && analyticsResultsForActual.metaData) {
     analyticsResultsForActual = getSanitizedAnalytictForMultiplePeriods(
-      analyticsResultsForActual
+      analyticsResultsForActual, shouldSkipSumOnActualPeriod
     );
     shouldStartWithActual = peSelection.findIndex(({
       ref_type
@@ -292,9 +292,9 @@ function getMergedAnalyticsForActualAndReferencePeriods(
   return analyticsResultsForReference;
 }
 
-function getSanitizedAnalytictForMultiplePeriods(analytics) {
+function getSanitizedAnalytictForMultiplePeriods(analytics, skipSummationOnMultiplePeriod) {
   const periods = analytics.metaData.dimensions.pe;
-  if (periods.length > 1) {
+  if (periods.length > 1 && !skipSummationOnMultiplePeriod) {
     const names = {};
     const items = analytics.metaData.items;
     Object.keys(items).map(key => {
