@@ -1,27 +1,43 @@
-//Example of function implementation
 parameters.progress(0);
-//get expression and expresiion map form rule
+//getting all passed variables on function
 const expressionMapping = parameters.rule.json.expressionMapping;
 const namesMapping = parameters.rule.json.namesMapping;
 const expression = parameters.rule.json.expression;
-//get perameter for actual and reference periods
-const peSelection = parameters.peSelection.items;
-const useReferencePeriod = parameters.useReferencePeriod;
-const skipSummationOnMultiplePeriod = parameters.skipSummationOnMultiplePeriod
+const customRuleDefinition = parameters.rule.json.customRuleDefinition;
 const isCalculationBasedOnRefAndActual =
   parameters.rule.json.isCalculationBasedOnRefAndActual;
-const shouldSumResultValue = parameters.shouldSumResultValue;
-const customRuleDefinition = parameters.rule.json.customRuleDefinition;
+const peSelection = parameters.peSelection.items;
+const {
+  useReferencePeriod,
+  skipSummationOnMultiplePeriod,
+  shouldSumResultValue,
+  filters
+} = parameters;
+
+//deduce filter values
+const isOuInFilters = filters.find(
+  ({
+    dimension
+  }) => dimension === 'ou'
+) ? true : false;
+
+const isPeInFilters = filters.find(
+  ({
+    dimension
+  }) => dimension === 'pe'
+) ? true : false;
+
 // get all uids form expression
-var dataElements = getUidsFromExpression(expression);
+const dataElements = getUidsFromExpression(expression);
 //checking for all de uids has mapper
-var mappingStatus = getDataElementMappingStatus(
+const mappingStatus = getDataElementMappingStatus(
   dataElements,
   expressionMapping
 );
 if (mappingStatus.areAllMapped) {
+  parameters.progress(20);
   //get analytics results
-  var dx = dataElements.join(';');
+  const dx = dataElements.join(';');
   //handling referenc and actual periods
   if (useReferencePeriod && peSelection.length > 1) {
     const actualPeriod = peSelection.filter(item => item.ref_type === 'PERIOD_ACTUAL').map(({
@@ -54,7 +70,7 @@ if (mappingStatus.areAllMapped) {
   }
 } else {
   // return error message with unmapped de
-  var errorMessage = getMissingDataElementsMappingErrorMessage(
+  const errorMessage = getMissingDataElementsMappingErrorMessage(
     mappingStatus.dataElementWithoutMapping,
     namesMapping
   );
@@ -131,7 +147,7 @@ function loadingAndEvaluateCustomExpressionCalculations(
               }
             }
           });
-          parameters.success(resultAnalytics);
+          parameters.success(getAnalyticValueWithThousandCommaSeparator(resultAnalytics))
         }
       })
       .catch(error => {
@@ -212,7 +228,7 @@ function loadingAndEvaluateActualAndReferenceIndicator(
             analyticsResultsForReference,
             analyticsResultsForActual
           )
-          parameters.success(resultAnalytics);
+          parameters.success(getAnalyticValueWithThousandCommaSeparator(resultAnalytics))
         },
         error: function (error) {
           parameters.error(error);
@@ -278,7 +294,7 @@ function getMergedAnalyticsForActualAndReferencePeriods(
 
 function getSanitizedAnalytictForMultiplePeriods(analytics) {
   const periods = analytics.metaData.dimensions.pe;
-  if (periods.length > 1 && !skipSummationOnMultiplePeriod) {
+  if (periods.length > 1) {
     const names = {};
     const items = analytics.metaData.items;
     Object.keys(items).map(key => {
@@ -341,7 +357,7 @@ function loadingAndEvaluateAnalyticsData(dx, expression, dataElements) {
       if (shouldSumResultValue) {
         analytic = getSanitizedAnalytictForMultiplePeriods(analytic)
       }
-      parameters.success(analytic);
+      parameters.success(getAnalyticValueWithThousandCommaSeparator(analytic));
     },
     error: function (error) {
       parameters.error(error);
@@ -521,6 +537,23 @@ function getEvaluatedValueOfRule(expression, keyValuePair) {
     } catch (e) {}
   });
   return evaluatedValue.toFixed(1);
+}
+
+function getAnalyticValueWithThousandCommaSeparator(analytic) {
+  // console.log({
+  //   analytic,
+  //   isOuInFilters,
+  //   isPeInFilters
+  // });
+  if (analytic && analytic.rows) {
+    // Apply ou or pe filter
+    for (var row of analytic.rows) {
+      var value = getAnalyticValueWithThousandCommaSeparator(row[row.length - 1]);
+      value = parseFloat(value).toLocaleString();
+      row[row.length - 1] = value;
+    }
+  }
+  return analytic;
 }
 
 function getEmptyAnalytics() {

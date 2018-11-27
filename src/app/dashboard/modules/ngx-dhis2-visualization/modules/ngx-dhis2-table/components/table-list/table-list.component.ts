@@ -41,6 +41,7 @@ export class TableListComponent implements OnInit {
   }
 
   getLayerAnalytic(analytics, layout, useReferencePeriod) {
+    console.log({ useReferencePeriod, pe: analytics.metaData.pe, layout });
     if (
       !useReferencePeriod &&
       analytics &&
@@ -69,6 +70,7 @@ export class TableListComponent implements OnInit {
         analytics.rows = sanitizedRows;
       }
     }
+    console.log({ analytics });
     return analytics;
   }
 
@@ -86,9 +88,14 @@ export class TableListComponent implements OnInit {
     });
     Object.keys(sumOffPeAndDxObjet).map(idObject => {
       const ids = idObject.split('_');
-      const value = parseFloat(sumOffPeAndDxObjet[idObject]).toFixed(1);
+      let value = parseFloat(sumOffPeAndDxObjet[idObject]).toFixed(1);
+      value = parseFloat(value).toLocaleString();
       sanitizedRows.push([ids[0], customPe, ids[1], value]);
     });
     return sanitizedRows;
+  }
+
+  getValueWithThousandCommaSeparator(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 }
