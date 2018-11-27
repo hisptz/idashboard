@@ -8,6 +8,7 @@ export interface VisualizationDataSelection {
   items: Array<{
     id: string;
     name: string;
+    skipSummationOnMultiplePeriod?: boolean;
     type?: string;
   }>;
   groups?: Array<{

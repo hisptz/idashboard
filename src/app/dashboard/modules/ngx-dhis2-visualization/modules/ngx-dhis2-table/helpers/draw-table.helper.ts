@@ -15,7 +15,9 @@ export function drawTable(
     declineIndicators,
     useReferencePeriod,
     peValues: favPeValues,
-    onlyUseActualPeriod
+    onlyUseActualPeriod,
+    rowsGroups = [],
+    rowsStyles = {}
   } = tableConfiguration;
 
   const referencePeriodIndex =
@@ -26,6 +28,8 @@ export function drawTable(
   const table = {
     headers: columnGroups.length ? [{ items: [...columnGroups], style: '' }] : [],
     columns: [],
+    headerSpan: 1,
+    titleSpan: null,
     rows: [],
     titles: {
       rows: [],
@@ -102,7 +106,7 @@ export function drawTable(
             row_span: ![...declineIndicators, ...onlyUseActualPeriod].includes(currentItem.uid) ? 1 : 2,
             span: ![...declineIndicators, ...onlyUseActualPeriod].includes(currentItem.uid) ? dimension.col_span : 1,
             type: currentItem.type,
-            color: columnsStyles[currentItem.uid],
+            color: columnsStyles[currentItem.uid] ? columnsStyles[currentItem.uid] : columnsStyles.default,
             id: currentItem.uid
           });
         }
@@ -189,12 +193,28 @@ export function drawTable(
           headers: rowItem
         };
         for (const val of rowItem) {
+          const dxGroup = rowsGroups.find(rowgrp => rowgrp.id === val.uid) || {};
+          const rowGroup = rowsGroups.find(rowgrp => rowgrp.itemId === val.uid);
           if (counter === 0 || counter % val.dimensions.col_span === 0) {
+            if (rowGroup) {
+              table.headerSpan = 2;
+              item.items.push({
+                type: rowGroup.type,
+                name: rowGroup.id,
+                val: rowGroup.name,
+                span: rowGroup.span,
+                color: rowGroup.color,
+                row_span: rowGroup.row_span,
+                header: true
+              });
+            }
             item.items.push({
               type: val.type,
               name: val.uid,
               val: val.name,
-              row_span: val.dimensions.col_span,
+              span: dxGroup.span,
+              color: dxGroup.color || rowsStyles[val.uid],
+              row_span: dxGroup.row_span || val.dimensions.col_span,
               header: true
             });
           }
@@ -221,6 +241,7 @@ export function drawTable(
                 getLegendSets(dataItem, legendClasses, legendSets, tableConfiguration, tableId),
                 getDataValue(analyticsObject, dataItem)
               ),
+              span: '1',
               row_span: '1',
               display: true
             });
@@ -262,6 +283,9 @@ export function drawTable(
       }
     }
   }
+
+  table.titleSpan =
+    table.headerSpan === 1 ? table.rows[0].items.length : table.rows[0].items.length - 1 + table.headerSpan;
 
   // todo improve total options to also work for event table
   // return _getSanitizedTableObject(table, tableConfiguration);

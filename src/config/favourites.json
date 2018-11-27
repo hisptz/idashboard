@@ -250,47 +250,27 @@
     "groups": {
       "headers": [{
           "name": "Reporting completeness (OPD)",
-          "dx": [
-            "GLqY4EV4iOG",
-            "Gg0z2s1QM3F",
-            "xTsHkGqsUlW"
-          ]
+          "dx": ["GLqY4EV4iOG", "Gg0z2s1QM3F", "xTsHkGqsUlW"]
         },
         {
           "name": "Reporting completeness (IPD)",
-          "dx": [
-            "oPu5OSqr6p9",
-            "WLKT9cTihxj",
-            "VaxcbRkQbZA"
-          ]
+          "dx": ["oPu5OSqr6p9", "WLKT9cTihxj", "VaxcbRkQbZA"]
         },
         {
           "name": "Treatment with ACT",
-          "dx": [
-            "l7gcisIvTBN",
-            "M91K9z70dl4",
-            "HFWOXsnDJo7"
-          ]
+          "dx": ["l7gcisIvTBN", "M91K9z70dl4", "HFWOXsnDJo7"]
         },
         {
           "name": "Diagnosis",
-          "dx": [
-            "OMYp5Suv6P2"
-          ]
+          "dx": ["OMYp5Suv6P2"]
         },
         {
           "name": "LLIN distributed at district level(annual)",
-          "dx": [
-            "UH47dKFqTRK",
-            "OcBiqoUWLYy"
-          ]
+          "dx": ["UH47dKFqTRK", "OcBiqoUWLYy"]
         },
         {
           "name": "Indoor Residual Spraying(annual)",
-          "dx": [
-            "NywGy6uMS5r",
-            "UyuDDeXuIbr"
-          ]
+          "dx": ["NywGy6uMS5r", "UyuDDeXuIbr"]
         }
       ],
       "levels": 1
@@ -568,18 +548,8 @@
         "id": "lxAvmpSPV2y"
       }
     ],
-    "declineIndicators": [
-      "VD4CKS8uRsA",
-      "d6FUocDoKFP",
-      "opjQGRn9KXM",
-      "CfvHk9Kk1da",
-      "ufvoNFHpEyQ"
-    ],
-    "onlyUseActualPeriod": [
-      "ZCCrHrs1Ta2",
-      "fj29hAOSNDk",
-      "RqGYc77Xhek"
-    ],
+    "declineIndicators": ["VD4CKS8uRsA", "d6FUocDoKFP", "opjQGRn9KXM", "CfvHk9Kk1da", "ufvoNFHpEyQ"],
+    "onlyUseActualPeriod": ["ZCCrHrs1Ta2", "fj29hAOSNDk", "RqGYc77Xhek"],
     "columns": [{
         "dimension": "dx",
         "items": [{
@@ -2117,28 +2087,15 @@
     "groups": {
       "headers": [{
           "name": "foci",
-          "dx": [
-            "LH9FKWl1FfP",
-            "lz1FE0wvo1m",
-            "s9FmEvF0r4n"
-          ]
+          "dx": ["LH9FKWl1FfP", "lz1FE0wvo1m", "s9FmEvF0r4n"]
         },
         {
           "name": "cases",
-          "dx": [
-            "LhcXjWs6lm7",
-            "DYpakDmCvNG",
-            "Ppc51eaCPHb",
-            "dASLnPMS8L8",
-            "Uzmk0S9IwWn"
-          ]
+          "dx": ["LhcXjWs6lm7", "DYpakDmCvNG", "Ppc51eaCPHb", "dASLnPMS8L8", "Uzmk0S9IwWn"]
         },
         {
           "name": "investigation",
-          "dx": [
-            "EEuvMCljxc9",
-            "lZi1cjtvVB6"
-          ]
+          "dx": ["EEuvMCljxc9", "lZi1cjtvVB6"]
         }
       ],
       "levels": 1
@@ -2616,27 +2573,32 @@
             "dataElement": {
               "id": "GxlrIgMyEf4"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "YDqD4CuPJGq"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "rmu9kA4Ti2U"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "cPucRw8LCZT"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "TcyzseQs9rK"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "jx3YNvNxSIq"
@@ -2679,7 +2641,8 @@
               "id": "GxlrIgMyEf4",
               "name": "Number of malaria deaths",
               "dimensionItemType": "DATA_ELEMENT"
-            }, {
+            },
+            {
               "id": "YDqD4CuPJGq",
               "name": "Annual parasite incidence (API) - % change",
               "dataDimensionItemType": "INDICATOR"
@@ -2703,7 +2666,6 @@
               "id": "jx3YNvNxSIq",
               "name": "Confirmed cases - % change",
               "dataDimensionItemType": "INDICATOR"
-
             }
           ]
         }]
@@ -3414,28 +3376,25 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
+    "filters": [],
+    "rows": [{
       "dimension": "ou",
       "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
+          "id": "USER_ORGUNIT",
+          "dimensionItem": "USER_ORGUNIT",
+          "displayName": "USER_ORGUNIT"
+        },
+        {
+          "id": "USER_ORGUNIT_CHILDREN",
+          "dimensionItem": "USER_ORGUNIT_CHILDREN",
+          "displayName": "USER_ORGUNIT_CHILDREN"
+        }
+      ]
     }]
   },
   "ZVioCmjr4bz": {
     "lastUpdated": "2018-08-21T13:06:09.329",
     "useReferencePeriod": true,
-    "skipSummationOnMultiplePeriod": true,
     "id": "ZVioCmjr4bz",
     "created": "2018-08-21T10:33:59.976",
     "name": "Funding and Operations",
@@ -3460,8 +3419,53 @@
       "GD7TowwI46c": ""
     },
     "styles": {
-      "header": "#e2931d"
+      "header": "#6597CE"
     },
+    "columnsStyles": {
+      "default": "#D2D270"
+    },
+    "rowsStyles": {
+      "PAbp5CFUJEP": "#FFFDC9",
+      "bMshElFlkIT": "#FFFDC9",
+      "j470ZcksHc2": "#FFFDC9",
+      "ifhhKPHYssI": "#FFFDC9",
+      "sx6VVUpEY1r": "#FFFDC9"
+    },
+    "rowsGroups": [{
+        "name": "Total needs",
+        "span": 2,
+        "row_span": 1,
+        "type": "dx",
+        "color": "#D2D270",
+        "id": "PQA10xCuDqo"
+      },
+      {
+        "name": "Available",
+        "span": 1,
+        "row_span": 2,
+        "type": "gp",
+        "itemId": "PAbp5CFUJEP",
+        "color": "#D2D270",
+        "id": "BArAWVucQ7O"
+      },
+      {
+        "name": "Net Gap",
+        "span": 2,
+        "row_span": 1,
+        "type": "dx",
+        "color": "#D2D270",
+        "id": "UnUlBgLykAj"
+      },
+      {
+        "name": "External Source",
+        "span": 1,
+        "row_span": 3,
+        "type": "gp",
+        "itemId": "j470ZcksHc2",
+        "color": "#D2D270",
+        "id": "lxAvmpSPV2y"
+      }
+    ],
     "displayDensity": "NORMAL",
     "completedOnly": false,
     "colTotals": false,
@@ -3496,28 +3500,29 @@
       }
     },
     "dataElementGroupSetDimensions": [],
+    "skipSummationOnMultiplePeriod": true,
     "attributeDimensions": [],
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
     "subscribers": [],
+    "defaultPeriods": [{
+      "id": "LAST_5_YEARS",
+      "dimensionItem": "LAST_5_YEARS",
+      "displayName": "LAST_5_YEARS",
+      "skipSummationOnMultiplePeriod": true,
+      "ref_type": "PERIOD_ACTUAL",
+      "dimensionItemType": "PERIOD"
+    }],
     "columns": [{
       "dimension": "pe",
       "items": [{
-          "id": "LAST_5_YEARS",
-          "dimensionItem": "LAST_5_YEARS",
-          "displayName": "LAST_5_YEARS",
-          "ref_type": "PERIOD_ACTUAL",
-          "dimensionItemType": "PERIOD"
-        },
-        {
-          "id": "THIS_YEAR",
-          "dimensionItem": "THIS_YEAR",
-          "displayName": "THIS_YEAR",
-          "ref_type": "PERIOD_ACTUAL",
-          "dimensionItemType": "PERIOD"
-        }
-      ]
+        "id": "THIS_YEAR",
+        "dimensionItem": "THIS_YEAR",
+        "displayName": "THIS_YEAR",
+        "ref_type": "PERIOD_ACTUAL",
+        "dimensionItemType": "PERIOD"
+      }]
     }],
     "dataElementDimensions": [],
     "categoryDimensions": [],

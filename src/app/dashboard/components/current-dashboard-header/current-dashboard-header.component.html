@@ -1,10 +1,13 @@
-<div class="dashboard-header-container">
+<div class="dashboard-header-container d-print-none">
   <div class="dashboard-title-block">
     <div class="dashboard-title">
       <div *ngIf="dashboardLoading" style="height: 34px; width: 200px;">
         <app-dashboard-progress [borderRadius]="'3px'"></app-dashboard-progress>
       </div>
-      <app-current-dashboard-title *ngIf="dashboardLoaded" [currentDashboardTitle]="currentDashboard?.name"></app-current-dashboard-title>
+      <app-current-dashboard-title
+        *ngIf="dashboardLoaded"
+        [currentDashboardTitle]="currentDashboard?.name"
+      ></app-current-dashboard-title>
     </div>
     <div class="dashboard-options">
       <div *ngIf="dashboardLoading" style="display: flex;">
@@ -18,17 +21,22 @@
           <app-dashboard-progress [borderRadius]="'17px'"></app-dashboard-progress>
         </div>
       </div>
-      <!-- <div class="current-dashboard-share-button" *ngIf="dashboardLoaded || currentDashboard?.access?.manage">
-        <app-current-dashboard-sharing [id]="currentDashboard?.id"></app-current-dashboard-sharing>
-      </div>
+      <!--
+        <div class="current-dashboard-share-button" *ngIf="dashboardLoaded || currentDashboard?.access?.manage">
+          <app-current-dashboard-sharing [id]="currentDashboard?.id"></app-current-dashboard-sharing>
+        </div>
 
-      <div class="current-dashboard-bookmark-button" *ngIf="dashboardLoaded">
-        <app-current-dashboard-bookmark [dashboardBookmarked]="currentDashboard?.bookmarked" [dashboardBookmarkPending]="currentDashboard?.bookmarkPending"
-          (toggleDashboardBookmark)="onToggleDashboardBookmarkAction($event)"></app-current-dashboard-bookmark>
-      </div> -->
+        <div class="current-dashboard-bookmark-button" *ngIf="dashboardLoaded">
+          <app-current-dashboard-bookmark [dashboardBookmarked]="currentDashboard?.bookmarked" [dashboardBookmarkPending]="currentDashboard?.bookmarkPending"
+            (toggleDashboardBookmark)="onToggleDashboardBookmarkAction($event)"></app-current-dashboard-bookmark>
+        </div>
+      -->
       <div class="current-dashboard-global-filter" *ngIf="dashboardLoaded">
-        <ngx-dhis2-selection-filters (filterUpdate)="onFilterUpdateAction($event)" [dataSelections]="currentDashboard?.globalSelections"
-          [selectionFilterConfig]="selectionFilterConfig">
+        <ngx-dhis2-selection-filters
+          (filterUpdate)="onFilterUpdateAction($event)"
+          [dataSelections]="currentDashboard?.globalSelections"
+          [selectionFilterConfig]="selectionFilterConfig"
+        >
         </ngx-dhis2-selection-filters>
       </div>
     </div>
@@ -39,13 +47,20 @@
     <div style="height: 40px; width: 100%;" *ngIf="dashboardLoading">
       <app-dashboard-progress [borderRadius]="'5px'"></app-dashboard-progress>
     </div>
-    <app-favorite-filter *ngIf="dashboardLoaded" [currentUser]="currentUser" [dashboardAccess]="currentDashboard?.access" (addFavorite)="onAddFavoriteAction($event)"
-      (createFavorite)="onCreateFavoriteAction()"></app-favorite-filter>
+    <app-favorite-filter
+      *ngIf="dashboardLoaded"
+      [currentUser]="currentUser"
+      [dashboardAccess]="currentDashboard?.access"
+      (addFavorite)="onAddFavoriteAction($event)"
+      (createFavorite)="onCreateFavoriteAction()"
+    ></app-favorite-filter>
   </div>
 </div>
 
 <!-- current dashboard description -->
 <div class="current-dashboard-description" *ngIf="currentDashboard?.description">
-  <app-current-dashboard-description [dashboardDescription]="currentDashboard?.description"></app-current-dashboard-description>
+  <app-current-dashboard-description
+    [dashboardDescription]="currentDashboard?.description"
+  ></app-current-dashboard-description>
 </div>
 <!-- end of current dashboard description -->

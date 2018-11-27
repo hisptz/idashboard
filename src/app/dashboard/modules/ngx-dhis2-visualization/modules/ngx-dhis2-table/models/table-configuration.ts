@@ -19,6 +19,8 @@ export interface TableConfiguration {
   legendSet: any;
   columnsStyles?: any;
   columnGroups?: any;
+  rowsStyles?: any;
+  rowsGroups?: any;
   styles: any;
   declineIndicators: any;
   onlyUseActualPeriod: Array<any>;

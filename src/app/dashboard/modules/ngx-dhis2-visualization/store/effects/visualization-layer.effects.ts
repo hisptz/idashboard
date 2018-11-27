@@ -84,12 +84,19 @@ export class VisualizationLayerEffects {
                   );
                   const { config } = visualizationLayer;
                   const onlyUseActualPeriod = config.onlyUseActualPeriod || [];
-                  const { skipSummationOnMultiplePeriod, filters } = config;
-                  const peItems = config.useReferencePeriod
-                    ? peSelection.items
-                    : peSelection.items.filter(
-                        item => item['ref_type'] !== 'PERIOD_REF'
-                      );
+                  const {
+                    skipSummationOnMultiplePeriod = false,
+                    defaultPeriods = [],
+                    filters
+                  } = config;
+                  const peItems = [
+                    ...defaultPeriods,
+                    ...(config.useReferencePeriod
+                      ? peSelection.items
+                      : peSelection.items.filter(
+                          item => item['ref_type'] !== 'PERIOD_REF'
+                        ))
+                  ];
                   const newPeSelection = { ...peSelection, items: peItems };
                   const otherSelections = visualizationLayer.dataSelections.filter(
                     ({ dimension }) => !['dx', 'pe'].includes(dimension)
@@ -98,8 +105,7 @@ export class VisualizationLayerEffects {
                     id,
                     name,
                     filters,
-                    skipSummationOnMultiplePeriod:
-                      skipSummationOnMultiplePeriod || false,
+                    skipSummationOnMultiplePeriod,
                     type: functionRuleEntities[id] ? 'FUNCTION_RULE' : type,
                     shouldSumResultValue:
                       onlyUseActualPeriod && config.useReferencePeriod,
