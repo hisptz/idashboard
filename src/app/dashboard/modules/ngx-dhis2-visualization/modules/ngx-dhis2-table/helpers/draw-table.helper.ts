@@ -193,7 +193,6 @@ export function drawTable(
           headers: rowItem
         };
         for (const val of rowItem) {
-          console.log({ rowsGroups });
           const dxGroup = rowsGroups.find(rowgrp => rowgrp.id === val.uid) || {};
           const rowGroup = rowsGroups.find(rowgrp => rowgrp.itemId === val.uid);
           if (counter === 0 || counter % val.dimensions.col_span === 0) {
@@ -253,7 +252,6 @@ export function drawTable(
             table.rows.push(item);
           }
         } else {
-          console.log({ item });
           table.rows.push(item);
         }
 

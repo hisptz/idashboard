@@ -76,7 +76,8 @@
       "WLKT9cTihxj": "#C0D4E9",
       "VaxcbRkQbZA": "#C0D4E9"
     },
-    "columnGroups": [{
+    "columnGroups": [
+      {
         "name": "Pop. at risk",
         "span": 1,
         "row_span": 2,
@@ -141,106 +142,109 @@
         "id": "m2I8YBn5Z89"
       }
     ],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "ZCCrHrs1Ta2",
-          "dimensionItem": "ZCCrHrs1Ta2",
-          "displayName": "Proportion of population at risk",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "GLqY4EV4iOG",
-          "dimensionItem": "GLqY4EV4iOG",
-          "displayName": "No. of Health facilities reports expected (OPD)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "Gg0z2s1QM3F",
-          "dimensionItem": "Gg0z2s1QM3F",
-          "displayName": "No. of Health facilities reports received (OPD)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "xTsHkGqsUlW",
-          "dimensionItem": "xTsHkGqsUlW",
-          "displayName": "% completeness(OPD)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "oPu5OSqr6p9",
-          "dimensionItem": "oPu5OSqr6p9",
-          "displayName": "No. of Health facilities reports expected (IPD)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "WLKT9cTihxj",
-          "dimensionItem": "WLKT9cTihxj",
-          "displayName": "No. of Health facilities reports received (IPD)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "VaxcbRkQbZA",
-          "dimensionItem": "VaxcbRkQbZA",
-          "displayName": "% completeness(IPD)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "l7gcisIvTBN",
-          "dimensionItem": "l7gcisIvTBN",
-          "displayName": "No of ACT distributed to patients",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "M91K9z70dl4",
-          "dimensionItem": "M91K9z70dl4",
-          "displayName": "No. P.f cases treated with ACT",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "HFWOXsnDJo7",
-          "dimensionItem": "HFWOXsnDJo7",
-          "displayName": "Cases potentially treated with ACT(%)",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "iaQuylCoH3u",
-          "dimensionItem": "iaQuylCoH3u",
-          "displayName": "No of RDTs distributed",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "OMYp5Suv6P2",
-          "dimensionItem": "OMYp5Suv6P2",
-          "displayName": "RDT/ACT ration",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "UH47dKFqTRK",
-          "dimensionItem": "UH47dKFqTRK",
-          "displayName": "No. LLIN distributed",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "OcBiqoUWLYy",
-          "dimensionItem": "OcBiqoUWLYy",
-          "displayName": "% of population potentially covered with LLIN",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "NywGy6uMS5r",
-          "dimensionItem": "NywGy6uMS5r",
-          "displayName": "No of Population protected with IRS",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "UyuDDeXuIbr",
-          "dimensionItem": "UyuDDeXuIbr",
-          "displayName": "% of Population protected with IRS",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "ZCCrHrs1Ta2",
+            "dimensionItem": "ZCCrHrs1Ta2",
+            "displayName": "Proportion of population at risk",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "GLqY4EV4iOG",
+            "dimensionItem": "GLqY4EV4iOG",
+            "displayName": "No. of Health facilities reports expected (OPD)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "Gg0z2s1QM3F",
+            "dimensionItem": "Gg0z2s1QM3F",
+            "displayName": "No. of Health facilities reports received (OPD)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "xTsHkGqsUlW",
+            "dimensionItem": "xTsHkGqsUlW",
+            "displayName": "% completeness(OPD)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "oPu5OSqr6p9",
+            "dimensionItem": "oPu5OSqr6p9",
+            "displayName": "No. of Health facilities reports expected (IPD)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "WLKT9cTihxj",
+            "dimensionItem": "WLKT9cTihxj",
+            "displayName": "No. of Health facilities reports received (IPD)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "VaxcbRkQbZA",
+            "dimensionItem": "VaxcbRkQbZA",
+            "displayName": "% completeness(IPD)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "l7gcisIvTBN",
+            "dimensionItem": "l7gcisIvTBN",
+            "displayName": "No of ACT distributed to patients",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "M91K9z70dl4",
+            "dimensionItem": "M91K9z70dl4",
+            "displayName": "No. P.f cases treated with ACT",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "HFWOXsnDJo7",
+            "dimensionItem": "HFWOXsnDJo7",
+            "displayName": "Cases potentially treated with ACT(%)",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "iaQuylCoH3u",
+            "dimensionItem": "iaQuylCoH3u",
+            "displayName": "No of RDTs distributed",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "OMYp5Suv6P2",
+            "dimensionItem": "OMYp5Suv6P2",
+            "displayName": "RDT/ACT ration",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "UH47dKFqTRK",
+            "dimensionItem": "UH47dKFqTRK",
+            "displayName": "No. LLIN distributed",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "OcBiqoUWLYy",
+            "dimensionItem": "OcBiqoUWLYy",
+            "displayName": "% of population potentially covered with LLIN",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "NywGy6uMS5r",
+            "dimensionItem": "NywGy6uMS5r",
+            "displayName": "No of Population protected with IRS",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "UyuDDeXuIbr",
+            "dimensionItem": "UyuDDeXuIbr",
+            "displayName": "% of Population protected with IRS",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
@@ -248,54 +252,36 @@
     "userAccesses": [],
     "favorites": [],
     "groups": {
-      "headers": [{
+      "headers": [
+        {
           "name": "Reporting completeness (OPD)",
-          "dx": [
-            "GLqY4EV4iOG",
-            "Gg0z2s1QM3F",
-            "xTsHkGqsUlW"
-          ]
+          "dx": ["GLqY4EV4iOG", "Gg0z2s1QM3F", "xTsHkGqsUlW"]
         },
         {
           "name": "Reporting completeness (IPD)",
-          "dx": [
-            "oPu5OSqr6p9",
-            "WLKT9cTihxj",
-            "VaxcbRkQbZA"
-          ]
+          "dx": ["oPu5OSqr6p9", "WLKT9cTihxj", "VaxcbRkQbZA"]
         },
         {
           "name": "Treatment with ACT",
-          "dx": [
-            "l7gcisIvTBN",
-            "M91K9z70dl4",
-            "HFWOXsnDJo7"
-          ]
+          "dx": ["l7gcisIvTBN", "M91K9z70dl4", "HFWOXsnDJo7"]
         },
         {
           "name": "Diagnosis",
-          "dx": [
-            "OMYp5Suv6P2"
-          ]
+          "dx": ["OMYp5Suv6P2"]
         },
         {
           "name": "LLIN distributed at district level(annual)",
-          "dx": [
-            "UH47dKFqTRK",
-            "OcBiqoUWLYy"
-          ]
+          "dx": ["UH47dKFqTRK", "OcBiqoUWLYy"]
         },
         {
           "name": "Indoor Residual Spraying(annual)",
-          "dx": [
-            "NywGy6uMS5r",
-            "UyuDDeXuIbr"
-          ]
+          "dx": ["NywGy6uMS5r", "UyuDDeXuIbr"]
         }
       ],
       "levels": 1
     },
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "dataElement": {
           "id": "HFWOXsnDJo7"
@@ -346,29 +332,36 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "THIS_YEAR",
-        "dimensionItem": "THIS_YEAR",
-        "displayName": "THIS_YEAR",
-        "dimensionItemType": "PERIOD"
-      }]
-    }],
-    "rows": [{
-      "dimension": "ou",
-      "items": [{
-          "id": "USER_ORGUNIT",
-          "dimensionItem": "USER_ORGUNIT",
-          "displayName": "USER_ORGUNIT"
-        },
-        {
-          "id": "USER_ORGUNIT_CHILDREN",
-          "dimensionItem": "USER_ORGUNIT_CHILDREN",
-          "displayName": "USER_ORGUNIT_CHILDREN"
-        }
-      ]
-    }]
+    "filters": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "THIS_YEAR",
+            "dimensionItem": "THIS_YEAR",
+            "displayName": "THIS_YEAR",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          },
+          {
+            "id": "USER_ORGUNIT_CHILDREN",
+            "dimensionItem": "USER_ORGUNIT_CHILDREN",
+            "displayName": "USER_ORGUNIT_CHILDREN"
+          }
+        ]
+      }
+    ]
   },
   "E0Ct7kfn7ah": {
     "lastUpdated": "2018-08-21T09:52:49.604",
@@ -417,28 +410,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "OCN59f0jJbk",
-          "dimensionItem": "OCN59f0jJbk",
-          "displayName": "Proportion of foci investigated",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "nrJvyLYwsHA",
-          "dimensionItem": "nrJvyLYwsHA",
-          "displayName": "Proportion of foci classified",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "OCN59f0jJbk",
+            "dimensionItem": "OCN59f0jJbk",
+            "displayName": "Proportion of foci investigated",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "nrJvyLYwsHA",
+            "dimensionItem": "nrJvyLYwsHA",
+            "displayName": "Proportion of foci classified",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "OCN59f0jJbk"
@@ -453,23 +450,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "EFuehVGA7qF": {
     "lastUpdated": "2018-10-03T10:30:52.979",
@@ -526,9 +531,11 @@
     },
     "user": {
       "displayName": "admin admin",
-      "dataViewOrganisationUnits": [{
-        "id": "ImspTQPwCqd"
-      }]
+      "dataViewOrganisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ]
     },
     "dataElementGroupSetDimensions": [],
     "attributeDimensions": [],
@@ -551,7 +558,8 @@
       "GxlrIgMyEf4": "#CCCD5F",
       "CfvHk9Kk1da": "#CCCD5F"
     },
-    "columnGroups": [{
+    "columnGroups": [
+      {
         "name": "Out-patient",
         "span": 12,
         "row_span": 1,
@@ -568,21 +576,13 @@
         "id": "lxAvmpSPV2y"
       }
     ],
-    "declineIndicators": [
-      "VD4CKS8uRsA",
-      "d6FUocDoKFP",
-      "opjQGRn9KXM",
-      "CfvHk9Kk1da",
-      "ufvoNFHpEyQ"
-    ],
-    "onlyUseActualPeriod": [
-      "ZCCrHrs1Ta2",
-      "fj29hAOSNDk",
-      "RqGYc77Xhek"
-    ],
-    "columns": [{
+    "declineIndicators": ["VD4CKS8uRsA", "d6FUocDoKFP", "opjQGRn9KXM", "CfvHk9Kk1da", "ufvoNFHpEyQ"],
+    "onlyUseActualPeriod": ["ZCCrHrs1Ta2", "fj29hAOSNDk", "RqGYc77Xhek"],
+    "columns": [
+      {
         "dimension": "dx",
-        "items": [{
+        "items": [
+          {
             "id": "ZCCrHrs1Ta2",
             "dimensionItem": "ZCCrHrs1Ta2",
             "displayName": "Proportion of population at risk",
@@ -664,7 +664,8 @@
       },
       {
         "dimension": "pe",
-        "items": [{
+        "items": [
+          {
             "id": "LAST_YEAR",
             "dimensionItem": "LAST_YEAR",
             "displayName": "LAST_YEAR",
@@ -687,7 +688,8 @@
     "attributeValues": [],
     "userAccesses": [],
     "favorites": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "ZCCrHrs1Ta2"
@@ -769,20 +771,23 @@
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
     "filters": [],
-    "rows": [{
-      "dimension": "ou",
-      "items": [{
-          "id": "USER_ORGUNIT",
-          "dimensionItem": "USER_ORGUNIT",
-          "displayName": "USER_ORGUNIT"
-        },
-        {
-          "id": "USER_ORGUNIT_CHILDREN",
-          "dimensionItem": "USER_ORGUNIT_CHILDREN",
-          "displayName": "USER_ORGUNIT_CHILDREN"
-        }
-      ]
-    }]
+    "rows": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          },
+          {
+            "id": "USER_ORGUNIT_CHILDREN",
+            "dimensionItem": "USER_ORGUNIT_CHILDREN",
+            "displayName": "USER_ORGUNIT_CHILDREN"
+          }
+        ]
+      }
+    ]
   },
   "eqbjzgCFSFs": {
     "lastUpdated": "2018-08-21T10:48:50.758",
@@ -831,28 +836,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "q5EPiDt5Xzt",
-          "dimensionItem": "q5EPiDt5Xzt",
-          "displayName": "Malaria inpatient reporting completeness (%)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "YS1Rf9k88HX",
-          "dimensionItem": "YS1Rf9k88HX",
-          "displayName": "Malaria deaths reporting completeness (%)",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "q5EPiDt5Xzt",
+            "dimensionItem": "q5EPiDt5Xzt",
+            "displayName": "Malaria inpatient reporting completeness (%)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "YS1Rf9k88HX",
+            "dimensionItem": "YS1Rf9k88HX",
+            "displayName": "Malaria deaths reporting completeness (%)",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "q5EPiDt5Xzt"
@@ -867,23 +876,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "hQwk2byL539": {
     "lastUpdated": "2018-08-21T09:52:49.879",
@@ -931,34 +948,38 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "c9o7AH6loTf",
-          "dimensionItem": "c9o7AH6loTf",
-          "displayName": "Proportion of cases classified",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "MljjlLCWohp",
-          "dimensionItem": "MljjlLCWohp",
-          "displayName": "Proportion of local cases",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "OCN59f0jJbk",
-          "dimensionItem": "OCN59f0jJbk",
-          "displayName": "Proportion of foci investigated",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "c9o7AH6loTf",
+            "dimensionItem": "c9o7AH6loTf",
+            "displayName": "Proportion of cases classified",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "MljjlLCWohp",
+            "dimensionItem": "MljjlLCWohp",
+            "displayName": "Proportion of local cases",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "OCN59f0jJbk",
+            "dimensionItem": "OCN59f0jJbk",
+            "displayName": "Proportion of foci investigated",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "c9o7AH6loTf"
@@ -979,29 +1000,38 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "JyOc57gUaXp": {
     "id": "JyOc57gUaXp",
     "created": "2018-08-21T10:33:59.976",
     "name": "National-level Surveillance data",
-    "mapViews": [{
+    "mapViews": [
+      {
         "lastUpdated": "2018-08-21T19:49:03.573",
         "id": "MTe6EvKn6iG",
         "created": "2018-08-21T19:19:56.758",
@@ -1068,21 +1098,26 @@
         "interpretations": [],
         "userGroupAccesses": [],
         "subscribers": [],
-        "columns": [{
-          "dimension": "pe",
-          "items": [{
-            "id": "THIS_YEAR",
-            "name": "THIS_YEAR",
-            "dimensionItemType": "PERIOD"
-          }]
-        }],
+        "columns": [
+          {
+            "dimension": "pe",
+            "items": [
+              {
+                "id": "THIS_YEAR",
+                "name": "THIS_YEAR",
+                "dimensionItemType": "PERIOD"
+              }
+            ]
+          }
+        ],
         "dataElementDimensions": [],
         "categoryDimensions": [],
         "programIndicatorDimensions": [],
         "attributeValues": [],
         "userAccesses": [],
         "favorites": [],
-        "dataDimensionItems": [{
+        "dataDimensionItems": [
+          {
             "dataDimensionItemType": "DATA_ELEMENT",
             "dataElement": {
               "id": "cOVhTyW8zN6"
@@ -1133,58 +1168,65 @@
         ],
         "categoryOptionGroupSetDimensions": [],
         "organisationUnitGroupSetDimensions": [],
-        "filters": [{
-          "dimension": "ou",
-          "items": [{
-            "id": "USER_ORGUNIT",
-            "dimensionItem": "USER_ORGUNIT",
-            "displayName": "USER_ORGUNIT"
-          }]
-        }],
-        "rows": [{
-          "dimension": "dx",
-          "items": [{
-              "id": "cOVhTyW8zN6",
-              "name": "Population at risk for malaria",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "gTPP0wYkXBA",
-              "name": "Confirmed Cases",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "DYpakDmCvNG",
-              "name": "Malaria classified as indigenous",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "Jlp3WR8fVnO",
-              "name": "Relapsing/recrudesance cases",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "Ppc51eaCPHb",
-              "name": "Cases investigated",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "HHpmA3PRXlJ",
-              "name": "Prop. of cases investigated within 4 timeframe",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "HiH7BmkVTyK",
-              "name": "Number of P.Falciparum cases",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "tGfdJPAcElX",
-              "name": "Number of P.Vivax Cases",
-              "dimensionItemType": "INDICATOR"
-            }
-          ]
-        }]
+        "filters": [
+          {
+            "dimension": "ou",
+            "items": [
+              {
+                "id": "USER_ORGUNIT",
+                "dimensionItem": "USER_ORGUNIT",
+                "displayName": "USER_ORGUNIT"
+              }
+            ]
+          }
+        ],
+        "rows": [
+          {
+            "dimension": "dx",
+            "items": [
+              {
+                "id": "cOVhTyW8zN6",
+                "name": "Population at risk for malaria",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "gTPP0wYkXBA",
+                "name": "Confirmed Cases",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "DYpakDmCvNG",
+                "name": "Malaria classified as indigenous",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "Jlp3WR8fVnO",
+                "name": "Relapsing/recrudesance cases",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "Ppc51eaCPHb",
+                "name": "Cases investigated",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "HHpmA3PRXlJ",
+                "name": "Prop. of cases investigated within 4 timeframe",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "HiH7BmkVTyK",
+                "name": "Number of P.Falciparum cases",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "tGfdJPAcElX",
+                "name": "Number of P.Vivax Cases",
+                "dimensionItemType": "INDICATOR"
+              }
+            ]
+          }
+        ]
       },
       {
         "lastUpdated": "2018-08-21T19:49:03.569",
@@ -1253,21 +1295,26 @@
         "interpretations": [],
         "userGroupAccesses": [],
         "subscribers": [],
-        "columns": [{
-          "dimension": "pe",
-          "items": [{
-            "id": "THIS_YEAR",
-            "name": "THIS_YEAR",
-            "dimensionItemType": "PERIOD"
-          }]
-        }],
+        "columns": [
+          {
+            "dimension": "pe",
+            "items": [
+              {
+                "id": "THIS_YEAR",
+                "name": "THIS_YEAR",
+                "dimensionItemType": "PERIOD"
+              }
+            ]
+          }
+        ],
         "dataElementDimensions": [],
         "categoryDimensions": [],
         "programIndicatorDimensions": [],
         "attributeValues": [],
         "userAccesses": [],
         "favorites": [],
-        "dataDimensionItems": [{
+        "dataDimensionItems": [
+          {
             "dataDimensionItemType": "DATA_ELEMENT",
             "dataElement": {
               "id": "kC0lyoKVBqC"
@@ -1318,58 +1365,65 @@
         ],
         "categoryOptionGroupSetDimensions": [],
         "organisationUnitGroupSetDimensions": [],
-        "filters": [{
-          "dimension": "ou",
-          "items": [{
-            "id": "USER_ORGUNIT",
-            "dimensionItem": "USER_ORGUNIT",
-            "displayName": "USER_ORGUNIT"
-          }]
-        }],
-        "rows": [{
-          "dimension": "dx",
-          "items": [{
-              "id": "kC0lyoKVBqC",
-              "name": "Foci identified, new and old (list of foci)",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "lz1FE0wvo1m",
-              "name": "Foci classified as endemic or active",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "Qzfvt1YRb1Y",
-              "name": "Number of residula non-active foci",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "LH9FKWl1FfP",
-              "name": "Number of cleared-up foci",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "lZi1cjtvVB6",
-              "name": "Number of new foci indentified",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "IS9VxwhkJXR",
-              "name": "proportion of foci with response with timeframe",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "v0WZQQ6gKAX",
-              "name": "In-patient malaria deaths",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "GxlrIgMyEf4",
-              "name": "Indigenous malaria deaths",
-              "dimensionItemType": "INDICATOR"
-            }
-          ]
-        }]
+        "filters": [
+          {
+            "dimension": "ou",
+            "items": [
+              {
+                "id": "USER_ORGUNIT",
+                "dimensionItem": "USER_ORGUNIT",
+                "displayName": "USER_ORGUNIT"
+              }
+            ]
+          }
+        ],
+        "rows": [
+          {
+            "dimension": "dx",
+            "items": [
+              {
+                "id": "kC0lyoKVBqC",
+                "name": "Foci identified, new and old (list of foci)",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "lz1FE0wvo1m",
+                "name": "Foci classified as endemic or active",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "Qzfvt1YRb1Y",
+                "name": "Number of residula non-active foci",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "LH9FKWl1FfP",
+                "name": "Number of cleared-up foci",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "lZi1cjtvVB6",
+                "name": "Number of new foci indentified",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "IS9VxwhkJXR",
+                "name": "proportion of foci with response with timeframe",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "v0WZQQ6gKAX",
+                "name": "In-patient malaria deaths",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "GxlrIgMyEf4",
+                "name": "Indigenous malaria deaths",
+                "dimensionItemType": "INDICATOR"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -1422,29 +1476,33 @@
     "interpretations": [],
     "userGroupAccesses": [],
     "subscribers": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "lZi1cjtvVB6",
-          "dimensionItem": "lZi1cjtvVB6",
-          "displayName": "Number of new active foci with the current calendar year",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "gTPP0wYkXBA",
-          "dimensionItem": "gTPP0wYkXBA",
-          "displayName": "Total malaria confirmed cases",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "lZi1cjtvVB6",
+            "dimensionItem": "lZi1cjtvVB6",
+            "displayName": "Number of new active foci with the current calendar year",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "gTPP0wYkXBA",
+            "dimensionItem": "gTPP0wYkXBA",
+            "displayName": "Total malaria confirmed cases",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
     "favorites": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
           "id": "lZi1cjtvVB6"
@@ -1459,23 +1517,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "mmdI4h7KdLL": {
     "lastUpdated": "2018-08-21T10:48:50.659",
@@ -1524,28 +1590,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "v0WZQQ6gKAX",
-          "dimensionItem": "v0WZQQ6gKAX",
-          "displayName": "Number of inpatient malaria cases",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "FDgw48IMC7A",
-          "dimensionItem": "FDgw48IMC7A",
-          "displayName": "Non-malaria inpatient cases",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "v0WZQQ6gKAX",
+            "dimensionItem": "v0WZQQ6gKAX",
+            "displayName": "Number of inpatient malaria cases",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "FDgw48IMC7A",
+            "dimensionItem": "FDgw48IMC7A",
+            "displayName": "Non-malaria inpatient cases",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
           "id": "v0WZQQ6gKAX"
@@ -1560,23 +1630,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "pnEMZYfUAZt": {
     "lastUpdated": "2018-08-21T10:48:50.588",
@@ -1625,34 +1703,38 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "ySyleCjszMH",
-          "dimensionItem": "ySyleCjszMH",
-          "displayName": "Proportion of outpatient malaria cases",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "UROz5lfu4ab",
-          "dimensionItem": "UROz5lfu4ab",
-          "displayName": "Proportion of inpatient malaria",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "ploh4JSyBCf",
-          "dimensionItem": "ploh4JSyBCf",
-          "displayName": "Proportion of malaria deaths",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "ySyleCjszMH",
+            "dimensionItem": "ySyleCjszMH",
+            "displayName": "Proportion of outpatient malaria cases",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "UROz5lfu4ab",
+            "dimensionItem": "UROz5lfu4ab",
+            "displayName": "Proportion of inpatient malaria",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "ploh4JSyBCf",
+            "dimensionItem": "ploh4JSyBCf",
+            "displayName": "Proportion of malaria deaths",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "ySyleCjszMH"
@@ -1673,23 +1755,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "PvxM8Xg87Nj": {
     "lastUpdated": "2018-08-21T09:52:49.762",
@@ -1738,28 +1828,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "EM5cpI2NZ7d",
-          "dimensionItem": "EM5cpI2NZ7d",
-          "displayName": "Percentage of P. falciparum",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "clAcoaqWA5q",
-          "dimensionItem": "clAcoaqWA5q",
-          "displayName": "Percentage of P. vivax",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "EM5cpI2NZ7d",
+            "dimensionItem": "EM5cpI2NZ7d",
+            "displayName": "Percentage of P. falciparum",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "clAcoaqWA5q",
+            "dimensionItem": "clAcoaqWA5q",
+            "displayName": "Percentage of P. vivax",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "EM5cpI2NZ7d"
@@ -1774,23 +1868,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "QqZNdTABzsZ": {
     "lastUpdated": "2018-08-21T10:48:50.588",
@@ -1839,34 +1941,38 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "DPNsg3wjxGm",
-          "dimensionItem": "DPNsg3wjxGm",
-          "displayName": "Number of malaria cases tested with microscopy",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "pmRn0GsUfr6",
-          "dimensionItem": "pmRn0GsUfr6",
-          "displayName": "Number of malaria cases tested with RDT",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "gTPP0wYkXBA",
-          "dimensionItem": "gTPP0wYkXBA",
-          "displayName": "Confirmed Cases",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "DPNsg3wjxGm",
+            "dimensionItem": "DPNsg3wjxGm",
+            "displayName": "Number of malaria cases tested with microscopy",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "pmRn0GsUfr6",
+            "dimensionItem": "pmRn0GsUfr6",
+            "displayName": "Number of malaria cases tested with RDT",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "gTPP0wYkXBA",
+            "dimensionItem": "gTPP0wYkXBA",
+            "displayName": "Confirmed Cases",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
           "id": "DPNsg3wjxGm"
@@ -1887,23 +1993,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "s6UwlCxG5nW": {
     "lastUpdated": "2018-08-21T22:02:34.706",
@@ -1979,7 +2093,8 @@
       "EHbjdbiKtd8": "#e58647",
       "IS9VxwhkJXR": "#e58647"
     },
-    "columnGroups": [{
+    "columnGroups": [
+      {
         "name": "Population",
         "span": 1,
         "row_span": 2,
@@ -2020,94 +2135,97 @@
         "id": "xTsHkGqsUlW"
       }
     ],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "ZCCrHrs1Ta2",
-          "dimensionItem": "ZCCrHrs1Ta2",
-          "displayName": "Proportion of population at risk",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "lz1FE0wvo1m",
-          "dimensionItem": "lz1FE0wvo1m",
-          "displayName": "Number of malaria foci classified as active (with ongoing transmission, locally acquired case(s) detected within the current transmission calendar year )",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "Qzfvt1YRb1Y",
-          "dimensionItem": "Qzfvt1YRb1Y",
-          "displayName": "Number of malaria foci classified as residual non-active (Transmission interrupted recently, 1-3 years ago)",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "LH9FKWl1FfP",
-          "dimensionItem": "LH9FKWl1FfP",
-          "displayName": "Number of malaria Foci classified as cleared-up (no local transmission for >3 years, no longer considered residual non-active)",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "gTPP0wYkXBA",
-          "dimensionItem": "gTPP0wYkXBA",
-          "displayName": "Total malaria confirmed cases",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "DYpakDmCvNG",
-          "dimensionItem": "DYpakDmCvNG",
-          "displayName": "Number of malaria cases classified as indigenous",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "Ppc51eaCPHb",
-          "dimensionItem": "Ppc51eaCPHb",
-          "displayName": "Number of malaria cases investigated",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "nx6lSAN1YmB",
-          "dimensionItem": "nx6lSAN1YmB",
-          "displayName": "Proportion of cases investigated within N2 days of diagnosis",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "EM5cpI2NZ7d",
-          "dimensionItem": "EM5cpI2NZ7d",
-          "displayName": "Percentage of P. falciparum",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "clAcoaqWA5q",
-          "dimensionItem": "clAcoaqWA5q",
-          "displayName": "Percentage of P. vivax",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "lZi1cjtvVB6",
-          "dimensionItem": "lZi1cjtvVB6",
-          "displayName": "Number of new active foci with the current calendar year",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "EHbjdbiKtd8",
-          "dimensionItem": "EHbjdbiKtd8",
-          "displayName": "Number of malaria foci classified",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "IS9VxwhkJXR",
-          "dimensionItem": "IS9VxwhkJXR",
-          "displayName": "proportion of foci with response within N4 days of diagnosis",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "xTsHkGqsUlW",
-          "dimensionItem": "xTsHkGqsUlW",
-          "displayName": "% completeness(OPD)",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "ZCCrHrs1Ta2",
+            "dimensionItem": "ZCCrHrs1Ta2",
+            "displayName": "Proportion of population at risk",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "lz1FE0wvo1m",
+            "dimensionItem": "lz1FE0wvo1m",
+            "displayName": "Number of malaria foci classified as active (with ongoing transmission, locally acquired case(s) detected within the current transmission calendar year )",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "Qzfvt1YRb1Y",
+            "dimensionItem": "Qzfvt1YRb1Y",
+            "displayName": "Number of malaria foci classified as residual non-active (Transmission interrupted recently, 1-3 years ago)",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "LH9FKWl1FfP",
+            "dimensionItem": "LH9FKWl1FfP",
+            "displayName": "Number of malaria Foci classified as cleared-up (no local transmission for >3 years, no longer considered residual non-active)",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "gTPP0wYkXBA",
+            "dimensionItem": "gTPP0wYkXBA",
+            "displayName": "Total malaria confirmed cases",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "DYpakDmCvNG",
+            "dimensionItem": "DYpakDmCvNG",
+            "displayName": "Number of malaria cases classified as indigenous",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "Ppc51eaCPHb",
+            "dimensionItem": "Ppc51eaCPHb",
+            "displayName": "Number of malaria cases investigated",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "nx6lSAN1YmB",
+            "dimensionItem": "nx6lSAN1YmB",
+            "displayName": "Proportion of cases investigated within N2 days of diagnosis",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "EM5cpI2NZ7d",
+            "dimensionItem": "EM5cpI2NZ7d",
+            "displayName": "Percentage of P. falciparum",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "clAcoaqWA5q",
+            "dimensionItem": "clAcoaqWA5q",
+            "displayName": "Percentage of P. vivax",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "lZi1cjtvVB6",
+            "dimensionItem": "lZi1cjtvVB6",
+            "displayName": "Number of new active foci with the current calendar year",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "EHbjdbiKtd8",
+            "dimensionItem": "EHbjdbiKtd8",
+            "displayName": "Number of malaria foci classified",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "IS9VxwhkJXR",
+            "dimensionItem": "IS9VxwhkJXR",
+            "displayName": "proportion of foci with response within N4 days of diagnosis",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "xTsHkGqsUlW",
+            "dimensionItem": "xTsHkGqsUlW",
+            "displayName": "% completeness(OPD)",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
@@ -2115,35 +2233,24 @@
     "userAccesses": [],
     "favorites": [],
     "groups": {
-      "headers": [{
+      "headers": [
+        {
           "name": "foci",
-          "dx": [
-            "LH9FKWl1FfP",
-            "lz1FE0wvo1m",
-            "s9FmEvF0r4n"
-          ]
+          "dx": ["LH9FKWl1FfP", "lz1FE0wvo1m", "s9FmEvF0r4n"]
         },
         {
           "name": "cases",
-          "dx": [
-            "LhcXjWs6lm7",
-            "DYpakDmCvNG",
-            "Ppc51eaCPHb",
-            "dASLnPMS8L8",
-            "Uzmk0S9IwWn"
-          ]
+          "dx": ["LhcXjWs6lm7", "DYpakDmCvNG", "Ppc51eaCPHb", "dASLnPMS8L8", "Uzmk0S9IwWn"]
         },
         {
           "name": "investigation",
-          "dx": [
-            "EEuvMCljxc9",
-            "lZi1cjtvVB6"
-          ]
+          "dx": ["EEuvMCljxc9", "lZi1cjtvVB6"]
         }
       ],
       "levels": 1
     },
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "dataElement": {
           "id": "DkmMEcubiPv"
@@ -2224,35 +2331,43 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "THIS_YEAR",
-        "dimensionItem": "THIS_YEAR",
-        "displayName": "THIS_YEAR",
-        "dimensionItemType": "PERIOD"
-      }]
-    }],
-    "rows": [{
-      "dimension": "ou",
-      "items": [{
-          "id": "USER_ORGUNIT",
-          "dimensionItem": "USER_ORGUNIT",
-          "displayName": "USER_ORGUNIT"
-        },
-        {
-          "id": "USER_ORGUNIT_CHILDREN",
-          "dimensionItem": "USER_ORGUNIT_CHILDREN",
-          "displayName": "USER_ORGUNIT_CHILDREN"
-        }
-      ]
-    }]
+    "filters": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "THIS_YEAR",
+            "dimensionItem": "THIS_YEAR",
+            "displayName": "THIS_YEAR",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          },
+          {
+            "id": "USER_ORGUNIT_CHILDREN",
+            "dimensionItem": "USER_ORGUNIT_CHILDREN",
+            "displayName": "USER_ORGUNIT_CHILDREN"
+          }
+        ]
+      }
+    ]
   },
   "SjvpCQUNq2n": {
     "id": "SjvpCQUNq2n",
     "created": "2018-08-21T10:33:59.976",
     "name": "Estimated  national coverage(possession) with LLIN",
-    "mapViews": [{
+    "mapViews": [
+      {
         "lastUpdated": "2018-08-21T13:06:09.329",
         "id": "lMiNVKZHW0B",
         "created": "2018-08-21T10:33:59.976",
@@ -2319,21 +2434,26 @@
         "interpretations": [],
         "userGroupAccesses": [],
         "subscribers": [],
-        "columns": [{
-          "dimension": "pe",
-          "items": [{
-            "id": "THIS_YEAR",
-            "name": "THIS_YEAR",
-            "dimensionItemType": "PERIOD"
-          }]
-        }],
+        "columns": [
+          {
+            "dimension": "pe",
+            "items": [
+              {
+                "id": "THIS_YEAR",
+                "name": "THIS_YEAR",
+                "dimensionItemType": "PERIOD"
+              }
+            ]
+          }
+        ],
         "dataElementDimensions": [],
         "categoryDimensions": [],
         "programIndicatorDimensions": [],
         "attributeValues": [],
         "userAccesses": [],
         "favorites": [],
-        "dataDimensionItems": [{
+        "dataDimensionItems": [
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "ZCCrHrs1Ta2"
@@ -2348,33 +2468,40 @@
         ],
         "categoryOptionGroupSetDimensions": [],
         "organisationUnitGroupSetDimensions": [],
-        "filters": [{
-          "dimension": "ou",
-          "items": [{
-            "id": "USER_ORGUNIT",
-            "dimensionItem": "USER_ORGUNIT",
-            "displayName": "USER_ORGUNIT"
-          }]
-        }],
-        "rows": [{
-          "dimension": "dx",
-          "items": [{
-              "id": "ZCCrHrs1Ta2",
-              "name": "Proportion of population at risk",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "HxTrnX154BH",
-              "name": "No. of LLIN distributed",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "UH47dKFqTRK",
-              "name": "No. of LLIN distributed",
-              "dimensionItemType": "DATA_ELEMENT"
-            }
-          ]
-        }]
+        "filters": [
+          {
+            "dimension": "ou",
+            "items": [
+              {
+                "id": "USER_ORGUNIT",
+                "dimensionItem": "USER_ORGUNIT",
+                "displayName": "USER_ORGUNIT"
+              }
+            ]
+          }
+        ],
+        "rows": [
+          {
+            "dimension": "dx",
+            "items": [
+              {
+                "id": "ZCCrHrs1Ta2",
+                "name": "Proportion of population at risk",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "HxTrnX154BH",
+                "name": "No. of LLIN distributed",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "UH47dKFqTRK",
+                "name": "No. of LLIN distributed",
+                "dimensionItemType": "DATA_ELEMENT"
+              }
+            ]
+          }
+        ]
       },
       {
         "lastUpdated": "2018-08-21T20:32:50.939",
@@ -2443,21 +2570,26 @@
         "interpretations": [],
         "userGroupAccesses": [],
         "subscribers": [],
-        "columns": [{
-          "dimension": "pe",
-          "items": [{
-            "id": "THIS_YEAR",
-            "name": "THIS_YEAR",
-            "dimensionItemType": "PERIOD"
-          }]
-        }],
+        "columns": [
+          {
+            "dimension": "pe",
+            "items": [
+              {
+                "id": "THIS_YEAR",
+                "name": "THIS_YEAR",
+                "dimensionItemType": "PERIOD"
+              }
+            ]
+          }
+        ],
         "dataElementDimensions": [],
         "categoryDimensions": [],
         "programIndicatorDimensions": [],
         "attributeValues": [],
         "userAccesses": [],
         "favorites": [],
-        "dataDimensionItems": [{
+        "dataDimensionItems": [
+          {
             "dataDimensionItemType": "DATA_ELEMENT",
             "dataElement": {
               "id": "NywGy6uMS5r"
@@ -2472,28 +2604,35 @@
         ],
         "categoryOptionGroupSetDimensions": [],
         "organisationUnitGroupSetDimensions": [],
-        "filters": [{
-          "dimension": "ou",
-          "items": [{
-            "id": "USER_ORGUNIT",
-            "dimensionItem": "USER_ORGUNIT",
-            "displayName": "USER_ORGUNIT"
-          }]
-        }],
-        "rows": [{
-          "dimension": "dx",
-          "items": [{
-              "id": "NywGy6uMS5r",
-              "name": "Number of people protected by IRS",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "UyuDDeXuIbr",
-              "name": "% population protected with IRS",
-              "dimensionItemType": "INDICATOR"
-            }
-          ]
-        }]
+        "filters": [
+          {
+            "dimension": "ou",
+            "items": [
+              {
+                "id": "USER_ORGUNIT",
+                "dimensionItem": "USER_ORGUNIT",
+                "displayName": "USER_ORGUNIT"
+              }
+            ]
+          }
+        ],
+        "rows": [
+          {
+            "dimension": "dx",
+            "items": [
+              {
+                "id": "NywGy6uMS5r",
+                "name": "Number of people protected by IRS",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "UyuDDeXuIbr",
+                "name": "% population protected with IRS",
+                "dimensionItemType": "INDICATOR"
+              }
+            ]
+          }
+        ]
       },
       {
         "lastUpdated": "2018-08-21T13:06:09.329",
@@ -2563,31 +2702,35 @@
         "interpretations": [],
         "userGroupAccesses": [],
         "subscribers": [],
-        "columns": [{
-          "dimension": "pe",
-          "items": [{
-              "id": "LAST_YEAR",
-              "dimensionItem": "LAST_YEAR",
-              "displayName": "LAST_YEAR",
-              "ref_type": "PERIOD_REF",
-              "dimensionItemType": "PERIOD"
-            },
-            {
-              "id": "THIS_YEAR",
-              "dimensionItem": "THIS_YEAR",
-              "displayName": "THIS_YEAR",
-              "ref_type": "PERIOD_ACTUAL",
-              "dimensionItemType": "PERIOD"
-            }
-          ]
-        }],
+        "columns": [
+          {
+            "dimension": "pe",
+            "items": [
+              {
+                "id": "LAST_YEAR",
+                "dimensionItem": "LAST_YEAR",
+                "displayName": "LAST_YEAR",
+                "ref_type": "PERIOD_REF",
+                "dimensionItemType": "PERIOD"
+              },
+              {
+                "id": "THIS_YEAR",
+                "dimensionItem": "THIS_YEAR",
+                "displayName": "THIS_YEAR",
+                "ref_type": "PERIOD_ACTUAL",
+                "dimensionItemType": "PERIOD"
+              }
+            ]
+          }
+        ],
         "dataElementDimensions": [],
         "categoryDimensions": [],
         "programIndicatorDimensions": [],
         "attributeValues": [],
         "userAccesses": [],
         "favorites": [],
-        "dataDimensionItems": [{
+        "dataDimensionItems": [
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "gTPP0wYkXBA"
@@ -2616,27 +2759,32 @@
             "dataElement": {
               "id": "GxlrIgMyEf4"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "YDqD4CuPJGq"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "rmu9kA4Ti2U"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "cPucRw8LCZT"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "TcyzseQs9rK"
             }
-          }, {
+          },
+          {
             "dataDimensionItemType": "INDICATOR",
             "indicator": {
               "id": "jx3YNvNxSIq"
@@ -2645,68 +2793,75 @@
         ],
         "categoryOptionGroupSetDimensions": [],
         "organisationUnitGroupSetDimensions": [],
-        "filters": [{
-          "dimension": "ou",
-          "items": [{
-            "id": "USER_ORGUNIT",
-            "dimensionItem": "USER_ORGUNIT",
-            "displayName": "USER_ORGUNIT"
-          }]
-        }],
-        "rows": [{
-          "dimension": "dx",
-          "items": [{
-              "id": "gTPP0wYkXBA",
-              "name": "Total malaria confirmed cases",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "SEi6VEB5DO0",
-              "name": "Annual parasite incidence(API)",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "IPI8Xmc1nnT",
-              "name": "Test positivity rate(TPR)",
-              "dimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "v0WZQQ6gKAX",
-              "name": "Number of inpatient malaria cases",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "GxlrIgMyEf4",
-              "name": "Number of malaria deaths",
-              "dimensionItemType": "DATA_ELEMENT"
-            }, {
-              "id": "YDqD4CuPJGq",
-              "name": "Annual parasite incidence (API) - % change",
-              "dataDimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "rmu9kA4Ti2U",
-              "name": "Test positivity rate(TPR) - % change",
-              "dataDimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "cPucRw8LCZT",
-              "name": "Number of inpatient malaria cases - % change",
-              "dataDimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "TcyzseQs9rK",
-              "name": "Number of malaria deaths - % change",
-              "dataDimensionItemType": "INDICATOR"
-            },
-            {
-              "id": "jx3YNvNxSIq",
-              "name": "Confirmed cases - % change",
-              "dataDimensionItemType": "INDICATOR"
-
-            }
-          ]
-        }]
+        "filters": [
+          {
+            "dimension": "ou",
+            "items": [
+              {
+                "id": "USER_ORGUNIT",
+                "dimensionItem": "USER_ORGUNIT",
+                "displayName": "USER_ORGUNIT"
+              }
+            ]
+          }
+        ],
+        "rows": [
+          {
+            "dimension": "dx",
+            "items": [
+              {
+                "id": "gTPP0wYkXBA",
+                "name": "Total malaria confirmed cases",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "SEi6VEB5DO0",
+                "name": "Annual parasite incidence(API)",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "IPI8Xmc1nnT",
+                "name": "Test positivity rate(TPR)",
+                "dimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "v0WZQQ6gKAX",
+                "name": "Number of inpatient malaria cases",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "GxlrIgMyEf4",
+                "name": "Number of malaria deaths",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "YDqD4CuPJGq",
+                "name": "Annual parasite incidence (API) - % change",
+                "dataDimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "rmu9kA4Ti2U",
+                "name": "Test positivity rate(TPR) - % change",
+                "dataDimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "cPucRw8LCZT",
+                "name": "Number of inpatient malaria cases - % change",
+                "dataDimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "TcyzseQs9rK",
+                "name": "Number of malaria deaths - % change",
+                "dataDimensionItemType": "INDICATOR"
+              },
+              {
+                "id": "jx3YNvNxSIq",
+                "name": "Confirmed cases - % change",
+                "dataDimensionItemType": "INDICATOR"
+              }
+            ]
+          }
+        ]
       },
       {
         "lastUpdated": "2018-08-21T20:40:03.569",
@@ -2775,21 +2930,26 @@
         "interpretations": [],
         "userGroupAccesses": [],
         "subscribers": [],
-        "columns": [{
-          "dimension": "pe",
-          "items": [{
-            "id": "THIS_YEAR",
-            "name": "THIS_YEAR",
-            "dimensionItemType": "PERIOD"
-          }]
-        }],
+        "columns": [
+          {
+            "dimension": "pe",
+            "items": [
+              {
+                "id": "THIS_YEAR",
+                "name": "THIS_YEAR",
+                "dimensionItemType": "PERIOD"
+              }
+            ]
+          }
+        ],
         "dataElementDimensions": [],
         "categoryDimensions": [],
         "programIndicatorDimensions": [],
         "attributeValues": [],
         "userAccesses": [],
         "favorites": [],
-        "dataDimensionItems": [{
+        "dataDimensionItems": [
+          {
             "dataDimensionItemType": "DATA_ELEMENT",
             "indicator": {
               "id": "PAbp5CFUJEP"
@@ -2810,33 +2970,40 @@
         ],
         "categoryOptionGroupSetDimensions": [],
         "organisationUnitGroupSetDimensions": [],
-        "filters": [{
-          "dimension": "ou",
-          "items": [{
-            "id": "USER_ORGUNIT",
-            "dimensionItem": "USER_ORGUNIT",
-            "displayName": "USER_ORGUNIT"
-          }]
-        }],
-        "rows": [{
-          "dimension": "dx",
-          "items": [{
-              "id": "PAbp5CFUJEP",
-              "name": "Domestic Funding % year",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "bMshElFlkIT",
-              "name": "External funding % year",
-              "dimensionItemType": "DATA_ELEMENT"
-            },
-            {
-              "id": "LB63qxQWAot",
-              "name": "Funding gap % year",
-              "dimensionItemType": "DATA_ELEMENT"
-            }
-          ]
-        }]
+        "filters": [
+          {
+            "dimension": "ou",
+            "items": [
+              {
+                "id": "USER_ORGUNIT",
+                "dimensionItem": "USER_ORGUNIT",
+                "displayName": "USER_ORGUNIT"
+              }
+            ]
+          }
+        ],
+        "rows": [
+          {
+            "dimension": "dx",
+            "items": [
+              {
+                "id": "PAbp5CFUJEP",
+                "name": "Domestic Funding % year",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "bMshElFlkIT",
+                "name": "External funding % year",
+                "dimensionItemType": "DATA_ELEMENT"
+              },
+              {
+                "id": "LB63qxQWAot",
+                "name": "Funding gap % year",
+                "dimensionItemType": "DATA_ELEMENT"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -2887,28 +3054,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "Te6QHrjYc8k",
-          "dimensionItem": "Te6QHrjYc8k",
-          "displayName": "Slide positivity rate (microscopy)",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "IPI8Xmc1nnT",
-          "dimensionItem": "IPI8Xmc1nnT",
-          "displayName": "Test positivity rate (RDT)",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "Te6QHrjYc8k",
+            "dimensionItem": "Te6QHrjYc8k",
+            "displayName": "Slide positivity rate (microscopy)",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "IPI8Xmc1nnT",
+            "dimensionItem": "IPI8Xmc1nnT",
+            "displayName": "Test positivity rate (RDT)",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "Te6QHrjYc8k"
@@ -2923,23 +3094,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "sV93XsyzYKh": {
     "lastUpdated": "2018-08-21T09:52:49.706",
@@ -2988,28 +3167,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "lWrQhvx4YUA",
-          "dimensionItem": "lWrQhvx4YUA",
-          "displayName": "Proportion of cases investigated",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "c9o7AH6loTf",
-          "dimensionItem": "c9o7AH6loTf",
-          "displayName": "Proportion of cases classified",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "lWrQhvx4YUA",
+            "dimensionItem": "lWrQhvx4YUA",
+            "displayName": "Proportion of cases investigated",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "c9o7AH6loTf",
+            "dimensionItem": "c9o7AH6loTf",
+            "displayName": "Proportion of cases classified",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "lWrQhvx4YUA"
@@ -3024,23 +3207,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "tq6l6xuECZo": {
     "lastUpdated": "2018-08-21T10:48:50.589",
@@ -3089,28 +3280,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "GxlrIgMyEf4",
-          "dimensionItem": "GxlrIgMyEf4",
-          "displayName": "Number of malaria deaths",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "af7VIQU9Gsb",
-          "dimensionItem": "af7VIQU9Gsb",
-          "displayName": "Non-malaria inpatient deaths",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "GxlrIgMyEf4",
+            "dimensionItem": "GxlrIgMyEf4",
+            "displayName": "Number of malaria deaths",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "af7VIQU9Gsb",
+            "dimensionItem": "af7VIQU9Gsb",
+            "displayName": "Non-malaria inpatient deaths",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
           "id": "GxlrIgMyEf4"
@@ -3125,23 +3320,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "uE5LUxEM6sT": {
     "lastUpdated": "2018-08-21T09:52:49.873",
@@ -3190,45 +3393,59 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-        "id": "HMUc4RajgaC",
-        "dimensionItem": "HMUc4RajgaC",
-        "displayName": "Number of malaria cases classified as local",
-        "dimensionItemType": "DATA_ELEMENT"
-      }]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "HMUc4RajgaC",
+            "dimensionItem": "HMUc4RajgaC",
+            "displayName": "Number of malaria cases classified as local",
+            "dimensionItemType": "DATA_ELEMENT"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
-      "dataDimensionItemType": "DATA_ELEMENT",
-      "indicator": {
-        "id": "HMUc4RajgaC"
+    "dataDimensionItems": [
+      {
+        "dataDimensionItemType": "DATA_ELEMENT",
+        "indicator": {
+          "id": "HMUc4RajgaC"
+        }
       }
-    }],
+    ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "wSudey0Yc2R": {
     "lastUpdated": "2018-08-21T10:48:50.771",
@@ -3277,28 +3494,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "kRasaq1REFp",
-          "dimensionItem": "kRasaq1REFp",
-          "displayName": "Number of total malaria cases (confirmed + presumed)",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "UHoPVgnALcd",
-          "dimensionItem": "UHoPVgnALcd",
-          "displayName": "Non-malaria outpatient cases",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "kRasaq1REFp",
+            "dimensionItem": "kRasaq1REFp",
+            "displayName": "Number of total malaria cases (confirmed + presumed)",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "UHoPVgnALcd",
+            "dimensionItem": "UHoPVgnALcd",
+            "displayName": "Non-malaria outpatient cases",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
           "id": "kRasaq1REFp"
@@ -3313,23 +3534,31 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "pe",
-      "items": [{
-        "id": "LAST_12_MONTHS",
-        "dimensionItem": "LAST_12_MONTHS",
-        "displayName": "LAST_12_MONTHS",
-        "dimensionItemType": "PERIOD"
-      }]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "LAST_12_MONTHS",
+            "dimensionItem": "LAST_12_MONTHS",
+            "displayName": "LAST_12_MONTHS",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ]
   },
   "XG7LBCz7nQn": {
     "lastUpdated": "2018-08-21T10:48:50.737",
@@ -3378,28 +3607,32 @@
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
-    "columns": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "gTPP0wYkXBA",
-          "dimensionItem": "gTPP0wYkXBA",
-          "displayName": "Total malaria confirmed cases",
-          "dimensionItemType": "INDICATOR"
-        },
-        {
-          "id": "fj29hAOSNDk",
-          "dimensionItem": "fj29hAOSNDk",
-          "displayName": "Annual blood examination rate",
-          "dimensionItemType": "INDICATOR"
-        }
-      ]
-    }],
+    "columns": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "gTPP0wYkXBA",
+            "dimensionItem": "gTPP0wYkXBA",
+            "displayName": "Total malaria confirmed cases",
+            "dimensionItemType": "INDICATOR"
+          },
+          {
+            "id": "fj29hAOSNDk",
+            "dimensionItem": "fj29hAOSNDk",
+            "displayName": "Annual blood examination rate",
+            "dimensionItemType": "INDICATOR"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "INDICATOR",
         "indicator": {
           "id": "gTPP0wYkXBA"
@@ -3415,25 +3648,27 @@
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
     "filters": [],
-    "rows": [{
-      "dimension": "ou",
-      "items": [{
-          "id": "USER_ORGUNIT",
-          "dimensionItem": "USER_ORGUNIT",
-          "displayName": "USER_ORGUNIT"
-        },
-        {
-          "id": "USER_ORGUNIT_CHILDREN",
-          "dimensionItem": "USER_ORGUNIT_CHILDREN",
-          "displayName": "USER_ORGUNIT_CHILDREN"
-        }
-      ]
-    }]
+    "rows": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          },
+          {
+            "id": "USER_ORGUNIT_CHILDREN",
+            "dimensionItem": "USER_ORGUNIT_CHILDREN",
+            "displayName": "USER_ORGUNIT_CHILDREN"
+          }
+        ]
+      }
+    ]
   },
   "ZVioCmjr4bz": {
     "lastUpdated": "2018-08-21T13:06:09.329",
     "useReferencePeriod": true,
-    "skipSummationOnMultiplePeriod": true,
     "id": "ZVioCmjr4bz",
     "created": "2018-08-21T10:33:59.976",
     "name": "Funding and Operations",
@@ -3458,8 +3693,54 @@
       "GD7TowwI46c": ""
     },
     "styles": {
-      "header": "#e2931d"
+      "header": "#6597CE"
     },
+    "columnsStyles": {
+      "default": "#D2D270"
+    },
+    "rowsStyles": {
+      "PAbp5CFUJEP": "#FFFDC9",
+      "bMshElFlkIT": "#FFFDC9",
+      "j470ZcksHc2": "#FFFDC9",
+      "ifhhKPHYssI": "#FFFDC9",
+      "sx6VVUpEY1r": "#FFFDC9"
+    },
+    "rowsGroups": [
+      {
+        "name": "Total needs",
+        "span": 2,
+        "row_span": 1,
+        "type": "dx",
+        "color": "#D2D270",
+        "id": "PQA10xCuDqo"
+      },
+      {
+        "name": "Available",
+        "span": 1,
+        "row_span": 2,
+        "type": "gp",
+        "itemId": "PAbp5CFUJEP",
+        "color": "#D2D270",
+        "id": "BArAWVucQ7O"
+      },
+      {
+        "name": "Net Gap",
+        "span": 2,
+        "row_span": 1,
+        "type": "dx",
+        "color": "#D2D270",
+        "id": "UnUlBgLykAj"
+      },
+      {
+        "name": "External Source",
+        "span": 1,
+        "row_span": 3,
+        "type": "gp",
+        "itemId": "j470ZcksHc2",
+        "color": "#D2D270",
+        "id": "lxAvmpSPV2y"
+      }
+    ],
     "displayDensity": "NORMAL",
     "completedOnly": false,
     "colTotals": false,
@@ -3494,36 +3775,44 @@
       }
     },
     "dataElementGroupSetDimensions": [],
+    "skipSummationOnMultiplePeriod": true,
     "attributeDimensions": [],
     "translations": [],
     "interpretations": [],
     "userGroupAccesses": [],
     "subscribers": [],
-    "columns": [{
-      "dimension": "pe",
-      "items": [{
-          "id": "LAST_5_YEARS",
-          "dimensionItem": "LAST_5_YEARS",
-          "displayName": "LAST_5_YEARS",
-          "ref_type": "PERIOD_ACTUAL",
-          "dimensionItemType": "PERIOD"
-        },
-        {
-          "id": "THIS_YEAR",
-          "dimensionItem": "THIS_YEAR",
-          "displayName": "THIS_YEAR",
-          "ref_type": "PERIOD_ACTUAL",
-          "dimensionItemType": "PERIOD"
-        }
-      ]
-    }],
+    "defaultPeriods": [
+      {
+        "id": "LAST_5_YEARS",
+        "dimensionItem": "LAST_5_YEARS",
+        "displayName": "LAST_5_YEARS",
+        "skipSummationOnMultiplePeriod": true,
+        "ref_type": "PERIOD_ACTUAL",
+        "dimensionItemType": "PERIOD"
+      }
+    ],
+    "columns": [
+      {
+        "dimension": "pe",
+        "items": [
+          {
+            "id": "THIS_YEAR",
+            "dimensionItem": "THIS_YEAR",
+            "displayName": "THIS_YEAR",
+            "ref_type": "PERIOD_ACTUAL",
+            "dimensionItemType": "PERIOD"
+          }
+        ]
+      }
+    ],
     "dataElementDimensions": [],
     "categoryDimensions": [],
     "programIndicatorDimensions": [],
     "attributeValues": [],
     "userAccesses": [],
     "favorites": [],
-    "dataDimensionItems": [{
+    "dataDimensionItems": [
+      {
         "dataDimensionItemType": "DATA_ELEMENT",
         "indicator": {
           "id": "PQA10xCuDqo"
@@ -3568,52 +3857,59 @@
     ],
     "categoryOptionGroupSetDimensions": [],
     "organisationUnitGroupSetDimensions": [],
-    "filters": [{
-      "dimension": "ou",
-      "items": [{
-        "id": "USER_ORGUNIT",
-        "dimensionItem": "USER_ORGUNIT",
-        "displayName": "USER_ORGUNIT"
-      }]
-    }],
-    "rows": [{
-      "dimension": "dx",
-      "items": [{
-          "id": "PQA10xCuDqo",
-          "name": "Total Needs",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "PAbp5CFUJEP",
-          "name": "Domestic Funding",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "bMshElFlkIT",
-          "name": "External Funding",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "UnUlBgLykAj",
-          "name": "Net Gap",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "j470ZcksHc2",
-          "name": "Global Fund",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "ifhhKPHYssI",
-          "name": "PMI/ USAID",
-          "dimensionItemType": "DATA_ELEMENT"
-        },
-        {
-          "id": "sx6VVUpEY1r",
-          "name": "Others",
-          "dimensionItemType": "DATA_ELEMENT"
-        }
-      ]
-    }]
+    "filters": [
+      {
+        "dimension": "ou",
+        "items": [
+          {
+            "id": "USER_ORGUNIT",
+            "dimensionItem": "USER_ORGUNIT",
+            "displayName": "USER_ORGUNIT"
+          }
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "dimension": "dx",
+        "items": [
+          {
+            "id": "PQA10xCuDqo",
+            "name": "Total Needs",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "PAbp5CFUJEP",
+            "name": "Domestic Funding",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "bMshElFlkIT",
+            "name": "External Funding",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "UnUlBgLykAj",
+            "name": "Net Gap",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "j470ZcksHc2",
+            "name": "Global Fund",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "ifhhKPHYssI",
+            "name": "PMI/ USAID",
+            "dimensionItemType": "DATA_ELEMENT"
+          },
+          {
+            "id": "sx6VVUpEY1r",
+            "name": "Others",
+            "dimensionItemType": "DATA_ELEMENT"
+          }
+        ]
+      }
+    ]
   }
 }

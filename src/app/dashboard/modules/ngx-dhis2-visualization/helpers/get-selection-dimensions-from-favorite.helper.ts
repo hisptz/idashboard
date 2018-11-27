@@ -36,6 +36,7 @@ function getStandardizedDimensions(dimensions: any[], dataElements: any[], dimen
           id: item.dimensionItem || item.id,
           name: item.displayName || item.name,
           ref_type: item.ref_type,
+          skipSummationOnMultiplePeriod: item.skipSummationOnMultiplePeriod,
           type: getDimensionItemType(dimensionObject.dimension, item)
         };
       })
