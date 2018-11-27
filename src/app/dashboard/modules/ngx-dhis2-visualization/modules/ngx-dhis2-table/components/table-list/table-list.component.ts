@@ -41,7 +41,6 @@ export class TableListComponent implements OnInit {
   }
 
   getLayerAnalytic(analytics, layout, useReferencePeriod) {
-    console.log({ useReferencePeriod, pe: analytics.metaData.pe, layout });
     if (
       !useReferencePeriod &&
       analytics &&
@@ -70,7 +69,6 @@ export class TableListComponent implements OnInit {
         analytics.rows = sanitizedRows;
       }
     }
-    console.log({ analytics });
     return analytics;
   }
 

@@ -493,6 +493,7 @@ function getSanitizedAnalytict(analyticsResults, parameters) {
       });
     });
   }
+  analytics = getAnalyticValueWithThousandCommaSeparator(analytics)
   analytics.height = analytics.rows.length;
   return analytics;
 }
@@ -540,13 +541,25 @@ function getEvaluatedValueOfRule(expression, keyValuePair) {
 }
 
 function getAnalyticValueWithThousandCommaSeparator(analytic) {
-  // console.log({
-  //   analytic,
-  //   isOuInFilters,
-  //   isPeInFilters
-  // });
   if (analytic && analytic.rows) {
-    // Apply ou or pe filter
+    const customPe = "customPe"
+    const customOu = "customOu"
+    if (isOuInFilters) {
+      const rows = getRowsByOuAsFilter(analytic.rows, customOu)
+      analytic.metaData.items[customOu] = {
+        name: ""
+      }
+      analytic.metaData.dimensions.ou = [customOu]
+      analytic.rows = rows;
+    }
+    if (isPeInFilters) {
+      const rows = getRowsByPeAsFilter(analytic.rows, customPe);
+      analytic.metaData.items[customPe] = {
+        name: ""
+      };
+      analytic.metaData.dimensions.pe = [customPe];
+      analytic.rows = rows;
+    }
     for (var row of analytic.rows) {
       var value = getAnalyticValueWithThousandCommaSeparator(row[row.length - 1]);
       value = parseFloat(value).toLocaleString();
@@ -554,6 +567,46 @@ function getAnalyticValueWithThousandCommaSeparator(analytic) {
     }
   }
   return analytic;
+}
+
+function getRowsByOuAsFilter(rows, customOu) {
+  const sanitizedRows = [];
+  const sumObjet = {};
+  rows.map(row => {
+    if (row.length === 4) {
+      const id = `${row[0]}__${row[1]}`;
+      if (!sumObjet[id]) {
+        sumObjet[id] = 0;
+      }
+      sumObjet[id] += parseFloat(row[3]);
+    }
+  });
+  Object.keys(sumObjet).map(idObject => {
+    const ids = idObject.split('__');
+    const value = parseFloat(sumObjet[idObject]).toFixed(1);
+    sanitizedRows.push([ids[0], ids[1], customOu, value]);
+  });
+  return sanitizedRows;
+}
+
+function getRowsByPeAsFilter(rows, customPe) {
+  const sanitizedRows = [];
+  const sumObjet = {};
+  rows.map(row => {
+    if (row.length === 4) {
+      const id = `${row[0]}_${row[2]}`;
+      if (!sumObjet[id]) {
+        sumObjet[id] = 0;
+      }
+      sumObjet[id] += parseFloat(row[3]);
+    }
+  });
+  Object.keys(sumObjet).map(idObject => {
+    const ids = idObject.split('_');
+    const value = parseFloat(sumObjet[idObject]).toFixed(1);
+    sanitizedRows.push([ids[0], customPe, ids[1], value]);
+  });
+  return sanitizedRows;
 }
 
 function getEmptyAnalytics() {
