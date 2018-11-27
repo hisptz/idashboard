@@ -1,7 +1,7 @@
 
 {
     "version": "1.0",
-    "name": "WHO Malaria Bulletin",
+    "name": "Malaria Bulletin",
     "description": "WHO Malaria Bulletin",
     "appType": "APP",
     "launch_path": "index.html",
