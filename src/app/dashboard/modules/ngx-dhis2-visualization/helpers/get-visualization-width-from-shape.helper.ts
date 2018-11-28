@@ -1,10 +1,10 @@
 export function getVisualizationWidthFromShape(dashboardItemShape: string): string {
   switch (dashboardItemShape) {
     case 'DOUBLE_WIDTH':
-      return 'span 6';
+      return 'grid-double-width';
     case 'FULL_WIDTH':
-      return 'span 12';
+      return 'grid-full-width';
     default:
-      return 'span 4';
+      return 'grid-double-width';
   }
 }

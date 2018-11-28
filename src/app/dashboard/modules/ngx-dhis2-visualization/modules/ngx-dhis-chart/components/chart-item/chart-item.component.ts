@@ -1,13 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import * as Highcharts from 'highcharts';
+const Highcharts = window['Highcharts'];
 declare var require: any;
-const HighchartsGroupedCategories = require('highcharts-grouped-categories')(
-    Highcharts
-  ),
+const HighchartsGroupedCategories = require('highcharts-grouped-categories')(Highcharts),
   HighchartsExporting = require('highcharts/modules/exporting')(Highcharts),
-  OfflineHighchartExporting = require('highcharts/modules/offline-exporting.js')(
-    Highcharts
-  ),
+  OfflineHighchartExporting = require('highcharts/modules/offline-exporting.js')(Highcharts),
   HighchartsExportData = require('highcharts/modules/export-data')(Highcharts),
   HighchartsMore = require('highcharts/highcharts-more.js')(Highcharts),
   HighchartGauge = require('highcharts/modules/solid-gauge.js')(Highcharts),
