@@ -36,3 +36,7 @@
     background-color: inherit;
   }
 }
+
+* {
+  page-break-inside: avoid !important;
+}
