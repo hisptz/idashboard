@@ -93,3 +93,10 @@ $color: blue;
 .current {
   border-bottom: 2px solid $color;
 }
+
+.vertical-menu-wrapper {
+  box-sizing: border-box;
+  position: absolute;
+  right: 16px;
+  top: 5px;
+}

@@ -24,7 +24,6 @@ import { reducers, metaReducers, effects } from './store';
 import { RouteSerializer } from './utils';
 
 import { NgxDhis2MenuModule } from '@hisptz/ngx-dhis2-menu';
-import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +31,6 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    SharedModule,
     /**
      * Translation module
      */

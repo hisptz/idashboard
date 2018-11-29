@@ -14,10 +14,13 @@ import { FavoriteFilterModule } from './modules/favorite-filter/favorite-filter.
 import { NgxDhis2VisualizationModule } from './modules/ngx-dhis2-visualization/ngx-dhis2-visualization.module';
 import { NgxDhis2SelectionFiltersModule } from './modules/ngx-dhis2-data-selection-filter/ngx-dhis2-selection-filters.module';
 
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     DashboardRoutingModule,
     NgxDhis2VisualizationModule,
     NgxDhis2SelectionFiltersModule,

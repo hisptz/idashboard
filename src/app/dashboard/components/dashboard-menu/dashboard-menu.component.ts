@@ -36,6 +36,8 @@ export class DashboardMenuComponent {
   }> = new EventEmitter();
   headerMessage: string;
   headerMessage1: string;
+
+  public dropdownList = [{ name: 'About', url: 'pages/about' }];
   constructor() {
     this.headerMessage = 'National Malaria Program';
     this.headerMessage1 = 'Monthly Surveillance and Logistics Report';

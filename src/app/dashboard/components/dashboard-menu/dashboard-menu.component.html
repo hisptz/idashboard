@@ -2,6 +2,7 @@
   <div class="dashboardHeader">
     <span>{{ headerMessage }}</span
     ><br /><span>{{ headerMessage1 }}</span>
+    <div class="vertical-menu-wrapper"><app-dropdown-menu [dropdownList]="dropdownList"></app-dropdown-menu></div>
   </div>
   <ul class="tabs d-print-none" *ngIf="dashboardGroups">
     <li
