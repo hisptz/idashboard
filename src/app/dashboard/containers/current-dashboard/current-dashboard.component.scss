@@ -32,13 +32,6 @@
       page-break-inside: avoid !important;
     }
 
-    .visualization-card-block:nth-child(even) {
-      background: #ccc;
-    }
-    .visualization-card-block:nth-child(odd) {
-      background: #fff;
-    }
-
     .visualization-card-block.grid-full-width {
       grid-column: 12 span;
     }
@@ -80,15 +73,12 @@
   @media print {
     .current-dashboard-visualizations {
       display: block;
+      padding: 0 auto;
       .visualization-card-block.grid-full-width {
         grid-column: 12 span;
-        position: static;
-        overflow: auto;
       }
       .visualization-card-block.grid-double-width {
         grid-column: 12 span;
-        position: static;
-        overflow: auto;
       }
     }
   }
