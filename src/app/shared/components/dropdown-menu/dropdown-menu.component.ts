@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-dropdown-menu',
   templateUrl: './dropdown-menu.component.html',
@@ -10,7 +11,7 @@ export class DropdownMenuComponent implements OnInit {
 
   @Input() dropdownList = [{ name: 'Dashboard', url: '' }, { name: 'About', url: 'pages/about' }];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private location: Location) {
     this.isDropdownOpen = false;
   }
 
@@ -21,6 +22,10 @@ export class DropdownMenuComponent implements OnInit {
   }
 
   goToSelectedRoute(item) {
-    this.router.navigateByUrl(item.url);
+    if (item.url === 'back') {
+      this.location.back();
+    } else {
+      this.router.navigate([item.url]);
+    }
   }
 }

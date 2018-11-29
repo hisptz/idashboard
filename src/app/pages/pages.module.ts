@@ -7,8 +7,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PagesRoutingModule } from './pages-routing.module';
 
 import { containers } from './containers';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
-  imports: [CommonModule, FormsModule, PagesRoutingModule, TranslateModule.forChild()],
+  imports: [CommonModule, FormsModule, PagesRoutingModule, SharedModule, TranslateModule.forChild()],
   declarations: [...containers]
 })
 export class PagesModule {}
