@@ -4,7 +4,7 @@ window.onbeforeprint = function() {
     chart.resetParams = [chart.chartWidth, chart.chartHeight, false];
 
     var height = chart.renderTo.clientHeight;
-    var width = chart.renderTo.clientWidth > 1100 ? chart.renderTo.clientWidth : 1100;
+    var width = chart.renderTo.clientWidth;
     chart.setSize(width, height, false);
   });
 };
