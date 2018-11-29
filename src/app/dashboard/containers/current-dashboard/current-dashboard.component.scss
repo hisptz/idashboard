@@ -79,11 +79,16 @@
 
   @media print {
     .current-dashboard-visualizations {
+      display: block;
       .visualization-card-block.grid-full-width {
         grid-column: 12 span;
+        position: static;
+        overflow: auto;
       }
       .visualization-card-block.grid-double-width {
-        grid-column: 6 span;
+        grid-column: 12 span;
+        position: static;
+        overflow: auto;
       }
     }
   }

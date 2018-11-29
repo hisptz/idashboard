@@ -20,6 +20,10 @@
     -webkit-print-color-adjust: exact; /*Chrome, Safari */
     color-adjust: exact; /*Firefox*/
   }
+  table {
+    page-break-inside: avoid;
+    transform: scale(0.95);
+  }
 
   .container-fluid {
     padding-right: 0 !important;

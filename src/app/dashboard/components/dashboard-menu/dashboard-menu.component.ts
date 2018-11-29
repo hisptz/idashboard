@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Dashboard, DashboardGroups } from '../../models';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-dashboard-menu',

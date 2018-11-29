@@ -12,7 +12,7 @@ export function getStandardizedVisualizationUiConfig(
   return {
     id: visualizationItem.id,
     shape: visualizationItem.shape || 'NORMAL',
-    height: isFullScreen ? '99vh' : '450px',
+    height: isFullScreen ? '99vh' : visualizationItem.itemHeight || '450px',
     width: getVisualizationWidthFromShape(visualizationItem.shape || 'NORMAL'),
     showBody: true,
     fullScreen: isFullScreen,
