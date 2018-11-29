@@ -164,7 +164,8 @@ function getAnalyticDataBasedCustomExpressionCalculations(
   actualPeriod,
   referencePeriod
 ) {
-  const dx = getUidsFromExpression(expression).join(';');
+  const dataElements = getUidsFromExpression(expression);
+  const dx = dataElements.join(';');
   let pe = parameters.pe;
   if (refExpressionKey.indexOf(expressionKey) > -1 && referencePeriod) {
     pe = referencePeriod;
@@ -175,26 +176,30 @@ function getAnalyticDataBasedCustomExpressionCalculations(
   const ou = parameters.ou;
   const url = `../../../api/analytics.json?dimension=dx:${dx}&dimension=pe:${pe}&dimension=ou:${ou}`;
   return new Promise((resolve, reject) => {
-    $.ajax({
-      url,
-      type: 'GET',
-      success: function (analytic) {
-        //evaluate expression and and get new analytic object
-        analytic = getSanitizedAnalytict(analytic, {
-          rule: {
-            id: expressionKey,
-            name: '',
-            json: {
-              expression
+    if (dataElements.length == 0) {
+      resolve(getEmptyAnalytics());
+    } else {
+      $.ajax({
+        url,
+        type: 'GET',
+        success: function (analytic) {
+          //evaluate expression and and get new analytic object
+          analytic = getSanitizedAnalytict(analytic, {
+            rule: {
+              id: expressionKey,
+              name: '',
+              json: {
+                expression
+              }
             }
-          }
-        });
-        resolve(analytic);
-      },
-      error: function (error) {
-        reject(error);
-      }
-    });
+          })
+          resolve(analytic);
+        },
+        error: function (error) {
+          reject(error);
+        }
+      });
+    }
   });
 }
 
@@ -288,7 +293,6 @@ function getMergedAnalyticsForActualAndReferencePeriods(
       analyticsResultsForActual.rows
     );
   }
-
   return analyticsResultsForReference;
 }
 
@@ -325,7 +329,7 @@ function getSanitizedRowsByPeAndDx(rows, customPe) {
       if (!sumOffPeAndDxObjet[id]) {
         sumOffPeAndDxObjet[id] = 0;
       }
-      const value = parseFloat(row[3]);
+      const value = parseFloat(row[3].replace(new RegExp(",", 'g'), ""));
       const sum = sumOffPeAndDxObjet[id] + value;
       sumOffPeAndDxObjet[id] = sum;
     }
@@ -420,7 +424,7 @@ function getMissingDataElementsMappingErrorMessage(
     }
   });
   errorMessage.message +=
-    missingDataElementNames.join(',') + ' have not been mapped';
+    missingDataElementNames.join(', ') + ' have not been mapped';
   return errorMessage;
 }
 
@@ -508,7 +512,7 @@ function getDataElementValuePair(ou, pe, rows) {
     if (row.length === 4) {
       var rowPe = row[1];
       var rowOu = row[2];
-      var value = row[3];
+      var value = row[3].replace(new RegExp(",", 'g'), "")
       if (rowPe === pe && rowOu === ou) {
         var oldValue = parseInt(keyValuePair[key], 10);
         var newValue = oldValue + parseInt(value, 10);
@@ -561,7 +565,7 @@ function getAnalyticValueWithThousandCommaSeparator(analytic) {
       analytic.rows = rows;
     }
     for (var row of analytic.rows) {
-      var value = getAnalyticValueWithThousandCommaSeparator(row[row.length - 1]);
+      var value = row[row.length - 1].replace(new RegExp(",", 'g'), "");
       value = parseFloat(value).toLocaleString();
       row[row.length - 1] = value;
     }
@@ -578,7 +582,7 @@ function getRowsByOuAsFilter(rows, customOu) {
       if (!sumObjet[id]) {
         sumObjet[id] = 0;
       }
-      sumObjet[id] += parseFloat(row[3]);
+      sumObjet[id] += parseFloat(row[3].replace(new RegExp(",", 'g'), ""));
     }
   });
   Object.keys(sumObjet).map(idObject => {
@@ -598,7 +602,7 @@ function getRowsByPeAsFilter(rows, customPe) {
       if (!sumObjet[id]) {
         sumObjet[id] = 0;
       }
-      sumObjet[id] += parseFloat(row[3]);
+      sumObjet[id] += parseFloat(row[3].replace(new RegExp(",", 'g'), ""));
     }
   });
   Object.keys(sumObjet).map(idObject => {

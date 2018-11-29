@@ -3571,6 +3571,23 @@
         "dataElement": {
           "id": "sx6VVUpEY1r"
         }
+      }, {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "aS1r6wwtLb4"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "Mc9igiMHZrP"
+        }
+      },
+      {
+        "dataDimensionItemType": "INDICATOR",
+        "indicator": {
+          "id": "ANfjRNaQvR7"
+        }
       }
     ],
     "categoryOptionGroupSetDimensions": [],
@@ -3603,7 +3620,7 @@
         {
           "id": "UnUlBgLykAj",
           "name": "Net Gap",
-          "dimensionItemType": "DATA_ELEMENT"
+          "dimensionItemType": "INDICATOR"
         },
         {
           "id": "j470ZcksHc2",
@@ -3619,6 +3636,19 @@
           "id": "sx6VVUpEY1r",
           "name": "Others",
           "dimensionItemType": "DATA_ELEMENT"
+        }, {
+          "id": "ANfjRNaQvR7",
+          "name": "External Funding % in current year",
+          "dimensionItemType": "INDICATOR"
+        },
+        {
+          "id": "Mc9igiMHZrP",
+          "name": "Domestic Funding % in current year",
+          "dimensionItemType": "INDICATOR"
+        }, {
+          "id": "aS1r6wwtLb4",
+          "name": "Net Gap % in current year",
+          "dimensionItemType": "INDICATOR"
         }
       ]
     }]

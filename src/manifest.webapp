@@ -1,8 +1,8 @@
 
 {
-    "version": "1.1",
-    "name": "WHO Malaria Dashboard",
-    "description": "WHO Malaria Dashboard",
+    "version": "1.0",
+    "name": "Malaria Bulletin",
+    "description": "WHO Malaria Bulletin",
     "appType": "APP",
     "launch_path": "index.html",
     "icons": {

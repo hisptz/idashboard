@@ -1,9 +1,14 @@
 <div class="visualization-error-notifier">
   <i class="fa fa-exclamation-triangle fa-3x text-warning"></i>
-  <br>
-  <h4>Aw, Snap. We are sorry for this inconvenience, our server tells us that</h4>
-  <h5>{{errorMessage.statusText}} - (Error Code {{errorMessage.statusCode}})</h5>
-  <div>
+  <div *ngIf="isServerError">
+    <h4>Aw, Snap. We are sorry for this inconvenience, our server tells us that</h4>
+    <h5>{{errorMessage.statusText}} - (Error Code {{errorMessage.statusCode}})</h5>
+    <div>
+      <span style="color:#e76767" [innerHtml]="errorMessage.message | safe:'html'"></span>
+    </div>
+  </div>
+  <div *ngIf="!isServerError">
     <span style="color:#e76767" [innerHtml]="errorMessage.message | safe:'html'"></span>
   </div>
+
 </div>
