@@ -116,7 +116,7 @@
       },
       {
         "id": "xTsHkGqsUlW",
-        "name": "% completeness(OPD)",
+        "name": "% completeness (OPD)",
         "description": "",
         "json": "{\"expression\":\"(((#{Gg0z2s1QM3F})/(#{GLqY4EV4iOG}))*100)\",\"expressionMapping\":{\"Gg0z2s1QM3F\":null,\"GLqY4EV4iOG\":null},\"namesMapping\":{\"GLqY4EV4iOG\":\"No. of Health facilities reports expected (OPD)\",\"Gg0z2s1QM3F\":\"No. of Health facilities reports received (OPD)\"}}"
       },
@@ -134,7 +134,7 @@
       },
       {
         "id": "VaxcbRkQbZA",
-        "name": "% completeness(IPD)",
+        "name": "% completeness (IPD)",
         "description": "",
         "json": "{\"expression\":\"(((#{WLKT9cTihxj})/(#{oPu5OSqr6p9}))*100)\",\"expressionMapping\":{\"WLKT9cTihxj\":null,\"oPu5OSqr6p9\":null},\"namesMapping\":{\"oPu5OSqr6p9\":\"No. of Health facilities reports expected (IPD)\",\"WLKT9cTihxj\":\"No. of Health facilities reports received (IPD)\"}}"
       },
