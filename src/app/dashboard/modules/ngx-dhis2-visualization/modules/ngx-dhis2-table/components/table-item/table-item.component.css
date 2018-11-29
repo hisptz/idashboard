@@ -54,3 +54,10 @@ td {
   -webkit-print-color-adjust: exact;
   color-adjust: exact;
 }
+
+@media print {
+  .custom-table > thead > tr > th,
+  .custom-table > tbody > tr > td {
+    font-size: 10px !important;
+  }
+}
