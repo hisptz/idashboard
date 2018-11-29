@@ -19,10 +19,10 @@
   body {
     -webkit-print-color-adjust: exact; /*Chrome, Safari */
     color-adjust: exact; /*Firefox*/
-    transform: scale(0.95);
   }
   table {
     page-break-inside: avoid;
+    transform: scale(0.95);
   }
 
   .container-fluid {
