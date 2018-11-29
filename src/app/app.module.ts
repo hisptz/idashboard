@@ -10,10 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '../environments/environment';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import {
-  RouterStateSerializer,
-  StoreRouterConnectingModule
-} from '@ngrx/router-store';
+import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -27,6 +24,7 @@ import { reducers, metaReducers, effects } from './store';
 import { RouteSerializer } from './utils';
 
 import { NgxDhis2MenuModule } from '@hisptz/ngx-dhis2-menu';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +32,7 @@ import { NgxDhis2MenuModule } from '@hisptz/ngx-dhis2-menu';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    SharedModule,
     /**
      * Translation module
      */

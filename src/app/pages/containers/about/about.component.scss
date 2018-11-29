@@ -1,0 +1,54 @@
+.wrapper {
+  position: relative;
+  margin: 0 auto 75px auto;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title h1 {
+  font-size: 24px;
+  color: #000;
+  font-weight: 500;
+}
+
+.content {
+  padding-bottom: 20px;
+  position: relative;
+  margin-top: 100px;
+}
+
+.content .card.first {
+  margin-top: -80px;
+}
+
+.card {
+  position: relative;
+  background: #fff;
+  padding: 50px;
+  width: 80%;
+  margin: 20px auto 0 auto;
+  box-shadow: 0 2px 4px rgba(100, 100, 100, 0.1);
+}
+
+.card h2 {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.card h2 a {
+  color: #cc0000;
+  text-decoration: none;
+}
+
+.card .text {
+  color: #212121;
+  margin-top: 20px;
+  font-size: 15px;
+  line-height: 22px;
+}
