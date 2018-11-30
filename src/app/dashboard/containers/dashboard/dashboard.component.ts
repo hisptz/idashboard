@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import {
   getAllGroupDashboards,
   getCurrentDashboardId,
+  getCurrentDashboard,
+  getCurrentUser,
   SetCurrentDashboardAction,
   SetActiveDashboardGroupsAction,
   getAllDashboardGroups,
@@ -16,6 +18,7 @@ import {
   getDashboardObjectLoaded
 } from '../../../store';
 import { Dashboard, DashboardGroups } from '../../models';
+import { User } from '../../../models';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +29,8 @@ import { Dashboard, DashboardGroups } from '../../models';
 export class DashboardComponent implements OnInit {
   dashboards$: Observable<Dashboard[]>;
   currentDashboardId$: Observable<string>;
+  currentDashboard$: Observable<Dashboard>;
+  currentUser$: Observable<User>;
   currentDashboardGroupId$: Observable<string>;
   menuContainerHeight: number;
   dashboardLoading$: Observable<boolean>;
@@ -42,6 +47,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardLoaded$ = store.select(getDashboardObjectLoaded);
     this.dashboardGroups$ = store.select(getAllDashboardGroups);
     this.currentDashboardGroupId$ = store.select(getActiveDashboardGroup);
+    this.currentDashboard$ = store.select(getCurrentDashboard);
+    this.currentUser$ = store.select(getCurrentUser);
 
     // menu container height in pixels
     this.menuContainerHeight = 136;

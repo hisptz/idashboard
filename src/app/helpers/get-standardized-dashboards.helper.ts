@@ -27,10 +27,12 @@ export function getStandardizedDashboards(dashboards: any[], currentUser: User, 
           items: [
             {
               id: 'LAST_YEAR',
+              name: 'Last Year',
               ref_type: 'PERIOD_REF'
             },
             {
               id: 'THIS_YEAR',
+              name: 'This Year',
               ref_type: 'PERIOD_ACTUAL'
             }
           ]

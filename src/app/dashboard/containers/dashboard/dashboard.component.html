@@ -17,6 +17,8 @@
     </div>
     <app-dashboard-menu
       *ngIf="(dashboardLoaded$ | async)"
+      [currentDashboard]="currentDashboard$ | async"
+      [currentUser]="currentUser$ | async"
       [dashboardMenuList]="dashboards$ | async"
       [currentDashboardId]="currentDashboardId$ | async"
       (setCurrentDashboard)="onSetCurrenDashboardAction($event)"

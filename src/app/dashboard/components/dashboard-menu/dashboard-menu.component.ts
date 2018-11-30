@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Dashboard, DashboardGroups } from '../../models';
-import * as jsPDF from 'jspdf';
+import { User } from '../../../models';
+import { getDataSelectionSummary, getOuSelectionSummary, getPeSelectionSummary } from '../../helpers';
 
 @Component({
   selector: 'app-dashboard-menu',
@@ -12,7 +13,13 @@ export class DashboardMenuComponent {
   @Input()
   dashboardMenuList: Dashboard[];
   @Input()
+  currentUser: User;
+  @Input()
   currentDashboardId: string;
+
+  @Input()
+  currentDashboard: Dashboard;
+
   @Input()
   dashboardGroups: DashboardGroups[];
 
@@ -57,5 +64,12 @@ export class DashboardMenuComponent {
 
   onCreateDashboard(dashboardName: string) {
     this.createDashboard.emit(dashboardName);
+  }
+
+  get periodSelectionSummary() {
+    return getPeSelectionSummary(this.currentDashboard.globalSelections);
+  }
+  get orgUnitSelectionSummary() {
+    return getOuSelectionSummary(this.currentDashboard.globalSelections, this.currentUser);
   }
 }

@@ -51,13 +51,11 @@ function periodDimensionExist(dimensionArray) {
   return periodExist;
 }
 
-function generateCorrespondingFixedPeriodArray(relativePeriodArray) {
+export function generateCorrespondingFixedPeriodArray(relativePeriodArray) {
   let fixedPeriods = [];
   if (relativePeriodArray) {
     relativePeriodArray.forEach(relativePeriod => {
-      const newPeriods = getFixedPeriodArrayFromSingleRelativePeriod(
-        relativePeriod
-      );
+      const newPeriods = getFixedPeriodArrayFromSingleRelativePeriod(relativePeriod);
       fixedPeriods = [...fixedPeriods, ...newPeriods];
     });
   }
@@ -70,9 +68,7 @@ function generateCorrespondingFixedPeriodArray(relativePeriodArray) {
 /**
  This function return array of fixed periods from one relative period
  */
-function getFixedPeriodArrayFromSingleRelativePeriod(
-  relativePeriod
-): Array<Object> {
+function getFixedPeriodArrayFromSingleRelativePeriod(relativePeriod): Array<Object> {
   const periodCategory = [
     '_MONTH',
     '_BIMONTH',
@@ -465,14 +461,7 @@ function getThisWeek(d?) {
   d.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7));
 
   const week = new Date(d.getFullYear(), 0, 4);
-  const thisWeek =
-    1 +
-    Math.round(
-      ((d.getTime() - week.getTime()) / 86400000 -
-        3 +
-        ((week.getDay() + 6) % 7)) /
-        7
-    );
+  const thisWeek = 1 + Math.round(((d.getTime() - week.getTime()) / 86400000 - 3 + ((week.getDay() + 6) % 7)) / 7);
 
   return thisWeek;
 }
