@@ -4,35 +4,18 @@ import { environment } from '../../../environments/environment';
 
 import { userReducer, UserState } from './user.reducer';
 import { systemInfoReducer, SystemInfoState } from './system-info.reducer';
-import {
-  DashboardObjectState,
-  dashboardObjectReducer
-} from './dashboard.reducer';
-import {
-  DashboardSettingsState,
-  dashboardSettingsReducer
-} from './dashboard-settings.reducer';
-import {
-  DashboardVisualizationState,
-  dashboardVisualizationReducer
-} from './dashboard-visualization.reducer';
-import {
-  DashboardGroupsState,
-  dashboardGroupReducer
-} from './dashboard-groups.reducer';
+import { DashboardObjectState, dashboardObjectReducer } from './dashboard.reducer';
+import { DashboardSettingsState, dashboardSettingsReducer } from './dashboard-settings.reducer';
+import { DashboardVisualizationState, dashboardVisualizationReducer } from './dashboard-visualization.reducer';
+import { DashboardGroupsState, dashboardGroupReducer } from './dashboard-groups.reducer';
 import { LegendSetState, legendSetReducer } from './legend-set.reducer';
 import { DataElementState, dataElementReducer } from './data-elements.reducer';
-import {
-  FunctionRuleState,
-  functionRuleReducer
-} from './function-rule.reducer';
+import { FunctionRuleState, functionRuleReducer } from './function-rule.reducer';
 import { IndicatorState, indicatorReducer } from './indicactors.reducer';
-import {
-  DataItemMappingState,
-  dataItemMappingReducer
-} from './data-item-mapping.reducer';
+import { DataItemMappingState, dataItemMappingReducer } from './data-item-mapping.reducer';
 import { FunctionState, FunctionReducer } from './function.reducer';
 import { DataSetState, DataSetReducer } from './data-set.reducer';
+import { OrgUnitLevelState, orgUnitLevelReducer } from './orgUnit-level.reducer';
 
 /**
  * Root state interface
@@ -42,6 +25,8 @@ export interface State {
    * User state
    */
   user: UserState;
+
+  orgUnitLevel: OrgUnitLevelState;
 
   /**
    * System info state
@@ -67,6 +52,7 @@ export interface State {
 
 export const reducers: ActionReducerMap<State> = {
   user: userReducer,
+  orgUnitLevel: orgUnitLevelReducer,
   systemInfo: systemInfoReducer,
   route: routerReducer,
   dashboardObject: dashboardObjectReducer,
@@ -82,9 +68,7 @@ export const reducers: ActionReducerMap<State> = {
   dataSet: DataSetReducer
 };
 
-export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? []
-  : [];
+export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
 
 /**
  * Root state selector

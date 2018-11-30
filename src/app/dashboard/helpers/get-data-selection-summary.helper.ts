@@ -1,6 +1,6 @@
 import { VisualizationDataSelection } from '../modules/ngx-dhis2-visualization/models';
 import { generateCorrespondingFixedPeriodArray } from '../modules/ngx-dhis2-visualization/helpers';
-import { User } from '../../models';
+import { User, OrgUnitLevel } from '../../models';
 import * as _ from 'lodash';
 export function getDataSelectionSummary(dataSelections: VisualizationDataSelection[]) {
   const ouDimension = _.find(dataSelections, ['dimension', 'ou']);
@@ -18,7 +18,11 @@ export function getDataSelectionSummary(dataSelections: VisualizationDataSelecti
   return ouSection !== '' && peSection !== '' ? ouSection + ' - ' + peSection : '';
 }
 
-export const getOuSelectionSummary = (dataSelections: VisualizationDataSelection[], user: User) => {
+export const getOuSelectionSummary = (
+  dataSelections: VisualizationDataSelection[],
+  user: User,
+  orgUnitLevels: OrgUnitLevel[]
+) => {
   const ouDimensionItems = dataSelections.find(({ dimension }) => dimension === 'ou').items;
 
   const userOrgUnit = user.organisationUnits[0];
@@ -36,8 +40,8 @@ export const getOuSelectionSummary = (dataSelections: VisualizationDataSelection
         return name;
       }
     });
-
-  return `${ouNames.join(',')}-Level${userLevel}`;
+  const levelName = orgUnitLevels.find(({ level }) => Number(level) === userLevel).name;
+  return `${ouNames.join(',')}-${levelName} Level`;
 };
 
 export const getPeSelectionSummary = (dataSelections: VisualizationDataSelection[]) => {

@@ -18,6 +18,7 @@
     <app-dashboard-menu
       *ngIf="(dashboardLoaded$ | async)"
       [currentDashboard]="currentDashboard$ | async"
+      [orgUnitLevels]="orgUnitLevels$ | async"
       [currentUser]="currentUser$ | async"
       [dashboardMenuList]="dashboards$ | async"
       [currentDashboardId]="currentDashboardId$ | async"

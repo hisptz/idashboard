@@ -11,6 +11,7 @@ import { FunctionRuleEffects } from './function-rules.effects';
 import { FunctionEffects } from './function.effects';
 import { IndicatorsEffects } from './indicators.effects';
 import { DataSetEffects } from './data-set.effects';
+import { OrganisationUnitLevelEffects } from './orgUnit-level.effects';
 
 export const effects: any[] = [
   RouterEffects,
@@ -25,5 +26,6 @@ export const effects: any[] = [
   IndicatorsEffects,
   FunctionRuleEffects,
   FunctionEffects,
-  DataSetEffects
+  DataSetEffects,
+  OrganisationUnitLevelEffects
 ];

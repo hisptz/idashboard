@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
+  getAllOrgUnitLevels,
   getAllGroupDashboards,
   getCurrentDashboardId,
   getCurrentDashboard,
@@ -18,7 +19,7 @@ import {
   getDashboardObjectLoaded
 } from '../../../store';
 import { Dashboard, DashboardGroups } from '../../models';
-import { User } from '../../../models';
+import { User, OrgUnitLevel } from '../../../models';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,7 @@ import { User } from '../../../models';
 export class DashboardComponent implements OnInit {
   dashboards$: Observable<Dashboard[]>;
   currentDashboardId$: Observable<string>;
+  orgUnitLevels$: Observable<OrgUnitLevel[]>;
   currentDashboard$: Observable<Dashboard>;
   currentUser$: Observable<User>;
   currentDashboardGroupId$: Observable<string>;
@@ -49,6 +51,7 @@ export class DashboardComponent implements OnInit {
     this.currentDashboardGroupId$ = store.select(getActiveDashboardGroup);
     this.currentDashboard$ = store.select(getCurrentDashboard);
     this.currentUser$ = store.select(getCurrentUser);
+    this.orgUnitLevels$ = store.select(getAllOrgUnitLevels);
 
     // menu container height in pixels
     this.menuContainerHeight = 136;

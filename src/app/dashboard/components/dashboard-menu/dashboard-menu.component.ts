@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Dashboard, DashboardGroups } from '../../models';
-import { User } from '../../../models';
+import { User, OrgUnitLevel } from '../../../models';
 import { getDataSelectionSummary, getOuSelectionSummary, getPeSelectionSummary } from '../../helpers';
 
 @Component({
@@ -16,6 +16,8 @@ export class DashboardMenuComponent {
   currentUser: User;
   @Input()
   currentDashboardId: string;
+
+  @Input() orgUnitLevels: OrgUnitLevel[];
 
   @Input()
   currentDashboard: Dashboard;
@@ -70,6 +72,6 @@ export class DashboardMenuComponent {
     return getPeSelectionSummary(this.currentDashboard.globalSelections);
   }
   get orgUnitSelectionSummary() {
-    return getOuSelectionSummary(this.currentDashboard.globalSelections, this.currentUser);
+    return getOuSelectionSummary(this.currentDashboard.globalSelections, this.currentUser, this.orgUnitLevels);
   }
 }

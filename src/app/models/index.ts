@@ -6,3 +6,4 @@ export * from './data-element';
 export * from './function-rule';
 export * from './indicator';
 export * from './data-set';
+export * from './orgUnit-level.model';
