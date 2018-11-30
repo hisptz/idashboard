@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectionStrategy,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 import { Dashboard } from '../../models';
 import { Observable } from 'rxjs';
@@ -56,9 +49,7 @@ export class CurrentDashboardHeaderComponent implements OnInit {
   }>();
 
   @Output()
-  createFavoriteForCurrentDashboard: EventEmitter<string> = new EventEmitter<
-    string
-  >();
+  createFavoriteForCurrentDashboard: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
   globalFilterChange: EventEmitter<any> = new EventEmitter<any>();
@@ -80,11 +71,7 @@ export class CurrentDashboardHeaderComponent implements OnInit {
     });
   }
 
-  onAddFavoriteAction(favorite: {
-    id: string;
-    name: string;
-    dashboardTypeDetails: any;
-  }) {
+  onAddFavoriteAction(favorite: { id: string; name: string; dashboardTypeDetails: any }) {
     this.addDashboardItem.emit({
       dashboardId: this.currentDashboard.id,
       dashboardItem:
@@ -92,8 +79,7 @@ export class CurrentDashboardHeaderComponent implements OnInit {
           ? {
               id: generateUid(),
               type: favorite.dashboardTypeDetails.type,
-              [_.camelCase(favorite.dashboardTypeDetails.type)]: favorite
-                .dashboardTypeDetails.isArray
+              [_.camelCase(favorite.dashboardTypeDetails.type)]: favorite.dashboardTypeDetails.isArray
                 ? [
                     {
                       id: favorite.id,

@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of, from } from 'rxjs';
-import {
-  switchMap,
-  map,
-  catchError,
-  tap,
-  withLatestFrom,
-  mergeMap,
-  take
-} from 'rxjs/operators';
+import { switchMap, map, catchError, tap, withLatestFrom, mergeMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 
@@ -92,12 +84,7 @@ export class DashboardEffects {
       this.dashboardService.loadAll(action.dashboardSettings).pipe(
         map(
           (dashboards: any[]) =>
-            new LoadDashboardsSuccessAction(
-              dashboards,
-              action.currentUser,
-              routeUrl,
-              action.systemInfo
-            )
+            new LoadDashboardsSuccessAction(dashboards, action.currentUser, routeUrl, action.systemInfo)
         ),
         catchError((error: any) => of(new LoadDashboardsFailAction(error)))
       )
@@ -108,11 +95,7 @@ export class DashboardEffects {
   loadAllDashboardSuccess$: Observable<any> = this.actions$.pipe(
     ofType(DashboardActionTypes.LoadDashboardsSuccess),
     map((action: LoadDashboardsSuccessAction) => {
-      const currentDashboardId = getCurrentDashboardId(
-        action.routeUrl,
-        action.dashboards,
-        action.currentUser
-      );
+      const currentDashboardId = getCurrentDashboardId(action.routeUrl, action.dashboards, action.currentUser);
       return new SetCurrentDashboardAction(currentDashboardId, action.routeUrl);
     })
   );
@@ -123,10 +106,7 @@ export class DashboardEffects {
     withLatestFrom(this.store.select(getCurrentUser)),
     tap(([action, currentUser]: [SetCurrentDashboardAction, User]) => {
       // Set selected dashboard id into local storage
-      localStorage.setItem(
-        'dhis2.dashboard.current.' + currentUser.userCredentials.username,
-        action.id
-      );
+      localStorage.setItem('dhis2.dashboard.current.' + currentUser.userCredentials.username, action.id);
 
       // Decide on the route to take
       const splitedRouteUrl = action.routeUrl ? action.routeUrl.split('/') : [];
@@ -134,9 +114,7 @@ export class DashboardEffects {
       if (!currentVisualizationId) {
         this.store.dispatch(new Go({ path: [`/dashboards/${action.id}`] }));
       } else {
-        this.store.dispatch(
-          new SetCurrentVisualizationAction(currentVisualizationId, action.id)
-        );
+        this.store.dispatch(new SetCurrentVisualizationAction(currentVisualizationId, action.id));
       }
 
       // Load current dashboard contents if not available
@@ -145,12 +123,7 @@ export class DashboardEffects {
         .pipe(take(1))
         .subscribe((dashboardVisualization: DashboardVisualization) => {
           if (!dashboardVisualization) {
-            this.store.dispatch(
-              new LoadDashboardVisualizationsAction(
-                action.id,
-                currentVisualizationId
-              )
-            );
+            this.store.dispatch(new LoadDashboardVisualizationsAction(action.id, currentVisualizationId));
           }
         });
     })
@@ -162,11 +135,7 @@ export class DashboardEffects {
     map(
       (action: SetCurrentVisualizationAction) =>
         new Go({
-          path: [
-            `/dashboards/${action.dashboardId}/fullScreen/${
-              action.visualizationId
-            }`
-          ]
+          path: [`/dashboards/${action.dashboardId}/fullScreen/${action.visualizationId}`]
         })
     )
   );
@@ -177,12 +146,7 @@ export class DashboardEffects {
     withLatestFrom(this.store.select(getCurrentUser)),
     switchMap(([action, currentUser]: [ToggleDashboardBookmarkAction, User]) =>
       this.dashboardService
-        .bookmarkDashboard(
-          action.id,
-          action.changes.bookmarked,
-          action.supportBookmark,
-          currentUser.id
-        )
+        .bookmarkDashboard(action.id, action.changes.bookmarked, action.supportBookmark, currentUser.id)
         .pipe(
           map(
             () =>
@@ -210,208 +174,159 @@ export class DashboardEffects {
   addDashboardItem$: Observable<any> = this.actions$.pipe(
     ofType(DashboardActionTypes.ManageDashboardItem),
     withLatestFrom(this.store.select(getDashboardSettings)),
-    tap(
-      ([action, dashboardSettings]: [
-        ManageDashboardItemAction,
-        DashboardSettings
-      ]) => {
-        this.dashboardService
-          .manageDashboardItem(
-            action.dashboardId,
-            action.dashboardItem,
-            dashboardSettings,
-            action.action
-          )
-          .subscribe(
-            (dashboardResponse: any) => {
-              this.store.dispatch(
-                new ManageDashboardItemSuccessAction(
-                  dashboardResponse.dashboardId,
-                  dashboardResponse.dashboardItem
-                )
-              );
+    tap(([action, dashboardSettings]: [ManageDashboardItemAction, DashboardSettings]) => {
+      this.dashboardService
+        .manageDashboardItem(action.dashboardId, action.dashboardItem, dashboardSettings, action.action)
+        .subscribe(
+          (dashboardResponse: any) => {
+            this.store.dispatch(
+              new ManageDashboardItemSuccessAction(dashboardResponse.dashboardId, dashboardResponse.dashboardItem)
+            );
 
-              if (!action.skipStoreUpdate) {
-                if (action.action === 'ADD') {
-                  this.store.dispatch(
-                    new AddDashboardVisualizationItemAction(
-                      dashboardResponse.dashboardId,
-                      dashboardResponse.dashboardItem
-                        ? dashboardResponse.dashboardItem.id
-                        : ''
-                    )
-                  );
+            if (!action.skipStoreUpdate) {
+              if (action.action === 'ADD') {
+                this.store.dispatch(
+                  new AddDashboardVisualizationItemAction(
+                    dashboardResponse.dashboardId,
+                    dashboardResponse.dashboardItem ? dashboardResponse.dashboardItem.id : ''
+                  )
+                );
 
-                  this.store.dispatch(
-                    new AddVisualizationObjectAction(
-                      getStandardizedVisualizationObject({
-                        ...dashboardResponse.dashboardItem,
-                        dashboardId: dashboardResponse.dashboardId,
-                        isOpen: true
-                      })
-                    )
-                  );
+                this.store.dispatch(
+                  new AddVisualizationObjectAction(
+                    getStandardizedVisualizationObject({
+                      ...dashboardResponse.dashboardItem,
+                      dashboardId: dashboardResponse.dashboardId,
+                      isOpen: true
+                    })
+                  )
+                );
 
+                this.store.dispatch(
+                  new AddVisualizationUiConfigurationAction(
+                    getStandardizedVisualizationUiConfig({
+                      ...dashboardResponse.dashboardItem,
+                      dashboardId: dashboardResponse.dashboardId,
+                      isOpen: true
+                    })
+                  )
+                );
+              } else if (action.action === 'DELETE') {
+                if (!action.dashboardItem.isNew && action.dashboardItem.deleteFavorite) {
                   this.store.dispatch(
-                    new AddVisualizationUiConfigurationAction(
-                      getStandardizedVisualizationUiConfig({
-                        ...dashboardResponse.dashboardItem,
-                        dashboardId: dashboardResponse.dashboardId,
-                        isOpen: true
-                      })
+                    new RemoveVisualizationFavoriteAction(
+                      action.dashboardItem.id,
+                      action.dashboardItem.favorite.id,
+                      action.dashboardItem.favorite.type
                     )
-                  );
-                } else if (action.action === 'DELETE') {
-                  if (
-                    !action.dashboardItem.isNew &&
-                    action.dashboardItem.deleteFavorite
-                  ) {
-                    this.store.dispatch(
-                      new RemoveVisualizationFavoriteAction(
-                        action.dashboardItem.id,
-                        action.dashboardItem.favorite.id,
-                        action.dashboardItem.favorite.type
-                      )
-                    );
-                  }
-                  this.store.dispatch(
-                    new RemoveDashboardVisualizationItemAction(
-                      action.dashboardId,
-                      action.dashboardItem.id
-                    )
-                  );
-
-                  this.store.dispatch(
-                    new RemoveVisualizationObjectAction(action.dashboardItem.id)
                   );
                 }
+                this.store.dispatch(
+                  new RemoveDashboardVisualizationItemAction(action.dashboardId, action.dashboardItem.id)
+                );
+
+                this.store.dispatch(new RemoveVisualizationObjectAction(action.dashboardItem.id));
               }
-            },
-            error => {
-              this.store.dispatch(new ManageDashboardItemFailAction('', error));
             }
-          );
-      }
-    )
+          },
+          error => {
+            this.store.dispatch(new ManageDashboardItemFailAction('', error));
+          }
+        );
+    })
   );
 
   @Effect()
   createDashboard$: Observable<any> = this.actions$.pipe(
     ofType(DashboardActionTypes.CreateDashboard),
     withLatestFrom(this.store.select(getDashboardSettings)),
-    mergeMap(
-      ([action, dashboardSettings]: [
-        CreateDashboardAction,
-        DashboardSettings
-      ]) => {
-        const id = generateUid();
-        this.store.dispatch(
-          new AddDashboardAction({
+    mergeMap(([action, dashboardSettings]: [CreateDashboardAction, DashboardSettings]) => {
+      const id = generateUid();
+      this.store.dispatch(
+        new AddDashboardAction({
+          id,
+          name: action.dashboardName,
+          creating: true
+        })
+      );
+      return this.dashboardService.create({ id, name: action.dashboardName }, dashboardSettings).pipe(
+        switchMap(() => [
+          new UpdateDashboardAction(id, {
+            creating: false,
+            updatedOrCreated: true,
+            access: {
+              manage: true,
+              write: true,
+              update: true,
+              read: true,
+              externalize: true,
+              delete: true
+            }
+          }),
+          new AddDashboardVisualizationAction({
             id,
-            name: action.dashboardName,
-            creating: true
-          })
-        );
-        return this.dashboardService
-          .create({ id, name: action.dashboardName }, dashboardSettings)
-          .pipe(
-            switchMap(() => [
-              new UpdateDashboardAction(id, {
-                creating: false,
-                updatedOrCreated: true,
-                access: {
-                  manage: true,
-                  write: true,
-                  update: true,
-                  read: true,
-                  externalize: true,
-                  delete: true
-                }
-              }),
-              new AddDashboardVisualizationAction({
-                id,
-                loaded: true,
-                loading: false,
-                hasError: false,
-                error: null,
-                items: []
-              }),
-              new SetCurrentDashboardAction(id)
-            ]),
-            catchError(error =>
-              of(
-                new UpdateDashboardAction(id, {
-                  creating: false,
-                  updatedOrCreated: false,
-                  error
-                })
-              )
-            )
-          );
-      }
-    )
+            loaded: true,
+            loading: false,
+            hasError: false,
+            error: null,
+            items: []
+          }),
+          new SetCurrentDashboardAction(id)
+        ]),
+        catchError(error =>
+          of(
+            new UpdateDashboardAction(id, {
+              creating: false,
+              updatedOrCreated: false,
+              error
+            })
+          )
+        )
+      );
+    })
   );
 
   @Effect()
   addNewFavorite$: Observable<any> = this.actions$.pipe(
     ofType(DashboardActionTypes.AddNewUnsavedFavorite),
-    map(
-      (action: AddNewUnsavedFavoriteAction) =>
-        new AddDashboardVisualizationItemAction(action.id, generateUid())
-    )
+    map((action: AddNewUnsavedFavoriteAction) => new AddDashboardVisualizationItemAction(action.id, generateUid()))
   );
 
   @Effect({ dispatch: false })
   globalFilterChange$: Observable<any> = this.actions$.pipe(
     ofType(DashboardActionTypes.GlobalFilterChange),
     withLatestFrom(this.store.select(getCurrentDashboardVisualizationItems)),
-    tap(
-      ([action, dashboardVisualizations]: [
-        GlobalFilterChangeAction,
-        string[]
-      ]) =>
-        from(dashboardVisualizations)
-          .pipe(
-            mergeMap((dashboardVisualization: any) =>
-              this.store
-                .select(
-                  getCurrentVisualizationObjectLayers(dashboardVisualization.id)
-                )
-                .pipe(
-                  take(1),
-                  map((visualizationLayers: VisualizationLayer[]) => {
+    tap(([action, dashboardVisualizations]: [GlobalFilterChangeAction, string[]]) =>
+      from(dashboardVisualizations)
+        .pipe(
+          mergeMap((dashboardVisualization: any) =>
+            this.store.select(getCurrentVisualizationObjectLayers(dashboardVisualization.id)).pipe(
+              take(1),
+              map((visualizationLayers: VisualizationLayer[]) => {
+                return {
+                  visualizationId: dashboardVisualization.id,
+                  visualizationLayers: _.map(visualizationLayers, (visualizationLayer: VisualizationLayer) => {
                     return {
-                      visualizationId: dashboardVisualization.id,
-                      visualizationLayers: _.map(
-                        visualizationLayers,
-                        (visualizationLayer: VisualizationLayer) => {
-                          return {
-                            ...visualizationLayer,
-                            dataSelections: getMergedDataSelections(
-                              visualizationLayer.dataSelections,
-                              action.changes.globalSelections
-                            )
-                          };
-                        }
+                      ...visualizationLayer,
+                      dataSelections: getMergedDataSelections(
+                        visualizationLayer.dataSelections,
+                        action.changes.globalSelections
                       )
                     };
                   })
-                )
+                };
+              })
             )
           )
-          .subscribe(
-            (visualizationDetails: {
-              visualizationId: string;
-              visualizationLayers: VisualizationLayer[];
-            }) => {
-              this.store.dispatch(
-                new LoadVisualizationAnalyticsAction(
-                  visualizationDetails.visualizationId,
-                  visualizationDetails.visualizationLayers
-                )
-              );
-            }
-          )
+        )
+        .subscribe((visualizationDetails: { visualizationId: string; visualizationLayers: VisualizationLayer[] }) => {
+          this.store.dispatch(
+            new LoadVisualizationAnalyticsAction(
+              visualizationDetails.visualizationId,
+              visualizationDetails.visualizationLayers
+            )
+          );
+        })
     )
   );
 
@@ -436,9 +351,5 @@ export class DashboardEffects {
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private store: Store<State>,
-    private dashboardService: DashboardService
-  ) {}
+  constructor(private actions$: Actions, private store: Store<State>, private dashboardService: DashboardService) {}
 }

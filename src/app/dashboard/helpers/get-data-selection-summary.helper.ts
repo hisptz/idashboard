@@ -27,13 +27,13 @@ export const getOuSelectionSummary = (
 
   const userOrgUnit = user.organisationUnits[0];
 
-  let userLevel = 1;
+  let userLevel = Number.POSITIVE_INFINITY;
 
   const ouNames = ouDimensionItems
     .filter(({ id }) => id !== 'USER_ORGUNIT_CHILDREN')
     .map(({ id, name, level }) => {
       if (id === 'USER_ORGUNIT') {
-        userLevel = Number(userOrgUnit.level) < userLevel ? Number(userOrgUnit.level) : userLevel;
+        userLevel = Number(userOrgUnit.level) < userLevel ? Number(userOrgUnit.level) : 1;
         return userOrgUnit.name;
       } else {
         userLevel = level && Number(level) < userLevel ? Number(level) : userLevel;
