@@ -27,21 +27,27 @@ export const getOuSelectionSummary = (
 
   const userOrgUnit = user.organisationUnits[0];
 
-  let userLevel = Number.POSITIVE_INFINITY;
-
   const ouNames = ouDimensionItems
-    .filter(({ id }) => id !== 'USER_ORGUNIT_CHILDREN')
-    .map(({ id, name, level }) => {
+    .map(({ id, name }) => {
       if (id === 'USER_ORGUNIT') {
-        userLevel = Number(userOrgUnit.level) < userLevel ? Number(userOrgUnit.level) : 1;
         return userOrgUnit.name;
+      } else if (id === 'USER_ORGUNIT_CHILDREN') {
+        const child_level = orgUnitLevels.find(({ level }) => level === userOrgUnit.level + 1);
+        const child_name = child_level ? `${child_level.name} in ${userOrgUnit.name}` : undefined;
+        return child_name;
+      } else if (id === 'USER_ORGUNIT_GRANDCHILDREN') {
+        const grand_child_level = orgUnitLevels.find(({ level }) => level === userOrgUnit.level + 2);
+        const grand_child_name = grand_child_level ? `${grand_child_level.name} in ${userOrgUnit.name}` : undefined;
+        return grand_child_name;
       } else {
-        userLevel = level && Number(level) < userLevel ? Number(level) : userLevel;
         return name;
       }
-    });
-  const levelName = orgUnitLevels.find(({ level }) => Number(level) === userLevel).name;
-  return `${ouNames.join(',')}-${levelName} Level`;
+    })
+    .filter(name => name);
+
+  return ouNames.length <= 5
+    ? `${ouNames.join(',')}`
+    : `${ouNames.slice(0, 5).join(',')} and ${ouNames.length - 5} more`;
 };
 
 export const getPeSelectionSummary = (dataSelections: VisualizationDataSelection[]) => {
