@@ -11,6 +11,8 @@ import {FaqComponent} from './pages/portal/faq/faq.component';
 import {DownloadsComponent} from './pages/portal/downloads/downloads.component';
 import {VisualizationSliderComponent} from './pages/portal/visualization-slider/visualization-slider.component';
 import {VisualizationSliderFullScreenComponent} from './pages/portal/visualization-slider/visualization-slider-full-screen/visualization-slider-full-screen.component';
+import {GroupedSliderComponent} from './pages/portal/shared-components/grouped-slider/grouped-slider.component';
+import {GroupedSliderFullScreenComponent} from './pages/portal/shared-components/grouped-slider/grouped-slider-full-screen/grouped-slider-full-screen.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +42,14 @@ export const routes: Routes = [
   {
     path: 'pages/downloads',
     component: DownloadsComponent,
+  },
+  {
+    path: 'pages/grouped-slider',
+    component: GroupedSliderComponent
+  },
+  {
+    path: 'pages/grouped-slider/full-screen',
+    component: GroupedSliderFullScreenComponent
   },
   {
     path: 'pages/visualization-slider/full-screen',

@@ -17,9 +17,9 @@ export class VisualizationSliderResizeComponent implements OnInit {
 
   toggleFullScreenSlider(type) {
     if ( type === 'full-screen') {
-      this.router.navigate(['/pages/visualization-slider/full-screen']);
+      this.router.navigate(['/pages/grouped-slider/full-screen']);
     } else {
-      this.router.navigate(['/pages/home']);
+      this.router.navigate(['/pages/grouped-slider']);
     }
   }
 }

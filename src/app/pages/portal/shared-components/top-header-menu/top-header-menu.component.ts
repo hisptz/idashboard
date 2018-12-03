@@ -17,6 +17,7 @@ export class TopHeaderMenuComponent implements OnInit {
   ngOnInit() {
     if (this.allNews && this.portalConfigurations) {
       this.headerInfo = this.portalConfigurations['header'];
+      console.log('header info', this.headerInfo)
       this.allNews.forEach((news) => {
         if (news.isItNew === true) {
           const pagesArr = [];

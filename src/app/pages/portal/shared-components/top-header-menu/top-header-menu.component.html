@@ -1,4 +1,4 @@
-<div class="col-md-12 top-menu-wrapper" *ngIf="pages">
+<div class="col-md-12 top-menu-wrapper" *ngIf="portalConfigurations">
   <div class="row top-menu-wrapper-info">
     <div class=" col-lg-2 col-md-12 left-of-top-banner">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Coat_of_arms_of_Tanzania.svg/251px-Coat_of_arms_of_Tanzania.svg.png" alt="Coat of arms of Tanzania.svg">
@@ -15,7 +15,7 @@
 <div class="col-md-12 menus">
   <div class="topnav top-menu-wrapper-menu" id="myTopnav">
     <a class="left" style="width: 1px; padding: 0px"></a>
-    <a *ngFor="let page of pages" routerLinkActive="active-btn" (click)="setActiveClass(page.id)"  class="top-btn left" routerLink="{{ page.routeUrl }}">
+    <a *ngFor="let page of portalConfigurations['pages']" routerLinkActive="active-btn" (click)="setActiveClass(page.id)"  class="top-btn left" routerLink="{{ page.routeUrl }}">
       <span>
         <img *ngIf="page['imgSrc'] !== ''" [src]="page['imgSrc']">
         {{ page.name }}
