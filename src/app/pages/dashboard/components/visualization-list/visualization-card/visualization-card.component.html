@@ -11,7 +11,7 @@
       <!--<app-visualization-interpretation-button [loaded]="loaded" [visualizationId]="visualizationObject.id" [visualizationLayers]="visualizationObject.layers"></app-visualization-interpretation-button>-->
       <!--</div>-->
     </div>
-    <div class="visualization-card-header-right">
+    <div class="visualization-card-header-right" *ngIf="!visualizationObject.details.fullScreen">
       <app-visualization-resize-section
         [dashboardId]="visualizationObject.dashboardId"
         [visualizationId]="visualizationObject.id"
