@@ -1,5 +1,20 @@
 import * as _ from 'lodash';
 
+const month_names = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
 export function getISOFormatFromRelativePeriod(favourite) {
   const isoFormat = [];
   let periodDimension: any;
@@ -131,7 +146,7 @@ function getExecutingPeriodFunctions() {
           months.push({
             id: currentYear + '0' + month,
             dimensionItem: currentYear + '0' + month,
-            displayName: currentYear + '0' + month,
+            displayName: `${month_names[month - 1]} ${currentYear}`,
             dimensionItemType: 'PERIOD'
           });
         } else {
@@ -142,7 +157,7 @@ function getExecutingPeriodFunctions() {
           months.push({
             id: currentYear + '' + month,
             dimensionItem: currentYear + '' + month,
-            displayName: currentYear + '' + month,
+            displayName: `${month_names[month - 1]} ${currentYear}`,
             dimensionItemType: 'PERIOD'
           });
         }

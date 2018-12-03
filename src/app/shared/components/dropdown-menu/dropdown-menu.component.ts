@@ -24,8 +24,12 @@ export class DropdownMenuComponent implements OnInit {
   goToSelectedRoute(item) {
     if (item.url === 'back') {
       this.location.back();
+    } else if (item.url === 'print') {
+      (window as any).print();
     } else {
       this.router.navigate([item.url]);
     }
+
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

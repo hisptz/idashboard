@@ -1,9 +1,15 @@
 <!-- Right aligned menu below button -->
-<button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon" (click)="toggleDropDownOpen()">
+<button
+  id="demo-menu-lower-right"
+  class="mdl-button mdl-js-button mdl-button--icon"
+  (click)="toggleDropDownOpen()"
+  appClickOutside
+  (clickOutside)="isDropdownOpen = false"
+>
   <img class="material-icons" src="assets/icons/verticalMenu.png" />
 </button>
 <div class="mdl-menu__container is-visible" *ngIf="isDropdownOpen">
   <ul class="mdl-menu mdl-menu--bottom-right">
-    <a class="mdl-menu__item" *ngFor="let item of dropdownList" (click)="goToSelectedRoute(item)">{{ item.name }}</a>
+    <li class="mdl-menu__item" *ngFor="let item of dropdownList" (click)="goToSelectedRoute(item)">{{ item.name }}</li>
   </ul>
 </div>
