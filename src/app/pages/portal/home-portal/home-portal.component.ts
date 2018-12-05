@@ -74,14 +74,9 @@ export class HomePortalComponent implements OnInit {
         }
       });
     }
-    if (window.navigator.geolocation) {
-      console.log('here for the navigator');
-      window.navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-    }
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {
         this.theSetPage = params['id']; const parentId = params['parentId'];
-        console.log('parentId', parentId);
         if (!parentId) {
           this.portalConfiguration$.subscribe((portalConfigurations) => {
             if (portalConfigurations) {
@@ -113,18 +108,9 @@ export class HomePortalComponent implements OnInit {
         }
       });
     }
-
-    if (this.dataFromExternalSource$) {
-      this.dataFromExternalSource$.subscribe((dataFromExternalSource) => {
-        if (dataFromExternalSource) {
-          console.log('dataFromExternalSource', dataFromExternalSource);
-        }
-      });
-    }
   }
 
   setPosition(position) {
     this.location = position.coords;
-    console.log('position.coords', position.coords);
   }
 }

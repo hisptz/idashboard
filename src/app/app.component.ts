@@ -1,5 +1,5 @@
-import {Component, ElementRef, HostListener, OnInit, ɵConsole} from '@angular/core';
-import {DomSanitizer, SafeHtml, Title} from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+import { Title} from '@angular/platform-browser';
 import {AppState} from './store/app.reducers';
 import {Store} from '@ngrx/store';
 import * as currentUser from './store/current-user/current-user.actions';
@@ -7,7 +7,6 @@ import {getPortalConfiguration, getStatsSummary} from './store/portal/portal.sel
 import {Observable} from 'rxjs/Observable';
 import {PortalConfigurationState, StatsSummaryState} from './store/portal/portal.state';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import * as portalActions from './store/portal/portal.actions';
 
 @Component({

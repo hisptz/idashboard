@@ -44,7 +44,6 @@ export class GroupedSliderFullScreenComponent implements OnInit {
         if (groupedSliderInfo) {
           this.groupedSliderInfo = groupedSliderInfo.data;
           this.scrollingInfo = groupedSliderInfo.data['scrollingInfo'];
-          console.log(groupedSliderInfo.data);
         }
       });
     }
@@ -106,8 +105,6 @@ export class GroupedSliderFullScreenComponent implements OnInit {
   sliderTiming(sliderStopped, activeSliderGroup) {
     if (!sliderStopped && activeSliderGroup === 'rch0') {
       const intervalTime = interval(15000);
-
-      console.log('sliderStopped', sliderStopped);
       intervalTime.subscribe((countTime) => {
         // console.log(countTime);
         if (this.activeSlider <= 6 && this.activeSlider >= 0) {

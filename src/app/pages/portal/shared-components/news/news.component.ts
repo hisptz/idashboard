@@ -22,14 +22,11 @@ export class NewsComponent implements OnInit {
         $strip.addClass('newsticker')
         let stripHeight = 1;
         $strip.find('li').each(function(i) {
-          console.log('strip height', stripHeight);
-          console.log($(this, i).outerHeight(true))
           stripHeight += ($(this, i).outerHeight(true)) / 1.5;
         });
         const $mask = $strip.wrap('<div class=' + '"mask"' + '></div>');
         const $tickercontainer = $strip.parent().wrap('<div class=' + '"tickercontainer"' + '></div>');
         const containerHeight = ($strip.parent().parent().height()) / 1.5;
-        console.log('container height', containerHeight);
         $strip.height(stripHeight);
         const totalTravel = stripHeight;
         const defTiming = totalTravel / settings.travelocity;

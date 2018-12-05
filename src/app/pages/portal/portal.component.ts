@@ -8,7 +8,6 @@ import {ActivatedRoute, Params} from '@angular/router';
 import * as portalActions from '../../store/portal/portal.actions';
 import {getCurrentUser} from '../../store/current-user/current-user.selectors';
 import {CurrentUserState} from '../../store/current-user/current-user.state';
-import { faqReducer } from '../../store/portal/portal.reducer';
 
 @Component({
   selector: 'app-portal',
@@ -47,7 +46,6 @@ export class PortalComponent implements OnInit {
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {
         this.theSetPage = params['id']; const parentId = params['parentId'];
-        console.log('parentId', parentId);
         if (!parentId) {
           this.portalConfiguration$.subscribe((portalConfigurations) => {
             if (portalConfigurations) {

@@ -46,26 +46,38 @@ export class DownloadsComponent implements OnInit {
 
   openCity(evt, downloadOption) {
     let i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName('tabcontent');
+    try {
+      tabcontent = document.getElementsByClassName('tabcontent');
+    } catch (e) {
+      console.log(e);
+    }
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = 'none';
     }
-    tablinks = document.getElementsByClassName('tablinks');
-    console.log('tab links', tablinks);
+    try {
+      tablinks = document.getElementsByClassName('tablinks');
+    } catch (e) {
+      console.log(e);
+    }
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(' active', '');
       if (tablinks[i].id === 'btn-' + downloadOption) {
-        console.log('tablinks[i].id', tablinks[i].id);
-        console.log('downloadOption', 'btn-' + downloadOption);
-        document.getElementById(tablinks[i].id).classList.add('active');
+        try {
+          document.getElementById(tablinks[i].id).classList.add('active');
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
-    document.getElementById(downloadOption).style.display = 'block';
-    evt.currentTarget.className += ' active';
+    try {
+      document.getElementById(downloadOption).style.display = 'block';
+      evt.currentTarget.className += ' active';
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   trustedUrl(url) {
-    console.log(url);
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

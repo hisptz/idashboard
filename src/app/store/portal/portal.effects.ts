@@ -12,7 +12,6 @@ import {
   PortalConfigurationState,
   StatsSummaryState,
   FAQState,
-  ExternalSourcesState,
   GroupedSlidersState
 } from './portal.state';
 import {AppState} from '../app.reducers';

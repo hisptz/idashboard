@@ -6,7 +6,7 @@ import {ExternalSourcesState, StatsSummaryState} from '../../../store/portal/por
 import {Observable} from 'rxjs/index';
 import {getDataFromExternalSource, getStatsSummary} from '../../../store/portal/portal.selectors';
 import * as portalActions from '../../../store/portal/portal.actions';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
@@ -20,7 +20,6 @@ export class UpdatesComponent implements OnInit {
   allNews: any;
   news: any;
   hasScriptSet: boolean;
-  hasHtmlSet: boolean;
   _newsFromExternalSource: SafeHtml;
   dataFromExternalSource$: Observable<ExternalSourcesState>;
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {

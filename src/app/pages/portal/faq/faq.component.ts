@@ -28,7 +28,6 @@ export class FaqComponent implements OnInit {
       this.portalFAQs$.subscribe((faq) => {
         if (faq) {
           this.activeDivId = faq['faq']['faqMenu'][0].id;
-          console.log('active id', this.activeDivId)
           this.portalFAQs = faq;
         }
       });

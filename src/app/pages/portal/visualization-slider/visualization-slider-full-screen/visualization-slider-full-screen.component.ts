@@ -19,8 +19,6 @@ export class VisualizationSliderFullScreenComponent implements OnInit {
   visualizationObjects$: Observable<any>;
   currentUser$: Observable<CurrentUserState>;
   statsSummary$: Observable<StatsSummaryState>;
-  visualizationObjects1: Array<any>;
-  visualizationObjects2: Array<any>;
   dashboardAccess: {
     delete: true
     externalize: true
@@ -36,17 +34,6 @@ export class VisualizationSliderFullScreenComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.statsSummary$) {
-      this.statsSummary$.subscribe((statisticsSummary) => {
-        if (statisticsSummary) {
-          this.visualizationObjects$ = statisticsSummary['visualization'];
-          if (this.visualizationObjects$) {
-            this.visualizationObjects1.push(this.visualizationObjects$[0]);
-            this.visualizationObjects2.push(this.visualizationObjects$[1]);
-          }
-        }
-      });
-    }
   }
 
 }

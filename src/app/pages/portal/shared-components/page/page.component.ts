@@ -27,7 +27,6 @@ export class PageComponent implements OnInit {
     if (this.statsSummary$) {
       this.statsSummary$.subscribe((statisticsSummary) => {
         if (statisticsSummary) {
-          console.log(statisticsSummary)
           this.statsSummaryGroups = statisticsSummary.statsSummaryGroups;
           const pages = statisticsSummary['pages'];
           this.route.params.forEach((params: Params) => {
