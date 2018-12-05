@@ -42,3 +42,17 @@
   float: right;
   right: 0;
 }
+
+
+.move-bottom-left, .grouped-btns {
+  float: left;
+}
+
+.move-bottom-right {
+  float: right;
+}
+
+.btns {
+  min-height: 30px;
+  /*display: inline-block;*/
+}
