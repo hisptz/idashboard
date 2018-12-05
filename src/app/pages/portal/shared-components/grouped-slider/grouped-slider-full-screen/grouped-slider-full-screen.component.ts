@@ -105,7 +105,7 @@ export class GroupedSliderFullScreenComponent implements OnInit {
 
   sliderTiming(sliderStopped, activeSliderGroup) {
     if (!sliderStopped && activeSliderGroup === 'rch0') {
-      const intervalTime = interval(10000);
+      const intervalTime = interval(15000);
 
       console.log('sliderStopped', sliderStopped);
       intervalTime.subscribe((countTime) => {
