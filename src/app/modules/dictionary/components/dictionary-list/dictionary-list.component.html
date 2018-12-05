@@ -1,4 +1,4 @@
-<div class="dictionary-list-container">
+<div class="dictionary-list-container" *ngIf="dictionaryList$">
   <div
     class="dictionary-item-container"
     *ngFor="let dictionaryItem of dictionaryList$ | async; let i = index"

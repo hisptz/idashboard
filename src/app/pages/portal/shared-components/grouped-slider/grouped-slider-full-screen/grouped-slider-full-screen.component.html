@@ -1,4 +1,4 @@
-<div class="grouped-sliders">
+<div class="grouped-sliders" *ngIf="headersOfSliders && currentUser$ && groupedSliderInfo$">
   <div class="grouped-sliders-header">
     <div>
       <button (click)="stopSlider(header.id + header.counter)" *ngFor="let header of headersOfSliders" id="{{header.id}}{{header.counter}}" class="grouped-sliders-header-btn">{{header.name}}</button>
