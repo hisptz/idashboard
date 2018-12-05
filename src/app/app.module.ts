@@ -110,6 +110,7 @@ import { ListMegaBtnComponent } from './pages/portal/shared-components/list-mega
 import { ListCardWithOpenPropComponent } from './pages/portal/shared-components/list-card-with-open-prop/list-card-with-open-prop.component';
 import { GroupedSliderComponent } from './pages/portal/shared-components/grouped-slider/grouped-slider.component';
 import { GroupedSliderFullScreenComponent } from './pages/portal/shared-components/grouped-slider/grouped-slider-full-screen/grouped-slider-full-screen.component';
+import { HorizontalScrollingComponent } from './pages/portal/shared-components/horizontal-scrolling/horizontal-scrolling.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -190,6 +191,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListCardWithOpenPropComponent,
     GroupedSliderComponent,
     GroupedSliderFullScreenComponent,
+    HorizontalScrollingComponent,
   ],
   imports: [
     BrowserModule,

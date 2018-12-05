@@ -10,43 +10,25 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <div class="row">
-          <div class="col-md-7">
-            <div class="corousel-text">
-              <h3>Tanzania national health portal</h3>
-              <p>The integrated and harmonized source of health related information on the
-                tanzania
-                mainland health sector. It provides various health
-                related
-                data, from routine data collection, community surveys, researches and
-                publications</p>
-            </div>
-          </div>
-          <div class="col-md-5">
-            <div class="corousel-img">
-              <div class="a">Downloads (program's reports) </div>
-              <div class="c">Routine data from HMIS - DHIS2</div>
-              <div class="d">Downloads of scorecards, survey data, researches etc</div>
-              <div class="b">Survey data browsing</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="row">
           <div class="col-md-5">
             <div class="corousel-text">
               <h3>{{visualizationObjects$[1][0].name}}</h3>
               <p>{{visualizationObjects$[1][0].description}}</p>
-              <p><b>Source:</b> TDHS</p>
             </div>
           </div>
           <div class="col-md-7">
             <div class="corousel-img">
               <app-visualization-list
+                *ngIf="visualizationObjects$[1][0].details !== ''"
                 [visualizationObjects]="visualizationObjects$[1]"
                 [currentUser]="currentUser$ | async"
                 [dashboardAccess]="dashboardAccess"
               ></app-visualization-list>
+              <img
+                *ngIf="visualizationObjects$[1][0].details == ''"
+                [src]="visualizationObjects$[1][0].imgSrc"
+                height="300" width="450"
+              >
             </div>
           </div>
         </div>
@@ -58,16 +40,21 @@
             <div class="corousel-text">
               <h3>{{visualizationObjects$[0][0].name}}</h3>
               <p>{{visualizationObjects$[0][0].description}}</p>
-              <p><b>Source:</b> Routine HMIS</p>
             </div>
           </div>
           <div class="col-md-7">
             <div class="corousel-img">
               <app-visualization-list
+                *ngIf="visualizationObjects$[0][0].details !== ''"
                 [visualizationObjects]="visualizationObjects$[0]"
                 [currentUser]="currentUser$ | async"
                 [dashboardAccess]="dashboardAccess"
               ></app-visualization-list>
+              <img
+                *ngIf="visualizationObjects$[0][0].details === ''"
+                [src]="visualizationObjects$[0][0].imgSrc"
+                height="300" width="450"
+              >
             </div>
           </div>
         </div>

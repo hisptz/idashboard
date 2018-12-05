@@ -51,3 +51,7 @@ export interface DataState {
   height: number;
   width: number;
 }
+
+export interface GroupedSlidersState {
+  data: any;
+}

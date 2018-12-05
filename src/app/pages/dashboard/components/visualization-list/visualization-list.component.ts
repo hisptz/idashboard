@@ -22,10 +22,5 @@ export class VisualizationListComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.visualizationObjects) {
-      this.visualizationObjects.forEach((visualization) => {
-        console.log('details', JSON.stringify(visualization.details));
-      });
-    }
   }
 }

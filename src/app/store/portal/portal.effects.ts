@@ -7,7 +7,14 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, ExternalSourcesState} from './portal.state';
+import {
+  DownloadsState,
+  PortalConfigurationState,
+  StatsSummaryState,
+  FAQState,
+  ExternalSourcesState,
+  GroupedSlidersState
+} from './portal.state';
 import {AppState} from '../app.reducers';
 import {Store} from '@ngrx/store';
 
@@ -43,6 +50,18 @@ export class PortalEffects {
         map((downloadsObj: DownloadsState) =>
           new portalActions.LoadDownloadsSuccessAction(downloadsObj)),
         catchError((error) => of(new portalActions.LoadDownloadsFailAction(error)))
+      ))
+    );
+
+
+  @Effect()
+  loadGroupedSlidersInfo$ = this.actions$
+    .ofType<portalActions.LoadGroupedSliderDataAction>(portalActions.PortalActions.LOAD_GROUPED_SLIDER_DATA)
+    .pipe(
+      switchMap(() => this._loadData('dataStore/observatory/groupedSliderInfo.json').pipe(
+        map((groupedSlidersInfoObj: GroupedSlidersState) =>
+          new portalActions.LoadGroupedSliderDataSuccessAction(groupedSlidersInfoObj)),
+        catchError((error) => of(new portalActions.LoadGroupedSliderDataFailAction(error)))
       ))
     );
 

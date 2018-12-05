@@ -20,8 +20,12 @@ export enum PortalActions {
   LOAD_FAQ_FAIL = '[FAQ] Load downloads fail',
   LOAD_DATA = '[Data] load data',
   LOAD_DATA_SUCCESS = '[Data] load data success',
-  LOAD_DATA_FAIL = '[Data] load data fail'
+  LOAD_DATA_FAIL = '[Data] load data fail',
+  LOAD_GROUPED_SLIDER_DATA = '[Grouped slider] Load data',
+  LOAD_GROUPED_SLIDER_DATA_SUCCESS = '[Grouped slider] Load data success',
+  LOAD_GROUPED_SLIDER_DATA_FAIL = '[Grouped data Load data fail'
 }
+
 
 export class LoadPortalConfigurationAction implements Action {
   readonly type = PortalActions.LOAD_PORTAL_CONFIGURATION;
@@ -127,6 +131,23 @@ export class LoadDataFailAction implements Action {
 }
 
 
+// Load grouped slider data
+export class LoadGroupedSliderDataAction implements Action {
+  readonly type = PortalActions.LOAD_GROUPED_SLIDER_DATA;
+}
+
+
+export class LoadGroupedSliderDataSuccessAction implements Action {
+  readonly type = PortalActions.LOAD_GROUPED_SLIDER_DATA_SUCCESS;
+  constructor (public payload: any) {}
+}
+
+export class LoadGroupedSliderDataFailAction implements Action {
+  readonly type = PortalActions.LOAD_GROUPED_SLIDER_DATA_FAIL;
+  constructor (public payload: any) {}
+}
+
+
 
 export type PortalConfigurationAction =  LoadPortalConfigurationAction
   | LoadPortalConfigurationSuccessAction
@@ -145,4 +166,7 @@ export type PortalConfigurationAction =  LoadPortalConfigurationAction
   | LoadExtractedDataFromExternalSourcesFailAction
   | LoadDataAction
   | LoadDataSuccessAction
-  | LoadDataFailAction;
+  | LoadDataFailAction
+  | LoadGroupedSliderDataAction
+  | LoadGroupedSliderDataSuccessAction
+  | LoadGroupedSliderDataFailAction;

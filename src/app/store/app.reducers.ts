@@ -16,7 +16,7 @@ import {
   portalReducer,
   statsSummaryReducer,
   faqReducer,
-  loadDataFromExternalSourcesReducer, loadAnalyticsData
+  loadDataFromExternalSourcesReducer, loadAnalyticsData, loadGroupedSliderInfo
 } from './portal/portal.reducer';
 import {
   DownloadsState,
@@ -24,7 +24,7 @@ import {
   StatsSummaryState,
   FAQState,
   ExternalSourcesState,
-  DataState
+  DataState, GroupedSlidersState
 } from './portal/portal.state';
 
 export interface AppState {
@@ -39,6 +39,7 @@ export interface AppState {
   faqs: FAQState;
   dataFromExternalSource: ExternalSourcesState;
   analyticsData: DataState;
+  groupedSlidersInfo: GroupedSlidersState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -53,6 +54,7 @@ export const reducers: ActionReducerMap<AppState> = {
   metadataDictionary: dictionaryReducer,
   dataFromExternalSource: loadDataFromExternalSourcesReducer,
   analyticsData: loadAnalyticsData,
+  groupedSlidersInfo: loadGroupedSliderInfo
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [storeFreeze] : [];

@@ -1,5 +1,13 @@
 import {PortalConfigurationAction, PortalActions} from './portal.actions';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, ExternalSourcesState, DataState} from './portal.state';
+import {
+  DownloadsState,
+  PortalConfigurationState,
+  StatsSummaryState,
+  FAQState,
+  ExternalSourcesState,
+  DataState,
+  GroupedSlidersState
+} from './portal.state';
 
 export function portalReducer(state: PortalConfigurationState = null, action: PortalConfigurationAction) {
   switch (action.type) {
@@ -72,5 +80,14 @@ export function loadAnalyticsData(state: DataState = null, action: PortalConfigu
         ...state
       };
     }
+  }
+}
+
+export function loadGroupedSliderInfo(state: GroupedSlidersState = null, action: PortalConfigurationAction) {
+  switch (action.type) {
+    case PortalActions.LOAD_GROUPED_SLIDER_DATA_SUCCESS:
+      return {...action.payload};
+    default:
+      return state;
   }
 }

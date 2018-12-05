@@ -1,0 +1,16 @@
+span {
+  margin-right: 10px;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+span b {
+  margin-left: 5px;
+}
+
+.marquee {
+  background-color: #2A8FD1;
+  margin-top: 10px;
+}
+
