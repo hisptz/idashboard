@@ -1,22 +1,31 @@
-<div class="" *ngIf="allDashboardMenus && menuApiUrl">
-  <div class="dropdown dashboard-menu-item-block-desktop" *ngFor="let menu of allDashboardMenus">
-    <button class="dropbtn menu-btn"  *ngIf="menu.category !== 'parent'" (click)="setActiveClass(menu.id)" id="{{menu.id}}" title="{{ menu.description }}" routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]">{{ menu.name }}</button>
-    <button disabled="disabled" id="{{ menu.name }}" class="dropbtn main-menu-btn" *ngIf="menu.category == 'parent'">{{ menu.name }}<i>
-      <!--<img src="assets/icons/dropdown2.png" height="15px" width="15px">-->
-      <img height="15px" width="15px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADLSURBVFhH7daxDcIwFIRhI0pgCloqhmAOKjqGoKVhCCoYg4plWAAhwRlxTWIjQp5fXNwvXeEokr/SQSmllDJrhh2wPTaNH5xbYEds8z4l2mHPzy6YJ3KJ3TDeH8+tthh/8EQ2cXdsjrUaY2fME9nEPbA1ls0T2RnHPJB/41hJZG8cK4E0wzFLpDmOWSCL4VgfZHEcyyEnWC43HOuCdMexX5CD4dg35OA4lkJesSpwLIWsBsdSyGpwLCJPWJU4NsJWWHy6K6WUUlUUwgt7W5T7P8qSQAAAAABJRU5ErkJggg==">
-    </i></button>
-    <div class="dropdown-content">
-      <div
-        class="dashboard-menu-item-block-desktop"
-        *ngFor="let subMenu of menu.subMenu"
-      >
-        <app-dashboard-menu-item-desktop
-          [dashboardMenuItem]="subMenu"
-          [menu]="menu"
-          (mainMenuId)="setStylesMainMenu($event)"
-        >
-        </app-dashboard-menu-item-desktop>
-      </div>
+<div *ngIf="!allDashboardMenus" class="loading-progress container">
+  <app-progress-loader></app-progress-loader>
+</div>
+<div class="menu-by-list" *ngIf="allDashboardMenus && menuApiUrl">
+  <div class="btns">
+    <div class="main-menu-btns">
+      <button
+        (click)="setActiveMenu(menu.id, allDashboardMenus)"
+        class="menu-list-btn"
+        *ngFor="let menu of allDashboardMenus"
+        id="{{menu.id}}"
+        routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]"
+      >{{menu.name}}</button>
+    </div>
+    <div class="list-sub-menus" *ngIf="subMenus">
+      <button
+        *ngFor="let menu of subMenus"
+        id="sub-{{menu.id}}"
+        (click)="setSubMenuActiveClass(menu.id)"
+        routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]"
+        class="sub-menu-btn">{{menu.displayName}}</button>
+    </div>
+    <div class="list-sub-menus" *ngIf="activeMenu && keyedDashboardMenus[activeMenu]">
+      <button
+        (click)="setSubMenuActiveClass(activeMenu)"
+        id="sub-{{activeMenu}}"
+        routerLinkActive="active-dashboard" [routerLink]="['/dashboards', activeMenu]"
+        class="sub-menu-btn">{{keyedDashboardMenus[activeMenu]}}</button>
     </div>
   </div>
 </div>
