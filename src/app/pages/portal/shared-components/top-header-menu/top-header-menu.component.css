@@ -199,3 +199,9 @@ label {
 .btn-primary:hover {
   background-color: #2A8FD1;
 }
+
+/* Progress bar*/
+.loading-progress {
+  height: 20px;
+  border-radius: 2px;
+}

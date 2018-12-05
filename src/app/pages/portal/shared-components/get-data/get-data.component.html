@@ -1,1 +1,8 @@
-<span>{{dataValue}} %</span>
+<div *ngIf="!dataValue">
+  <img
+    src="assets/img/balls-3.svg"
+    height="25"
+    width="25"
+  >
+</div>
+<span *ngIf="dataValue">{{dataValue}} %</span>
