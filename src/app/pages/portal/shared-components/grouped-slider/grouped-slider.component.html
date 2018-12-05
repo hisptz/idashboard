@@ -1,10 +1,14 @@
-<div class="grouped-sliders" *ngIf="headersOfSliders && currentUser$ && groupedSliderInfo$">
+<div class="grouped-sliders" *ngIf="headersOfSliders && currentUser$ && groupedSliderInfo$ && activeSliderGroup">
   <div class="grouped-sliders-header">
-    <div>
-      <button (click)="stopSlider(header.id + header.counter)" *ngFor="let header of headersOfSliders" id="{{header.id}}{{header.counter}}" class="grouped-sliders-header-btn">{{header.name}}</button>
+    <div class="btns">
+      <div class="move-bottom-left"><app-move-item-btn [isLeft]="true"></app-move-item-btn></div>
+      <div class="grouped-btns">
+        <button (click)="stopSlider(header.id + header.counter)" *ngFor="let header of headersOfSliders" id="{{header.id}}{{header.counter}}" class="grouped-sliders-header-btn">{{header.name}}</button>
+      </div>
       <div class="resize-btn">
         <app-visualization-slider-resize [visualSize]="'full-screen'" [title]="'View full screen'"></app-visualization-slider-resize>
       </div>
+      <div class="move-bottom-right"><app-move-item-btn [isLeft]="false"></app-move-item-btn></div>
     </div>
   </div>
   <div class="effective-slider">

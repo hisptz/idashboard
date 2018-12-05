@@ -111,6 +111,7 @@ import { ListCardWithOpenPropComponent } from './pages/portal/shared-components/
 import { GroupedSliderComponent } from './pages/portal/shared-components/grouped-slider/grouped-slider.component';
 import { GroupedSliderFullScreenComponent } from './pages/portal/shared-components/grouped-slider/grouped-slider-full-screen/grouped-slider-full-screen.component';
 import { HorizontalScrollingComponent } from './pages/portal/shared-components/horizontal-scrolling/horizontal-scrolling.component';
+import { MoveItemBtnComponent } from './pages/portal/shared-components/move-item-btn/move-item-btn.component';
 
 // Add a function, that returns a “TranslateHttpLoader” and export it (needed by AoT)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -192,6 +193,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     GroupedSliderComponent,
     GroupedSliderFullScreenComponent,
     HorizontalScrollingComponent,
+    MoveItemBtnComponent,
   ],
   imports: [
     BrowserModule,
