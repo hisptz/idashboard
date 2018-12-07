@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {CurrentUserState} from '../../../../../store/current-user/current-user.state';
 import {getCurrentUser} from '../../../../../store/current-user/current-user.selectors';
@@ -6,8 +6,16 @@ import {Router} from '@angular/router';
 import {interval} from 'rxjs/internal/observable/interval';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../../store/app.reducers';
-import {GroupedSlidersState, StatsSummaryState} from '../../../../../store/portal/portal.state';
-import {getGroupedSlidersInfo, getStatsSummary} from '../../../../../store/portal/portal.selectors';
+import {
+  GroupedSlidersState,
+  PortalConfigurationState,
+  StatsSummaryState
+} from '../../../../../store/portal/portal.state';
+import {
+  getGroupedSlidersInfo,
+  getPortalConfiguration,
+  getStatsSummary
+} from '../../../../../store/portal/portal.selectors';
 import * as portalActions from '../../../../../store/portal/portal.actions';
 
 @Component({
@@ -27,6 +35,8 @@ export class GroupedSliderFullScreenComponent implements OnInit {
   visualizationObjects$: any;
   currentUser$: Observable<CurrentUserState>;
   statsSummary$: Observable<StatsSummaryState>;
+  headerInfo: any[];
+
   constructor(private router: Router,
               private store: Store<AppState>) {
     store.dispatch(new portalActions.LoadGroupedSliderDataAction());
@@ -36,9 +46,19 @@ export class GroupedSliderFullScreenComponent implements OnInit {
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.groupedSliderInfo$ = store.select(getGroupedSlidersInfo);
+    store.select(getPortalConfiguration).subscribe((response: any) => {
+      console.log(response);
+      if (response) {
+        this.headerInfo = response.header;
+      }
+
+    }, (error) => {
+    });
+
   }
 
   ngOnInit() {
+    this.fullScreen();
     if (this.groupedSliderInfo$) {
       this.groupedSliderInfo$.subscribe((groupedSliderInfo) => {
         if (groupedSliderInfo) {
@@ -125,7 +145,7 @@ export class GroupedSliderFullScreenComponent implements OnInit {
       });
     } else {
       const buttons = document.getElementsByClassName('grouped-sliders-header-btn');
-      for (let count = 0; count <= 6 ; count++) {
+      for (let count = 0; count <= 6; count++) {
         document.getElementById(buttons[count].id).style.backgroundColor = '#eee';
         document.getElementById(buttons[count].id).style.color = '#222';
       }
@@ -133,5 +153,15 @@ export class GroupedSliderFullScreenComponent implements OnInit {
       document.getElementById(activeSliderGroup).style.backgroundColor = '#2A8FD1';
       document.getElementById(activeSliderGroup).style.color = '#FFF';
     }
+  }
+
+
+  fullScreen() {
+    const elem = document.documentElement;
+    const methodToBeInvoked = elem.requestFullscreen ||
+      elem.webkitRequestFullScreen || elem['mozRequestFullscreen']
+      ||
+      elem['msRequestFullscreen'];
+    if (methodToBeInvoked) methodToBeInvoked.call(elem);
   }
 }
