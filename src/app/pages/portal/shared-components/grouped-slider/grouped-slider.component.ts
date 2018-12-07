@@ -6,9 +6,10 @@ import {Params, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {getCurrentUser} from '../../../../store/current-user/current-user.selectors';
 import {CurrentUserState} from '../../../../store/current-user/current-user.state';
-import {getGroupedSlidersInfo, getStatsSummary} from '../../../../store/portal/portal.selectors';
+import {getAnalyticsData, getGroupedSlidersInfo, getStatsSummary} from '../../../../store/portal/portal.selectors';
 import * as portalActions from '../../../../store/portal/portal.actions';
-import {GroupedSlidersState, StatsSummaryState} from '../../../../store/portal/portal.state';
+import {DataState, GroupedSlidersState, StatsSummaryState} from '../../../../store/portal/portal.state';
+import { visualizationStructure} from '../../models/visualization-structure';
 
 @Component({
   selector: 'app-grouped-slider',
@@ -21,7 +22,10 @@ export class GroupedSliderComponent implements OnInit {
   activeSlider: number;
   isSliderStopped: boolean;
   activeSliderGroup: string;
+  activeData: any;
   groupedSliderInfo$: Observable<GroupedSlidersState>;
+  analyticsData$: Observable<DataState>;
+  groupedAnalyticsData = {};
   groupedSliderInfo: any;
   scrollingInfo: any;
   visualizationObjects$: any;
@@ -30,30 +34,17 @@ export class GroupedSliderComponent implements OnInit {
   constructor(private router: Router,
               private store: Store<AppState>) {
     store.dispatch(new portalActions.LoadGroupedSliderDataAction());
+    store.dispatch(new portalActions.LoadDataAction('dataStore/observatory/groupedSliderInfoDimensions'));
     this.activeSlider = 0;
     this.activeSliderGroup = 'rch0';
     this.isSliderStopped = false;
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.groupedSliderInfo$ = store.select(getGroupedSlidersInfo);
+    this.analyticsData$ = store.select(getAnalyticsData);
   }
 
   ngOnInit() {
-    if (this.groupedSliderInfo$) {
-      this.groupedSliderInfo$.subscribe((groupedSliderInfo) => {
-        if (groupedSliderInfo) {
-          this.groupedSliderInfo = groupedSliderInfo.data;
-          this.scrollingInfo = groupedSliderInfo.data['scrollingInfo'];
-        }
-      });
-    }
-    if (this.statsSummary$) {
-      this.statsSummary$.subscribe((statisticsSummary) => {
-        if (statisticsSummary) {
-          this.visualizationObjects$ = statisticsSummary['visualization'];
-        }
-      });
-    }
     this.headersOfSliders = [
       {
         'id': 'rch',
@@ -91,14 +82,42 @@ export class GroupedSliderComponent implements OnInit {
         'name': 'IVD'
       }
     ];
+    if (this.analyticsData$) {
+      this.analyticsData$.subscribe((analyticsData) => {
+        if (analyticsData) {
+          this.groupedAnalyticsData = analyticsData;
+          console.log('analytics', analyticsData);
+          // console.log('visualizationStructure', visualizationStructure);
+          // visualizationStructure.id = analyticsData[0]['metaData']['dimensions']['dx'][0];
+          // console.log('visualizationStructure', visualizationStructure);
+        }
+      });
+    }
+    if (this.groupedSliderInfo$ && this.activeSliderGroup) {
+      this.groupedSliderInfo$.subscribe((groupedSliderInfo) => {
+        if (groupedSliderInfo) {
+          this.groupedSliderInfo = groupedSliderInfo.data;
+          this.activeData = this.groupedSliderInfo[this.activeSliderGroup]
+          this.scrollingInfo = groupedSliderInfo.data['scrollingInfo'];
+        }
+      });
+    }
+    if (this.statsSummary$) {
+      this.statsSummary$.subscribe((statisticsSummary) => {
+        if (statisticsSummary) {
+          this.visualizationObjects$ = statisticsSummary['visualization'];
+        }
+      });
+    }
 
     this.sliderTiming(this.isSliderStopped, this.activeSliderGroup);
   }
 
-  stopSlider(id) {
+  stopSlider(id, groupedSliderInfo) {
     this.isSliderStopped = true;
     this.activeSliderGroup = id;
-    this.activeSlider = -1
+    this.activeSlider = -1;
+    this.activeData = groupedSliderInfo[this.activeSliderGroup];
     this.sliderTiming(true, this.activeSliderGroup);
   }
 
@@ -109,14 +128,18 @@ export class GroupedSliderComponent implements OnInit {
         // console.log(countTime);
         if (this.activeSlider <= 6 && this.activeSlider >= 0) {
           if (this.headersOfSliders[this.activeSlider].counter === this.activeSlider) {
-            const buttons = document.getElementsByClassName('grouped-sliders-header-btn');
-            for (let count = 0; count <= 6; count++) {
-              document.getElementById(buttons[count].id).style.backgroundColor = '#eee';
-              document.getElementById(buttons[count].id).style.color = '#222';
+            try {
+              const buttons = document.getElementsByClassName('grouped-sliders-header-btn');
+              for (let count = 0; count <= 6; count++) {
+                document.getElementById(buttons[count].id).style.backgroundColor = '#eee';
+                document.getElementById(buttons[count].id).style.color = '#222';
+              }
+              this.activeSliderGroup = this.headersOfSliders[this.activeSlider].id + this.headersOfSliders[this.activeSlider].counter;
+              document.getElementById(this.headersOfSliders[this.activeSlider].id + this.activeSlider).style.backgroundColor = '#2A8FD1';
+              document.getElementById(this.headersOfSliders[this.activeSlider].id + this.activeSlider).style.color = '#FFF';
+            } catch (e) {
+              console.log(e);
             }
-            this.activeSliderGroup = this.headersOfSliders[this.activeSlider].id + this.headersOfSliders[this.activeSlider].counter;
-            document.getElementById(this.headersOfSliders[this.activeSlider].id + this.activeSlider).style.backgroundColor = '#2A8FD1';
-            document.getElementById(this.headersOfSliders[this.activeSlider].id + this.activeSlider).style.color = '#FFF';
           }
           this.activeSlider++;
         } else if (this.activeSlider > 6) {
@@ -124,14 +147,18 @@ export class GroupedSliderComponent implements OnInit {
         }
       });
     } else {
-      const buttons = document.getElementsByClassName('grouped-sliders-header-btn');
-      for (let count = 0; count <= 6 ; count++) {
-        document.getElementById(buttons[count].id).style.backgroundColor = '#eee';
-        document.getElementById(buttons[count].id).style.color = '#222';
+      try {
+        const buttons = document.getElementsByClassName('grouped-sliders-header-btn');
+        for (let count = 0; count <= 6 ; count++) {
+          document.getElementById(buttons[count].id).style.backgroundColor = '#eee';
+          document.getElementById(buttons[count].id).style.color = '#222';
+        }
+        this.activeSliderGroup = activeSliderGroup;
+        document.getElementById(activeSliderGroup).style.backgroundColor = '#2A8FD1';
+        document.getElementById(activeSliderGroup).style.color = '#FFF';
+      } catch (e) {
+        console.log(e);
       }
-      this.activeSliderGroup = activeSliderGroup;
-      document.getElementById(activeSliderGroup).style.backgroundColor = '#2A8FD1';
-      document.getElementById(activeSliderGroup).style.color = '#FFF';
     }
   }
 }

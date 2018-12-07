@@ -32,7 +32,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.router)
     this.setTitle('Tanzania national health portal');
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {

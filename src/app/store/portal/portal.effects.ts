@@ -4,6 +4,7 @@ import {HttpClientService} from '../../services/http-client.service';
 import * as portalActions from '../portal/portal.actions';
 import 'rxjs/add/operator/switchMap';
 import {Observable} from 'rxjs/Observable';
+import * as  portalHelpers from './helpers/index';
 import 'rxjs/add/operator/map';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
@@ -16,6 +17,8 @@ import {
 } from './portal.state';
 import {AppState} from '../app.reducers';
 import {Store} from '@ngrx/store';
+import {forkJoin} from 'rxjs/index';
+import * as _ from 'lodash';
 
 @Injectable()
 export class PortalEffects {
@@ -86,7 +89,7 @@ export class PortalEffects {
     .pipe(
       switchMap((action: any) => this._loadData(action.payload).pipe(
         map((dataObject: any) =>
-        new portalActions.LoadExtractedDataFromExternalSourcesSuccessAction(dataObject)),
+          new portalActions.LoadExtractedDataFromExternalSourcesSuccessAction(dataObject)),
         catchError((error) => of(new portalActions.LoadExtractedDataFromExternalSourcesFailAction(error)))
       ))
     );
@@ -104,12 +107,12 @@ export class PortalEffects {
       //       console.log(JSON.stringify(data));
       //     });
       //   }
-      //   this.store.dispatch(new portalActions.LoadDataSuccessAction({'id': 'jose', 'name': 'Josepjat'}));
+      //   this.store.dispatch(new portalActions.LoadDataSuccessAction({'id': 'jose', 'name': 'Josephat'}));
       // })
       switchMap((action: any) => this._analyticsData(action.payload).pipe(
         map((analyticsObj: any) => new portalActions.LoadDataSuccessAction(analyticsObj))
       ))
-    )
+    );
 
   constructor(private actions$: Actions, private store: Store<AppState>,
               private httpClient: HttpClientService) {
@@ -119,8 +122,38 @@ export class PortalEffects {
     return this.httpClient.get(url);
   }
 
-  private _analyticsData(dataDimensions): Observable<any> {
-    const url = '../api/analytics.json?dimension=dx:' + dataDimensions['indicatorId'] + '&dimension=pe:' + dataDimensions['period'] + '&filter=ou:' + dataDimensions['orgUnitId'] + '&displayProperty=NAME&skipMeta=false';
-    return this.httpClient.get(url);
+  private _analyticsData(url) {
+    return new Observable(observer => {
+      this.httpClient.get(url).subscribe(
+        (dataDimensions: any[]) => {
+          forkJoin(
+            _.map(dataDimensions['dimensions'], (dataDimension: any) =>
+              this.httpClient.get('../api/analytics.json?dimension=dx:' + dataDimension['indicatorId'] + '&dimension=pe:' + dataDimension['period'] + '&filter=ou:' + dataDimension['orgUnitId'] + '&displayProperty=NAME&skipMeta=false')
+            )
+          ).subscribe(
+            (analyticsResults: any) => {
+              observer.next(
+                _.map(
+                  analyticsResults,
+                  (analyticsResult: any,
+                   analyticsResultIndex: number) => {
+                    const addedIdentifier = 'P';
+                    if (analyticsResults) {
+                    }
+                    return {
+                      id: analyticsResults[analyticsResultIndex]['metaData']['dimensions']['dx'][0] + addedIdentifier,
+                      ...portalHelpers.formatAnalyticsResult(analyticsResult)
+                    };
+                  }
+                )
+              );
+            },
+            error => observer.error(error)
+          );
+        },
+        error => observer.error(error)
+      );
+    });
   }
 }
+
