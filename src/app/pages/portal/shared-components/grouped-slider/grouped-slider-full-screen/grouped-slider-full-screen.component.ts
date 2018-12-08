@@ -12,11 +12,13 @@ import {
   StatsSummaryState
 } from '../../../../../store/portal/portal.state';
 import {
+  getAnalyticsData,
   getGroupedSlidersInfo,
   getPortalConfiguration,
   getStatsSummary
 } from '../../../../../store/portal/portal.selectors';
 import * as portalActions from '../../../../../store/portal/portal.actions';
+import {getDashboardGroupedVisualizationObjects} from '../../../../../store/visualization/visualization.selectors';
 
 @Component({
   selector: 'app-grouped-slider-full-screen',
@@ -36,16 +38,20 @@ export class GroupedSliderFullScreenComponent implements OnInit {
   currentUser$: Observable<CurrentUserState>;
   statsSummary$: Observable<StatsSummaryState>;
   headerInfo: any[];
+  groupedDashboards$: Observable<any>;
 
   constructor(private router: Router,
               private store: Store<AppState>) {
     store.dispatch(new portalActions.LoadGroupedSliderDataAction());
+    store.dispatch(new portalActions.LoadDataAction('dataStore/observatory/groupedSliderInfoDimensions'));
+    this.groupedDashboards$ = this.store.select(getDashboardGroupedVisualizationObjects);
     this.activeSlider = 0;
     this.activeSliderGroup = 'rch0';
     this.isSliderStopped = false;
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.groupedSliderInfo$ = store.select(getGroupedSlidersInfo);
+    // this.analyticsData$ = store.select(getAnalyticsData);
     store.select(getPortalConfiguration).subscribe((response: any) => {
       console.log(response);
       if (response) {
@@ -67,13 +73,47 @@ export class GroupedSliderFullScreenComponent implements OnInit {
         }
       });
     }
-    if (this.statsSummary$) {
-      this.statsSummary$.subscribe((statisticsSummary) => {
-        if (statisticsSummary) {
-          this.visualizationObjects$ = statisticsSummary['visualization'];
-        }
-      });
+    this.headersOfSliders = [
+      {
+        'id': 'rch',
+        'counter': 0,
+        'name': 'RCH'
+      },
+      {
+        'id': 'hiv_aids',
+        'counter': 1,
+        'name': 'HIV and AIDS'
+      },
+      {
+        'id': 'malaria',
+        'counter': 2,
+        'name': 'Malaria'
+      },
+      {
+        'id': 'tb_leprosy',
+        'counter': 3,
+        'name': 'TB & LEPROSY'
+      },
+      {
+        'id': 'tracer',
+        'counter': 4,
+        'name': 'TRACER DRUGS'
+      },
+      {
+        'id': 'ntd_ncd',
+        'counter': 5,
+        'name': 'NTD and NCD'
+      },
+      {
+        'id': 'ivd',
+        'counter': 6,
+        'name': 'IVD'
+      }
+    ];
+    if (this.groupedSliderInfo$ && this.activeSliderGroup) {
     }
+
+    this.sliderTiming(this.isSliderStopped, this.activeSliderGroup);
     this.headersOfSliders = [
       {
         'id': 'rch',

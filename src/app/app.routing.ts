@@ -62,6 +62,14 @@ export const routes: Routes = [
       path: 'item/:id',
       component: FullScreenDashboardItemViewComponent
     }]
+  },
+  {
+    path: 'screen-view/:id',
+    component: DashboardComponent,
+    children: [{
+      path: 'item/:id',
+      component: FullScreenDashboardItemViewComponent
+    }]
   }
 ];
 

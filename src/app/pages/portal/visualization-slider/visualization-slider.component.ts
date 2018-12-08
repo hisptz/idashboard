@@ -7,8 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class VisualizationSliderComponent implements OnInit {
 
-  @Input() visualizationObjects$: any;
-  @Input() currentUser$: any;
+  @Input() visualizationObjects: any;
+  @Input() currentUser: any;
   @Input() activeSliderGroup: string;
   dashboardAccess: {
     delete: true
@@ -21,5 +21,8 @@ export class VisualizationSliderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (this.visualizationObjects) {
+      console.log('visualizationObjects$', this.visualizationObjects);
+    }
   }
 }

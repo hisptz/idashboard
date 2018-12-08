@@ -40,7 +40,6 @@ export class DashboardMenuListDesktopComponent implements OnInit {
         menuData['dashboardMenus'].forEach((mainMenu) => {
           if (mainMenu['subMenu'].length === 0) {
             this.keyedDashboardMenus[mainMenu.id] = mainMenu.name;
-            console.log('keyedDashboardMenus', this.keyedDashboardMenus);
           }
           mainMenu.subMenu.forEach((subMenu) => {
             // this.keyedDashboardMenus[subMenu.id] = subMenu.displayName;

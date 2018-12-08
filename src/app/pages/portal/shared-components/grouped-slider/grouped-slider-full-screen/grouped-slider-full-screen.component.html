@@ -17,20 +17,21 @@
       </div>
     </div>
   </div>
+
   <div class="grouped-sliders-header">
     <div class="btns">
-      <div class="move-bottom-left"><app-move-item-btn [isLeft]="true"></app-move-item-btn></div>
-      <div class="grouped-btns">
-        <button (click)="stopSlider(header.id + header.counter)" *ngFor="let header of headersOfSliders" id="{{header.id}}{{header.counter}}" class="grouped-sliders-header-btn">{{header.name}}</button>
-      </div>
+      <!--<div class="move-bottom-left"><app-move-item-btn [isLeft]="true"></app-move-item-btn></div>-->
+      <!--<div class="grouped-btns">-->
+      <!--<button (click)="stopSlider(header.id, header.visualizationObjects)" *ngFor="let header of groupedDashboards$ | async" id="{{header.id}}" class="grouped-sliders-header-btn">{{header.name}}</button>-->
+      <!--</div>-->
       <div class="resize-btn">
-        <app-visualization-slider-resize [visualSize]="'back'" [title]="'Back'"></app-visualization-slider-resize>
+        <app-visualization-slider-resize [visualSize]="'Back'" [title]="'Back'"></app-visualization-slider-resize>
       </div>
-      <div class="move-bottom-right"><app-move-item-btn [isLeft]="false"></app-move-item-btn></div>
+      <!--<div class="move-bottom-right"><app-move-item-btn [isLeft]="false"></app-move-item-btn></div>-->
     </div>
   </div>
   <div class="effective-slider">
-    <app-visualization-slider [currentUser$]="currentUser$" [visualizationObjects$]="groupedSliderInfo[activeSliderGroup]" [activeSliderGroup]="activeSliderGroup"></app-visualization-slider>
+    <app-visualization-slider [currentUser]="currentUser$ | async" [visualizationObjects]="groupedDashboards$ | async"></app-visualization-slider>
     <app-horizontal-scrolling [scrollingInfo]="scrollingInfo"></app-horizontal-scrolling>
   </div>
 </div>

@@ -3,27 +3,27 @@ import {
   map,
   catchError, tap, debounceTime, distinctUntilChanged
 } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { Observable, of, forkJoin } from 'rxjs';
-import { Dashboard, DashboardSharing } from './dashboard.state';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import {Injectable} from '@angular/core';
+import {Observable, of, forkJoin} from 'rxjs';
+import {Dashboard, DashboardSharing} from './dashboard.state';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 
 
-import { HttpClientService } from '../../services/http-client.service';
+import {HttpClientService} from '../../services/http-client.service';
 import * as dashboard from './dashboard.actions';
 import * as dashboardHelpers from './helpers/index';
 import * as visualization from '../visualization/visualization.actions';
 import * as visualizationHelpers from '../visualization/helpers/index';
 import * as currentUser from '../current-user/current-user.actions';
 import * as portalConfiguration from '../portal/portal.actions';
-import { AppState } from '../app.reducers';
-import { Store } from '@ngrx/store';
-import { CurrentUserState } from '../current-user/current-user.state';
+import {AppState} from '../app.reducers';
+import {Store} from '@ngrx/store';
+import {CurrentUserState} from '../current-user/current-user.state';
 import * as _ from 'lodash';
-import { Router } from '@angular/router';
-import { ROUTER_NAVIGATION } from '@ngrx/router-store';
-import { Visualization } from '../visualization/visualization.state';
-import { SharingEntity } from '../../modules/sharing-filter/models/sharing-entity';
+import {Router} from '@angular/router';
+import {ROUTER_NAVIGATION} from '@ngrx/router-store';
+import {Visualization} from '../visualization/visualization.state';
+import {SharingEntity} from '../../modules/sharing-filter/models/sharing-entity';
 
 @Injectable()
 export class DashboardEffects {
@@ -79,13 +79,25 @@ export class DashboardEffects {
     const portalConfigurations = action.payload.portalConfiguration;
     /**
      * Control if the app will load with portal configurations from datastore or not
-  **/
+     **/
     if (portalConfigurations.isPortal && portalConfigurations) {
+      // _.each(action.payload.dashboards, (dashboardObject: any) => {
+      //   this.store.dispatch(
+      //     new dashboard.SetCurrentAction(dashboardObject.id)
+      //   );
+      // })
       // navigate to the page set true
       let navigateTo = '';
+
+      const allDashboardItems = _.flatten(_.map(action.payload.dashboards || [], (dashboardLoaded: any) => _.drop(_.map(dashboardLoaded.dashboardItems, (dashboardItem: any) => {
+        return {...dashboardItem, dashboardId: dashboardLoaded.id};
+      }), 10)));
+
+      this.store.dispatch(new dashboard.SetAllDashboardsAction(allDashboardItems));
+
       portalConfigurations.pages.forEach((page) => {
         if (this.router.url !== '/') {
-          console.log(this.router.url)
+          console.log(this.router.url);
           navigateTo = this.router.url;
         } else if (page.isHomePage) {
           navigateTo = page.routeUrl;
@@ -665,7 +677,7 @@ export class DashboardEffects {
 
   private _getEntities(itemArray, initialValues: SharingEntity) {
     return itemArray.reduce(
-      (items: {[id: string]: any}, item: any) => {
+      (items: { [id: string]: any }, item: any) => {
         return {
           ...items,
           [item.id]: {

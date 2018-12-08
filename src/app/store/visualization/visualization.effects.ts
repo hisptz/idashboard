@@ -7,7 +7,7 @@ import * as dashboard from '../dashboard/dashboard.actions';
 import { AppState } from '../app.reducers';
 import { Store } from '@ngrx/store';
 import { Observable, of, forkJoin } from 'rxjs';
-import { withLatestFrom , 
+import { withLatestFrom ,
   map,
   tap,
   switchMap,
@@ -60,6 +60,42 @@ export class VisualizationEffects {
           );
         });
       }
+    }));
+
+  @Effect({dispatch: false})
+  setInitialVisualizationsForAllDashboards$ = this.actions$.pipe(
+    ofType<dashboard.SetAllDashboardsAction>(dashboard.DashboardActions.SET_ALL_DASHBOARDS)
+    , withLatestFrom(this.store)
+    , tap(([action, state]: [any, AppState]) => {
+      const visualizationObjects: Visualization[] =
+        state.visualization.visualizationObjects;
+
+      const initialVisualizations: Visualization[] = action.dashboardItems.map(
+        (dashboardItem: any) =>
+          !_.find(visualizationObjects, ['id', dashboardItem.id])
+            ? visualizationHelpers.mapDashboardItemToVisualization(
+            dashboardItem,
+            dashboardItem.dashboardId,
+            state.currentUser
+            )
+            : null
+      ).filter((visualizationObject: Visualization) => visualizationObject);
+
+      /**
+       * Update store with initial visualization objects
+       */
+      this.store.dispatch(
+        new visualization.SetInitialAction(initialVisualizations)
+      );
+
+      /**
+       * Update visualizations with favorites
+       */
+      initialVisualizations.forEach((visualizationObject: Visualization) => {
+        this.store.dispatch(
+          new visualization.LoadFavoriteAction(visualizationObject)
+        );
+      });
     }));
 
   @Effect()

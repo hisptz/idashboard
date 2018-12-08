@@ -1,5 +1,5 @@
-<div class="visualization-slider" *ngIf="visualizationObjects$">
-  <div id="slider" class="carousel slide" data-ride="carousel">
+<div class="visualization-slider" *ngIf="visualizationObjects && visualizationObjects.length > 0" style="height: 75vh;">
+  <div id="slider" class="carousel slide" data-ride="carousel" style="height: 73vh;">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#slider" data-slide-to="0" class="active"></li>
@@ -12,53 +12,42 @@
         <div class="row">
           <div class="col-md-5">
             <div class="corousel-text">
-              <h3>{{visualizationObjects$[0][0].name}}</h3>
-              <p>{{visualizationObjects$[0][0].description}}</p>
+              <!--<h3 *ngIf="visualizationObject.name">{{visualizationObject.name}}</h3>-->
+              <p></p>
             </div>
           </div>
           <div class="col-md-7">
             <div class="corousel-img">
-              <app-visualization-list
-                *ngIf="visualizationObjects$[0][0].details !== ''"
-                [visualizationObjects]="visualizationObjects$[1]"
-                [currentUser]="currentUser$ | async"
+              <app-visualization-card
+                [visualizationObject]="visualizationObjects[0]"
+                [currentUser]="currentUser"
                 [dashboardAccess]="dashboardAccess"
-              ></app-visualization-list>
-              <img
-                *ngIf="visualizationObjects$[0][0].details == ''"
-                [src]="visualizationObjects$[0][0].imgSrc"
-                height="300" width="450"
-              >
+              ></app-visualization-card>
             </div>
           </div>
         </div>
       </div>
 
-      <!--<div class="carousel-item">-->
-        <!--<div class="row">-->
-          <!--<div class="col-md-5">-->
-            <!--<div class="corousel-text">-->
-              <!--<h3>{{visualizationObjects$[0][0].name}}</h3>-->
-              <!--<p>{{visualizationObjects$[0][0].description}}</p>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="col-md-7">-->
-            <!--<div class="corousel-img">-->
-              <!--<app-visualization-list-->
-                <!--*ngIf="visualizationObjects$[0][0].details !== ''"-->
-                <!--[visualizationObjects]="visualizationObjects$[0]"-->
-                <!--[currentUser]="currentUser$ | async"-->
-                <!--[dashboardAccess]="dashboardAccess"-->
-              <!--&gt;</app-visualization-list>-->
-              <!--<img-->
-                <!--*ngIf="visualizationObjects$[0][0].details === ''"-->
-                <!--[src]="visualizationObjects$[0][0].imgSrc"-->
-                <!--height="300" width="450"-->
-              <!--&gt;-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div class="carousel-item" *ngFor="let visualizationObject of visualizationObjects.slice(1, visualizationObjects.length -1); index as countOfItems">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="corousel-text" *ngIf="visualizationObject">
+              <h3 *ngIf="visualizationObject.name">{{visualizationObject.name}}</h3>
+              <p></p>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="corousel-img">
+              <app-visualization-card
+                [visualizationObject]="visualizationObject"
+                [currentUser]="currentUser"
+                [dashboardAccess]="dashboardAccess"
+              >
+              </app-visualization-card>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Left and right controls -->
     <a class="carousel-control-prev" href="#slider" data-slide="prev">

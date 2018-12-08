@@ -45,6 +45,9 @@ export class VisualizationCardComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.visualizationObject) {
+      console.log('visualizationObject', JSON.stringify(this.visualizationObject));
+    }
     this.selectedDimensions = this.getSelectedDimensions();
 
     this.currentVisualization = this.visualizationObject.details.currentVisualization;

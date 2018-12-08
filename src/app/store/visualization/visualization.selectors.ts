@@ -1,13 +1,32 @@
 import * as _ from 'lodash';
 import {AppState} from '../app.reducers';
 import {createSelector} from '@ngrx/store';
-import {getCurrentDashboard} from '../dashboard/dashboard.selectors';
+import {getAllDashboards, getCurrentDashboard} from '../dashboard/dashboard.selectors';
 import {Visualization, VisualizationState} from './visualization.state';
 import {Dashboard} from '../dashboard/dashboard.state';
 
 const visualizationState = (state: AppState) => state.visualization;
 
 export const getVisualizationLoadingState = createSelector(visualizationState, (state) => state.loading);
+
+export const getDashboardGroupedVisualizationObjects = createSelector(visualizationState, getAllDashboards, (visualization: VisualizationState, dashboards: Dashboard[]) => {
+  // return _.filter(_.map(dashboards || [], (dashboard: any) => {
+  //   return dashboard ? {
+  //     id: dashboard.id,
+  //     name: dashboard.name,
+  //     visualizationObjects: _.filter(visualization.visualizationObjects || [], (visualizationObject: any) => visualizationObject.dashboardId === dashboard.id)
+  //   } : null;
+  // }), dashboardResult => dashboardResult);
+
+  // const visualizations = _.filter(_.map(visualization.visualizationObjects || [], (visualizationObject: any) => {
+  //   const associatedDashboard = _.find(dashboards, ['id', visualizationObject ? visualizationObject.dashboardId : '']);
+  //   return visualizationObject ? {
+  //     ...visualizationObject, dashboardName: associatedDashboard ? associatedDashboard.name : ''
+  //   } : null;
+  // }), visualizationObject => visualizationObject);
+  // console.log(visualizations)
+  return visualization.visualizationObjects;
+});
 
 export const getCurrentDashboardVisualizationObjects = createSelector(visualizationState, getCurrentDashboard,
   (visualization: VisualizationState, currentDashboard: Dashboard) =>

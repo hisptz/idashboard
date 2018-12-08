@@ -1,4 +1,4 @@
-<div class="visualization-card" [style.height]="visualizationObject.details.cardHeight" (mouseenter)="toggleCardFocusAction($event, true)"
+<div class="visualization-card" *ngIf="visualizationObject" [style.height]="visualizationObject.details.cardHeight" (mouseenter)="toggleCardFocusAction($event, true)"
      (mouseleave)="toggleCardFocusAction($event, false)">
   <!--Visualization card header content-->
   <div class="visualization-card-header" *ngIf="!visualizationObject.details.hasError">
@@ -35,7 +35,7 @@
     <div class="visualization-block" [style.flex]="'2'">
       <!--chart block-->
       <div class="row">
-        <div [ngClass]="showInfo === true ? 'col-7' : 'col-12'">
+        <div [ngClass]="showInfo ? 'col-7' : 'col-12'">
           <div class="chart-container" *ngIf="currentVisualization === 'CHART' ">
             <app-chart-list [visualizationLayers]="visualizationObject.layers" [visualizationId]="visualizationObject.id" [chartHeight]="visualizationObject.details.itemHeight"></app-chart-list>
           </div>
@@ -83,7 +83,7 @@
           </div>
           <!-- end of app block -->
         </div>
-        <div [ngClass]="showInfo === true ? 'col-5' : 'col-0'">
+        <div *ngIf="showInfo">
           <!--dictionary block-->
           <div class="dictionary-container" [style.height]="visualizationObject.details.cardHeight">
             <app-dictionary-list [metadataIdentifiers]="visualizationObject.details.metadataIdentifiers"></app-dictionary-list>

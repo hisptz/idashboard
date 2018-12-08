@@ -44,6 +44,7 @@ export enum DashboardActions {
   LOAD_NOTIFACATION = '[Dashboard] Load dashboard notification',
   LOAD_NOTIFACATION_SUCCESS = '[Dashboard] Load dashboard notification success',
   LOAD_NOTIFACATION_FAIL = '[Dashboard] Load dashboard notification fail',
+  SET_ALL_DASHBOARDS = '[Dashboard] Set all dashboards'
 }
 
 export class LoadAction implements Action {
@@ -271,6 +272,11 @@ export class LoadDashboardNotificationFailAction implements Action {
   constructor(public payload: any) {}
 }
 
+export class SetAllDashboardsAction implements  Action {
+  readonly  type = DashboardActions.SET_ALL_DASHBOARDS;
+  constructor(public dashboardItems: any[]) {}
+}
+
 export type DashboardAction =
   | LoadAction
   | LoadSuccessAction
@@ -306,4 +312,5 @@ export type DashboardAction =
   | SetSearchTermAction
   | LoadDashboardNotificationAction
   | LoadDashboardNotificationSuccessAction
-  | LoadDashboardNotificationFailAction;
+  | LoadDashboardNotificationFailAction
+  | SetAllDashboardsAction;

@@ -10,6 +10,7 @@ import {getAnalyticsData, getGroupedSlidersInfo, getStatsSummary} from '../../..
 import * as portalActions from '../../../../store/portal/portal.actions';
 import {DataState, GroupedSlidersState, StatsSummaryState} from '../../../../store/portal/portal.state';
 import { visualizationStructure} from '../../models/visualization-structure';
+import {getDashboardGroupedVisualizationObjects} from '../../../../store/visualization/visualization.selectors';
 
 @Component({
   selector: 'app-grouped-slider',
@@ -31,10 +32,13 @@ export class GroupedSliderComponent implements OnInit {
   visualizationObjects$: any;
   currentUser$: Observable<CurrentUserState>;
   statsSummary$: Observable<StatsSummaryState>;
+
+  groupedDashboards$: Observable<any>;
   constructor(private router: Router,
               private store: Store<AppState>) {
     store.dispatch(new portalActions.LoadGroupedSliderDataAction());
     store.dispatch(new portalActions.LoadDataAction('dataStore/observatory/groupedSliderInfoDimensions'));
+    this.groupedDashboards$ = this.store.select(getDashboardGroupedVisualizationObjects);
     this.activeSlider = 0;
     this.activeSliderGroup = 'rch0';
     this.isSliderStopped = false;
@@ -82,30 +86,11 @@ export class GroupedSliderComponent implements OnInit {
         'name': 'IVD'
       }
     ];
-    if (this.analyticsData$) {
-      this.analyticsData$.subscribe((analyticsData) => {
-        if (analyticsData) {
-          this.groupedAnalyticsData = analyticsData;
-          console.log('analytics', analyticsData);
-          // console.log('visualizationStructure', visualizationStructure);
-          // visualizationStructure.id = analyticsData[0]['metaData']['dimensions']['dx'][0];
-          // console.log('visualizationStructure', visualizationStructure);
-        }
-      });
-    }
-    if (this.groupedSliderInfo$ && this.activeSliderGroup) {
+    if (this.groupedSliderInfo$) {
       this.groupedSliderInfo$.subscribe((groupedSliderInfo) => {
         if (groupedSliderInfo) {
           this.groupedSliderInfo = groupedSliderInfo.data;
-          this.activeData = this.groupedSliderInfo[this.activeSliderGroup]
           this.scrollingInfo = groupedSliderInfo.data['scrollingInfo'];
-        }
-      });
-    }
-    if (this.statsSummary$) {
-      this.statsSummary$.subscribe((statisticsSummary) => {
-        if (statisticsSummary) {
-          this.visualizationObjects$ = statisticsSummary['visualization'];
         }
       });
     }
@@ -114,10 +99,11 @@ export class GroupedSliderComponent implements OnInit {
   }
 
   stopSlider(id, groupedSliderInfo) {
+    console.log('visualizationObject', JSON.stringify(groupedSliderInfo));
     this.isSliderStopped = true;
     this.activeSliderGroup = id;
     this.activeSlider = -1;
-    this.activeData = groupedSliderInfo[this.activeSliderGroup];
+    this.activeData = groupedSliderInfo;
     this.sliderTiming(true, this.activeSliderGroup);
   }
 
