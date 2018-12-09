@@ -89,7 +89,7 @@ export class DashboardEffects {
       // navigate to the page set true
       let navigateTo = '';
 
-      const allDashboardItems = _.flatten(_.map(action.payload.dashboards || [], (dashboardLoaded: any) => _.drop(_.map(dashboardLoaded.dashboardItems, (dashboardItem: any) => {
+      const allDashboardItems = _.flatten(_.map(action.payload.dashboards || [], (dashboardLoaded: any) => _.take(_.map(dashboardLoaded.dashboardItems, (dashboardItem: any) => {
         return {...dashboardItem, dashboardId: dashboardLoaded.id};
       }), 10)));
 

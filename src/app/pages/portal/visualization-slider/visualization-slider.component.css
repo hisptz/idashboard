@@ -90,3 +90,6 @@ p{
   border-bottom: solid 1px #eeeeee;
 }
 
+.description-container p {
+  font-size: 1.6em;
+}

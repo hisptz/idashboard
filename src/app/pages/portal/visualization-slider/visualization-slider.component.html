@@ -44,11 +44,23 @@
           <div class="col-md-4">
             <div class="corousel-text" *ngIf="visualizationObject">
               <h2 *ngIf="visualizationObject.name">{{visualizationObject.name}}</h2>
-              <div *ngIf="visualizationObject['layers'][0]['analytics']['rows'].length > 0">
-                <p>The {{ visualizationObject.layers[0]['settings']['type']}} chart shows data for
-                  <span *ngIf="visualizationObject.layers[0]['filters'][0]['value'].indexOf('LEVEL') > -1"> MoH - Tanzania </span>
-                  <span *ngIf="visualizationObject.layers[0]['filters'][0]['value'].split(';').length > 0">the period(s) {{visualizationObject.layers[0]['filters'][0]['value']}}</span></p>
-              </div>
+              <!--<div class="description-container" *ngIf="visualizationObject['layers'].length > 0 && visualizationObject.layers[0]['analytics']">-->
+
+                <!--<span>{{visualizationObject.layers[0]['filters'][0]['value']}}</span>-->
+                <!--<p>The {{ visualizationObject.layers[0]['settings']['type']}} chart shows data-->
+                  <!--<span *ngIf="visualizationObject.layers[0]['filters'][0]['value'].indexOf('-2') > -1 || visualizationObject.layers[0]['filters'][0]['value'].indexOf('USER_ORGUNIT_CHILDREN') > -1"> for MoH - Tanzania </span>-->
+                  <!--<span-->
+                    <!--*ngIf="visualizationObject.layers[0]['filters'][0]['value'].indexOf('-2') > -1 || visualizationObject.layers[0]['filters'][0]['value'].indexOf('USER_ORGUNIT_CHILDREN') > -1"-->
+                  <!--&gt; disaggregated by Regions as a trend for {{ visualizationObject.layers[0]['analytics']['metaData']['pe'][0]}}</span>-->
+                  <!--<span *ngIf="visualizationObject.layers[0]['filters'][0]['value'].split(';').length > 2"-->
+
+                  <!--&gt;,as trend for the period(s) {{visualizationObject.layers[0]['filters'][0]['value'].join(' ; ')}}-->
+                  <!--</span>-->
+                  <!--<span *ngIf="visualizationObject.layers[0]['filters'][0]['value'].indexOf('QUARTE') > -1">-->
+                     <!--{{visualizationObject.layers[0]['filters'][0]['value']}}-->
+                  <!--</span>-->
+                <!--</p>-->
+              <!--</div>-->
               <!--<p *ngIf="visualizationObjects[0]">{{favoriteDescription(visualizationObjects[0])}}</p>-->
             </div>
           </div>
