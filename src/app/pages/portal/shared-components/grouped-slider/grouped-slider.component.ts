@@ -97,211 +97,64 @@ export class GroupedSliderComponent implements OnInit {
               'id': 'yygBRkGZyEW',
               'dashboardItems': [
                 {
-                  'id': 'Kr3rMLUGAMk'
+                  'id': 'u6PCZMocxi8',
+                  'nam': 'ANC 4th visit coverage'
                 },
                 {
-                  'id': 'GvNOTJEH9vy'
+                  'id': 'YTSmZUoC5U3',
+                  'name': 'ANC anaemia prevalence'
                 },
                 {
-                  'id': 'v6lrdpwMezu'
+                  'id': 'SEmWgR1rCTY',
+                  'name': 'Contraceptive prevalence rate (modern methods)'
                 },
                 {
-                  'id': 'moGuMGdiB3L'
+                  'id': 'dB2TNdTHzGu',
+                  'name': 'ANC 1-4 visit Dropout Rate'
                 },
                 {
-                  'id': 'Lp3ILj9SBCC'
+                  'id': 'PdyQWFPNMj0',
+                  'name': 'ANC Couple Testing Rate'
                 },
                 {
-                  'id': 'mvJfAv9l0id'
+                  'id': 'ym5KPYCcasM',
+                  'name': 'ANC 1st visit coverage'
                 },
                 {
-                  'id': 'iTihN3qFMkS'
+                  'id': 'rcBAFhaLKX5',
+                  'name': 'ANC de-worming rate'
                 },
                 {
-                  'id': 'gDx9owfyLWN'
+                  'id': 'QFBXlvZKp8G',
+                  'name': 'ANC HIV prevalence 1st Test'
                 },
                 {
-                  'id': 'LvGDdnOdRnX'
+                  'id': 'tjsBwZLxS72',
+                  'name': 'Delivery by skilled attendants'
                 },
                 {
-                  'id': 'w9GqT5JMzIC'
+                  'id': 'otgBXB7vfE2',
+                  'name': 'Proportion of pregnant women receiving 2 doses of SP'
                 },
                 {
-                  'id': 'jDOQoOM1lGk'
+                  'id': 'JyuSOu3Nujb',
+                  'name': 'ANC Proportion of women tested for Anaemia'
                 },
                 {
-                  'id': 'Xoq3Q1RWSkV'
+                  'id': 'Gp8A45jrClZ',
+                  'name': 'ANC Proportion of pregnant women receiving TT2+'
                 },
                 {
-                  'id': 'JnngtHwAq3e'
+                  'id': 'QFBXlvZKp8G',
+                  'name': 'ANC HIV prevalence 1st Test'
                 },
                 {
-                  'id': 'HJgP4cbXmOn'
+                  'id': 'UXjw0K8C07r',
+                  'name': 'ANC Partners HIV testing rate'
                 },
                 {
-                  'id': 'htHXnv8QzMg'
-                },
-                {
-                  'id': 'QbkTsM9cR7L'
-                },
-                {
-                  'id': 'CLbKdz8cdtm'
-                },
-                {
-                  'id': 'lTWwfTsnEo3'
-                },
-                {
-                  'id': 'syqgAN9jr3j'
-                },
-                {
-                  'id': 'LYWKtBE4LrV'
-                },
-                {
-                  'id': 'DGDKzZb6JOV'
-                },
-                {
-                  'id': 'GA0jpUV9YT8'
-                },
-                {
-                  'id': 'uLBvdUvPE2P'
-                },
-                {
-                  'id': 'ORdL9iHxGuw'
-                },
-                {
-                  'id': 'ubeGdNOlEqQ'
-                },
-                {
-                  'id': 'Q1JFJAvMCmB'
-                },
-                {
-                  'id': 'TrHfqpR54kF'
-                },
-                {
-                  'id': 'aQ7fHe2rqly'
-                },
-                {
-                  'id': 'nFANwqU1OB9'
-                },
-                {
-                  'id': 'k8dvApA8Yiy'
-                },
-                {
-                  'id': 'R6YiXEKdbLt'
-                },
-                {
-                  'id': 'cxhyWNd3Yc8'
-                },
-                {
-                  'id': 'zrWzMftPQzw'
-                },
-                {
-                  'id': 'YFWLDTt7kUb'
-                },
-                {
-                  'id': 'hUAXTndBTJo'
-                },
-                {
-                  'id': 'OoEAY6Ahnsx'
-                },
-                {
-                  'id': 'tmAuPyTsmA9'
-                },
-                {
-                  'id': 'rBmUMzBQ6yo'
-                },
-                {
-                  'id': 'HCwjmnz5QUE'
-                },
-                {
-                  'id': 'O343Tkdbu7w'
-                },
-                {
-                  'id': 'OvGk0wwtt9H'
-                },
-                {
-                  'id': 'Uz6I6gDBEX1'
-                },
-                {
-                  'id': 'pnGVRXwz3ln'
-                },
-                {
-                  'id': 'FzlWv3FmNKN'
-                },
-                {
-                  'id': 'Q4QGiHQWImG'
-                },
-                {
-                  'id': 'l5QLZTXBCoX'
-                },
-                {
-                  'id': 'lCEe0dMFNa0'
-                },
-                {
-                  'id': 'ccQ4XN58ExL'
-                },
-                {
-                  'id': 'OMR17d1Gp1Q'
-                },
-                {
-                  'id': 'wlByXUfOfnJ'
-                }
-              ]
-            },
-            {
-              'name': 'HIV/AIDS',
-              'id': 'KOSUh5WCB70',
-              'dashboardItems': [
-                {
-                  'id': 'E7cqUV5IuwY'
-                },
-                {
-                  'id': 'lE5mJqlJq3u'
-                },
-                {
-                  'id': 'wH50LGAkHYD'
-                },
-                {
-                  'id': 'vGZ8d64aVto'
-                }
-              ]
-            },
-            {
-              'name': 'CERVICAL CANCER',
-              'id': 'lCpO4gUXH2V',
-              'dashboardItems': [
-                {
-                  'id': 'SCkRVUfOLVs'
-                },
-                {
-                  'id': 'GjB337AhSl0'
-                },
-                {
-                  'id': 'qaLkGgATRl9'
-                },
-                {
-                  'id': 'BoZ9PZGtBas'
-                },
-                {
-                  'id': 'ECSlwCgf2t0'
-                },
-                {
-                  'id': 'WO2pSKws5wP'
-                },
-                {
-                  'id': 'x40Z4eMASP2'
-                },
-                {
-                  'id': 'UOQRBxrZiAD'
-                },
-                {
-                  'id': 'NC53k4qkCrr'
-                },
-                {
-                  'id': 'RVUsoRSPzl5'
-                },
-                {
-                  'id': 'gQwzkLBXdFn'
+                  'id': 'TPzwBZyzzUl',
+                  'name': 'Delivery rate in Facility (institutional delivery coverage)'
                 }
               ]
             },
@@ -324,128 +177,20 @@ export class GroupedSliderComponent implements OnInit {
               ]
             },
             {
-              'name': 'GBV & VAC',
-              'id': 'AxHTuYXEMeu',
-              'dashboardItems': [
-                {
-                  'id': 'EnVEvFYU1e0'
-                },
-                {
-                  'id': 'UZDquI9QVAE'
-                },
-                {
-                  'id': 'WBSZJNYew2j'
-                },
-                {
-                  'id': 'lwwEgmaeD9Q'
-                },
-                {
-                  'id': 'kdOtgKY9ZSt'
-                },
-                {
-                  'id': 'eYwra2gaka6'
-                }
-              ]
-            },
-            {
               'name': 'GENERAL INFORMATION',
               'id': 'hwJNMC3LrPd',
               'dashboardItems': [
                 {
-                  'id': 'gRQB9dehrwl'
+                  'id': 'N7GU5EUzIfM',
+                  'name': 'Distribution of health facilities'
                 },
                 {
-                  'id': 'RucVrjMy28y'
+                  'id': 'qxZwk7eJkoT',
+                  'name': 'Distribution of facilities'
                 },
                 {
-                  'id': 'aYVMlDLWFve'
-                },
-                {
-                  'id': 'ZmkWGr3bOKC'
-                },
-                {
-                  'id': 'gPQLxPZ8oc9'
-                },
-                {
-                  'id': 'cnqbYxy8rOg'
-                },
-                {
-                  'id': 'YDpOKS3zA9F'
-                },
-                {
-                  'id': 'vCs667Jka23'
-                },
-                {
-                  'id': 'vAoeicrgETI'
-                }
-              ]
-            },
-            {
-              'name': 'HMIS&RCHS RAW DATA',
-              'id': 'duUJrQbZF9h',
-              'dashboardItems': [
-                {
-                  'id': 'my5zdoTkt6d'
-                },
-                {
-                  'id': 'D9qNtSGoBQ4'
-                },
-                {
-                  'id': 'wuyVMV0Ybjh'
-                },
-                {
-                  'id': 'KjpurR055wR'
-                },
-                {
-                  'id': 'oxiUa1QoS9v'
-                },
-                {
-                  'id': 'omnaQ5cqo2i'
-                },
-                {
-                  'id': 'zCc2ECP8eeg'
-                },
-                {
-                  'id': 'KZfqPFHyYJc'
-                },
-                {
-                  'id': 'Cdd6gybnRo5'
-                }
-              ]
-            },
-            {
-              'name': 'IVD',
-              'id': 'wazXFS5KbST',
-              'dashboardItems': [
-                {
-                  'id': 'P4Zt7MStnrx'
-                },
-                {
-                  'id': 'N4PgVAH6dZt'
-                },
-                {
-                  'id': 'vigaEXDzkJA'
-                },
-                {
-                  'id': 'RBNi3uG9if1'
-                },
-                {
-                  'id': 'IBNqYgwBU8Y'
-                },
-                {
-                  'id': 'ZLo58YmzOyt'
-                },
-                {
-                  'id': 'q7O4VJhOqFa'
-                },
-                {
-                  'id': 'pzn0NxZVtoo'
-                },
-                {
-                  'id': 'k7qxPQ70cGm'
-                },
-                {
-                  'id': 'prFEaXm8nGW'
+                  'id': 'pZQZvHhlHpJ',
+                  'name': 'Health workers by cadre'
                 }
               ]
             },
@@ -455,48 +200,6 @@ export class GroupedSliderComponent implements OnInit {
               'dashboardItems': [
                 {
                   'id': 'qIoKh7DXqEk'
-                },
-                {
-                  'id': 'kEYQMziOdz0'
-                },
-                {
-                  'id': 'xb4V54GpBwI'
-                },
-                {
-                  'id': 'cfXsHy7nLTw'
-                },
-                {
-                  'id': 'fvfQFKlydtp'
-                },
-                {
-                  'id': 'JpH17eCM2yW'
-                },
-                {
-                  'id': 'MyHuVtnsbpM'
-                },
-                {
-                  'id': 'lVLc3BgcwYH'
-                },
-                {
-                  'id': 'lsNhvSMiAVF'
-                },
-                {
-                  'id': 'dahSAmGY0yC'
-                },
-                {
-                  'id': 'P0DajorvBpM'
-                },
-                {
-                  'id': 'CSir8zpbn1F'
-                },
-                {
-                  'id': 'dscfsvGCWFM'
-                },
-                {
-                  'id': 'mDBDaF96fPb'
-                },
-                {
-                  'id': 'CR3FLyASxrk'
                 }
               ]
             },
@@ -506,63 +209,6 @@ export class GroupedSliderComponent implements OnInit {
               'dashboardItems': [
                 {
                   'id': 'TOwPhL0mJX8'
-                },
-                {
-                  'id': 'd3dzuEELSYX'
-                },
-                {
-                  'id': 'hSANUXBiVo2'
-                },
-                {
-                  'id': 'AMEq7ryz9jW'
-                },
-                {
-                  'id': 'QqRDsTxW2BB'
-                },
-                {
-                  'id': 'tvzbPy7WuV0'
-                },
-                {
-                  'id': 'ajCx3NxElDB'
-                },
-                {
-                  'id': 'M9Av0KGhDkh'
-                },
-                {
-                  'id': 'jn5AWKquA3W'
-                },
-                {
-                  'id': 'ZQWfZmSzSze'
-                }
-              ]
-            },
-            {
-              'name': 'NON-COMMUNICABLE DISEASE',
-              'id': 'kFf8g9Vlu1d',
-              'dashboardItems': [
-                {
-                  'id': 'PjqhpkNgJmV'
-                }
-              ]
-            },
-            {
-              'name': 'NTD',
-              'id': 'JXfFynzipLO',
-              'dashboardItems': [
-                {
-                  'id': 'd4oCOnXX2sn'
-                },
-                {
-                  'id': 'isjyxRsIDD2'
-                },
-                {
-                  'id': 'fJfN6944Aws'
-                },
-                {
-                  'id': 'PgPQq2YwmeH'
-                },
-                {
-                  'id': 'X2wy53SF6KT'
                 }
               ]
             },
@@ -575,42 +221,6 @@ export class GroupedSliderComponent implements OnInit {
                 },
                 {
                   'id': 'Joe22R0hNE5'
-                },
-                {
-                  'id': 'twFqSrJsqI7'
-                },
-                {
-                  'id': 'kEXlxtsO1LN'
-                },
-                {
-                  'id': 'RjqpNSfGQxp'
-                },
-                {
-                  'id': 'Z0PzhFOvumP'
-                },
-                {
-                  'id': 'sDEWnBNtz3n'
-                },
-                {
-                  'id': 'vYgjGoUo6OM'
-                },
-                {
-                  'id': 'eh31WABDRC6'
-                },
-                {
-                  'id': 'NyaAVAbXQtC'
-                },
-                {
-                  'id': 'pGbMofoIwJq'
-                },
-                {
-                  'id': 'vpniFCAg1HV'
-                },
-                {
-                  'id': 'tijVmZszsaj'
-                },
-                {
-                  'id': 'GoDz3d5gtFR'
                 }
               ]
             },
@@ -620,21 +230,6 @@ export class GroupedSliderComponent implements OnInit {
               'dashboardItems': [
                 {
                   'id': 'tyG3yeF8cHs'
-                },
-                {
-                  'id': 'Ks705WW912C'
-                },
-                {
-                  'id': 'Mg9XhEOQGYJ'
-                },
-                {
-                  'id': 'yV0rxf0q3aC'
-                },
-                {
-                  'id': 'OUM9zvZbHg8'
-                },
-                {
-                  'id': 'agSBDIsoVZ5'
                 }
               ]
             },
@@ -644,21 +239,6 @@ export class GroupedSliderComponent implements OnInit {
               'dashboardItems': [
                 {
                   'id': 'EuC79VD7JRa'
-                },
-                {
-                  'id': 'MoMfVyv6RH1'
-                },
-                {
-                  'id': 'W2Ghn7CPrKg'
-                },
-                {
-                  'id': 'ZODiSswPE2r'
-                },
-                {
-                  'id': 'uTXoorf82uE'
-                },
-                {
-                  'id': 'oR8xxbE2Sef'
                 }
               ]
             },
@@ -668,30 +248,6 @@ export class GroupedSliderComponent implements OnInit {
               'dashboardItems': [
                 {
                   'id': 'mIgL85AyCQx'
-                },
-                {
-                  'id': 'P7OjKEA9Igm'
-                },
-                {
-                  'id': 'zh6nNFmPZKz'
-                },
-                {
-                  'id': 'mOqAP4jB98Q'
-                },
-                {
-                  'id': 'XlGGanf53yk'
-                },
-                {
-                  'id': 'hwovmGHXweX'
-                },
-                {
-                  'id': 'P37fh2h9EVO'
-                },
-                {
-                  'id': 'WnyrMrpm4VH'
-                },
-                {
-                  'id': 'dGdsYXB5lFV'
                 }
               ]
             },
@@ -701,102 +257,6 @@ export class GroupedSliderComponent implements OnInit {
               'dashboardItems': [
                 {
                   'id': 'lEcT2kNgo6y'
-                },
-                {
-                  'id': 'cJqlSdPMdHl'
-                },
-                {
-                  'id': 'YCtYeMtV9o7'
-                },
-                {
-                  'id': 'P96in8O7NlR'
-                },
-                {
-                  'id': 'ReDXHjEzk8D'
-                },
-                {
-                  'id': 'a4oHAviudAJ'
-                },
-                {
-                  'id': 'ejqvMAFP7kX'
-                },
-                {
-                  'id': 'gHem1kDKjV3'
-                },
-                {
-                  'id': 'hKyl4cJwWe0'
-                },
-                {
-                  'id': 'SFpsJBpfpDy'
-                },
-                {
-                  'id': 'f9660GYFQdl'
-                },
-                {
-                  'id': 'hA79ki4a43A'
-                },
-                {
-                  'id': 'YUFzJ9DXi7q'
-                },
-                {
-                  'id': 'ky1CuKxy8By'
-                },
-                {
-                  'id': 'UCNCmC9fVVN'
-                },
-                {
-                  'id': 'tIJHuuocRIf'
-                },
-                {
-                  'id': 'NfnyRWC9m1D'
-                },
-                {
-                  'id': 'MXUjVtjNK9u'
-                },
-                {
-                  'id': 'fgD3Bf8EQRp'
-                },
-                {
-                  'id': 'gLiPxDexaSj'
-                },
-                {
-                  'id': 'ml5zDzS45en'
-                },
-                {
-                  'id': 'UZqN5on0w3Q'
-                },
-                {
-                  'id': 'xrcdjDGio8Y'
-                },
-                {
-                  'id': 'oHle3ts57az'
-                },
-                {
-                  'id': 'nrRzbxiczjU'
-                },
-                {
-                  'id': 'hMM9Zr8LsGy'
-                }
-              ]
-            },
-            {
-              'name': 'VMCC',
-              'id': 'n4MDSZ0z5nZ',
-              'dashboardItems': [
-                {
-                  'id': 'FVFiwKpwfc0'
-                }
-              ]
-            },
-            {
-              'name': 'Star Rating',
-              'id': 'Tk50PilnEbr',
-              'dashboardItems': [
-                {
-                  'id': 'zCOPr3uyytx'
-                },
-                {
-                  'id': 'GV5UTl0E5Df'
                 }
               ]
             }

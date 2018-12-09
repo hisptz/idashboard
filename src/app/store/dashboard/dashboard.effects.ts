@@ -89,9 +89,11 @@ export class DashboardEffects {
       // navigate to the page set true
       let navigateTo = '';
 
-      const allDashboardItems = _.flatten(_.map(action.payload.dashboards || [], (dashboardLoaded: any) => _.take(_.map(dashboardLoaded.dashboardItems, (dashboardItem: any) => {
+      const allDashboardItems = _.flatten(_.take(_.map(action.payload.dashboards || [], (dashboardLoaded: any) => _.take(_.map(dashboardLoaded.dashboardItems, (dashboardItem: any) => {
         return {...dashboardItem, dashboardId: dashboardLoaded.id};
-      }), 6)));
+      }), 125)), 1));
+
+      console.log('allDashboardItems', allDashboardItems)
 
       this.store.dispatch(new dashboard.SetAllDashboardsAction(allDashboardItems));
 
