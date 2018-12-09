@@ -91,7 +91,7 @@ export class DashboardEffects {
 
       const allDashboardItems = _.flatten(_.map(action.payload.dashboards || [], (dashboardLoaded: any) => _.take(_.map(dashboardLoaded.dashboardItems, (dashboardItem: any) => {
         return {...dashboardItem, dashboardId: dashboardLoaded.id};
-      }), 10)));
+      }), 6)));
 
       this.store.dispatch(new dashboard.SetAllDashboardsAction(allDashboardItems));
 
