@@ -31,6 +31,7 @@ export class GroupedSliderFullScreenComponent implements OnInit {
   activeSlider: number;
   isSliderStopped: boolean;
   activeSliderGroup: string;
+  dashboardsGroups: any;
   groupedSliderInfo$: Observable<GroupedSlidersState>;
   groupedSliderInfo: any;
   scrollingInfo: any;
@@ -70,6 +71,7 @@ export class GroupedSliderFullScreenComponent implements OnInit {
         if (groupedSliderInfo) {
           this.groupedSliderInfo = groupedSliderInfo.data;
           this.scrollingInfo = groupedSliderInfo.data['scrollingInfo'];
+          this.dashboardsGroups = groupedSliderInfo.data['dashboards'];
         }
       });
     }

@@ -29,6 +29,10 @@ export class VisualizationCardComponent implements OnInit {
   @Input()
   dashboardAccess: DashboardAccess;
 
+  @Input() isItVisualizable: boolean
+
+  @Input() isFullScreenEnabled: boolean;
+
   isCardFocused: boolean;
   selectedDimensions: any;
   currentVisualization: string;
@@ -45,9 +49,6 @@ export class VisualizationCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.visualizationObject) {
-      console.log('visualizationObject', JSON.stringify(this.visualizationObject));
-    }
     this.selectedDimensions = this.getSelectedDimensions();
 
     this.currentVisualization = this.visualizationObject.details.currentVisualization;

@@ -26,7 +26,7 @@ export class GroupedSliderComponent implements OnInit {
   activeData: any;
   groupedSliderInfo$: Observable<GroupedSlidersState>;
   analyticsData$: Observable<DataState>;
-  groupedAnalyticsData = {};
+  dashboardsGroups: any;
   groupedSliderInfo: any;
   scrollingInfo: any;
   visualizationObjects$: any;
@@ -91,6 +91,7 @@ export class GroupedSliderComponent implements OnInit {
         if (groupedSliderInfo) {
           this.groupedSliderInfo = groupedSliderInfo.data;
           this.scrollingInfo = groupedSliderInfo.data['scrollingInfo'];
+          this.dashboardsGroups = groupedSliderInfo.data['dashboards'];
         }
       });
     }

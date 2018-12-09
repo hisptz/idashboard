@@ -3,7 +3,7 @@
   <!--Visualization card header content-->
   <div class="visualization-card-header" *ngIf="!visualizationObject.details.hasError">
     <div class="visualization-card-header-left">
-      <div class="visualization-filter-section-container" *ngIf="!visualizationObject.details.nonVisualizable">
+      <div class="visualization-filter-section-container" *ngIf="isItVisualizable">
         <app-visualization-filter-section [selectedDimensions]="selectedDimensions" [visualizationType]="currentVisualization" [loaded]="loaded"
                                           (onFilterUpdate)="onFilterUpdate($event)" (onLayoutUpdate)="onLayoutUpdate($event)"></app-visualization-filter-section>
       </div>
@@ -11,7 +11,7 @@
       <!--<app-visualization-interpretation-button [loaded]="loaded" [visualizationId]="visualizationObject.id" [visualizationLayers]="visualizationObject.layers"></app-visualization-interpretation-button>-->
       <!--</div>-->
     </div>
-    <div class="visualization-card-header-right" *ngIf="!visualizationObject.details.fullScreen">
+    <div class="visualization-card-header-right" *ngIf="!visualizationObject.details.fullScreen && isFullScreenEnabled">
       <app-visualization-resize-section
         [dashboardId]="visualizationObject.dashboardId"
         [visualizationId]="visualizationObject.id"

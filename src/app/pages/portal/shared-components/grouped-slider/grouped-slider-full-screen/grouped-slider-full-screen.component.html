@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="effective-slider">
-    <app-visualization-slider [currentUser]="currentUser$ | async" [visualizationObjects]="groupedDashboards$ | async"></app-visualization-slider>
+    <app-visualization-slider [currentUser]="currentUser$ | async" [visualizationObjects]="groupedDashboards$ | async" [dashboardsGroups]="dashboardsGroups"></app-visualization-slider>
     <app-horizontal-scrolling [scrollingInfo]="scrollingInfo"></app-horizontal-scrolling>
   </div>
 </div>
