@@ -49,43 +49,6 @@ export class GroupedSliderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.headersOfSliders = [
-      {
-        'id': 'rch',
-        'counter': 0,
-        'name': 'RCH'
-      },
-      {
-        'id': 'hiv_aids',
-        'counter': 1,
-        'name': 'HIV and AIDS'
-      },
-      {
-        'id': 'malaria',
-        'counter': 2,
-        'name': 'Malaria'
-      },
-      {
-        'id': 'tb_leprosy',
-        'counter': 3,
-        'name': 'TB & LEPROSY'
-      },
-      {
-        'id': 'tracer',
-        'counter': 4,
-        'name': 'TRACER DRUGS'
-      },
-      {
-        'id': 'ntd_ncd',
-        'counter': 5,
-        'name': 'NTD and NCD'
-      },
-      {
-        'id': 'ivd',
-        'counter': 6,
-        'name': 'IVD'
-      }
-    ];
     if (this.groupedSliderInfo$) {
       this.groupedSliderInfo$.subscribe((groupedSliderInfo) => {
         if (groupedSliderInfo) {
