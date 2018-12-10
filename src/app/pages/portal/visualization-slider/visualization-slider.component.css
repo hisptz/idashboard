@@ -102,3 +102,14 @@ p{
   color: #2A8FD1;
 }
 
+.slider-header p b {
+  color: #2A8FD1;
+  font-size: 1.8em;
+  margin-right: 4px;
+}
+
+.slider-header p {
+  font-size: 1.4em;
+}
+
+
