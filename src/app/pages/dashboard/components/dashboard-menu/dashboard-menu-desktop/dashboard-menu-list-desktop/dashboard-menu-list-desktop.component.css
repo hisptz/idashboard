@@ -73,7 +73,7 @@
   -ms-user-select: none;
   user-select: none;
   border: none;
-  padding: 0.1em 0.8em 0.1em 0.1em;
+  padding: 0.2em 1em 0.2em 0.1em;
   font-size: 0.8rem;
   border-radius: 0;
   line-height: 1.5;
@@ -110,6 +110,12 @@
   overflow: auto;
 }
 
+.main-menu-btns button:hover {
+  background-color: #2A8FD1;
+  /*color: #FFF;*/
+}
+
+
 .main-menu-btns button {
   display: inline-block;
 }
@@ -126,4 +132,8 @@
 .loading-progress {
   height:30px;
   border-radius: 2px;
+}
+
+button {
+  cursor: pointer;
 }

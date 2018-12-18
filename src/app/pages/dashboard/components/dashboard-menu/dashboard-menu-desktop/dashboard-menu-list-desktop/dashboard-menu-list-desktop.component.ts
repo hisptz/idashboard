@@ -63,7 +63,7 @@ export class DashboardMenuListDesktopComponent implements OnInit {
                 // document.getElementById(items[count].id).style.fontWeight = '500';
               }
             }
-            document.getElementById(id).style.borderBottom = 'solid 2px #2A8FD1';
+            document.getElementById(id).style.borderBottom = 'solid 3px #2A8FD1';
             // document.getElementById(id).style.fontWeight = '600';
             document.getElementById('sub-' + id).style.backgroundColor = '#2A8FD1';
             document.getElementById(id).style.color = '#000';
@@ -97,7 +97,7 @@ export class DashboardMenuListDesktopComponent implements OnInit {
           // document.getElementById(items[count].id).style.fontWeight = '500';
         }
       }
-      document.getElementById(id).style.borderBottom = 'solid 2px #2A8FD1';
+      document.getElementById(id).style.borderBottom = 'solid 3px #2A8FD1';
       // document.getElementById(id).style.fontWeight = '600';
       document.getElementById('sub-' + id).style.backgroundColor = '#2A8FD1';
       document.getElementById(id).style.color = '#000';

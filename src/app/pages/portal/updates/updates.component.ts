@@ -19,29 +19,14 @@ export class UpdatesComponent implements OnInit {
   statsSummary$: Observable<StatsSummaryState>;
   allNews: any;
   news: any;
-  hasScriptSet: boolean;
-  _newsFromExternalSource: SafeHtml;
   dataFromExternalSource$: Observable<ExternalSourcesState>;
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
-    store.dispatch(new portalActions.LoadExtractedDataFromExternalSourcesAction('../portal-middleware/extract'));
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     this.statsSummary$ = store.select(getStatsSummary);
     this.dataFromExternalSource$ = store.select(getDataFromExternalSource);
   }
 
   ngOnInit() {
-    if (this.dataFromExternalSource$) {
-      this.dataFromExternalSource$.subscribe((dataFromExternalSource) => {
-        try {
-          this._newsFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
-            dataFromExternalSource['data']
-          );
-          this.hasScriptSet = true;
-        } catch (e) {
-          console.log(JSON.stringify(e));
-        }
-      });
-    }
     if (this.statsSummary$) {
       this.statsSummary$.subscribe((summaryInfo) => {
         if (summaryInfo) {
