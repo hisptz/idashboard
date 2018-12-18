@@ -63,7 +63,6 @@ export class GroupedSliderComponent implements OnInit {
   }
 
   stopSlider(id, groupedSliderInfo) {
-    console.log('visualizationObject', JSON.stringify(groupedSliderInfo));
     this.isSliderStopped = true;
     this.activeSliderGroup = id;
     this.activeSlider = -1;

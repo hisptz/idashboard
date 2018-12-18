@@ -27,7 +27,6 @@ export class VisualizationSliderComponent implements OnInit {
       this.dashboardsGroups.forEach((dashboard) => {
         dashboard['dashboardItems'].forEach((item) => {
           this.keyedDashboards[item.id] = dashboard.name
-          console.log(this.keyedDashboards);
         });
       });
     }

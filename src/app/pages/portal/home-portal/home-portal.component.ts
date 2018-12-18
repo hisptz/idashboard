@@ -61,19 +61,6 @@ export class HomePortalComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    if (this.dataFromExternalSource$) {
-      this.dataFromExternalSource$.subscribe((dataFromExternalSource) => {
-        try {
-          this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
-            dataFromExternalSource['data']
-          );
-          this.hasScriptSet = true;
-        } catch (e) {
-          console.log(JSON.stringify(e));
-        }
-      });
-    }
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {
         this.theSetPage = params['id']; const parentId = params['parentId'];
@@ -105,6 +92,19 @@ export class HomePortalComponent implements OnInit {
               });
             }
           });
+        }
+      });
+    }
+
+    if (this.dataFromExternalSource$) {
+      this.dataFromExternalSource$.subscribe((dataFromExternalSource) => {
+        try {
+          this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
+            dataFromExternalSource['data']
+          );
+          this.hasScriptSet = true;
+        } catch (e) {
+          console.log(JSON.stringify(e));
         }
       });
     }

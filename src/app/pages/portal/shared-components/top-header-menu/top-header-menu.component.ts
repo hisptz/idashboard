@@ -15,29 +15,8 @@ export class TopHeaderMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.allNews && this.portalConfigurations) {
+    if (this.portalConfigurations) {
       this.headerInfo = this.portalConfigurations['header'];
-      // this.allNews.forEach((news) => {
-      //   if (news.isItNew === true) {
-      //     const pagesArr = [];
-      //     this.portalConfigurations['pages'].forEach((page) => {
-      //       if (page.id === 'TY89iyga57SQ') {
-      //         const routerUrl = page.routeUrl;
-      //         const newPage = {
-      //           'id': page.id,
-      //           'imgSrc': page.imgSrc,
-      //           'routeUrl': routerUrl + '/' + news.id,
-      //           'isHomePage': page.isHomePage,
-      //           'name': page.name
-      //         };
-      //         pagesArr.push(newPage);
-      //       } else {
-      //         pagesArr.push(page);
-      //       }
-      //       this.pages = pagesArr;
-      //     });
-      //   }
-      // });
     }
   }
 

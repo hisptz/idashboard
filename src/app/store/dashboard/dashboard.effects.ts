@@ -37,7 +37,6 @@ export class DashboardEffects {
   currentUserLoaded$ = this.actions$.ofType<currentUser.LoadSuccessAction>(
     currentUser.CurrentUserActions.LOAD_SUCCESS
   ).pipe(tap(() => {
-    this.store.dispatch(new portalConfiguration.LoadPortalConfigurationAction());
     this.store.dispatch(new dashboard.LoadDashboardNotificationAction());
   }));
 
@@ -81,19 +80,11 @@ export class DashboardEffects {
      * Control if the app will load with portal configurations from datastore or not
      **/
     if (portalConfigurations.isPortal && portalConfigurations) {
-      // _.each(action.payload.dashboards, (dashboardObject: any) => {
-      //   this.store.dispatch(
-      //     new dashboard.SetCurrentAction(dashboardObject.id)
-      //   );
-      // })
-      // navigate to the page set true
       let navigateTo = '';
 
       const allDashboardItems = _.flatten(_.take(_.map(action.payload.dashboards || [], (dashboardLoaded: any) => _.take(_.map(dashboardLoaded.dashboardItems, (dashboardItem: any) => {
         return {...dashboardItem, dashboardId: dashboardLoaded.id};
       }), 125)), 1));
-
-      console.log('allDashboardItems', allDashboardItems)
 
       this.store.dispatch(new dashboard.SetAllDashboardsAction(allDashboardItems));
 

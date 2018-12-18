@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   footerData: any;
   constructor(private titleService: Title, private router: Router, private store: Store<AppState>, private route: ActivatedRoute) {
     store.dispatch(new currentUser.LoadAction());
+    store.dispatch(new portalActions.LoadPortalConfigurationAction());
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
