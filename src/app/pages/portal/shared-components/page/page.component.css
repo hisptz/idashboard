@@ -31,8 +31,21 @@
 
 p {
   text-align: justify;
+  letter-spacing: 0.02em;
+  line-height: 1.7em;
 }
 
 .page-contents #contents {
   padding: 0 10px 0 10px;
+}
+
+.page-header {
+  text-align: left;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.sub-page-header {
+  margin-top: 5px;
+  color: #000000;
 }

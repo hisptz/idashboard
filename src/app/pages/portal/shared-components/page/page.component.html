@@ -7,11 +7,14 @@
   </div>
   <div class="col-lg-9 col-md-12 col-sx-12 page-contents">
     <div id="contents">
-      <h4 style="text-align: left;">{{selectedPageInformation.name}}</h4>
-      <div *ngIf="selectedPageInformation.contents.length > 0">
-        <p *ngFor="let paragraph of selectedPageInformation.contents">{{paragraph}}</p>
+      <h4 class="page-header">{{selectedPageInformation['pageHeader']}}</h4>
+      <div *ngIf="selectedPageInformation['pageContents'].length > 0">
+        <div *ngFor="let paragraphs of selectedPageInformation['pageContents']">
+          <h5 class="sub-page-header" *ngIf="paragraphs.header != ''">{{paragraphs.header}}</h5>
+          <p *ngFor="let subParagraph of paragraphs['paragraphs']">{{subParagraph}}</p>
+        </div>
       </div>
-      <div *ngIf="selectedPageInformation.contents.length === 0" class="message">
+      <div *ngIf="selectedPageInformation['pageContents'][0]['paragraphs'].length === 0" class="message">
         <h2>{{selectedPageInformation.message}}</h2>
       </div>
     </div>

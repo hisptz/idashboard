@@ -23,3 +23,7 @@
 }
 
 .col-lg-6 {}
+
+.contacts p {
+  margin: 6px !important;
+}
