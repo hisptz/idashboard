@@ -100,7 +100,6 @@ import { FaqComponent } from './pages/portal/faq/faq.component';
 import { CreateAbsoluteUrlPipe } from './pipes/create-absolute-url.pipe';
 import { FooterComponent } from './pages/portal/shared-components/footer/footer.component';
 import { VisualizationSliderComponent } from './pages/portal/visualization-slider/visualization-slider.component';
-import { VisualizationSliderFullScreenComponent } from './pages/portal/visualization-slider/visualization-slider-full-screen/visualization-slider-full-screen.component';
 import { VisualizationSliderResizeComponent } from './pages/portal/visualization-slider/visualization-slider-resize/visualization-slider-resize.component';
 import { GetDataComponent } from './pages/portal/shared-components/get-data/get-data.component';
 import { ListMegaBtnComponent } from './pages/portal/shared-components/list-mega-btn/list-mega-btn.component';
@@ -180,7 +179,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreateAbsoluteUrlPipe,
     FooterComponent,
     VisualizationSliderComponent,
-    VisualizationSliderFullScreenComponent,
     VisualizationSliderResizeComponent,
     GetDataComponent,
     ListMegaBtnComponent,

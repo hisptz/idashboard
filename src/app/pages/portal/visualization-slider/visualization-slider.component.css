@@ -112,4 +112,7 @@ p{
   font-size: 1.4em;
 }
 
+.slider-header p {
+  padding: 0 10px 0 10px;
+}
 
