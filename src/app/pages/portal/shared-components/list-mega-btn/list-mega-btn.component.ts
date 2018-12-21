@@ -14,8 +14,12 @@ export class ListMegaBtnComponent implements OnInit {
 
   ngOnInit() {
     if (this.activeDivId) {
-      document.getElementById(this.activeDivId).style.backgroundColor = '#2A8FD1';
-      document.getElementById(this.activeDivId).style.color = '#FFFFFF';
+      try {
+        document.getElementById(this.activeDivId).style.backgroundColor = '#2A8FD1';
+        document.getElementById(this.activeDivId).style.color = '#FFFFFF';
+      } catch (e) {
+        // error
+      }
     }
   }
 

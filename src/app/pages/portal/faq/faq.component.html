@@ -7,7 +7,7 @@
     <div class="row">
       <div class="row">
         <div class="col-md-12 lists">
-          <app-list-mega-btn [listObject]="faqMenuItem" [activeDivId]="activeDivId" (questionGroupId)="shownQuestionsById($event)" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu"></app-list-mega-btn>
+          <app-list-mega-btn routerLink="/pages/faqs/{{activeDivId}}" [listObject]="faqMenuItem" [activeDivId]="activeDivId" (questionGroupId)="shownQuestionsById($event)" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu"></app-list-mega-btn>
         </div>
         <div class="col-md-12" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu; let idx = index">
           <!--<h5 class="">{{ faqMenuItem.name }}</h5>-->

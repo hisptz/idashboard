@@ -6,6 +6,7 @@ import {AppState} from '../../../store/app.reducers';
 import {Observable} from 'rxjs/index';
 import {FAQState} from '../../../store/portal/portal.state';
 import {getFAQs} from '../../../store/portal/portal.selectors';
+import {ActivatedRoute, Params} from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class FaqComponent implements OnInit {
   portalFAQs: any;
   portalFAQs$: Observable<FAQState>;
   activeDivId: string;
-  constructor(private store: Store<AppState>, private faqSanitizer: DomSanitizer) {
+  constructor(private store: Store<AppState>, private faqSanitizer: DomSanitizer, private route: ActivatedRoute) {
     store.dispatch(new portalActions.LoadFAQAction());
     this.portalFAQs$ = store.select(getFAQs);
   }
@@ -27,8 +28,10 @@ export class FaqComponent implements OnInit {
     if (this.portalFAQs$) {
       this.portalFAQs$.subscribe((faq) => {
         if (faq) {
-          this.activeDivId = faq['faq']['faqMenu'][0].id;
-          this.portalFAQs = faq;
+          this.route.params.forEach((params: Params) => {
+            this.activeDivId = params['id'];
+            this.portalFAQs = faq;
+          });
         }
       });
     }
