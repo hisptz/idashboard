@@ -1,62 +1,58 @@
-<!-- <ul class="nav nav-pills" *ngIf="!downloads">
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/pages/portal/downloads/healthreport" routerLinkActive="active">HEALTHY REPORT</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/pages/portal/downloads/scorecard" routerLinkActive="">SCORECARD</a>
-  </li>
-</ul> -->
-
-
-<section id="tabs" *ngIf="downloads">
-  <div>
-    <div class="row">
-      <div class="col-lg-12 col-xs-12 ">
-        <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a *ngFor="let download of downloads['downloads']" class="nav-item nav-link {{download.class}}" id="{{download.id}}-tab" data-toggle="tab" href="#{{download.id}}" role="tab" aria-controls="nav-home" aria-selected="true">{{download.name}}</a>
-          </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-          <div  *ngFor="let download of downloads['downloads']" class="tab-pane fade show {{download.class}}" id="{{download.id}}" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div>
-              <div class="col-lg-12 col-md-12 col-xs-12 tab">
-                <div class="row">
-                  <div style="min-width: 50px" class="btn-tablinks">
-                    <button class="tablinks active" (click)="openCity(event, download['components'][0].id)" id="btn-{{download['components'][0].id}}">{{download['components'][0].name}}</button>
-                  </div>
-                  <div  style="min-width: 50px" class="btn-tablinks" *ngFor="let downloadOption of getOtherDownloads(download['components'][0], download['components'])">
-                    <button *ngIf="downloadOption.id != download['components'][0].id" class="tablinks" (click)="openCity(event, downloadOption.id)" id="btn-{{downloadOption.id}}">{{downloadOption.name}}</button>
-                  </div>
-                </div>
-              </div>
-              <div id="{{download['components'][0].id}}" style="display: block" class="tabcontent col-lg-12 col-md-12 col-xs-12">
-                <h3>{{download['components'][0].name}}</h3>
-                <div *ngIf="download['components'][0]['subPages'].length == 0" class="div-iframe">
-                  <div [innerHtml]="download['components'][0].link | safeHtml"></div>
-                  <!--<iframe *ngIf="download['components'][0].link" [src]="trustedUrl(download['components'][0].link)" width="100%" height="800" frameborder="0"></iframe>-->
-                </div>
-                <div *ngIf="download['components'][0]['subPages'].length > 0"  class="div-iframe">
-                  <app-statistics-summary [subPages]="download['components'][0]['subPages']"></app-statistics-summary>
-                </div>
-              </div>
-              <div *ngFor="let downloadOption of download['components']"  style="display: none" id="{{downloadOption.id}}"class="tabcontent col-lg-12 col-md-12 col-xs-12">
-                <div *ngIf="download.id !== download['components'][0].id"  >
-                  <h3>{{downloadOption.name}}</h3>
-                  <div *ngIf="downloadOption['subPages'].length == 0"  class="div-iframe">
-                    <div [innerHtml]="downloadOption.link | safeHtml"></div>
-                    <!--<iframe *ngIf="downloadOption.link" [src]="trustedUrl(downloadOption.link)" width="100%" height="800" frameborder="0"></iframe>-->
-                  </div>
-                  <div *ngIf="downloadOption['subPages'].length > 0"  class="div-iframe">
-                    <app-statistics-summary [subPages]="downloadOption['subPages']"></app-statistics-summary>
-                  </div>
-                </div>
-              </div>
+<!--<section id="tabs" *ngIf="downloads">-->
+  <!--<div>-->
+    <!--<div class="row">-->
+      <!--<div class="col-lg-12 col-xs-12 ">-->
+        <!--<nav>-->
+          <!--<div class="nav nav-tabs" id="nav-tab" role="tablist">-->
+            <!--<a *ngFor="let download of downloads['downloads']; let menuIndex = index" routerLink="/pages/downloads/{{download.id}}/{{download['components'][menuIndex].id}}/{{download['components'][menuIndex].id}}" class="nav-item nav-link downloads-menus {{setActiveMenuById(download.id)}}" id="{{download.id}}-tab" data-toggle="tab" href="#{{download.id}}" role="tab" aria-controls="nav-home" aria-selected="true">{{download.name}}</a>-->
+          <!--</div>-->
+        <!--</nav>-->
+        <!--<div class="tab-content" id="nav-tabContent">-->
+          <!--<div  *ngFor="let download of downloads['downloads']" class="tab-pane fade show {{download.class}}" id="{{download.id}}" role="tabpanel" aria-labelledby="nav-home-tab">-->
+            <!--<div>-->
+              <!--<div class="col-lg-12 col-md-12 col-xs-12 tab">-->
+                <!--<div class="row">-->
+                  <!--<div style="min-width: 50px" class="btn-tablinks">-->
+                    <!--<button class="tablinks active" (click)="openActiveArea(event, download['components'][0].id)" id="btn-{{download['components'][0].id}}">{{download['components'][0].name}}</button>-->
+                  <!--</div>-->
+                  <!--<div  style="min-width: 50px" class="btn-tablinks" *ngFor="let downloadOption of getOtherDownloads(download['components'][0], download['components'])">-->
+                    <!--<button *ngIf="downloadOption.id != download['components'][0].id" class="tablinks" (click)="openActiveArea(event, downloadOption.id)" id="btn-{{downloadOption.id}}">{{downloadOption.name}}</button>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--&lt;!&ndash;div here&ndash;&gt;-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</section>-->
+<div class="downloads" *ngIf="downloads">
+  <div class="main-menu-btns">
+    <a *ngFor="let download of downloads['downloads']; let menuIndex = index" routerLink="/pages/downloads/{{download.id}}/{{download['components'][menuIndex].id}}/{{download['components'][menuIndex].id}}" class="nav-item nav-link downloads-menus {{setActiveMenuById(download.id)}}" id="{{download.id}}-tab">{{download.name}}</a>
+  </div>
+  <div class="downloads-contents">
+    <div *ngFor="let download of downloads['downloads']">
+      <div class="downloads-list {{download.id}} {{activeDownloadClass(download.id)}}" id="{{download.id}}-div">
+        <div  style="min-width: 50px; display: inline-block" class="pill-btn" *ngFor="let downloadOption of download['components']; let menuIndex = index">
+          <button class="btns-sub-menu" (click)="setActiveArea(downloadOption.id)" id="{{downloadOption.id}}-btn" routerLink="/pages/downloads/{{download.id}}/{{downloadOption.id}}/{{downloadOption.id}}">{{downloadOption.name}}</button>
+        </div>
+      </div>
+      <div class="downloads-list {{download.id}} {{activeDownloadClass(download.id)}}" id="{{download.id}}-list">
+        <div *ngFor="let downloadOption of download['components']"   class="col-lg-12 col-md-12 col-xs-12 downloads-list-option {{downloadOption.id}} {{setDownloadOptionActiveClass(ativeDownloadOption)}}" id="{{downloadOption.id}}-sub-menu-list">
+          <div class="downloads-options">
+            <h4>{{downloadOption.name}}</h4>
+            <div *ngIf="downloadOption['subPages'].length == 0"  class="div-iframe">
+              <div [innerHtml]="downloadOption.link | safeHtml"></div>
+              <!--<iframe *ngIf="downloadOption.link" [src]="trustedUrl(downloadOption.link)" width="100%" height="800" frameborder="0"></iframe>-->
+            </div>
+            <div *ngIf="downloadOption['subPages'].length > 0"  class="div-iframe">
+              <app-statistics-summary [subPages]="downloadOption['subPages']" [activeId]="activeId"></app-statistics-summary>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
-</section>
+</div>

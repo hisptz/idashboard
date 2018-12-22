@@ -33,13 +33,13 @@
 }
 
 /* Change background color of buttons on hover */
-.tab button:hover {
+button:hover {
   background-color: #2A8FD1;
   color: #FFFFFF;
 }
 
 /* Create an active/current "tab button" class */
-.tab button.active {
+button.active {
   background-color: #2A8FD1;
   color: #FFFFFF;
 }
@@ -70,7 +70,7 @@ section {
   border: none;
 }
 
-#tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+.main-menu-btns .active {
   color: #000000;
   background-color: transparent;
   border-color: transparent transparent green;
@@ -105,4 +105,50 @@ section {
   padding: 10px 10px 10px 0;
 }
 
+.btns-sub-menu {
+  background-color: #eee;
+  margin-right: 5px;
+  color: #222222;
+  font-size: 1em;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.1em 0.5em 0.1em 0.5em;
+  border-radius: 15px;
+  line-height: 1.5;
+}
+
+.downloads-list, .downloads-list-option {
+  display: none;
+}
+
+.active-downloads-list {
+  display: block;
+}
+
+.pill-btn .active {
+  background-color: #2A8FD1; color: #FFF;
+}
+
+.downloads-menus {
+  min-width: 50px; display: inline-block;
+  color: #222222; font-size: 1em;
+  margin-right: 15px;
+}
+
+.downloads-options {
+  margin-top: 15px;
+}
+
+.downloads-contents {
+  margin-top: 8px;
+}
 

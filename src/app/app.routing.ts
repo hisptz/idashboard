@@ -37,7 +37,7 @@ export const routes: Routes = [
     component: FaqComponent,
   },
   {
-    path: 'pages/downloads',
+    path: 'pages/downloads/:menuId/:subMenu/:id',
     component: DownloadsComponent,
   },
   {
