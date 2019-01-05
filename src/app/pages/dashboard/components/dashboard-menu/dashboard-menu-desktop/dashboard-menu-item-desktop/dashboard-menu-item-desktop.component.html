@@ -1,4 +1,4 @@
-<div *ngIf="dashboardMenuItem.id" class="dashboard-menu-item-desktop dropbtn-div" id="{{ dashboardMenuItem.id }}" routerLinkActive="active-dashboard"  [routerLink]="['/dashboards', dashboardMenuItem.id]" (click)="setActiveClass(dashboardMenuItem.id)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)">
+<div *ngIf="dashboardMenuItem.id" class="dashboard-menu-item-desktop dropbtn-div" id="{{ dashboardMenuItem.id }}" routerLinkActive="active-dashboard"  [routerLink]="['/data-statistics', dashboardMenuItem.id]" (click)="setActiveClass(dashboardMenuItem.id)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)">
   <!--name block-->
   <a  class="dashboard-menu-name-desktop" routerLinkActive="active-dashboard" (contextmenu)="showDropdown($event)">
     {{ dashboardMenuItem.displayName}}

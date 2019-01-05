@@ -9,7 +9,7 @@
         class="menu-list-btn"
         *ngFor="let menu of allDashboardMenus"
         id="{{menu.id}}"
-        routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]"
+        routerLinkActive="active-dashboard" [routerLink]="['/data-statistics', menu.id]"
       >{{menu.name}}</button>
     </div>
     <div class="list-sub-menus" *ngIf="subMenus">
@@ -17,14 +17,14 @@
         *ngFor="let menu of subMenus"
         id="sub-{{menu.id}}"
         (click)="setSubMenuActiveClass(menu.id)"
-        routerLinkActive="active-dashboard" [routerLink]="['/dashboards', menu.id]"
+        routerLinkActive="active-dashboard" [routerLink]="['/data-statistics', menu.id]"
         class="sub-menu-btn">{{menu.displayName}}</button>
     </div>
     <div class="list-sub-menus" *ngIf="activeMenu && keyedDashboardMenus[activeMenu]">
       <button
         (click)="setSubMenuActiveClass(activeMenu)"
         id="sub-{{activeMenu}}"
-        routerLinkActive="active-dashboard" [routerLink]="['/dashboards', activeMenu]"
+        routerLinkActive="active-dashboard" [routerLink]="['/data-statistics', activeMenu]"
         class="sub-menu-btn">{{keyedDashboardMenus[activeMenu]}}</button>
     </div>
   </div>

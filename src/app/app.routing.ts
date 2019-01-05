@@ -49,7 +49,7 @@ export const routes: Routes = [
     component: GroupedSliderFullScreenComponent
   },
   {
-    path: 'dashboards/:id',
+    path: 'data-statistics/:id',
     component: DashboardComponent,
     children: [{
       path: 'item/:id',

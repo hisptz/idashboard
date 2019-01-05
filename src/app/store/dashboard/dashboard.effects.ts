@@ -104,8 +104,8 @@ export class DashboardEffects {
         /**
          * Navigate to the particular dashboard if comes from home
          */
-        if (action.payload.url.indexOf('dashboards') === -1) {
-          this.router.navigate(['/dashboards/' + currentDashboardId]);
+        if (action.payload.url.indexOf('data-statistics') === -1) {
+          this.router.navigate(['/data-statistics/' + currentDashboardId]);
         } else {
           if (currentVisualization) {
             this.store.dispatch(
