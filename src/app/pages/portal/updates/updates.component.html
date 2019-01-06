@@ -1,16 +1,16 @@
 <div class="row" *ngIf="allNews">
-  <div class="col-lg-3 col-md-6 col-xs-12">
+  <div class="col-lg-4 col-md-6 col-xs-12">
     <div class="news-header">
-      <h2>News & Events</h2>
+      <h4>News & Events</h4>
     </div>
     <div *ngFor="let newsList of allNews" class="news-list">
-      <a routerLink="/pages/updates/{{newsList.id}}">
+      <a routerLink="/pages/updates/{{newsList.id}}" [ngClass]="newsList.id === activeNewsId ? 'active-news' : ''">
         <h5>{{newsList.heading}} <span *ngIf="newsList.isItNew" style="margin-left: 10px"><img src="assets/img/new.png" height="30px" width="40px"></span></h5>
         <h6><span class="news-category">{{newsList.category}}</span><span class="news-date">{{newsList.newsDate}}</span></h6>
       </a>
     </div>
   </div>
-  <div class="col-lg-9 col-md-6 col-xs-12">
+  <div class="col-lg-8 col-md-6 col-xs-12">
     <div *ngIf="news" class="selected-news">
       <h4>{{news.heading}}</h4>
       <h6><span class="news-category">{{news.category}}</span><span class="news-date">{{news.newsDate}}</span></h6>

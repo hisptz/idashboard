@@ -20,6 +20,7 @@ export class UpdatesComponent implements OnInit {
   allNews: any;
   news: any;
   dataFromExternalSource$: Observable<ExternalSourcesState>;
+  activeNewsId: string;
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     this.statsSummary$ = store.select(getStatsSummary);
@@ -33,6 +34,7 @@ export class UpdatesComponent implements OnInit {
           this.allNews = summaryInfo['news'];
           this.route.params.forEach((params: Params) => {
             if (params['id']) {
+              this.activeNewsId = params['id'];
               this.allNews.forEach((news) => {
                 if (news.id === params['id']) {
                   this.news = news;
