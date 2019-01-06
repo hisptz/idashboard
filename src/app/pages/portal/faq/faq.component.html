@@ -1,3 +1,6 @@
+<div *ngIf="!portalFAQs" class="loading-progress container">
+  <app-progress-loader></app-progress-loader>
+</div>
 <section id="tabs" *ngIf="portalFAQs">
   <div class="container">
     <div class="row">

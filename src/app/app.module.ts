@@ -101,8 +101,6 @@ import { FooterComponent } from './pages/portal/shared-components/footer/footer.
 import { VisualizationSliderComponent } from './pages/portal/visualization-slider/visualization-slider.component';
 import { VisualizationSliderResizeComponent } from './pages/portal/visualization-slider/visualization-slider-resize/visualization-slider-resize.component';
 import { GetDataComponent } from './pages/portal/shared-components/get-data/get-data.component';
-import { ListMegaBtnComponent } from './pages/portal/shared-components/list-mega-btn/list-mega-btn.component';
-import { ListCardWithOpenPropComponent } from './pages/portal/shared-components/list-card-with-open-prop/list-card-with-open-prop.component';
 import { GroupedSliderComponent } from './pages/portal/shared-components/grouped-slider/grouped-slider.component';
 import { GroupedSliderFullScreenComponent } from './pages/portal/shared-components/grouped-slider/grouped-slider-full-screen/grouped-slider-full-screen.component';
 import { HorizontalScrollingComponent } from './pages/portal/shared-components/horizontal-scrolling/horizontal-scrolling.component';
@@ -179,8 +177,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     VisualizationSliderComponent,
     VisualizationSliderResizeComponent,
     GetDataComponent,
-    ListMegaBtnComponent,
-    ListCardWithOpenPropComponent,
     GroupedSliderComponent,
     GroupedSliderFullScreenComponent,
     HorizontalScrollingComponent,
