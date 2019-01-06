@@ -55,3 +55,7 @@ export interface DataState {
 export interface GroupedSlidersState {
   data: any;
 }
+
+export interface FeedBacksState {
+  feedBacks: any;
+}

@@ -6,8 +6,10 @@ import {
   FAQState,
   ExternalSourcesState,
   DataState,
-  GroupedSlidersState
+  GroupedSlidersState,
+  FeedBacksState
 } from './portal.state';
+import { FeedBack } from '../../model/feedback';
 
 export function portalReducer(state: PortalConfigurationState = null, action: PortalConfigurationAction) {
   switch (action.type) {
@@ -86,6 +88,15 @@ export function loadAnalyticsData(state: DataState = null, action: PortalConfigu
 export function loadGroupedSliderInfo(state: GroupedSlidersState = null, action: PortalConfigurationAction) {
   switch (action.type) {
     case PortalActions.LOAD_GROUPED_SLIDER_DATA_SUCCESS:
+      return {...action.payload};
+    default:
+      return state;
+  }
+}
+
+export function loadFeedBacks(state: FeedBacksState = null, action: PortalConfigurationAction) {
+  switch(action.type) {
+    case PortalActions.LOAD_FEEDBACKS_SUCCESS:
       return {...action.payload};
     default:
       return state;

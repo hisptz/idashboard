@@ -13,7 +13,8 @@ import {
   PortalConfigurationState,
   StatsSummaryState,
   FAQState,
-  GroupedSlidersState
+  GroupedSlidersState,
+  FeedBacksState
 } from './portal.state';
 import {AppState} from '../app.reducers';
 import {Store} from '@ngrx/store';
@@ -113,6 +114,16 @@ export class PortalEffects {
         map((analyticsObj: any) => new portalActions.LoadDataSuccessAction(analyticsObj))
       ))
     );
+
+    @Effect()
+    loadFeedBacks$ =  this.actions$
+    .ofType<portalActions.LoadFeedbacksAction>(portalActions.PortalActions.LOAD_FEEDBACKS)
+    .pipe(
+      switchMap( () => this.httpClient.get('dataStore/observatory/faqs.json').pipe(
+        map((feedBackObject: FeedBacksState) => new portalActions.LoadFeedbacksSuccessAction(feedBackObject)),
+        catchError((error) => of(new portalActions.LoadFeedbacksFailAction(error)))
+      ))
+    )
 
   constructor(private actions$: Actions, private store: Store<AppState>,
               private httpClient: HttpClientService) {

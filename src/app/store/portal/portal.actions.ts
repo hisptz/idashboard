@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState} from './portal.state';
+import {DownloadsState, PortalConfigurationState, StatsSummaryState, FAQState, FeedBacksState} from './portal.state';
 
 
 export enum PortalActions {
@@ -23,7 +23,11 @@ export enum PortalActions {
   LOAD_DATA_FAIL = '[Data] load data fail',
   LOAD_GROUPED_SLIDER_DATA = '[Grouped slider] Load data',
   LOAD_GROUPED_SLIDER_DATA_SUCCESS = '[Grouped slider] Load data success',
-  LOAD_GROUPED_SLIDER_DATA_FAIL = '[Grouped data Load data fail'
+  LOAD_GROUPED_SLIDER_DATA_FAIL = '[Grouped data Load data fail',
+  LOAD_FEEDBACKS = '[Feedbacks] Load feedbacks',
+  LOAD_FEEDBACKS_SUCCESS = '[Feedbacks] Load feedbacks success',
+  LOAD_FEEDBACKS_FAIL = '[Feedbacks] Load feedbacks fail',
+
 }
 
 
@@ -147,6 +151,22 @@ export class LoadGroupedSliderDataFailAction implements Action {
   constructor (public payload: any) {}
 }
 
+export class LoadFeedbacksAction implements Action {
+  readonly type = PortalActions.LOAD_FEEDBACKS;
+}
+
+export class LoadFeedbacksSuccessAction implements Action {
+  readonly type = PortalActions.LOAD_FEEDBACKS_SUCCESS;
+
+  constructor(public payload: FeedBacksState) {}
+}
+
+export class LoadFeedbacksFailAction implements Action {
+  readonly type = PortalActions.LOAD_FEEDBACKS_FAIL;
+
+  constructor(public payload: any) {}
+}
+
 
 
 export type PortalConfigurationAction =  LoadPortalConfigurationAction
@@ -169,4 +189,7 @@ export type PortalConfigurationAction =  LoadPortalConfigurationAction
   | LoadDataFailAction
   | LoadGroupedSliderDataAction
   | LoadGroupedSliderDataSuccessAction
-  | LoadGroupedSliderDataFailAction;
+  | LoadGroupedSliderDataFailAction
+  | LoadFeedbacksAction
+  | LoadFeedbacksSuccessAction
+  | LoadFeedbacksFailAction;

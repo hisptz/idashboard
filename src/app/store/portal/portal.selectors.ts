@@ -1,6 +1,6 @@
 import {createSelector} from '@ngrx/store';
 import {AppState} from '../app.reducers';
-import {DataState, GroupedSlidersState, PortalConfigurationState, StatsSummaryState} from './portal.state';
+import {DataState, GroupedSlidersState, PortalConfigurationState, StatsSummaryState, FeedBacksState} from './portal.state';
 
 const portalConfiguration = (state: AppState) => state.portalConfiguration;
 const statsSummary = (state: AppState) => state.statsSummary;
@@ -9,6 +9,7 @@ const faqs = (state: AppState) => state.faqs;
 const dataFromExternalSources = (state: AppState) => state.dataFromExternalSource;
 const analyticsData = (state: AppState) => state.analyticsData;
 const groupedSlidersInfo = (state: AppState) => state.groupedSlidersInfo;
+const feedBacks = (state: AppState) => state.feedBacks;
 
 
 export const getPortalConfiguration = createSelector(portalConfiguration, (configurationsObj: PortalConfigurationState) => configurationsObj);
@@ -18,3 +19,4 @@ export const getFAQs = createSelector(faqs, (faqObject: any) => faqObject);
 export const getDataFromExternalSource = createSelector(dataFromExternalSources, (dataFromExternalSourcesObj: any) => dataFromExternalSourcesObj);
 export const getAnalyticsData = createSelector(analyticsData, (analyticsDataObj: DataState) => analyticsDataObj);
 export const getGroupedSlidersInfo = createSelector(groupedSlidersInfo, (groupedSlidersInfoObj: GroupedSlidersState) => groupedSlidersInfoObj);
+export const getFeedBacks = createSelector(feedBacks, (feedBacksData: FeedBacksState) => feedBacksData);
