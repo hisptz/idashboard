@@ -34,7 +34,10 @@
                   </div>
                   <div *ngIf="faqMenuItemData.id === activeQuestionId">
                     <div class="card card-body">
-                      {{ faqMenuItemData.answer }}
+                      <p>{{ faqMenuItemData.answer }}</p>
+                      <div *ngIf="faqMenuItemData.helpMaterial">
+                        <div [innerHtml]="faqMenuItemData.helpMaterial | safeHtml"></div>
+                      </div>
                     </div>
                   </div>
                 </div>

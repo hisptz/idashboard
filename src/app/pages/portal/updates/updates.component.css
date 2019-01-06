@@ -42,3 +42,9 @@
 .active-news {
   color: #2A8FD1 !important;
 }
+
+.selected-news div span {
+  color: #2A8FD1;
+  cursor: pointer;
+  font-weight: 600;
+}

@@ -15,10 +15,7 @@
       <h4>{{news.heading}}</h4>
       <h6><span class="news-category">{{news.category}}</span><span class="news-date">{{news.newsDate}}</span></h6>
       <div>
-        <p *ngFor="let description of news.description">{{description}}</p>
-        <div *ngIf="news.previewDoc">
-          <div [innerHtml]="news.previewDoc | safeHtml"></div>
-        </div>
+        <p *ngFor="let description of news.description">{{description.information}}<span *ngIf="description.link" routerLink="{{description.link}}"> here</span></p>
       </div>
     </div>
     <!--<div class="news-from-external-sources" *ngIf="_newsFromExternalSource">-->
