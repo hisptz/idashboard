@@ -20,7 +20,7 @@
               <div class="qns-list">
                 <div class="list-card-with-open">
                   <div class="lists-title">
-                    <a href="#{{ faqMenuItemData.id }}" routerLink="/pages/faqs/{{faqMenuItem.id}}/{{faqMenuItemData.id}}" role="button" aria-expanded="false">
+                    <a [ngClass]="faqMenuItemData.id===activeQuestionId ? 'active-qn' : ''" routerLink="/pages/faqs/{{faqMenuItem.id}}/{{faqMenuItemData.id}}" role="button" aria-expanded="false">
                       - {{ faqMenuItemData.title }}
                     </a>
                   </div>

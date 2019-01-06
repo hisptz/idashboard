@@ -131,4 +131,8 @@ section #tabs {
   color: #2A8FD1 !important;
 }
 
+.lists-title a:hover, .active-qn {
+  font-weight: 600;
+}
+
 /* End of opn on click css */
