@@ -24,7 +24,9 @@ export class TopHeaderMenuComponent implements OnInit {
   feedBackModel: any;
   feedBacksArray: any;
   feedBacks$: Observable<FeedBacksState>;
-  updateStatus: any;
+  updateStatus: any = {
+    'httpStatus': ''
+  };
   sendingFeedback: boolean;
   constructor(private store: Store<AppState>, private httpClientService: HttpClientService) {
     store.dispatch(new portalActions.LoadFeedbacksAction);
