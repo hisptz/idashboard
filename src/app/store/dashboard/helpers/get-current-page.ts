@@ -20,7 +20,7 @@ export function getCurrentPage(dashboards: Dashboard[], dashboardId: string, ite
   }
 
   /**
-   * find current page based on current dashboard
+   * find current page based on current data-statistics
    */
   let currentPage: number;
   for (const range of ranges) {

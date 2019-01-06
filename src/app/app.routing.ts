@@ -1,8 +1,8 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {HomeComponent} from './pages/home/home.component';
-import {DashboardComponent} from './pages/dashboard/dashboard.component';
-import {FullScreenDashboardItemViewComponent} from './pages/full-screen-dashboard-item-view/full-screen-dashboard-item-view.component';
+import {DashboardComponent} from './pages/portal/data-statistics/dashboard.component';
+import {FullScreenDashboardItemViewComponent} from './pages/portal/full-screen-dashboard-item-view/full-screen-dashboard-item-view.component';
 import {HomePortalComponent} from './pages/portal/home-portal/home-portal.component';
 import {PageComponent} from './pages/portal/shared-components/page/page.component';
 import {UpdatesComponent} from './pages/portal/updates/updates.component';
@@ -33,7 +33,7 @@ export const routes: Routes = [
     component: UpdatesComponent,
   },
   {
-    path: 'pages/faqs/:id',
+    path: 'pages/faqs/:id/:qnId',
     component: FaqComponent,
   },
   {

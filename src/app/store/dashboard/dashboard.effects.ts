@@ -102,7 +102,7 @@ export class DashboardEffects {
     } else {
       if (currentDashboardId) {
         /**
-         * Navigate to the particular dashboard if comes from home
+         * Navigate to the particular data-statistics if comes from home
          */
         if (action.payload.url.indexOf('data-statistics') === -1) {
           this.router.navigate(['/data-statistics/' + currentDashboardId]);
@@ -132,7 +132,7 @@ export class DashboardEffects {
       (dashboardObject: any) =>
         new dashboard.CreateSuccessAction(dashboardObject)
     ))));
-  // TODO deal with errors when dashboard creation fails
+  // TODO deal with errors when data-statistics creation fails
 
   @Effect()
   renameDashboard$ = this.actions$.pipe(
@@ -188,7 +188,7 @@ export class DashboardEffects {
       const currentDashboardId = state.route.state.url.split('/')[2];
       if (currentDashboardId) {
         /**
-         * Save current dashboard into the store and load visualizations
+         * Save current data-statistics into the store and load visualizations
          */
         const currentDashboard = _.find(state.dashboard.dashboards, [
           'id',
@@ -197,7 +197,7 @@ export class DashboardEffects {
 
         if (currentDashboard) {
           /**
-           * Save current dashboard to local storage
+           * Save current data-statistics to local storage
            */
           localStorage.setItem(
             'dhis2.dashboard.current.' +
@@ -206,7 +206,7 @@ export class DashboardEffects {
           );
 
           /**
-           * Set current dashboard in the store
+           * Set current data-statistics in the store
            */
           this.store.dispatch(
             new dashboard.SetCurrentAction(currentDashboard.id)
@@ -331,7 +331,7 @@ export class DashboardEffects {
   @Effect()
   loadDashboardNotification$ = this.actions$.pipe(
     ofType(dashboard.DashboardActions.LOAD_NOTIFACATION),
-    switchMap(() => this.httpClient.get('me/dashboard.json').pipe(
+    switchMap(() => this.httpClient.get('me/data-statistics.json').pipe(
       map((response: any) => new dashboard.LoadDashboardNotificationSuccessAction(response)),
       catchError((error) => of(new dashboard.LoadDashboardNotificationFailAction(error)))))
   );
@@ -615,7 +615,7 @@ export class DashboardEffects {
   }
 
   private _loadSharingInfo(dashboardId: string): Observable<DashboardSharing> {
-    return this.httpClient.get('sharing?type=dashboard&id=' + dashboardId).pipe(map((sharingResponse: any) => {
+    return this.httpClient.get('sharing?type=data-statistics&id=' + dashboardId).pipe(map((sharingResponse: any) => {
       return sharingResponse && sharingResponse.object
         ? {
           id: dashboardId,

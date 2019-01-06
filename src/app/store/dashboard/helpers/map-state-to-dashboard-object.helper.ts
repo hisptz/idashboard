@@ -172,7 +172,7 @@ function removeDuplicateItems(dashboardItems) {
     }
 
     /**
-     * Deal with other non visualizable dashboard items
+     * Deal with other non visualizable data-statistics items
      */
     if (dashboardItem.type === 'APP' || dashboardItem.type === 'MESSAGES') {
       mergedDashboardItems.push(dashboardItem);

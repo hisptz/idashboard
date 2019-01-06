@@ -7,14 +7,29 @@
     <div class="row">
       <div class="row">
         <div class="col-md-12 lists">
-          <app-list-mega-btn routerLink="/pages/faqs/{{activeDivId}}" [listObject]="faqMenuItem" [activeDivId]="activeDivId" (questionGroupId)="shownQuestionsById($event)" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu"></app-list-mega-btn>
+          <a class="list-mega-btn" [ngClass]="faqMenuItem.id == activeDivId ? 'active-faq-nav-btn' : 'faq-nav-btn'" routerLink="/pages/faqs/{{faqMenuItem.id}}/{{faqMenuItem.faqqn[0].id}}"  *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu" id="{{faqMenuItem.id}}">
+            <div>
+              <h4 class="list-mega-btn-name">{{faqMenuItem.name}}</h4>
+            </div>
+          </a>
         </div>
         <div class="col-md-12" *ngFor="let faqMenuItem of portalFAQs['faq'].faqMenu; let idx = index">
           <!--<h5 class="">{{ faqMenuItem.name }}</h5>-->
-          <div *ngIf="faqMenuItem.id == activeDivId">
+          <div *ngIf="faqMenuItem.id === activeDivId">
             <div *ngFor="let faqMenuItemData of portalFAQs['faq'].faqMenu[idx].faqqn">
               <div class="qns-list">
-                <app-list-card-with-open-prop [listObj]="faqMenuItemData"></app-list-card-with-open-prop>
+                <div class="list-card-with-open">
+                  <div class="lists-title">
+                    <a href="#{{ faqMenuItemData.id }}" routerLink="/pages/faqs/{{faqMenuItem.id}}/{{faqMenuItemData.id}}" role="button" aria-expanded="false">
+                      - {{ faqMenuItemData.title }}
+                    </a>
+                  </div>
+                  <div *ngIf="faqMenuItemData.id === activeQuestionId">
+                    <div class="card card-body">
+                      {{ faqMenuItemData.answer }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

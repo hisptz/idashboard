@@ -1,0 +1,29 @@
+<div class="dashboard-header-container">
+  <div class="dashboard-title-block">
+    <div class="dashboard-title">
+      <app-current-dashboard-title
+        [currentDashboardTitle]="(currentDashboard$ | async)?.name"></app-current-dashboard-title>
+    </div>
+    <div class="dashboard-options">
+      <!--<div-->
+        <!--class="current-data-statistics-share-button"-->
+        <!--*ngIf="(currentDashboard$ | async)?.access.manage"-->
+      <!--&gt;-->
+        <!--<app-current-data-statistics-share-section></app-current-data-statistics-share-section>-->
+      <!--</div>-->
+
+      <!--<div class="current-data-statistics-bookmark-button">-->
+        <!--<app-current-data-statistics-bookmark-button-->
+          <!--[currentDashboard]="(currentDashboard$ | async)"></app-current-data-statistics-bookmark-button>-->
+      <!--</div>-->
+      <div class="current-dashboard-global-filter">
+        <app-dashboard-global-filter
+          [currentDashboardId]="(currentDashboard$ | async)?.id"></app-dashboard-global-filter>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="data-statistics-search-block no-print">-->
+    <!--<app-data-statistics-item-search [dashboardAccess]="(currentDashboard$ | async)?.access"></app-data-statistics-item-search>-->
+  <!--</div>-->
+</div>

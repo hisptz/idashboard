@@ -19,6 +19,7 @@ export class FaqComponent implements OnInit {
   portalFAQs: any;
   portalFAQs$: Observable<FAQState>;
   activeDivId: string;
+  activeQuestionId: string;
   constructor(private store: Store<AppState>, private faqSanitizer: DomSanitizer, private route: ActivatedRoute) {
     store.dispatch(new portalActions.LoadFAQAction());
     this.portalFAQs$ = store.select(getFAQs);
@@ -28,8 +29,10 @@ export class FaqComponent implements OnInit {
     if (this.portalFAQs$) {
       this.portalFAQs$.subscribe((faq) => {
         if (faq) {
+          console.log('faqs', faq);
           this.route.params.forEach((params: Params) => {
             this.activeDivId = params['id'];
+            this.activeQuestionId = params['qnId'];
             this.portalFAQs = faq;
           });
         }
@@ -37,8 +40,7 @@ export class FaqComponent implements OnInit {
     }
   }
 
-  shownQuestionsById(id) {
+  showQuestionsById(id) {
     this.activeDivId = id;
   }
-
 }

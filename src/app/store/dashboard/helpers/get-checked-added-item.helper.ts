@@ -20,7 +20,7 @@ export function getCheckedAddedItem(currentDashboard, dashboardItems): Dashboard
         if (availableDashboardItem.type[availableDashboardItem.type.length - 1] === 'S') {
 
           /**
-           * Update the item in its corresponding dashboard
+           * Update the item in its corresponding data-statistics
            * @type {[any , {} , any]}
            */
 

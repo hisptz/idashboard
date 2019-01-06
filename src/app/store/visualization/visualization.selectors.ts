@@ -10,11 +10,11 @@ const visualizationState = (state: AppState) => state.visualization;
 export const getVisualizationLoadingState = createSelector(visualizationState, (state) => state.loading);
 
 export const getDashboardGroupedVisualizationObjects = createSelector(visualizationState, getAllDashboards, (visualization: VisualizationState, dashboards: Dashboard[]) => {
-  // return _.filter(_.map(dashboards || [], (dashboard: any) => {
-  //   return dashboard ? {
-  //     id: dashboard.id,
-  //     name: dashboard.name,
-  //     visualizationObjects: _.filter(visualization.visualizationObjects || [], (visualizationObject: any) => visualizationObject.dashboardId === dashboard.id)
+  // return _.filter(_.map(dashboards || [], (data-statistics: any) => {
+  //   return data-statistics ? {
+  //     id: data-statistics.id,
+  //     name: data-statistics.name,
+  //     visualizationObjects: _.filter(visualization.visualizationObjects || [], (visualizationObject: any) => visualizationObject.dashboardId === data-statistics.id)
   //   } : null;
   // }), dashboardResult => dashboardResult);
 

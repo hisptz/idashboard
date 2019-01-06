@@ -1,7 +1,7 @@
 <div *ngIf="!portalConfigurations" class="loading-progress container">
   <app-progress-loader></app-progress-loader>
 </div>
-<!-- Show custom dhis menu when it is dashboard-->
+<!-- Show custom dhis menu when it is data-statistics-->
 <div class="no-print" *ngIf="portalConfigurations && !portalConfigurations.isPortal">
   <app-menu></app-menu>
 </div>

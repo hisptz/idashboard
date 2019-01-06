@@ -1,15 +1,15 @@
 const VISUALIZATION_SHAPES: any[] = [
   {
     shape: 'NORMAL',
-    shapeClasses: ['col-md-4', 'col-sm-6', 'col-xs-12', 'dashboard-card']
+    shapeClasses: ['col-md-4', 'col-sm-6', 'col-xs-12', 'data-statistics-card']
   },
   {
     shape: 'DOUBLE_WIDTH',
-    shapeClasses: ['col-md-8', 'col-sm-6', 'col-xs-12', 'dashboard-card']
+    shapeClasses: ['col-md-8', 'col-sm-6', 'col-xs-12', 'data-statistics-card']
   },
   {
     shape: 'FULL_WIDTH',
-    shapeClasses: ['col-md-12', 'col-sm-12', 'col-xs-12', 'dashboard-card']
+    shapeClasses: ['col-md-12', 'col-sm-12', 'col-xs-12', 'data-statistics-card']
   },
 ];
 

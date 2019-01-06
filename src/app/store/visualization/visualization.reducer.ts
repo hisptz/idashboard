@@ -123,7 +123,7 @@ export function visualizationReducer(state: visualization.VisualizationState = v
         visualizationObject
       );
       /**
-       * Change size of the dashboard item
+       * Change size of the data-statistics item
        */
 
       const newShape = visualizationObject
