@@ -38,6 +38,9 @@
                       <div *ngIf="faqMenuItemData.helpMaterial">
                         <div [innerHtml]="faqMenuItemData.helpMaterial | safeHtml"></div>
                       </div>
+                      <div *ngIf="faqMenuItemData.list">
+                        <p *ngFor="let list of faqMenuItemData.list">{{list}}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
