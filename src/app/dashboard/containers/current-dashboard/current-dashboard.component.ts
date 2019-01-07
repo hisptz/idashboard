@@ -19,7 +19,9 @@ import {
   getCurrentDashboardVisualizationItems,
   getCurrentDashboardVisualizationLoading,
   getCurrentDashboardVisualizationLoaded,
-  getCurrentDashboardGroup
+  getCurrentDashboardGroup,
+  getDashboardGroupsLoaded,
+  getDashboardGroupsLoading
 } from '../../../store';
 import { User, SystemInfo, LegendSet } from '../../../models';
 import { getSystemInfo } from '../../../store/selectors/system-info.selectors';
@@ -45,7 +47,9 @@ export class CurrentDashboardComponent implements OnInit {
   currentUser$: Observable<User>;
   systemInfo$: Observable<SystemInfo>;
   dashboardLoading$: Observable<boolean>;
+  dashboardGroupsLoading$: Observable<boolean>;
   dashboardLoaded$: Observable<boolean>;
+  dashboardGroupsLoaded$: Observable<boolean>;
   visualizationsReady$: Observable<boolean>;
   legendSets$: Observable<LegendSet[]>;
 
@@ -71,7 +75,9 @@ export class CurrentDashboardComponent implements OnInit {
     this.currentUser$ = store.select(getCurrentUser);
     this.systemInfo$ = store.select(getSystemInfo);
     this.dashboardLoading$ = store.select(getDashboardObjectLoading);
+    this.dashboardGroupsLoading$ = store.select(getDashboardGroupsLoading);
     this.dashboardLoaded$ = store.select(getDashboardObjectLoaded);
+    this.dashboardGroupsLoaded$ = store.select(getDashboardGroupsLoaded);
     this.visualizationsReady$ = store.select(getVisualizationReady);
     this.legendSets$ = store.select(getAllLegendSets);
 
