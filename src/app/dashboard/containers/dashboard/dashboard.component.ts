@@ -18,7 +18,9 @@ import {
   InitializeDashboardSettingsAction,
   State,
   getDashboardObjectLoading,
-  getDashboardObjectLoaded
+  getDashboardObjectLoaded,
+  getDashboardGroupsLoading,
+  getDashboardGroupsLoaded
 } from '../../../store';
 import { Dashboard, DashboardGroups } from '../../models';
 import { LoadFunctions } from '../../modules/ngx-dhis2-data-selection-filter/modules/data-filter/store/actions/function.actions';
@@ -37,6 +39,8 @@ export class DashboardComponent implements OnInit {
   dashboardLoading$: Observable<boolean>;
   dashboardLoaded$: Observable<boolean>;
   dashboardGroups$: Observable<DashboardGroups[]>;
+  dashboardGroupsLoading$: Observable<boolean>;
+  dashboardGroupsLoaded$: Observable<boolean>;
 
   @HostListener('window:beforeprint', ['$event'])
   onBeforePrint(event) {
@@ -61,6 +65,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardLoaded$ = store.select(getDashboardObjectLoaded);
     this.dashboardGroups$ = store.select(getAllDashboardGroups);
     this.currentDashboardGroupId$ = store.select(getActiveDashboardGroup);
+    this.dashboardGroupsLoading$ = store.select(getDashboardGroupsLoading);
+    this.dashboardGroupsLoaded$ = store.select(getDashboardGroupsLoaded);
 
     // menu container height in pixels
     this.menuContainerHeight = 91;

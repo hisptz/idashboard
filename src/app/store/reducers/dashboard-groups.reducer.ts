@@ -1,5 +1,11 @@
-import { DashboardGroupsActions, DashboardGroupsActionTypes } from '../actions/dashboard-groups.action';
-import { DashboardActionTypes, DashboardActions } from '../actions/dashboard.actions';
+import {
+  DashboardGroupsActions,
+  DashboardGroupsActionTypes
+} from '../actions/dashboard-groups.action';
+import {
+  DashboardActionTypes,
+  DashboardActions
+} from '../actions/dashboard.actions';
 import { DashboardGroups } from '../../dashboard/models/dashboard-groups.model';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
@@ -9,20 +15,27 @@ export interface DashboardGroupsState extends EntityState<DashboardGroups> {
   loaded: boolean;
 }
 
-export const DashboardGroupsAdapter: EntityAdapter<DashboardGroups> = createEntityAdapter<DashboardGroups>();
+export const DashboardGroupsAdapter: EntityAdapter<
+  DashboardGroups
+> = createEntityAdapter<DashboardGroups>();
 
-const initialState: DashboardGroupsState = DashboardGroupsAdapter.getInitialState({
-  // additional entity state properties
-  loading: false,
-  activeGroup: null,
-  loaded: false
-});
+const initialState: DashboardGroupsState = DashboardGroupsAdapter.getInitialState(
+  {
+    // additional entity state properties
+    loading: false,
+    activeGroup: null,
+    loaded: false
+  }
+);
 
 export function dashboardGroupReducer(
   state = initialState,
   action: DashboardGroupsActions | DashboardActions
 ): DashboardGroupsState {
   switch (action.type) {
+    case DashboardGroupsActionTypes.InitializeDashboardGroups: {
+      return { ...state, loading: true, loaded: false };
+    }
     case DashboardGroupsActionTypes.InitializeDashboardGroupSuccess: {
       /**
        * The addMany function provided by the created adapter
@@ -36,7 +49,7 @@ export function dashboardGroupReducer(
 
       return DashboardGroupsAdapter.addMany(dashboardGroups, {
         ...state,
-        activeGroup,
+        activeGroup: activeGroup ? activeGroup.id : '',
         loaded: true,
         loading: false
       });
@@ -44,7 +57,9 @@ export function dashboardGroupReducer(
 
     case DashboardActionTypes.SetCurrentDashboard: {
       const { entities } = state;
-      const activeGroup = Object.keys(entities).find(id => entities[id].dashboards.includes(action.id));
+      const activeGroup = Object.keys(entities).find(id =>
+        entities[id].dashboards.includes(action.id)
+      );
       return { ...state, activeGroup };
     }
 
@@ -58,6 +73,9 @@ export function dashboardGroupReducer(
   }
 }
 
-export const getDashboardGroupsLoadedState = (state: DashboardGroupsState) => state.loaded;
-export const getActiveDashboardGroupState = (state: DashboardGroupsState) => state.activeGroup;
-export const getDashboardGroupsLoadingState = (state: DashboardGroupsState) => state.loading;
+export const getDashboardGroupsLoadedState = (state: DashboardGroupsState) =>
+  state.loaded;
+export const getActiveDashboardGroupState = (state: DashboardGroupsState) =>
+  state.activeGroup;
+export const getDashboardGroupsLoadingState = (state: DashboardGroupsState) =>
+  state.loading;

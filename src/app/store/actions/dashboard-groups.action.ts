@@ -21,7 +21,7 @@ export class InitializeDashboardGroupsActionSuccess implements Action {
   readonly type = DashboardGroupsActionTypes.InitializeDashboardGroupSuccess;
   constructor(
     public dashboardGroups: DashboardGroups[],
-    public activeGroup: string
+    public activeGroup: DashboardGroups
   ) {}
 }
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, defer, of } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
@@ -23,8 +22,6 @@ import {
 } from 'rxjs/operators';
 import { DashboardGroupService } from 'src/app/services/dashboard-group.service';
 
-const GROUPS_PAYLOAD = [];
-
 @Injectable()
 export class DashboardGroupsEffects {
   @Effect({ dispatch: false })
@@ -46,6 +43,19 @@ export class DashboardGroupsEffects {
   );
 
   @Effect()
+  initializeDashboardGroupSuccess$: Observable<
+    DashboardGroupsActions
+  > = this.actions$.pipe(
+    ofType<InitializeDashboardGroupsActionSuccess>(
+      DashboardGroupsActionTypes.InitializeDashboardGroupSuccess
+    ),
+    map(
+      (action: InitializeDashboardGroupsActionSuccess) =>
+        new SetActiveDashboardGroupsAction(action.activeGroup)
+    )
+  );
+
+  @Effect()
   initializeDashboardGroups$: Observable<
     DashboardGroupsActions
   > = this.actions$.pipe(
@@ -60,7 +70,7 @@ export class DashboardGroupsEffects {
             dashboardGroups =>
               new InitializeDashboardGroupsActionSuccess(
                 dashboardGroups,
-                dashboardGroups.length > 0 ? dashboardGroups[0].id : ''
+                dashboardGroups.length > 0 ? dashboardGroups[0] : null
               )
           )
         )
