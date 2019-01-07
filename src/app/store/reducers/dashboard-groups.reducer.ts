@@ -9,6 +9,10 @@ import {
 import { DashboardGroups } from '../../dashboard/models/dashboard-groups.model';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
+function sortDashboardGroups(a: DashboardGroups, b: DashboardGroups): number {
+  return a.sortOrder - b.sortOrder;
+}
+
 export interface DashboardGroupsState extends EntityState<DashboardGroups> {
   loading: boolean;
   activeGroup: string;
@@ -17,7 +21,9 @@ export interface DashboardGroupsState extends EntityState<DashboardGroups> {
 
 export const DashboardGroupsAdapter: EntityAdapter<
   DashboardGroups
-> = createEntityAdapter<DashboardGroups>();
+> = createEntityAdapter<DashboardGroups>({
+  sortComparer: sortDashboardGroups
+});
 
 const initialState: DashboardGroupsState = DashboardGroupsAdapter.getInitialState(
   {
