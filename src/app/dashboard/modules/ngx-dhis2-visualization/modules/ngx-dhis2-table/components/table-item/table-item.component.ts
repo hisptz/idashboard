@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TableConfiguration } from '../../models/table-configuration';
 
 import { drawTable } from '../../helpers/index';
 import { LegendSet } from '../../models/legend-set.model';
+import { VisualizationExportService } from '../../../../services';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,16 +18,24 @@ export class TableItemComponent implements OnInit {
   analyticsObject: any;
   @Input()
   legendSets: LegendSet[];
+
+  @ViewChild('table')
+  table: ElementRef;
+
   tableObject: any;
   sort_direction: string[] = [];
   current_sorting: boolean[] = [];
-  constructor() {
+  constructor(private visualizationExportService: VisualizationExportService) {
     this.tableObject = null;
   }
 
   ngOnInit() {
     if (this.analyticsObject && this.tableConfiguration) {
-      this.tableObject = drawTable(this.analyticsObject, this.tableConfiguration, this.legendSets);
+      this.tableObject = drawTable(
+        this.analyticsObject,
+        this.tableConfiguration,
+        this.legendSets
+      );
     }
   }
   sortData(tableObject, n, isLastItem) {
@@ -112,6 +121,29 @@ export class TableItemComponent implements OnInit {
           }
         }
       }
+    }
+  }
+
+  downloadTable(downloadFormat) {
+    if (this.tableConfiguration) {
+      const title = `${this.tableConfiguration.title || 'Untitled'}-${
+        this.tableConfiguration.subtitle
+      }`;
+      if (this.table) {
+        const el = this.table.nativeElement;
+        if (downloadFormat === 'XLS') {
+          this.visualizationExportService.exportXLS(
+            title,
+            this.tableConfiguration.id
+          );
+        } else if (downloadFormat === 'CSV') {
+          if (el) {
+            this.visualizationExportService.exportCSV(title, el);
+          }
+        }
+      }
+    } else {
+      console.warn('Problem downloading data');
     }
   }
 }

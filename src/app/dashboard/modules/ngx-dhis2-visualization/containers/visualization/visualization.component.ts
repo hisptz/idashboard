@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild
+} from '@angular/core';
 import { VisualizationLayer } from '../../models/visualization-layer.model';
 import { VisualizationInputs } from '../../models/visualization-inputs.model';
 import { Observable, Subject } from 'rxjs';
@@ -36,6 +45,7 @@ import {
 } from '../../store/actions/visualization-layer.actions';
 import { take } from 'rxjs/operators';
 import { openAnimation } from '../../../../../animations';
+import { VisualizationBodySectionComponent } from '../../components/visualization-body-section/visualization-body-section';
 
 @Component({
   selector: 'ngx-dhis2-visualization',
@@ -72,6 +82,9 @@ export class VisualizationComponent implements OnInit, OnChanges {
   @Output()
   deleteVisualization: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChild(VisualizationBodySectionComponent)
+  visualizationBody: VisualizationBodySectionComponent;
+
   private _visualizationInputs$: Subject<VisualizationInputs> = new Subject();
   visualizationObject$: Observable<Visualization>;
   visualizationLayers$: Observable<VisualizationLayer[]>;
@@ -98,11 +111,21 @@ export class VisualizationComponent implements OnInit, OnChanges {
         );
 
         // Get selectors
-        this.visualizationObject$ = this.store.select(getVisualizationObjectById(visualizationInputs.id));
-        this.visualizationLayers$ = this.store.select(getCurrentVisualizationObjectLayers(visualizationInputs.id));
-        this.visualizationUiConfig$ = this.store.select(getCurrentVisualizationUiConfig(visualizationInputs.id));
-        this.visualizationProgress$ = this.store.select(getCurrentVisualizationProgress(visualizationInputs.id));
-        this.visualizationConfig$ = this.store.select(getCurrentVisualizationConfig(visualizationInputs.id));
+        this.visualizationObject$ = this.store.select(
+          getVisualizationObjectById(visualizationInputs.id)
+        );
+        this.visualizationLayers$ = this.store.select(
+          getCurrentVisualizationObjectLayers(visualizationInputs.id)
+        );
+        this.visualizationUiConfig$ = this.store.select(
+          getCurrentVisualizationUiConfig(visualizationInputs.id)
+        );
+        this.visualizationProgress$ = this.store.select(
+          getCurrentVisualizationProgress(visualizationInputs.id)
+        );
+        this.visualizationConfig$ = this.store.select(
+          getCurrentVisualizationConfig(visualizationInputs.id)
+        );
 
         this.focusedVisualization$ = store.select(getFocusedVisualization);
       }
@@ -138,7 +161,11 @@ export class VisualizationComponent implements OnInit, OnChanges {
     );
   }
 
-  onFullScreenAction(event: { id: string; uiConfigId: string; fullScreen: boolean }) {
+  onFullScreenAction(event: {
+    id: string;
+    uiConfigId: string;
+    fullScreen: boolean;
+  }) {
     this.toggleFullScreen.emit({
       id: this.id,
       dashboardId: this.dashboardId,
@@ -148,7 +175,9 @@ export class VisualizationComponent implements OnInit, OnChanges {
   }
 
   onLoadVisualizationAnalytics(visualizationLayer: VisualizationLayer) {
-    this.store.dispatch(new LoadVisualizationAnalyticsAction(this.id, [visualizationLayer]));
+    this.store.dispatch(
+      new LoadVisualizationAnalyticsAction(this.id, [visualizationLayer])
+    );
   }
 
   onVisualizationLayerConfigUpdate(visualizationLayer: VisualizationLayer) {
@@ -160,39 +189,58 @@ export class VisualizationComponent implements OnInit, OnChanges {
   }
 
   onSaveFavorite(favoriteDetails) {
-    this.store.dispatch(new SaveVisualizationFavoriteAction(this.id, favoriteDetails, this.dashboardId));
+    this.store.dispatch(
+      new SaveVisualizationFavoriteAction(
+        this.id,
+        favoriteDetails,
+        this.dashboardId
+      )
+    );
   }
 
   onToggleVisualizationCardFocus(e, focused: boolean) {
     e.stopPropagation();
     if (this.cardFocused !== focused) {
-      this.visualizationUiConfig$.pipe(take(1)).subscribe((visualizationUiConfig: VisualizationUiConfig) => {
-        this.store.dispatch(
-          new ToggleVisualizationFocusAction(visualizationUiConfig.id, {
-            hideFooter: !focused,
-            hideResizeButtons: !focused
-          })
-        );
-        this.cardFocused = focused;
-      });
+      this.visualizationUiConfig$
+        .pipe(take(1))
+        .subscribe((visualizationUiConfig: VisualizationUiConfig) => {
+          this.store.dispatch(
+            new ToggleVisualizationFocusAction(visualizationUiConfig.id, {
+              hideFooter: !focused,
+              hideResizeButtons: !focused
+            })
+          );
+          this.cardFocused = focused;
+        });
     }
   }
 
   onDeleteVisualizationAction(options: any) {
-    this.visualizationObject$.pipe(take(1)).subscribe((visualization: Visualization) => {
-      this.deleteVisualization.emit({
-        visualization,
-        deleteFavorite: options.deleteFavorite
-      });
+    this.visualizationObject$
+      .pipe(take(1))
+      .subscribe((visualization: Visualization) => {
+        this.deleteVisualization.emit({
+          visualization,
+          deleteFavorite: options.deleteFavorite
+        });
 
-      this.store.dispatch(
-        new UpdateVisualizationObjectAction(this.id, {
-          notification: {
-            message: 'Removing dasboard item...',
-            type: 'progress'
-          }
-        })
+        this.store.dispatch(
+          new UpdateVisualizationObjectAction(this.id, {
+            notification: {
+              message: 'Removing dasboard item...',
+              type: 'progress'
+            }
+          })
+        );
+      });
+  }
+
+  onVisualizationDownload(downloadDetails: any) {
+    if (this.visualizationBody) {
+      this.visualizationBody.onDownloadVisualization(
+        downloadDetails.type,
+        downloadDetails.downloadFormat
       );
-    });
+    }
   }
 }
