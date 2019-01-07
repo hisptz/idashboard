@@ -3,28 +3,30 @@
   </div>
 <div class="downloads" *ngIf="downloads">
   <div class="main-menu-btns">
-    <a *ngFor="let download of downloads['downloads']; let menuIndex = index" routerLink="/pages/downloads/{{download.id}}/{{download['components'][menuIndex].id}}/{{download['components'][menuIndex].id}}" class="nav-item nav-link downloads-menus {{setActiveMenuById(download.id)}}" id="{{download.id}}-tab">{{download.name}}</a>
+    <a *ngFor="let download of downloads['downloads']; let menuIndex = index" routerLink="/pages/downloads/{{download.id}}/{{download['components'][menuIndex].id}}/{{download['components'][menuIndex].id}}" class="nav-item nav-link downloads-menus" [ngClass]="download.id === activeMenuId ? 'active-menu' : ''" id="{{download.id}}-tab">{{download.name}}</a>
   </div>
   <div class="downloads-contents">
     <div *ngFor="let download of downloads['downloads']">
-      <div class="downloads-list {{download.id}} {{activeDownloadClass(download.id)}}" id="{{download.id}}-div">
-        <div  style="min-width: 50px; display: inline-block" class="pill-btn" *ngFor="let downloadOption of download['components']; let menuIndex = index">
-          <button class="btns-sub-menu" (click)="setActiveArea(downloadOption.id)" id="{{downloadOption.id}}-btn" routerLink="/pages/downloads/{{download.id}}/{{downloadOption.id}}/{{downloadOption.id}}">{{downloadOption.name}}</button>
-        </div>
-      </div>
-      <div class="downloads-list {{download.id}} {{activeDownloadClass(download.id)}}" id="{{download.id}}-list">
-        <div *ngFor="let downloadOption of download['components']"   class="col-lg-12 col-md-12 col-xs-12 downloads-list-option {{downloadOption.id}} {{setDownloadOptionActiveClass(ativeDownloadOption)}}" id="{{downloadOption.id}}-sub-menu-list">
-          <div class="downloads-options">
-            <h4>{{downloadOption.name}}</h4>
-            <div *ngIf="downloadOption['subPages'].length == 0"  class="div-iframe">
-              <div [innerHtml]="downloadOption.link | safeHtml"></div>
-              <!--<iframe *ngIf="downloadOption.link" [src]="trustedUrl(downloadOption.link)" width="100%" height="800" frameborder="0"></iframe>-->
+      <div *ngIf="download.id === activeMenuId">
+          <div class="downloads-list {{download.id}}" id="{{download.id}}-div">
+              <div  style="min-width: 50px; display: inline-block" class="pill-btn" *ngFor="let downloadOption of download['components']; let menuIndex = index">
+                <button class="btns-sub-menu" id="{{downloadOption.id}}-btn" routerLink="/pages/downloads/{{download.id}}/{{downloadOption.id}}/{{downloadOption.id}}" [ngClass]="downloadOption.id === activeId ? 'active-button' : ''">{{downloadOption.name}}</button>
+              </div>
             </div>
-            <div *ngIf="downloadOption['subPages'].length > 0"  class="div-iframe">
-              <app-statistics-summary [subPages]="downloadOption['subPages']" [activeId]="activeId"></app-statistics-summary>
+            <div class="downloads-list {{download.id}}" id="{{download.id}}-list">
+              <div *ngFor="let downloadOption of download['components']"   class="col-lg-12 col-md-12 col-xs-12 downloads-list-option {{downloadOption.id}}" id="{{downloadOption.id}}-sub-menu-list">
+                <div class="downloads-options" *ngIf="downloadOption.id === ativeDownloadOption">
+                  <h4>{{downloadOption.name}}</h4>
+                  <div *ngIf="downloadOption['subPages'].length == 0"  class="div-iframe">
+                    <div [innerHtml]="downloadOption.link | safeHtml"></div>
+                    <!--<iframe *ngIf="downloadOption.link" [src]="trustedUrl(downloadOption.link)" width="100%" height="800" frameborder="0"></iframe>-->
+                  </div>
+                  <div *ngIf="downloadOption['subPages'].length > 0"  class="div-iframe">
+                    <app-statistics-summary [subPages]="downloadOption['subPages']" [activeId]="activeId"></app-statistics-summary>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>

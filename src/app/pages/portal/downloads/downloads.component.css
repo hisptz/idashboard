@@ -83,6 +83,15 @@ section {
   border-bottom: 4px solid green !important;
   font-size: 20px;
 }
+
+.active-menu{
+  color: #000000;
+  background-color: transparent;
+  border-color: transparent transparent green;
+  border-bottom: 4px solid green !important;
+  font-size: 20px;
+}
+
 #tabs .nav-tabs .nav-link {
   border: 1px solid transparent;
   border-top-left-radius: .25rem;
@@ -132,9 +141,6 @@ section {
   line-height: 1.5;
 }
 
-.downloads-list, .downloads-list-option {
-  display: none;
-}
 
 .active-downloads-list {
   display: block;
@@ -156,5 +162,9 @@ section {
 
 .downloads-contents {
   margin-top: 8px;
+}
+
+.active-button {
+  background-color: #2A8FD1; color: #FFF;
 }
 
