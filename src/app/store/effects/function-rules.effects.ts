@@ -35,7 +35,7 @@ export class FunctionRuleEffects {
   updatingFunctionRules$: Observable<Action> = this.actions$.pipe(
     ofType<FunctionRuleActions>(FunctionRuleActionTypes.UpdateFunctionRules),
     mergeMap((action: any) =>
-      this.functionMetadata.updateFucntionRuleDataStore(action.payload)
+      this.functionMetadata.updateFunctionRuleDataStore(action.payload)
     ),
     map(() => new UpdateFunctionRuleSuccess()),
     catchError(error => of(new LoadFunctionRuleFail(error)))

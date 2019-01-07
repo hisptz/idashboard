@@ -10,6 +10,7 @@ import { DataElementEffects } from './data-elements.effects';
 import { FunctionRuleEffects } from './function-rules.effects';
 import { FunctionEffects } from './function.effects';
 import { IndicatorsEffects } from './indicators.effects';
+import { IndicatorsMappingEffects } from './indicator-mapping.effects';
 import { DataSetEffects } from './data-set.effects';
 import { OrganisationUnitLevelEffects } from './orgUnit-level.effects';
 
@@ -24,6 +25,7 @@ export const effects: any[] = [
   DashboardGroupsEffects,
   DataElementEffects,
   IndicatorsEffects,
+  IndicatorsMappingEffects,
   FunctionRuleEffects,
   FunctionEffects,
   DataSetEffects,

@@ -37,7 +37,7 @@ export class FunctionMetadataService {
     });
   }
 
-  updateFucntionRuleDataStore(data): Observable<any> {
+  updateFunctionRuleDataStore(data): Observable<any> {
     return new Observable(observer => {
       const { rules } = data;
       // @todo make generatic for other use case

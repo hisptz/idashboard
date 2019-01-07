@@ -25,9 +25,11 @@ export function IndicatorMapppingReducer(
 ): IndicatorMapppingState {
   switch (action.type) {
     case IndicatorMappingActionTypes.AddIndicatorsMapping: {
+      console.log('adding mapping');
       return state;
     }
     case IndicatorMappingActionTypes.UpdateIndicatorsMapping: {
+      console.log('updating mapping');
       return state;
     }
     default: {
