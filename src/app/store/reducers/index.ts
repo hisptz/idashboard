@@ -4,18 +4,43 @@ import { environment } from '../../../environments/environment';
 
 import { userReducer, UserState } from './user.reducer';
 import { systemInfoReducer, SystemInfoState } from './system-info.reducer';
-import { DashboardObjectState, dashboardObjectReducer } from './dashboard.reducer';
-import { DashboardSettingsState, dashboardSettingsReducer } from './dashboard-settings.reducer';
-import { DashboardVisualizationState, dashboardVisualizationReducer } from './dashboard-visualization.reducer';
-import { DashboardGroupsState, dashboardGroupReducer } from './dashboard-groups.reducer';
+import {
+  DashboardObjectState,
+  dashboardObjectReducer
+} from './dashboard.reducer';
+import {
+  DashboardSettingsState,
+  dashboardSettingsReducer
+} from './dashboard-settings.reducer';
+import {
+  DashboardVisualizationState,
+  dashboardVisualizationReducer
+} from './dashboard-visualization.reducer';
+import {
+  DashboardGroupsState,
+  dashboardGroupReducer
+} from './dashboard-groups.reducer';
 import { LegendSetState, legendSetReducer } from './legend-set.reducer';
 import { DataElementState, dataElementReducer } from './data-elements.reducer';
-import { FunctionRuleState, functionRuleReducer } from './function-rule.reducer';
+import {
+  FunctionRuleState,
+  functionRuleReducer
+} from './function-rule.reducer';
 import { IndicatorState, indicatorReducer } from './indicactors.reducer';
-import { DataItemMappingState, dataItemMappingReducer } from './data-item-mapping.reducer';
+import {
+  DataItemMappingState,
+  dataItemMappingReducer
+} from './data-item-mapping.reducer';
 import { FunctionState, FunctionReducer } from './function.reducer';
 import { DataSetState, DataSetReducer } from './data-set.reducer';
-import { OrgUnitLevelState, orgUnitLevelReducer } from './orgUnit-level.reducer';
+import {
+  OrgUnitLevelState,
+  orgUnitLevelReducer
+} from './orgUnit-level.reducer';
+import {
+  IndicatorMapppingReducer,
+  IndicatorMapppingState
+} from './indicator-mapping.reducer';
 
 /**
  * Root state interface
@@ -44,6 +69,7 @@ export interface State {
   legendSets: LegendSetState;
   dataElements: DataElementState;
   indicators: IndicatorState;
+  indicactorMapping: IndicatorMapppingState;
   dataItemMapping: DataItemMappingState;
   functionRules: FunctionRuleState;
   functions: FunctionState;
@@ -62,13 +88,16 @@ export const reducers: ActionReducerMap<State> = {
   legendSets: legendSetReducer,
   dataElements: dataElementReducer,
   indicators: indicatorReducer,
+  indicactorMapping: IndicatorMapppingReducer,
   dataItemMapping: dataItemMappingReducer,
   functionRules: functionRuleReducer,
   functions: FunctionReducer,
   dataSet: DataSetReducer
 };
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<State>[] = !environment.production
+  ? []
+  : [];
 
 /**
  * Root state selector
