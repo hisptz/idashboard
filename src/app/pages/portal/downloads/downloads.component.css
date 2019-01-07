@@ -76,12 +76,8 @@ section {
   border: none;
 }
 
-.main-menu-btns .active {
-  color: #000000;
-  background-color: transparent;
-  border-color: transparent transparent green;
-  border-bottom: 4px solid green !important;
-  font-size: 20px;
+.main-menu-btns {
+  min-width: 50px; display: inline-block;
 }
 
 .active-menu{
@@ -168,3 +164,26 @@ section {
   background-color: #2A8FD1; color: #FFF;
 }
 
+/* Subpages */
+.sub-pages {
+  margin-top: 10px;
+  outline: none;
+  text-decoration: none;
+  min-width: 70px;
+  display: inline-block;
+  padding: 5px 10px 4px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  text-align: center;
+}
+
+.active-selection {
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+  font-weight: 600;
+}
+
+.iframes {
+  width: 100%;
+}

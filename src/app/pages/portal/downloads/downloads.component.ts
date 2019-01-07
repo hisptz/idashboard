@@ -6,7 +6,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../store/app.reducers';
 import {Observable} from 'rxjs/index';
 import {DownloadsState} from '../../../store/portal/portal.state';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 
 @Component({
@@ -21,7 +21,8 @@ export class DownloadsComponent implements OnInit {
   ativeDownloadOption: string;
   activeId: string;
   activeMenuId: string;
-  constructor(private store: Store<AppState>, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
+  currentRoute: any;
+  constructor(private store: Store<AppState>, private sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router) {
     store.dispatch(new portalActions.LoadDownloadsAction());
     this.downloads$ = store.select(getDownloads);
   }
@@ -35,6 +36,7 @@ export class DownloadsComponent implements OnInit {
             this.activeId = params['id'];
             this.activeMenuId = params['menuId'];
             this.ativeDownloadOption = params['subMenu'];
+            this.currentRoute = this.router.url.replace(this.activeId, '');
           });
         }
       });
