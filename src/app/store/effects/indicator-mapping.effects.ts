@@ -22,8 +22,7 @@ export class IndicatorsMappingEffects {
       const indicatorMapping = _.map(action.payload, rule => {
         return { id: rule.id, isMapped: this.getMappingStatus(rule.json) };
       });
-      console.log(indicatorMapping);
-      return new UpdateIndicatorsMapping();
+      return new UpdateIndicatorsMapping(indicatorMapping);
     })
   );
 
@@ -36,8 +35,7 @@ export class IndicatorsMappingEffects {
       const indicatorMapping = _.map(action.payload, rule => {
         return { id: rule.id, isMapped: this.getMappingStatus(rule.json) };
       });
-      console.log(indicatorMapping);
-      return new AddIndicatorsMapping();
+      return new AddIndicatorsMapping(indicatorMapping);
     })
   );
 

@@ -11,13 +11,15 @@ interface InidcatorMapping {
 
 export interface IndicatorMapppingState extends EntityState<InidcatorMapping> {}
 
-export const FunctionAdapter: EntityAdapter<
+export const indicatorMappingAdapter: EntityAdapter<
   InidcatorMapping
 > = createEntityAdapter<InidcatorMapping>();
 
-const initialState: IndicatorMapppingState = FunctionAdapter.getInitialState({
-  // additional entity state properties
-});
+const initialState: IndicatorMapppingState = indicatorMappingAdapter.getInitialState(
+  {
+    // additional entity state properties
+  }
+);
 
 export function IndicatorMapppingReducer(
   state = initialState,
@@ -25,12 +27,10 @@ export function IndicatorMapppingReducer(
 ): IndicatorMapppingState {
   switch (action.type) {
     case IndicatorMappingActionTypes.AddIndicatorsMapping: {
-      console.log('adding mapping');
-      return state;
+      return indicatorMappingAdapter.addMany(action.payload, state);
     }
     case IndicatorMappingActionTypes.UpdateIndicatorsMapping: {
-      console.log('updating mapping');
-      return state;
+      return indicatorMappingAdapter.updateMany(action.payload, state);
     }
     default: {
       return state;
