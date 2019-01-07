@@ -1,6 +1,6 @@
 
 {
-    "version": "2.0.0-alpha.1",
+    "version": "2.0.0-alpha.2",
     "name": "Malaria Dashboard (New Version)",
     "description": "Malaria Dashboard",
     "appType": "APP",
@@ -17,8 +17,7 @@
     "default_locale": "en",
     "activities": {
         "dhis": {
-            "href": "../../../",
-            "namespace": "nmcp-malaria"
+            "href": "../../../"
         }
     },
      "authorities": [

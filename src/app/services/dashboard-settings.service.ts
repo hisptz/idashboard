@@ -23,12 +23,14 @@ export class DashboardSettingsService {
   loadAll() {
     return this.manifestService.getManifest().pipe(
       mergeMap((manifestObject: any) => {
-        const namespace =
-          manifestObject &&
-          manifestObject.activities &&
-          manifestObject.activities.dhis
-            ? manifestObject.activities.dhis.namespace
-            : 'default';
+        // const namespace =
+        //   manifestObject &&
+        //   manifestObject.activities &&
+        //   manifestObject.activities.dhis
+        //     ? manifestObject.activities.dhis.namespace
+        //     : 'default';
+
+        const namespace = 'nmcp-malaria';
 
         return this.httpClient.get(this._dataStoreUrl).pipe(
           mergeMap((dashboardSettingsList: Array<string>) => {
