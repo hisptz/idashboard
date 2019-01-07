@@ -62,7 +62,7 @@
               </div>
   
               <div class="form-group">
-                <textarea type="text" placeholder="Tell us (at least 1o characters)" rows="3" class="form-control" id="feedbabck"  [(ngModel)]="feedBackModel.feedback" name="feedback"></textarea>
+                <textarea type="text" placeholder="Tell us (at least 10 characters)" rows="3" class="form-control" id="feedbabck"  [(ngModel)]="feedBackModel.feedback" name="feedback"></textarea>
               </div>
               <button type="submit" class="btn btn-primary" *ngIf="feedBacksArray" (click)="submitFeedback(feedBacksArray)" [disabled]="!feedBackModel.feedback || feedBackModel.feedback.length <= 10">Submit</button>
               <button type="submit" class="btn btn-default" (click)="toggleFeedback()">X</button>

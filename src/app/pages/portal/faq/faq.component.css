@@ -144,3 +144,9 @@ section #tabs {
 }
 
 /* End of opn on click css */
+
+.lists span {
+  color: #2A8FD1;
+  cursor: pointer;
+  font-weight: 600;
+}

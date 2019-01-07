@@ -38,8 +38,8 @@
                       <div *ngIf="faqMenuItemData.helpMaterial">
                         <div [innerHtml]="faqMenuItemData.helpMaterial | safeHtml"></div>
                       </div>
-                      <div *ngIf="faqMenuItemData.list">
-                        <p *ngFor="let list of faqMenuItemData.list">{{list}}</p>
+                      <div *ngIf="faqMenuItemData.lists" class="lists">
+                        <p *ngFor="let list of faqMenuItemData.lists">{{list.name}} <span *ngIf="list.link" routerLink="{{list.link}}"> here</span></p>
                       </div>
                     </div>
                   </div>
