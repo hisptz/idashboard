@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Dashboard, DashboardGroups } from '../../models';
 
 @Component({
@@ -22,7 +28,9 @@ export class DashboardMenuComponent {
   setCurrentDashboard: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
-  setActiveDashboardGroup: EventEmitter<DashboardGroups> = new EventEmitter<DashboardGroups>();
+  setActiveDashboardGroup: EventEmitter<DashboardGroups> = new EventEmitter<
+    DashboardGroups
+  >();
 
   @Output()
   createDashboard: EventEmitter<string> = new EventEmitter<string>();

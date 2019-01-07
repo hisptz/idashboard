@@ -34,6 +34,12 @@ export class CurrentDashboardHeaderComponent implements OnInit {
   @Input()
   dashboardLoaded: boolean;
 
+  @Input()
+  dashboardGroupsLoaded: boolean;
+
+  @Input()
+  dashboardGroupsLoading: boolean;
+
   selectionFilterConfig: SelectionFilterConfig;
 
   showSharing: boolean;

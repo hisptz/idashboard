@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import * as _ from 'lodash';
 import {
   getDashboardObjectEntitiesState,
   getCurrentDashboardObjectState,
@@ -33,9 +34,13 @@ export const getAllGroupDashboards = createSelector(
   getCurrentDashboardGroup,
   (allDashboards, currentDashboardGroup) => {
     return currentDashboardGroup && currentDashboardGroup.dashboards
-      ? allDashboards
-          .filter(({ id }) => currentDashboardGroup.dashboards.includes(id))
-          .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
+      ? _.filter(
+          _.map(
+            currentDashboardGroup.dashboards,
+            (dashboardId: string) =>
+              _.find(allDashboards, ['id', dashboardId]) || null
+          )
+        )
       : allDashboards;
   }
 );
