@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { tap, withLatestFrom, take } from 'rxjs/operators';
-import { forkJoin, Observable, throwError } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 
 // reducers
 import { VisualizationState } from '../reducers';
@@ -107,12 +107,7 @@ export class VisualizationLayerEffects {
                   const items = dxItems.filter(({ id }) => indicatorMappingStatus[id]);
 
                   if (!items.length) {
-                    return throwError({
-                      httpStatus: 'Conflict',
-                      httpStatusCode: 409,
-                      status: 'ERROR',
-                      message: 'No mapping has been done'
-                    });
+                    return of(null);
                   }
 
                   const dataSelectionFormated = [...otherSelections, { ...dxSelection, items }, newPeSelection];
@@ -125,29 +120,45 @@ export class VisualizationLayerEffects {
               ).subscribe(
                 analyticsResponse => {
                   // Save visualizations layers
-                  _.each(analyticsResponse, (analytics, analyticsIndex) => {
-                    // console.log({ analytics });
+                  const filterNullValues = analyticsResponse.filter(response => response);
+                  if (filterNullValues.length) {
+                    _.each(analyticsResponse, (analytics, analyticsIndex) => {
+                      // console.log({ analytics });
+                      if (analytics) {
+                        this.store.dispatch(
+                          new LoadVisualizationAnalyticsSuccessAction(action.visualizationLayers[analyticsIndex].id, {
+                            analytics: getSanitizedAnalytics(
+                              getStandardizedAnalyticsObject(analytics, true),
+                              action.visualizationLayers[analyticsIndex].dataSelections
+                            ),
+                            dataSelections: action.visualizationLayers[analyticsIndex].dataSelections
+                          })
+                        );
+                      }
+                    });
+                    // Update visualization object
                     this.store.dispatch(
-                      new LoadVisualizationAnalyticsSuccessAction(action.visualizationLayers[analyticsIndex].id, {
-                        analytics: getSanitizedAnalytics(
-                          getStandardizedAnalyticsObject(analytics, true),
-                          action.visualizationLayers[analyticsIndex].dataSelections
-                        ),
-                        dataSelections: action.visualizationLayers[analyticsIndex].dataSelections
+                      new UpdateVisualizationObjectAction(action.visualizationId, {
+                        progress: {
+                          statusCode: 200,
+                          statusText: 'OK',
+                          percent: 100,
+                          message: 'Analytics loaded'
+                        }
                       })
                     );
-                  });
-                  // Update visualization object
-                  this.store.dispatch(
-                    new UpdateVisualizationObjectAction(action.visualizationId, {
-                      progress: {
-                        statusCode: 200,
-                        statusText: 'OK',
-                        percent: 100,
-                        message: 'Analytics loaded'
-                      }
-                    })
-                  );
+                  } else {
+                    this.store.dispatch(
+                      new UpdateVisualizationObjectAction(action.visualizationId, {
+                        progress: {
+                          statusCode: 409,
+                          statusText: 'Conflict',
+                          percent: 100,
+                          message: 'No mapping has been done'
+                        }
+                      })
+                    );
+                  }
                 },
                 error => {
                   this.store.dispatch(
