@@ -19,7 +19,7 @@ export class IndicatorsMappingEffects {
   updateIndicatorsMapping$: Observable<Action> = this.actions$.pipe(
     ofType<FunctionRuleActions>(FunctionRuleActionTypes.UpdateFunctionRules),
     map((action: any) => {
-      const indicatorMapping = _.map(action.payload, rule => {
+      const indicatorMapping = _.map(action.payload.rules, rule => {
         return { id: rule.id, isMapped: this.getMappingStatus(rule.json) };
       });
       return new UpdateIndicatorsMapping(indicatorMapping);
@@ -39,13 +39,13 @@ export class IndicatorsMappingEffects {
     })
   );
 
-  getMappingStatus(jsonString) {
+  getMappingStatus(json) {
     let isMapped = true;
-    const json = JSON.parse(jsonString);
-    const { expressionMapping, expression } = json;
-    if (!expressionMapping || !expression) {
-      isMapped = false;
-    } else {
+    if (typeof json === 'string') {
+      json = JSON.parse(json);
+    }
+    if (json && json.expressionMapping && json.expression) {
+      const { expressionMapping, expression } = json;
       const dataElements = this.getUidsFromExpression(expression);
       isMapped = this.getDataElementMappingStatus(
         dataElements,

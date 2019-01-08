@@ -30,7 +30,7 @@ export function IndicatorMapppingReducer(
       return indicatorMappingAdapter.addMany(action.payload, state);
     }
     case IndicatorMappingActionTypes.UpdateIndicatorsMapping: {
-      return indicatorMappingAdapter.updateMany(action.payload, state);
+      return indicatorMappingAdapter.upsertMany(action.payload, state);
     }
     default: {
       return state;
