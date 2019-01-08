@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { tap, withLatestFrom, take } from 'rxjs/operators';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 
 // reducers
 import { VisualizationState } from '../reducers';
@@ -22,17 +22,10 @@ import { UpdateVisualizationObjectAction } from '../actions/visualization-object
 import { AnalyticsService } from '../../services/analytics.service';
 
 // helpers
-import {
-  getStandardizedAnalyticsObject,
-  getSanitizedAnalytics
-} from '../../helpers';
+import { getStandardizedAnalyticsObject, getSanitizedAnalytics } from '../../helpers';
 import { Visualization } from '../../models';
 import { getVisualizationObjectById } from '../selectors';
-import {
-  State,
-  getFunctionById,
-  getFunctionRuleEntityState
-} from '../../../../../store';
+import { State, getIndicatorMappingStatus, getFunctionById, getFunctionRuleEntityState } from '../../../../../store';
 import { FUNCTION_NAMESPACE } from '../../../../constants/namespace.constants';
 
 @Injectable()
@@ -49,11 +42,13 @@ export class VisualizationLayerEffects {
     ofType(VisualizationLayerActionTypes.LOAD_VISUALIZATION_ANALYTICS),
     withLatestFrom(
       this.rootStore.select(getFunctionById(FUNCTION_NAMESPACE)),
-      this.rootStore.select(getFunctionRuleEntityState)
+      this.rootStore.select(getFunctionRuleEntityState),
+      this.rootStore.select(getIndicatorMappingStatus)
     ),
     tap(
-      ([action, functionObject, functionRuleEntitiesState]: [
+      ([action, functionObject, functionRuleEntitiesState, indicatorMappingStatus]: [
         LoadVisualizationAnalyticsAction,
+        any,
         any,
         any
       ]) => {
@@ -76,58 +71,51 @@ export class VisualizationLayerEffects {
 
               forkJoin(
                 _.map(action.visualizationLayers, visualizationLayer => {
-                  const dxSelection = visualizationLayer.dataSelections.find(
-                    ({ dimension }) => dimension === 'dx'
-                  );
-                  const peSelection = visualizationLayer.dataSelections.find(
-                    ({ dimension }) => dimension === 'pe'
-                  );
+                  const dxSelection = visualizationLayer.dataSelections.find(({ dimension }) => dimension === 'dx');
+                  const peSelection = visualizationLayer.dataSelections.find(({ dimension }) => dimension === 'pe');
                   const { config } = visualizationLayer;
                   const onlyUseActualPeriod = config.onlyUseActualPeriod || [];
-                  const {
-                    skipSummationOnMultiplePeriod = false,
-                    defaultPeriods = [],
-                    filters
-                  } = config;
+                  const { skipSummationOnMultiplePeriod = false, defaultPeriods = [], filters } = config;
                   const peItems = [
                     ...defaultPeriods,
                     ...(config.useReferencePeriod
                       ? peSelection.items
-                      : peSelection.items.filter(
-                          item => item['ref_type'] !== 'PERIOD_REF'
-                        ))
+                      : peSelection.items.filter(item => item['ref_type'] !== 'PERIOD_REF'))
                   ];
                   const newPeSelection = { ...peSelection, items: peItems };
                   const otherSelections = visualizationLayer.dataSelections.filter(
                     ({ dimension }) => !['dx', 'pe'].includes(dimension)
                   );
-                  const items = dxSelection.items.map(({ id, name, type }) => ({
+                  const dxItems = dxSelection.items.map(({ id, name, type }) => ({
                     id,
                     name,
                     filters,
                     skipSummationOnMultiplePeriod,
                     type: functionRuleEntities[id] ? 'FUNCTION_RULE' : type,
-                    shouldSumResultValue:
-                      onlyUseActualPeriod && config.useReferencePeriod,
-                    useReferencePeriod: onlyUseActualPeriod.includes(id)
-                      ? false
-                      : config.useReferencePeriod,
+                    shouldSumResultValue: onlyUseActualPeriod && config.useReferencePeriod,
+                    useReferencePeriod: onlyUseActualPeriod.includes(id) ? false : config.useReferencePeriod,
                     peSelection: onlyUseActualPeriod.includes(id)
                       ? {
                           ...newPeSelection,
-                          items: peSelection.items.filter(
-                            item => item['ref_type'] !== 'PERIOD_REF'
-                          )
+                          items: peSelection.items.filter(item => item['ref_type'] !== 'PERIOD_REF')
                         }
                       : newPeSelection,
                     ruleDefinition: functionRuleEntities[id],
                     functionObject
                   }));
-                  const dataSelectionFormated = [
-                    ...otherSelections,
-                    { ...dxSelection, items },
-                    newPeSelection
-                  ];
+
+                  const items = dxItems.filter(({ id }) => indicatorMappingStatus[id]);
+
+                  if (!items.length) {
+                    return throwError({
+                      httpStatus: 'Conflict',
+                      httpStatusCode: 409,
+                      status: 'ERROR',
+                      message: 'No mapping has been done'
+                    });
+                  }
+
+                  const dataSelectionFormated = [...otherSelections, { ...dxSelection, items }, newPeSelection];
                   return this.analyticsService.getAnalytics(
                     dataSelectionFormated,
                     visualizationLayer.layerType,
@@ -140,60 +128,43 @@ export class VisualizationLayerEffects {
                   _.each(analyticsResponse, (analytics, analyticsIndex) => {
                     // console.log({ analytics });
                     this.store.dispatch(
-                      new LoadVisualizationAnalyticsSuccessAction(
-                        action.visualizationLayers[analyticsIndex].id,
-                        {
-                          analytics: getSanitizedAnalytics(
-                            getStandardizedAnalyticsObject(analytics, true),
-                            action.visualizationLayers[analyticsIndex]
-                              .dataSelections
-                          ),
-                          dataSelections:
-                            action.visualizationLayers[analyticsIndex]
-                              .dataSelections
-                        }
-                      )
+                      new LoadVisualizationAnalyticsSuccessAction(action.visualizationLayers[analyticsIndex].id, {
+                        analytics: getSanitizedAnalytics(
+                          getStandardizedAnalyticsObject(analytics, true),
+                          action.visualizationLayers[analyticsIndex].dataSelections
+                        ),
+                        dataSelections: action.visualizationLayers[analyticsIndex].dataSelections
+                      })
                     );
                   });
                   // Update visualization object
                   this.store.dispatch(
-                    new UpdateVisualizationObjectAction(
-                      action.visualizationId,
-                      {
-                        progress: {
-                          statusCode: 200,
-                          statusText: 'OK',
-                          percent: 100,
-                          message: 'Analytics loaded'
-                        }
+                    new UpdateVisualizationObjectAction(action.visualizationId, {
+                      progress: {
+                        statusCode: 200,
+                        statusText: 'OK',
+                        percent: 100,
+                        message: 'Analytics loaded'
                       }
-                    )
+                    })
                   );
                 },
                 error => {
                   this.store.dispatch(
-                    new UpdateVisualizationObjectAction(
-                      action.visualizationId,
-                      {
-                        progress: {
-                          statusCode: error.httpStatusCode,
-                          statusText: error.status || error.statusText,
-                          percent: 100,
-                          message: error.message
-                        }
+                    new UpdateVisualizationObjectAction(action.visualizationId, {
+                      progress: {
+                        statusCode: error.httpStatusCode,
+                        statusText: error.status || error.statusText,
+                        percent: 100,
+                        message: error.message
                       }
-                    )
+                    })
                   );
                 }
               );
             } else {
               _.each(action.visualizationLayers, visualizationLayer => {
-                this.store.dispatch(
-                  new UpdateVisualizationLayerAction(
-                    visualizationLayer.id,
-                    visualizationLayer
-                  )
-                );
+                this.store.dispatch(new UpdateVisualizationLayerAction(visualizationLayer.id, visualizationLayer));
               });
             }
           });
