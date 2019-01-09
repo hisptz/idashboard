@@ -803,10 +803,10 @@ function getChartSubtitleObject(
             : []
       ).join(', ')
     ).join(' - '),
-    align: 'left',
+    align: 'center',
     style: {
-      fontWeight: '600',
-      fontSize: '13px'
+      fontWeight: '500',
+      fontSize: '12px'
     }
   };
 }

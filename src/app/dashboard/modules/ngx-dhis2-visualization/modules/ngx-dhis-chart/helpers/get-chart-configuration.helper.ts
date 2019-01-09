@@ -9,8 +9,8 @@ export function getChartConfiguration(
     customChartType !== ''
       ? customChartType.toLowerCase()
       : visualizationSettings.type
-        ? visualizationSettings.type.toLowerCase()
-        : 'column';
+      ? visualizationSettings.type.toLowerCase()
+      : 'column';
   return {
     renderId: renderId,
     type: chartType,
@@ -74,6 +74,9 @@ export function getChartConfiguration(
     xAxisType: visualizationLayout.rows ? visualizationLayout.rows : ['dx'],
     yAxisType: visualizationLayout.columns
       ? visualizationLayout.columns[0]
-      : 'ou'
+      : 'ou',
+    zAxisType: visualizationLayout.filters
+      ? visualizationLayout.filters
+      : ['pe']
   };
 }

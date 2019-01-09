@@ -11,6 +11,7 @@ export interface TableConfiguration {
   showHierarchy: boolean;
   rows: any[];
   columns: any[];
+  filters: any[];
   legendDisplayStrategy: string;
   displayList: boolean;
   legendSet: any;

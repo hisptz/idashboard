@@ -5,6 +5,7 @@ export interface ChartConfiguration {
   subtitle: string;
   xAxisType: any[];
   yAxisType: string;
+  zAxisType: string[];
   showData: boolean;
   hideTitle: boolean;
   hideSubtitle: boolean;

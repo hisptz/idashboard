@@ -1,6 +1,7 @@
 import { TableConfiguration } from '../models/table-configuration';
 import { LegendSet } from '../models/legend-set.model';
 const USE_BY_DATA_ITEM_LEGEND = 'BY_DATA_ITEM';
+import * as _ from 'lodash';
 
 export function drawTable(
   analyticsObject,
@@ -25,9 +26,22 @@ export function drawTable(
   if (tableConfiguration.hasOwnProperty('title')) {
     table['title'] = tableConfiguration.title;
   }
-  if (tableConfiguration.hasOwnProperty('subtitle')) {
-    table['subtitle'] = tableConfiguration.subtitle;
-  }
+
+  // Subtitle
+  table['subtitle'] = _.map(tableConfiguration.filters, (filter: string) =>
+    _.map(
+      analyticsObject && analyticsObject.metaData
+        ? analyticsObject.metaData[filter] || []
+        : [],
+      (itemId: string) =>
+        analyticsObject &&
+        analyticsObject.metaData &&
+        analyticsObject.metaData.names
+          ? analyticsObject.metaData.names[itemId] || []
+          : []
+    ).join(', ')
+  ).join(' - ');
+
   if (tableConfiguration.displayList) {
     table.headers[0] = {
       items: [],
