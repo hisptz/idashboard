@@ -201,10 +201,10 @@ function getDrilldownParentSeries(
     parentType === 'pe'
       ? 'Period'
       : parentType === 'dx'
-        ? 'Data'
-        : parentType === 'ou'
-          ? 'Organisation unit'
-          : 'Categories';
+      ? 'Data'
+      : parentType === 'ou'
+      ? 'Organisation unit'
+      : 'Categories';
 
   const seriesData = _.map(yAxisItems, yAxisObject => {
     return {
@@ -222,6 +222,7 @@ function getDrilldownParentSeries(
     colorByPoint: true,
     data: seriesData
   };
+
   return [newSeriesObject];
 }
 
@@ -310,17 +311,16 @@ function extendOtherChartOptions(
    */
   const seriesWithAxisOptions = updateSeriesWithAxisOptions(
     sortedSeries,
-    chartConfiguration.multiAxisTypes
+    chartConfiguration.multiAxisTypes,
+    chartConfiguration.touched
   );
 
   /**
    * Update colors by considering if series has data
    */
   const newColors: any[] = _.filter(
-    _.map(
-      seriesWithAxisOptions,
-      seriesObject =>
-        seriesObject.data[0] ? seriesObject.data[0].color : undefined
+    _.map(seriesWithAxisOptions, seriesObject =>
+      seriesObject.data[0] ? seriesObject.data[0].color : undefined
     ),
     color => color
   );
@@ -337,7 +337,11 @@ function extendOtherChartOptions(
   };
 }
 
-function updateSeriesWithAxisOptions(series: any[], multiAxisOptions: any[]) {
+function updateSeriesWithAxisOptions(
+  series: any[],
+  multiAxisOptions: any[],
+  touched: boolean = false
+) {
   return _.map(series, (seriesObject: any) => {
     const newSeriesObject = _.clone(seriesObject);
     const availableAxisOption: any = _.find(multiAxisOptions, [
@@ -346,8 +350,9 @@ function updateSeriesWithAxisOptions(series: any[], multiAxisOptions: any[]) {
     ]);
     if (availableAxisOption) {
       newSeriesObject.yAxis = availableAxisOption.axis === 'left' ? 0 : 1;
+
       newSeriesObject.type =
-        availableAxisOption.type !== ''
+        availableAxisOption.type !== '' && !touched
           ? getAllowedChartType(availableAxisOption.type)
           : seriesObject.type;
 
@@ -922,7 +927,7 @@ function getPlotOptions(chartConfiguration: any) {
           plotOptionChartType !== '' ? plotOptionChartType : 'series'
         ] = {
           showInLegend: !chartConfiguration.hideLegend,
-          colorByPoint: true
+          colorByPoint: false
         };
 
         /**
@@ -1024,8 +1029,8 @@ function getLegendOptions(chartConfiguration: any) {
       chartConfiguration.legendAlign === 'top'
         ? 0
         : chartConfiguration.legendAlign === 'bottom'
-          ? 25
-          : 0
+        ? 25
+        : 0
   };
 }
 
@@ -1056,8 +1061,8 @@ function getXAxisOptions(
               xAxisCategories.length <= 5
                 ? 0
                 : xAxisCategories.length >= 10
-                  ? -45
-                  : -45,
+                ? -45
+                : -45,
             style: {
               color: '#000000',
               fontWeight: 'normal',
@@ -1271,14 +1276,12 @@ function getSanitizedChartObject(
   // Remove non numeric series data and their categories
   const dataIndexesArrayToRemove = _.map(chartObject.series, seriesObject => {
     return _.filter(
-      _.map(
-        seriesObject.data,
-        (dataItem: any, dataIndex: number) =>
-          dataItem.y === '' ||
-          (dataSelectionGroupMembers.length > 0 &&
-            dataSelectionGroupMembers.indexOf(dataItem.id) === -1)
-            ? dataIndex
-            : -1
+      _.map(seriesObject.data, (dataItem: any, dataIndex: number) =>
+        dataItem.y === '' ||
+        (dataSelectionGroupMembers.length > 0 &&
+          dataSelectionGroupMembers.indexOf(dataItem.id) === -1)
+          ? dataIndex
+          : -1
       ),
       (dataIndex: number) => dataIndex !== -1
     );
@@ -1295,7 +1298,11 @@ function getSanitizedChartObject(
       ...seriesObject,
       data: _.filter(
         _.map(seriesObject.data, (dataItem: any) => {
-          const splitedDataItemId = dataItem.id.split('_');
+          const splitedDataItemId = (
+            dataItem.id ||
+            dataItem.drilldown ||
+            ''
+          ).split('_');
 
           const associatedGroup = _.find(dataSelectionGroups, [
             'id',
@@ -1318,22 +1325,25 @@ function getSanitizedChartObject(
   });
 
   let categoryCount = 0;
-  const newCategories = _.map(chartObject.xAxis.categories, (category: any) => {
-    if (!category.categories) {
-      return category;
-    }
-    const newCategory = {
-      ...category,
-      categories: _.filter(
-        category.categories,
-        (innerCategory: any, innerCategoryIndex: number) =>
-          newDataIndexes.indexOf(innerCategoryIndex + categoryCount) === -1
-      )
-    };
+  const newCategories = _.map(
+    chartObject.xAxis ? chartObject.xAxis.categories : [],
+    (category: any) => {
+      if (!category.categories) {
+        return category;
+      }
+      const newCategory = {
+        ...category,
+        categories: _.filter(
+          category.categories,
+          (innerCategory: any, innerCategoryIndex: number) =>
+            newDataIndexes.indexOf(innerCategoryIndex + categoryCount) === -1
+        )
+      };
 
-    categoryCount += category.categories ? category.categories.length : 0;
-    return newCategory;
-  });
+      categoryCount += category.categories ? category.categories.length : 0;
+      return newCategory;
+    }
+  );
 
   return {
     ...chartObject,

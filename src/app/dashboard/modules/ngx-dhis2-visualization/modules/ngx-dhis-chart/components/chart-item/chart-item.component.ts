@@ -69,7 +69,8 @@ export class ChartItemComponent implements OnInit {
     this.currentChartType = chartType;
     this.drawChart(this.analyticsObject, {
       ...this.chartConfiguration,
-      type: chartType
+      type: chartType,
+      touched: true
     });
     this.chartUpdate.emit({
       id: this.renderId,
