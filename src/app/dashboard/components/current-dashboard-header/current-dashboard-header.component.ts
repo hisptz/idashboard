@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../../models';
 import { SelectionFilterConfig } from '../../modules/ngx-dhis2-data-selection-filter/models/selected-filter-config.model';
 import { generateUid } from '../../../helpers/generate-uid.helper';
+import { VisualizationDataSelection } from '../../modules/ngx-dhis2-visualization/models';
 
 @Component({
   selector: 'app-current-dashboard-header',
@@ -39,6 +40,12 @@ export class CurrentDashboardHeaderComponent implements OnInit {
 
   @Input()
   dashboardGroupsLoading: boolean;
+
+  @Input()
+  globalDataSelections: VisualizationDataSelection[];
+
+  @Input()
+  visualizationLoadingPercent: number;
 
   selectionFilterConfig: SelectionFilterConfig;
 

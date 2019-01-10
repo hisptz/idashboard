@@ -21,7 +21,9 @@ import {
   getCurrentDashboardVisualizationLoaded,
   getCurrentDashboardGroup,
   getDashboardGroupsLoaded,
-  getDashboardGroupsLoading
+  getDashboardGroupsLoading,
+  getCurrentGlobalDataSelections,
+  getCurrentDashboardVisualizationLoadingProgress
 } from '../../../store';
 import { User, SystemInfo, LegendSet } from '../../../models';
 import { getSystemInfo } from '../../../store/selectors/system-info.selectors';
@@ -52,6 +54,9 @@ export class CurrentDashboardComponent implements OnInit {
   dashboardGroupsLoaded$: Observable<boolean>;
   visualizationsReady$: Observable<boolean>;
   legendSets$: Observable<LegendSet[]>;
+  currentGlobalDataSelections$: Observable<any>;
+  visualizationProgress$: Observable<any>;
+  progressMessages$: Observable<any>;
 
   welcomingTitle: string;
   welcomingDescription: string;
@@ -80,6 +85,17 @@ export class CurrentDashboardComponent implements OnInit {
     this.dashboardGroupsLoaded$ = store.select(getDashboardGroupsLoaded);
     this.visualizationsReady$ = store.select(getVisualizationReady);
     this.legendSets$ = store.select(getAllLegendSets);
+    this.visualizationProgress$ = store.select(
+      getCurrentDashboardVisualizationLoadingProgress
+    );
+
+    this.currentGlobalDataSelections$ = store.select(
+      getCurrentGlobalDataSelections
+    );
+
+    this.progressMessages$ = this.store.select(
+      getCurrentDashboardVisualizationLoadingProgress
+    );
 
     this.welcomingTitle = WELCOMING_TITLE;
     this.welcomingDescription = WELCOMING_DESCRIPTION;

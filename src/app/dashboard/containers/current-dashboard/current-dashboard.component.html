@@ -17,9 +17,19 @@
       [dashboardLoaded]="dashboardLoaded$ | async"
       [dashboardGroupsLoaded]="dashboardGroupsLoaded$ | async"
       [dashboardGroupsLoading]="dashboardGroupsLoading$ | async"
+      [globalDataSelections]="currentGlobalDataSelections$ | async"
+      [visualizationLoadingPercent]="(progressMessages$ | async)?.percent"
     ></app-current-dashboard-header>
   </div>
   <!-- end of current dashboard header -->
+
+  <!-- dashboard visualization progress -->
+  <div>
+    <app-dashboard-visualization-progress
+      [progressMessages]="progressMessages$ | async"
+    ></app-dashboard-visualization-progress>
+  </div>
+  <!-- end of dashboard visualization progress -->
 
   <!-- current dashboard visualization loader -->
   <div

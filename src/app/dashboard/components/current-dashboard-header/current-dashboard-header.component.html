@@ -107,10 +107,15 @@
 <!-- current dashboard description -->
 <div
   class="current-dashboard-description"
-  *ngIf="currentDashboard?.description"
+  *ngIf="
+    dashboardLoaded &&
+    dashboardGroupsLoaded &&
+    visualizationLoadingPercent == 100
+  "
 >
   <app-current-dashboard-description
     [dashboardDescription]="currentDashboard?.description"
+    [globalSelections]="globalDataSelections"
   ></app-current-dashboard-description>
 </div>
 <!-- end of current dashboard description -->
