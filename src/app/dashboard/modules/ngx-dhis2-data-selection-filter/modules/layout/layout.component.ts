@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { INITIAL_LAYOUT_MODEL } from './model/layout-model';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-layout',

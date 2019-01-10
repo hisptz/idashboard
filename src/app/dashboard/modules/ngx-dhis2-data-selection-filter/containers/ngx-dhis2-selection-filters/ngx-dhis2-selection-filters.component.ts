@@ -107,12 +107,12 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
       (this.filterConfig.showDataFilter
         ? 'DATA'
         : this.filterConfig.showPeriodFilter
-          ? 'PERIOD'
-          : this.filterConfig.showOrgUnitFilter
-            ? 'ORG_UNIT'
-            : this.filterConfig.showLayout
-              ? 'LAYOUT'
-              : '')
+        ? 'PERIOD'
+        : this.filterConfig.showOrgUnitFilter
+        ? 'ORG_UNIT'
+        : this.filterConfig.showLayout
+        ? 'LAYOUT'
+        : '')
     );
   }
 
@@ -313,7 +313,7 @@ export class NgxDhis2SelectionFiltersComponent implements OnInit {
           ...dataSelections.slice(selectedDimensionIndex + 1)
         ]
       : dataSelections
-        ? [...dataSelections, selectedObject]
-        : [selectedObject];
+      ? [...dataSelections, selectedObject]
+      : [selectedObject];
   }
 }
