@@ -111,8 +111,14 @@
 }
 
 .main-menu-btns button:hover {
-  background-color: #2a8fd1;
+  border-bottom: solid 3px #2a8fd1 !important;
+  font-weight: 600;
   /*color: #FFF;*/
+}
+
+.active-main-menu {
+  border-bottom: solid 3px #2a8fd1 !important;
+  font-weight: 600;
 }
 
 .main-menu-btns button {

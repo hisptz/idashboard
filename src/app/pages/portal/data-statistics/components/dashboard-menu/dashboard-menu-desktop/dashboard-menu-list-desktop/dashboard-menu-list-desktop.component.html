@@ -5,28 +5,41 @@
   <div class="btns">
     <div class="main-menu-btns">
       <button
-        (click)="setActiveMenu(menu.id, allDashboardMenus)"
+        [ngClass]="menu.id === activeMainMenu ? 'active-main-menu' : ''"
         class="menu-list-btn"
         *ngFor="let menu of allDashboardMenus"
-        id="{{menu.id}}"
-        routerLinkActive="active-dashboard" [routerLink]="['/data-statistics', menu.id]"
-      >{{menu.name}}</button>
+        id="{{ menu.id }}"
+        [routerLink]="['/data-statistics', menu.id, menu.id]"
+      >
+        {{ menu.name }}
+      </button>
     </div>
     <div class="list-sub-menus" *ngIf="subMenus">
       <button
         *ngFor="let menu of subMenus"
-        id="sub-{{menu.id}}"
-        (click)="setSubMenuActiveClass(menu.id)"
-        routerLinkActive="active-dashboard" [routerLink]="['/data-statistics', menu.id]"
-        class="sub-menu-btn">{{menu.displayName}}</button>
+        id="sub-{{ menu.id }}"
+        routerLinkActive="active-dashboard"
+        [routerLink]="[
+          '/data-statistics',
+          getMainMenuId(menu.id, allDashboardMenus),
+          menu.id
+        ]"
+        class="sub-menu-btn"
+      >
+        {{ menu.displayName }}
+      </button>
     </div>
-    <div class="list-sub-menus" *ngIf="activeMenu && keyedDashboardMenus[activeMenu]">
+    <div
+      class="list-sub-menus"
+      *ngIf="activeMenu && keyedDashboardMenus[activeMenu]"
+    >
       <button
-        (click)="setSubMenuActiveClass(activeMenu)"
-        id="sub-{{activeMenu}}"
-        routerLinkActive="active-dashboard" [routerLink]="['/data-statistics', activeMenu]"
-        class="sub-menu-btn">{{keyedDashboardMenus[activeMenu]}}</button>
+        id="sub-{{ activeMenu }}"
+        [routerLink]="['/data-statistics', activeMenu, activeMenu]"
+        class="sub-menu-btn active-dashboard"
+      >
+        {{ keyedDashboardMenus[activeMenu] }}
+      </button>
     </div>
   </div>
 </div>
-

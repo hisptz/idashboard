@@ -1,76 +1,67 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {DashboardMenuItem} from '../../../../../../../store/dashboard/dashboard.state';
-import {AppState} from '../../../../../../../store/app.reducers';
-import {Store} from '@ngrx/store';
-import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute, Params} from '@angular/router';
+import { Component, Input, OnInit } from "@angular/core";
+import { DashboardMenuItem } from "../../../../../../../store/dashboard/dashboard.state";
+import { AppState } from "../../../../../../../store/app.reducers";
+import { Store } from "@ngrx/store";
+import { HttpClient } from "@angular/common/http";
+import { ActivatedRoute, Params } from "@angular/router";
 
 @Component({
-  selector: 'app-dashboard-menu-list-desktop',
-  templateUrl: './dashboard-menu-list-desktop.component.html',
-  styleUrls: ['./dashboard-menu-list-desktop.component.css']
+  selector: "app-dashboard-menu-list-desktop",
+  templateUrl: "./dashboard-menu-list-desktop.component.html",
+  styleUrls: ["./dashboard-menu-list-desktop.component.css"]
 })
 export class DashboardMenuListDesktopComponent implements OnInit {
-
-  @Input() slideCss = '';
+  @Input() slideCss = "";
   @Input() priority: string;
   @Input() menuApiUrl: string;
   @Input() dashboardMenuItems: DashboardMenuItem[];
   @Input() menus: any;
   currentMenu: string;
   activeMenu: string;
+  activeSubMenu: string;
+  activeMainMenu: string;
   subMenus: any;
   isSubMenuSet: boolean;
-  keyedDashboardMenus =  {};
+  keyedDashboardMenus = {};
   public allDashboardMenus: any;
-  constructor(private store: Store<AppState>, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(
+    private store: Store<AppState>,
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {
     this.isSubMenuSet = false;
   }
 
   ngOnInit() {
     if (this.dashboardMenuItems) {
-      this.getMenuAndSubMenu(this.dashboardMenuItems);
+      this.route.params.forEach((params: Params) => {
+        this.activeSubMenu = params["id"];
+        this.activeMainMenu = params["mainMenuId"];
+        this.getMenuAndSubMenu(this.dashboardMenuItems);
+      });
     }
   }
 
-
   getMenuAndSubMenu(dashboardItems) {
     if (dashboardItems && this.menuApiUrl) {
-      this.http.get(this.menuApiUrl).subscribe((menuData) => {
-        menuData['dashboardMenus'].forEach((mainMenu) => {
-          if (mainMenu['subMenu'].length === 0) {
+      this.http.get(this.menuApiUrl).subscribe(menuData => {
+        menuData["dashboardMenus"].forEach(mainMenu => {
+          if (mainMenu["subMenu"].length === 0) {
             this.keyedDashboardMenus[mainMenu.id] = mainMenu.name;
           }
-          mainMenu.subMenu.forEach((subMenu) => {
+          mainMenu.subMenu.forEach(subMenu => {
             // this.keyedDashboardMenus[subMenu.id] = subMenu.displayName;
-            dashboardItems.forEach((item) => {
+            dashboardItems.forEach(item => {
               if (item.id === subMenu.id) {
                 subMenu.dashItem = item;
               }
             });
           });
         });
-        this.allDashboardMenus = menuData['dashboardMenus'];
+        this.allDashboardMenus = menuData["dashboardMenus"];
         this.route.params.forEach((params: Params) => {
-          const id = params['id'];
+          const id = params["id"];
           this.setActiveMenu(id, this.allDashboardMenus);
-          try {
-            const items = document.getElementsByClassName('menu-list-btn');
-            for (let count = 0; count < items.length; count++) {
-              if (items[count].id !== '') {
-                document.getElementById(items[count].id).style.borderBottom = 'none';
-                document.getElementById(items[count].id).style.color = '#000';
-                // document.getElementById(items[count].id).style.fontWeight = '500';
-              }
-            }
-            document.getElementById(id).style.borderBottom = 'solid 3px #2A8FD1';
-            // document.getElementById(id).style.fontWeight = '600';
-            document.getElementById('sub-' + id).style.backgroundColor = '#2A8FD1';
-            document.getElementById(id).style.color = '#000';
-            document.getElementById('sub-' + id).style.color = '#FFF';
-          } catch (e) {
-            console.log(e);
-          }
         });
       });
     }
@@ -83,45 +74,35 @@ export class DashboardMenuListDesktopComponent implements OnInit {
 
   getSubMenu(id, allDashboardMenus) {
     this.isSubMenuSet = false;
-    allDashboardMenus.forEach((mainMenu) => {
-      if (mainMenu['subMenu'] && mainMenu.id === id) {
-        this.subMenus = mainMenu['subMenu'];
+    allDashboardMenus.forEach(mainMenu => {
+      if (mainMenu["subMenu"] && mainMenu.id === id) {
+        this.subMenus = mainMenu["subMenu"];
       }
     });
-    try {
-      const items = document.getElementsByClassName('menu-list-btn');
-      for (let count = 0; count < items.length; count++) {
-        if (items[count].id !== '') {
-          document.getElementById(items[count].id).style.borderBottom = 'none';
-          document.getElementById(items[count].id).style.color = '#000';
-          // document.getElementById(items[count].id).style.fontWeight = '500';
-        }
-      }
-      document.getElementById(id).style.borderBottom = 'solid 3px #2A8FD1';
-      // document.getElementById(id).style.fontWeight = '600';
-      document.getElementById('sub-' + id).style.backgroundColor = '#2A8FD1';
-      document.getElementById(id).style.color = '#000';
-      document.getElementById('sub-' + id).style.color = '#FFF';
-      this.isSubMenuSet = true;
-    } catch (e) {
-      console.log(e);
-    }
   }
 
-  setSubMenuActiveClass(id) {
-    try {
-      const subMenuItems = document.getElementsByClassName('sub-menu-btn');
-      for (let count = 0; count < subMenuItems.length; count++) {
-        if (subMenuItems[count].id !== '') {
-          document.getElementById(subMenuItems[count].id).style.backgroundColor = '#eeeeee';
-          document.getElementById(subMenuItems[count].id).style.color = '#000';
+  setSubMenuActiveClass(subMenuId, allDashboardMenus) {
+    console.log("clicked menu", subMenuId);
+    let mainMenuId = "";
+    allDashboardMenus.forEach(mainMenu => {
+      mainMenu["subMenu"].forEach(subMenu => {
+        if (subMenu.id === subMenuId) {
+          mainMenuId = mainMenu.id;
+          console.log("main", mainMenuId);
         }
-      }
+      });
+    });
+  }
 
-      document.getElementById('sub-' + id).style.backgroundColor = '#2A8FD1';
-      document.getElementById('sub-' + id).style.color = '#FFF';
-    } catch (e) {
-      console.log(e);
-    }
+  getMainMenuId(subMenuId, allDashboardMenus) {
+    let mainMenuId = "";
+    allDashboardMenus.forEach(mainMenu => {
+      mainMenu["subMenu"].forEach(subMenu => {
+        if (subMenu.id === subMenuId) {
+          mainMenuId = mainMenu.id;
+        }
+      });
+    });
+    return mainMenuId;
   }
 }

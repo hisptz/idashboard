@@ -1,35 +1,35 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../../../../store/app.reducers';
-import * as dashboardActions from '../../../../../../../store/dashboard/dashboard.actions';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../../../../../../store/app.reducers";
+import * as dashboardActions from "../../../../../../../store/dashboard/dashboard.actions";
+import { Router } from "@angular/router";
 import {
   animate,
   state,
   style,
   transition,
   trigger
-} from '@angular/animations';
+} from "@angular/animations";
 
 @Component({
-  selector: 'app-dashboard-menu-item-desktop',
-  templateUrl: './dashboard-menu-item-desktop.component.html',
-  styleUrls: ['./dashboard-menu-item-desktop.component.css'],
+  selector: "app-dashboard-menu-item-desktop",
+  templateUrl: "./dashboard-menu-item-desktop.component.html",
+  styleUrls: ["./dashboard-menu-item-desktop.component.css"],
   animations: [
-    trigger('open', [
+    trigger("open", [
       state(
-        'in',
+        "in",
         style({
           opacity: 1
         })
       ),
-      transition('void => *', [
+      transition("void => *", [
         style({
           opacity: 0
         }),
         animate(700)
       ]),
-      transition('* => void', [
+      transition("* => void", [
         animate(400),
         style({
           opacity: 0
@@ -129,19 +129,5 @@ export class DashboardMenuItemDesktopComponent implements OnInit {
         bookmarked: !this.dashboardMenuItem.details.bookmarked
       })
     );
-  }
-
-  setActiveClass(id) {
-    this.mainMenu = this.menu.name;
-    this.mainMenuId.emit(this.menu.name);
-    const items = document.getElementsByClassName('dropbtn-div');
-    for (let count = 0; count < items.length; count++) {
-      if (items[count].id !== '') {
-        document.getElementById(items[count].id).style.backgroundColor = '#FFF';
-        document.getElementById(items[count].id).style.color = '#000';
-      }
-    }
-    document.getElementById(id).style.backgroundColor = '#FFF';
-    document.getElementById(id).style.color = '#000';
   }
 }
