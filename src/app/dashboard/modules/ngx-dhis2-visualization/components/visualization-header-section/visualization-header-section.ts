@@ -55,7 +55,7 @@ export class VisualizationHeaderSectionComponent {
       showPeriodFilter: true,
       showOrgUnitFilter: true,
       showLayout: true,
-      showDataFilter: true
+      showDataFilter: false
     };
   }
 
