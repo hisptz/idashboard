@@ -141,7 +141,7 @@ export class FaqComponent implements OnInit {
 
   sendUserReviews(reviews) {
     this.httpClient
-      .put("dataStore/observatory/portalViews.json", reviews)
+      .put("../api/dataStore/observatory/portalViews.json", reviews)
       .subscribe(message => {
         console.log(message);
       });
