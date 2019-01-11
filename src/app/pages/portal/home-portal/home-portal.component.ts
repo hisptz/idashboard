@@ -28,6 +28,7 @@ import { DeviceDetectorService } from "ngx-device-detector";
 import { DatePipe } from "@angular/common";
 
 import * as _ from "lodash";
+import { HttpClientService } from "../../../services/http-client.service";
 
 @Component({
   selector: "app-home-portal",
@@ -57,12 +58,12 @@ export class HomePortalComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private deviceService: DeviceDetectorService,
-    private httpClient: HttpClient,
+    private datePipe: DatePipe,
+    private router: Router,
+    private httpClient: HttpClientService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private elementRef: ElementRef,
-    private datePipe: DatePipe,
-    private router: Router
+    private elementRef: ElementRef
   ) {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     store.dispatch(new portalActions.LoadDownloadsAction());
@@ -72,14 +73,12 @@ export class HomePortalComponent implements OnInit {
         "../portal-middleware/extract/who-factbuffects"
       )
     );
-    store.dispatch(new portalActions.LoadPortalViewsAction());
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
     this.downloads$ = store.select(getDownloads);
     this.portalFAQs$ = store.select(getFAQs);
     this.dataFromExternalSource$ = store.select(getDataFromExternalSource);
-    this.portalViews$ = store.select(getPortalViews);
   }
 
   ngOnInit() {
@@ -92,13 +91,7 @@ export class HomePortalComponent implements OnInit {
             if (portalConfigurations) {
               this.portalConfigurations = portalConfigurations;
               this.portalPages = portalConfigurations["pages"];
-              if (this.portalViews$) {
-                this.portalViews$.subscribe(portalViews => {
-                  if (portalViews) {
-                    this.portalViewersInformation(portalViews);
-                  }
-                });
-              }
+              this.portalViewersInformation();
             }
           });
         }
@@ -144,43 +137,92 @@ export class HomePortalComponent implements OnInit {
     this.location = position.coords;
   }
 
-  portalViewersInformation(portalViews) {
-    const portalViewsInfo = portalViews;
-    const theDate = new Date();
-    let newPortalViews = {
-      portalViews: []
-    };
-    const viewsObject = {
-      viewDate: this.transformDate(theDate),
-      page: this.router.url,
-      userAgent: this.deviceService.getDeviceInfo(),
-      isMobile: this.deviceService.isMobile(),
-      isTablet: this.deviceService.isTablet(),
-      isDesktop: this.deviceService.isDesktop()
-    };
-    if (
-      _.filter(portalViewsInfo["portalViews"], [
-        "viewDate",
-        this.transformDate(theDate)
-      ]).length > 0
-    ) {
-      // check if the its from the same user and hence do not send, otherwise send
-      console.log("available");
-    } else {
-      // not available hence send
-      portalViewsInfo["portalViews"].forEach(portalView => {
-        newPortalViews.portalViews.push(portalView);
+  portalViewersInformation() {
+    this.store.dispatch(new portalActions.LoadPortalViewsAction());
+    this.portalViews$ = this.store.select(getPortalViews);
+    if (this.portalViews$) {
+      this.portalViews$.subscribe(portalViews => {
+        if (portalViews) {
+          const portalViewsInfo = portalViews;
+          const theDate = new Date();
+          let newPortalViews = {
+            portalViews: []
+          };
+          this.httpClient.get("system/id.json?").subscribe(systemIds => {
+            const uniqueIdObj = {
+              uniqueId: ""
+            };
+            if (systemIds) {
+              if (JSON.parse(localStorage.getItem("identifier"))) {
+                uniqueIdObj.uniqueId = JSON.parse(
+                  localStorage.getItem("identifier")
+                ).uniqueId;
+              } else {
+                uniqueIdObj.uniqueId = systemIds["codes"][0];
+              }
+              const viewsObject = {
+                id: uniqueIdObj.uniqueId,
+                viewDate: this.transformDate(theDate),
+                page: this.router.url,
+                userAgent: this.deviceService.getDeviceInfo(),
+                isMobile: this.deviceService.isMobile(),
+                isTablet: this.deviceService.isTablet(),
+                isDesktop: this.deviceService.isDesktop()
+              };
+              if (
+                _.filter(portalViewsInfo["portalViews"], {
+                  viewDate: this.transformDate(theDate),
+                  page: this.router.url
+                }).length > 0
+              ) {
+                // check if the its from the same user and hence do not send, otherwise send
+                // 1. local storage get local storage
+                console.log(JSON.parse(localStorage.getItem("identifier")));
+                if (
+                  _.filter(portalViewsInfo["portalViews"], {
+                    id: JSON.parse(localStorage.getItem("identifier")).uniqueId,
+                    page: this.router.url
+                  }).length > 0
+                ) {
+                  // info from this user already stored
+                  console.log("already stored");
+                } else {
+                  // send because its for not this user
+                  portalViewsInfo["portalViews"].forEach(portalView => {
+                    newPortalViews.portalViews.push(portalView);
+                  });
+                  viewsObject.id = JSON.parse(
+                    localStorage.getItem("identifier")
+                  ).uniqueId;
+                  newPortalViews.portalViews.push(viewsObject);
+                  this.sendUserReviews(newPortalViews);
+                }
+              } else {
+                // not available hence set localstorage and send
+                localStorage.setItem("identifier", JSON.stringify(uniqueIdObj));
+                portalViewsInfo["portalViews"].forEach(portalView => {
+                  newPortalViews.portalViews.push(portalView);
+                });
+                newPortalViews.portalViews.push(viewsObject);
+                this.sendUserReviews(newPortalViews);
+                this.sendUserReviews(newPortalViews);
+              }
+            }
+          });
+        }
       });
-      newPortalViews.portalViews.push(viewsObject);
-      this.httpClient
-        .put("/api/dataStore/observatory/portalViews.json", newPortalViews)
-        .subscribe(message => {
-          console.log(message);
-        });
     }
   }
 
   transformDate(date) {
     return this.datePipe.transform(date, "yyyy-MM-dd");
+  }
+
+  sendUserReviews(reviews) {
+    this.httpClient
+      .put("dataStore/observatory/portalViews.json", reviews)
+      .subscribe(message => {
+        console.log(message);
+      });
   }
 }
