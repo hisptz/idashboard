@@ -1,32 +1,38 @@
-import {ActionReducerMap, MetaReducer} from '@ngrx/store';
-import {environment} from '../../environments/environment';
-import {storeFreeze} from 'ngrx-store-freeze';
-import {RouterReducerState} from '@ngrx/router-store';
-import * as RouterReducer from '@ngrx/router-store';
-import {CurrentUserState} from './current-user/current-user.state';
-import {currentUserReducer} from './current-user/current-user.reducer';
-import {DashboardState} from './dashboard/dashboard.state';
-import {dashboardReducer} from './dashboard/dashboard.reducer';
-import {VisualizationState} from './visualization/visualization.state';
-import {visualizationReducer} from './visualization/visualization.reducer';
-import {DictionaryState} from '../modules/dictionary/store/dictionary.state';
-import {dictionaryReducer} from '../modules/dictionary/store/dictionary.reducer';
+import { ActionReducerMap, MetaReducer } from "@ngrx/store";
+import { environment } from "../../environments/environment";
+import { storeFreeze } from "ngrx-store-freeze";
+import { RouterReducerState } from "@ngrx/router-store";
+import * as RouterReducer from "@ngrx/router-store";
+import { CurrentUserState } from "./current-user/current-user.state";
+import { currentUserReducer } from "./current-user/current-user.reducer";
+import { DashboardState } from "./dashboard/dashboard.state";
+import { dashboardReducer } from "./dashboard/dashboard.reducer";
+import { VisualizationState } from "./visualization/visualization.state";
+import { visualizationReducer } from "./visualization/visualization.reducer";
+import { DictionaryState } from "../modules/dictionary/store/dictionary.state";
+import { dictionaryReducer } from "../modules/dictionary/store/dictionary.reducer";
 import {
   downloadsReducer,
   portalReducer,
   statsSummaryReducer,
   faqReducer,
-  loadDataFromExternalSourcesReducer, loadAnalyticsData, loadGroupedSliderInfo, loadFeedBacks
-} from './portal/portal.reducer';
+  loadDataFromExternalSourcesReducer,
+  loadAnalyticsData,
+  loadGroupedSliderInfo,
+  loadFeedBacks,
+  portalViewsReducer
+} from "./portal/portal.reducer";
 import {
   DownloadsState,
   PortalConfigurationState,
   StatsSummaryState,
   FAQState,
   ExternalSourcesState,
-  DataState, GroupedSlidersState,
-  FeedBacksState
-} from './portal/portal.state';
+  DataState,
+  GroupedSlidersState,
+  FeedBacksState,
+  PortalViewsState
+} from "./portal/portal.state";
 
 export interface AppState {
   route: RouterReducerState;
@@ -41,7 +47,8 @@ export interface AppState {
   dataFromExternalSource: ExternalSourcesState;
   analyticsData: DataState;
   groupedSlidersInfo: GroupedSlidersState;
-  feedBacks: FeedBacksState
+  feedBacks: FeedBacksState;
+  portalViews: PortalViewsState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -57,7 +64,10 @@ export const reducers: ActionReducerMap<AppState> = {
   dataFromExternalSource: loadDataFromExternalSourcesReducer,
   analyticsData: loadAnalyticsData,
   groupedSlidersInfo: loadGroupedSliderInfo,
-  feedBacks: loadFeedBacks
+  feedBacks: loadFeedBacks,
+  portalViews: portalViewsReducer
 };
 
-export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [storeFreeze] : [];
+export const metaReducers: MetaReducer<AppState>[] = !environment.production
+  ? [storeFreeze]
+  : [];

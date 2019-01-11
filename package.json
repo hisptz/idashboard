@@ -64,6 +64,7 @@
     "ng2-dragula": "^1.5.0",
     "ngrx-store-freeze": "^0.2.0",
     "ngx-color-picker": "^6.3.3",
+    "ngx-device-detector": "^1.3.5",
     "ngx-pagination": "^3.0.3",
     "owl.carousel": "^2.3.4",
     "polylabel": "^1.0.2",

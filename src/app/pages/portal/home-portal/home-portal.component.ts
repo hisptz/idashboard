@@ -1,35 +1,40 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import { Component, ElementRef, Input, OnInit } from "@angular/core";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import {
   DownloadsState,
   ExternalSourcesState,
   FAQState,
   PortalConfigurationState,
-  StatsSummaryState
-} from '../../../store/portal/portal.state';
-import {Observable} from 'rxjs/index';
+  StatsSummaryState,
+  PortalViewsState
+} from "../../../store/portal/portal.state";
+import { Observable } from "rxjs/index";
 import {
   getDataFromExternalSource,
   getDownloads,
   getFAQs,
   getPortalConfiguration,
-  getStatsSummary
-} from '../../../store/portal/portal.selectors';
-import {Store} from '@ngrx/store';
-import {CurrentUserState} from '../../../store/current-user/current-user.state';
-import {getCurrentUser} from '../../../store/current-user/current-user.selectors';
-import * as portalActions from '../../../store/portal/portal.actions';
-import {AppState} from '../../../store/app.reducers';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+  getStatsSummary,
+  getPortalViews
+} from "../../../store/portal/portal.selectors";
+import { Store } from "@ngrx/store";
+import { CurrentUserState } from "../../../store/current-user/current-user.state";
+import { getCurrentUser } from "../../../store/current-user/current-user.selectors";
+import * as portalActions from "../../../store/portal/portal.actions";
+import { AppState } from "../../../store/app.reducers";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { DeviceDetectorService } from "ngx-device-detector";
+import { DatePipe } from "@angular/common";
+
+import * as _ from "lodash";
 
 @Component({
-  selector: 'app-home-portal',
-  templateUrl: './home-portal.component.html',
-  styleUrls: ['./home-portal.component.css']
+  selector: "app-home-portal",
+  templateUrl: "./home-portal.component.html",
+  styleUrls: ["./home-portal.component.css"]
 })
 export class HomePortalComponent implements OnInit {
-
   portalConfiguration$: Observable<PortalConfigurationState>;
   visualizationObjects$: Observable<any>;
   downloads$: Observable<DownloadsState>;
@@ -47,28 +52,53 @@ export class HomePortalComponent implements OnInit {
   currentUser$: Observable<CurrentUserState>;
   _htmlFromExternalSource: SafeHtml;
   hasScriptSet: boolean;
-  constructor(private store: Store<AppState>, private httpClient: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) {
+  deviceInfo = null;
+  portalViews$: Observable<PortalViewsState>;
+  constructor(
+    private store: Store<AppState>,
+    private deviceService: DeviceDetectorService,
+    private httpClient: HttpClient,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private elementRef: ElementRef,
+    private datePipe: DatePipe,
+    private router: Router
+  ) {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     store.dispatch(new portalActions.LoadDownloadsAction());
     store.dispatch(new portalActions.LoadFAQAction());
-    store.dispatch(new portalActions.LoadExtractedDataFromExternalSourcesAction('../portal-middleware/extract/who-factbuffects'));
+    store.dispatch(
+      new portalActions.LoadExtractedDataFromExternalSourcesAction(
+        "../portal-middleware/extract/who-factbuffects"
+      )
+    );
+    store.dispatch(new portalActions.LoadPortalViewsAction());
     this.currentUser$ = store.select(getCurrentUser);
     this.statsSummary$ = store.select(getStatsSummary);
     this.portalConfiguration$ = store.select(getPortalConfiguration);
     this.downloads$ = store.select(getDownloads);
     this.portalFAQs$ = store.select(getFAQs);
     this.dataFromExternalSource$ = store.select(getDataFromExternalSource);
+    this.portalViews$ = store.select(getPortalViews);
   }
 
   ngOnInit() {
     if (this.portalConfiguration$) {
       this.route.params.forEach((params: Params) => {
-        this.theSetPage = params['id']; const parentId = params['parentId'];
+        this.theSetPage = params["id"];
+        const parentId = params["parentId"];
         if (!parentId) {
-          this.portalConfiguration$.subscribe((portalConfigurations) => {
+          this.portalConfiguration$.subscribe(portalConfigurations => {
             if (portalConfigurations) {
               this.portalConfigurations = portalConfigurations;
-              this.portalPages = portalConfigurations['pages'];
+              this.portalPages = portalConfigurations["pages"];
+              if (this.portalViews$) {
+                this.portalViews$.subscribe(portalViews => {
+                  if (portalViews) {
+                    this.portalViewersInformation(portalViews);
+                  }
+                });
+              }
             }
           });
         }
@@ -76,17 +106,17 @@ export class HomePortalComponent implements OnInit {
     }
 
     if (this.statsSummary$) {
-      this.statsSummary$.subscribe((statisticsSummary) => {
+      this.statsSummary$.subscribe(statisticsSummary => {
         if (statisticsSummary) {
           this.statsSummaryGroups = statisticsSummary.statsSummaryGroups;
-          this.portalThemes = statisticsSummary['themes'];
-          this.allNews = statisticsSummary['news'];
-          this.visualizationObjects$ = statisticsSummary['visualization'];
-          const pages = statisticsSummary['pages'];
+          this.portalThemes = statisticsSummary["themes"];
+          this.allNews = statisticsSummary["news"];
+          this.visualizationObjects$ = statisticsSummary["visualization"];
+          const pages = statisticsSummary["pages"];
           this.route.params.forEach((params: Params) => {
-            if (params['parentId']) {
-              pages.forEach((page) => {
-                if (page.id === params['id']) {
+            if (params["parentId"]) {
+              pages.forEach(page => {
+                if (page.id === params["id"]) {
                   this.selectedPageInformation = page;
                 }
               });
@@ -97,10 +127,10 @@ export class HomePortalComponent implements OnInit {
     }
 
     if (this.dataFromExternalSource$) {
-      this.dataFromExternalSource$.subscribe((dataFromExternalSource) => {
+      this.dataFromExternalSource$.subscribe(dataFromExternalSource => {
         try {
           this._htmlFromExternalSource = this.sanitizer.bypassSecurityTrustHtml(
-            dataFromExternalSource['data']
+            dataFromExternalSource["data"]
           );
           this.hasScriptSet = true;
         } catch (e) {
@@ -112,5 +142,45 @@ export class HomePortalComponent implements OnInit {
 
   setPosition(position) {
     this.location = position.coords;
+  }
+
+  portalViewersInformation(portalViews) {
+    const portalViewsInfo = portalViews;
+    const theDate = new Date();
+    let newPortalViews = {
+      portalViews: []
+    };
+    const viewsObject = {
+      viewDate: this.transformDate(theDate),
+      page: this.router.url,
+      userAgent: this.deviceService.getDeviceInfo(),
+      isMobile: this.deviceService.isMobile(),
+      isTablet: this.deviceService.isTablet(),
+      isDesktop: this.deviceService.isDesktop()
+    };
+    if (
+      _.filter(portalViewsInfo["portalViews"], [
+        "viewDate",
+        this.transformDate(theDate)
+      ]).length > 0
+    ) {
+      // check if the its from the same user and hence do not send, otherwise send
+      console.log("available");
+    } else {
+      // not available hence send
+      portalViewsInfo["portalViews"].forEach(portalView => {
+        newPortalViews.portalViews.push(portalView);
+      });
+      newPortalViews.portalViews.push(viewsObject);
+      this.httpClient
+        .put("/api/dataStore/observatory/portalViews.json", newPortalViews)
+        .subscribe(message => {
+          console.log(message);
+        });
+    }
+  }
+
+  transformDate(date) {
+    return this.datePipe.transform(date, "yyyy-MM-dd");
   }
 }

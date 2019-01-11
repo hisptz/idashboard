@@ -2,11 +2,11 @@ export interface PortalConfigurationState {
   isPortal: boolean;
   pages: [
     {
-      id: string,
-      name: string,
-      isHomePage: boolean,
-      routeUrl: string,
-      idName: string,
+      id: string;
+      name: string;
+      isHomePage: boolean;
+      routeUrl: string;
+      idName: string;
     }
   ];
 }
@@ -18,10 +18,10 @@ export interface StatsSummaryState {
 export interface DownloadsState {
   downloads: [
     {
-      id: string,
-      name: string,
-      routeUrl: string,
-      downloadsOptions: Array<{}>,
+      id: string;
+      name: string;
+      routeUrl: string;
+      downloadsOptions: Array<{}>;
     }
   ];
 }
@@ -30,15 +30,14 @@ export interface DownloadsState {
 export interface FAQState {
   faq: [
     {
-      title: string,
-      desc: string,
-      faqMenu: Array<{}>
+      title: string;
+      desc: string;
+      faqMenu: Array<{}>;
     }
   ];
 }
 
 // ENDS: FAQ MODEL - Custom Data Model
-
 
 export interface ExternalSourcesState {
   data: any;
@@ -58,4 +57,17 @@ export interface GroupedSlidersState {
 
 export interface FeedBacksState {
   feedBacks: any;
+}
+
+export interface PortalViewsState {
+  portalViews: [
+    {
+      viewDate: string;
+      page: string;
+      userAgent: any;
+      isMobile: boolean;
+      isTablet: boolean;
+      isDesktop: boolean;
+    }
+  ];
 }
