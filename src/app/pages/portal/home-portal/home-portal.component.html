@@ -1,16 +1,21 @@
 <!--<app-visualization-slider [currentUser$]="currentUser$" [visualizationObjects$]="visualizationObjects$"></app-visualization-slider>-->
-<app-slider [visualizationObjects$]="visualizationObjects$" [currentUser$]="currentUser$"></app-slider>
-<app-statistics-summary [statsSummaryGroups]="statsSummaryGroups"></app-statistics-summary>
+<app-slider
+  [visualizationObjects$]="visualizationObjects$"
+  [currentUser$]="currentUser$"
+></app-slider>
+<app-statistics-summary
+  [statsSummaryGroups]="statsSummaryGroups"
+></app-statistics-summary>
 <div class="row">
   <div class="col-lg-9 col-md-12" *ngIf="portalThemes">
     <app-portal-themes [themes]="portalThemes"></app-portal-themes>
   </div>
   <div class="col-lg-3 col-md-12" *ngIf="allNews">
     <app-news [allNews]="allNews"></app-news>
-    <div class="fact-buffets-from-external-sources" *ngIf="_htmlFromExternalSource">
+    <!-- <div class="fact-buffets-from-external-sources" *ngIf="_htmlFromExternalSource">
       <div class="card" style="padding: 10px;">
-        <!--<div [innerHtml]="_htmlFromExternalSource"></div>-->
+        <div [innerHtml]="_htmlFromExternalSource"></div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

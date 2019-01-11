@@ -90,10 +90,9 @@ export class DownloadsComponent implements OnInit {
   }
 
   portalViewersInformation() {
-    this.store.dispatch(new portalActions.LoadPortalViewsAction());
-    this.portalViews$ = this.store.select(getPortalViews);
-    if (this.portalViews$) {
-      this.portalViews$.subscribe(portalViews => {
+    this.httpClient
+      .get("dataStore/observatory/portalViews.json")
+      .subscribe(portalViews => {
         if (portalViews) {
           const portalViewsInfo = portalViews;
           const theDate = new Date();
@@ -163,7 +162,6 @@ export class DownloadsComponent implements OnInit {
           });
         }
       });
-    }
   }
 
   transformDate(date) {
