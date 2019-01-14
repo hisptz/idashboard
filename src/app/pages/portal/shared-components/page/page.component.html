@@ -1,21 +1,74 @@
 <div class="row" *ngIf="selectedPageInformation">
-  <div class="col-lg-3 col-md-12 col-sx-12">
-    <div class="container-summary-menu">
-      <h4><a href="#/pages/home">Home</a> / <b> {{selectedPageInformation.name}}</b></h4>
-      <div class="menu-list-item" id="{{selectedPageInformation.id}}">{{selectedPageInformation.name}}</div>
+  <div class="col-lg-12">
+    <div class="container-summary-menu-top">
+      <h4>
+        <a href="#/pages/home">Home</a> / <b> {{ selectedPageName }}</b>
+      </h4>
     </div>
   </div>
-  <div class="col-lg-9 col-md-12 col-sx-12 page-contents">
-    <div id="contents">
-      <h4 class="page-header">{{selectedPageInformation['pageHeader']}}</h4>
-      <div *ngIf="selectedPageInformation['pageContents'].length > 0">
-        <div *ngFor="let paragraphs of selectedPageInformation['pageContents']">
-          <h5 class="sub-page-header" *ngIf="paragraphs.header != ''">{{paragraphs.header}}</h5>
-          <p *ngFor="let subParagraph of paragraphs['paragraphs']">{{subParagraph}}</p>
+  <div class="col-lg-3 col-md-12 col-sx-12">
+    <div class="container-summary-menu">
+      <div
+        class="menu-list-item"
+        [ngClass]="subPage.id === selectedPageId ? 'menu-list-item-active' : ''"
+        *ngFor="let subPage of selectedPageInformation"
+        id="{{ subPage.id }}"
+        routerLink="/pages/home/{{ pageCategory }}/{{ subPageCategory }}/{{
+          subPage.id
+        }}"
+      >
+        {{ subPage.name }}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9 col-md-12 col-sx-12">
+    <div *ngFor="let subPage of selectedPageInformation">
+      <div
+        class="contents"
+        *ngIf="subPage['pageContents'] && subPage.id === selectedPageId"
+      >
+        <h4 class="page-header">{{ subPage.header }}</h4>
+        <div *ngIf="subPage['pageContents'].length > 0">
+          <div *ngFor="let paragraphs of subPage['pageContents']">
+            <h5 class="sub-page-header" *ngIf="paragraphs.header != ''">
+              {{ paragraphs.header }}
+            </h5>
+            <p *ngFor="let subParagraph of paragraphs['paragraphs']">
+              {{ subParagraph }}
+            </p>
+          </div>
+        </div>
+        <div
+          *ngIf="subPage['pageContents'][0]['paragraphs'].length === 0"
+          class="message"
+        >
+          <h2>{{ selectedPageInformation.message }}</h2>
         </div>
       </div>
-      <div *ngIf="selectedPageInformation['pageContents'][0]['paragraphs'].length === 0" class="message">
-        <h2>{{selectedPageInformation.message}}</h2>
+      <div
+        class="data-loaded"
+        *ngIf="
+          (subPage.dashboardItems || subPage.dimensions) &&
+          subPage.id === selectedPageId
+        "
+      >
+        <div *ngFor="let dashboardItem of subPage.dashboardItems">
+          <div *ngFor="let visualizationObject of (groupedDashboards$ | async)">
+            <div *ngIf="visualizationObject.id === dashboardItem.id">
+              <h2 *ngIf="visualizationObject.name">
+                {{ visualizationObject.name }}
+              </h2>
+              <app-visualization-card
+                [visualizationObject]="visualizationObject"
+                [currentUser]="currentUser$"
+                [dashboardAccess]="dashboardAccess"
+                [isItVisualizable]="true"
+                [isFullScreenEnabled]="false"
+              >
+              </app-visualization-card>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

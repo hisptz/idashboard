@@ -21,7 +21,7 @@ export const routes: Routes = [
     component: HomePortalComponent
   },
   {
-    path: "pages/home/:id",
+    path: "pages/home/:pageCategory/:subCategory/:id",
     component: PageComponent
   },
   {

@@ -104,7 +104,7 @@ export class DashboardEffects {
         if (portalConfigurations.isPortal && portalConfigurations) {
           let navigateTo = "";
 
-          const allDashboardItems = _.flatten(
+          const screenViewDashboardItems = _.flatten(
             _.take(
               _.map(action.payload.dashboards || [], (dashboardLoaded: any) =>
                 _.take(
@@ -125,7 +125,7 @@ export class DashboardEffects {
           );
 
           this.store.dispatch(
-            new dashboard.SetAllDashboardsAction(allDashboardItems)
+            new dashboard.SetAllDashboardsAction(screenViewDashboardItems)
           );
 
           portalConfigurations.pages.forEach(page => {
