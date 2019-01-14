@@ -51,6 +51,10 @@
           subPage.id === selectedPageId
         "
       >
+        <div *ngIf="!itemsLoaded">
+          <img src="assets/img/balls-3.svg" height="80" width="80" /> Preparing
+          information for data dimensions
+        </div>
         <div *ngFor="let dashboardItem of subPage.dashboardItems">
           <div *ngFor="let visualizationObject of (groupedDashboards$ | async)">
             <div *ngIf="visualizationObject.id === dashboardItem.id">

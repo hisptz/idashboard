@@ -38,6 +38,7 @@ export class PageComponent implements OnInit {
     update: true;
     write: true;
   };
+  itemsLoaded: boolean;
   constructor(
     private store: Store<AppState>,
     private httpClientService: HttpClientService,
@@ -46,6 +47,7 @@ export class PageComponent implements OnInit {
     store.dispatch(new portalActions.LoadStatsSummaryAction());
     this.statsSummary$ = store.select(getStatsSummary);
     this.currentUser$ = store.select(getCurrentUser);
+    this.itemsLoaded = false;
   }
 
   ngOnInit() {
@@ -114,6 +116,7 @@ export class PageComponent implements OnInit {
               }).length > 0
             ) {
               // we have data on the array of data used on screen view
+              this.itemsLoaded = true;
             } else {
               this.httpClientService
                 .get(
@@ -132,6 +135,9 @@ export class PageComponent implements OnInit {
                     this.groupedDashboards$ = this.store.select(
                       getDashboardGroupedVisualizationObjects
                     );
+                    if (this.groupedDashboards$) {
+                      this.itemsLoaded = true;
+                    }
                   }
                 });
             }
