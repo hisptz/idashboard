@@ -58,13 +58,31 @@ export class PageComponent implements OnInit {
             this.pageCategory = params["pageCategory"];
             this.subPageCategory = params["subCategory"];
             this.selectedPageId = params["id"];
-            console.log(this.selectedPageId);
+            this.selectedPageInformation = [];
             _.filter(statisticsSummary.statsSummaryGroups, {
               id: params["pageCategory"]
             })[0]["dataGroups"].forEach(dataGroup => {
               if (dataGroup.id === params["subCategory"]) {
                 this.selectedPageName = dataGroup["name"];
-                this.selectedPageInformation = dataGroup["statistics"];
+                dataGroup["statistics"].forEach(stats => {
+                  this.selectedPageInformation.push(stats);
+                });
+                console.log(
+                  "check",
+                  _.filter(statisticsSummary["themes"], {
+                    programId: params["subCategory"]
+                  })
+                );
+                _.filter(statisticsSummary["themes"], {
+                  programId: params["subCategory"]
+                }).forEach(theme => {
+                  console.log("theme", theme);
+                  this.selectedPageInformation.push(theme);
+                  console.log(
+                    "this.selectedPageInformation",
+                    this.selectedPageInformation
+                  );
+                });
                 this.selectedPageInformation.forEach(pageInfo => {
                   if (
                     pageInfo.id === this.selectedPageId &&

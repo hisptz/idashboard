@@ -26,7 +26,7 @@
   padding: 6px 8px;
   background-color: #ededed;
   color: #222222;
-  margin-bottom: -1px;
+  border-bottom: solid 1px #fff;
   cursor: pointer;
   border-radius: 0;
   outline: none;

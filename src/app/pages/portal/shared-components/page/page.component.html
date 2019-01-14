@@ -12,7 +12,6 @@
         class="menu-list-item"
         [ngClass]="subPage.id === selectedPageId ? 'menu-list-item-active' : ''"
         *ngFor="let subPage of selectedPageInformation"
-        id="{{ subPage.id }}"
         routerLink="/pages/home/{{ pageCategory }}/{{ subPageCategory }}/{{
           subPage.id
         }}"
