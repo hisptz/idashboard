@@ -194,7 +194,7 @@ export class HomePortalComponent implements OnInit {
                     localStorage.getItem("identifier")
                   ).uniqueId;
                   newPortalViews.portalViews.push(viewsObject);
-                  // this.sendUserReviews(newPortalViews);
+                  this.sendUserReviews(newPortalViews);
                 }
               } else {
                 // not available hence set localstorage and send
@@ -203,7 +203,7 @@ export class HomePortalComponent implements OnInit {
                   newPortalViews.portalViews.push(portalView);
                 });
                 newPortalViews.portalViews.push(viewsObject);
-                // this.sendUserReviews(newPortalViews);
+                this.sendUserReviews(newPortalViews);
               }
             }
           });
