@@ -22,6 +22,7 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
   legendSetEntities;
   @Input()
   visualizationLayerId: string;
+  @Input() functionRules: any;
 
   @Output()
   legendSetConfigurationClose = new EventEmitter();
@@ -38,8 +39,10 @@ export class LegendSetContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const functionRulesObject = _.keyBy(this.functionRules, 'id');
     const legendSets: LegendSet[] = legendHelper.getLegendSetsConfiguration(
       this.selectedItems,
+      functionRulesObject,
       this.legendSetEntities,
       this.visualizationLayerId
     );

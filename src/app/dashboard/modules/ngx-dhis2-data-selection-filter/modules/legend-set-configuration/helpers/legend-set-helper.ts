@@ -4,20 +4,28 @@ import { Legend, LegendSet } from '../models/legend-set';
 
 export function getLegendSetsConfiguration(
   selectedItems,
+  functionRulesObject,
   legendSetEntities,
   visualizationLayerId
 ) {
-  return _.map(selectedItems, selectedItem => {
-    const index = _.indexOf(selectedItems, selectedItem) + 1;
-    const dimensionItemId = selectedItem.id;
-    const id = `${visualizationLayerId}_${dimensionItemId}`;
-    const legends =
-      legendSetEntities && legendSetEntities[id]
-        ? legendSetEntities && legendSetEntities[id].legends
-        : [];
-    const name = selectedItem.name ? selectedItem.name : 'Item ' + index;
-    return { id, visualizationLayerId, dimensionItemId, name, legends };
-  });
+  return _.sortBy(
+    _.map(selectedItems, selectedItem => {
+      const index = _.indexOf(selectedItems, selectedItem) + 1;
+      const dimensionItemId = selectedItem.id;
+      const id = `${visualizationLayerId}_${dimensionItemId}`;
+      const legends =
+        legendSetEntities && legendSetEntities[id]
+          ? legendSetEntities && legendSetEntities[id].legends
+          : [];
+      const name =
+        functionRulesObject[selectedItem.id] &&
+        functionRulesObject[selectedItem.id].name
+          ? functionRulesObject[selectedItem.id].name
+          : 'Item ' + index;
+      return { id, visualizationLayerId, dimensionItemId, name, legends };
+    }),
+    ['name']
+  );
 }
 
 export function getLegendSetForUpdate(legendSets: LegendSet[]) {

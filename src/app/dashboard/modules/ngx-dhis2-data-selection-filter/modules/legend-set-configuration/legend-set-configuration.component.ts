@@ -8,10 +8,14 @@ import {
 } from '@angular/core';
 import { LegendSet } from './models/legend-set';
 import { Store, select } from '@ngrx/store';
-import { State, getLegendSetsEntities } from '../../../../../store';
+import {
+  State,
+  getLegendSetsEntities,
+  getAllFunctionRules
+} from '../../../../../store';
 import { Observable } from 'rxjs';
-import * as legendSetHelper from './helpers/legend-set-helper';
 import { UpsetLagendSets } from '../../../../../store/actions/legend-set.action';
+import { FunctionRule } from 'src/app/models';
 
 @Component({
   selector: 'app-legend-set-configuration',
@@ -23,6 +27,7 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
   selectedItems;
   @Input()
   visualizationLayerId: string;
+  functionRules$: Observable<FunctionRule[]>;
 
   @Output()
   legendSetConfigurationClose = new EventEmitter();
@@ -30,6 +35,7 @@ export class LegendSetConfigurationComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<State>) {
     this.legendSetEntities$ = this.store.pipe(select(getLegendSetsEntities));
+    this.functionRules$ = this.store.select(getAllFunctionRules);
   }
 
   ngOnInit() {}
