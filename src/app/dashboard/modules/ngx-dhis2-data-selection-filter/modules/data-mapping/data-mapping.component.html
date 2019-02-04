@@ -1,3 +1,21 @@
-<app-data-mapping-container (setCurrentDataItemGroup)="onSelectDataMappingGroup($event)" (dataMappingClose)="onDataMappingClose($event)"
-  [selectedGroup]="selectedGroup$ |async" [dataFilterItems]="dataFilterItems$ |async" [indicators]="indicators$|async"
-  [dataElements]="dataElements$ |async" [selectedItems]="selectedItems" [functionRules]="functionRules$|async"></app-data-mapping-container>
+<div class="data-filter-btns">
+  <div>
+    <button [ngClass]="{'btn btn-outline-secondary btn-sm': true,'active-btn': currentDataMappingContainer === 'DATA_ELEMENT_MAPPING' }"
+      (click)="onSetCurrentDataMappingCOntainer('DATA_ELEMENT_MAPPING')">Data
+      element
+      mapping</button>&nbsp;
+    <button [ngClass]="{'btn btn-outline-secondary btn-sm': true,'active-btn': currentDataMappingContainer === 'INDICTOR_NAMING' }"
+      (click)="onSetCurrentDataMappingCOntainer('INDICTOR_NAMING')">Indicator
+      naming</button>
+  </div>
+</div>
+<div class="data-mapping-container">
+  <div *ngIf="currentDataMappingContainer === 'DATA_ELEMENT_MAPPING'">
+    <app-data-mapping-container (setCurrentDataItemGroup)="onSelectDataMappingGroup($event)" (dataMappingClose)="onDataMappingClose($event)"
+      [selectedGroup]="selectedGroup$ |async" [dataFilterItems]="dataFilterItems$ |async" [indicators]="indicators$|async"
+      [dataElements]="dataElements$ |async" [selectedItems]="selectedItems" [functionRules]="functionRules$|async"></app-data-mapping-container>
+  </div>
+  <div *ngIf="currentDataMappingContainer === 'INDICTOR_NAMING'">
+    <app-indicator-container [selectedItems]="selectedItems" [functionRules]="functionRules$|async"></app-indicator-container>
+  </div>
+</div>

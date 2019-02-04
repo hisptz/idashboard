@@ -1,0 +1,24 @@
+.data-filter-btns {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 0.2em;
+  padding-right: 5px;
+  border-radius: 4px;
+}
+
+.data-mapping-container {
+  border-top: 2px solid #eeeeee;
+  margin: 5px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.data-filter-btns,
+.active-btn :hover {
+  color: #000000;
+}
+
+.active-btn {
+  background-color: #00796b;
+  color: #fff;
+}

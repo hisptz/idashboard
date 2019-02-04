@@ -40,16 +40,16 @@ export class DataMappingComponent implements OnInit, OnDestroy {
   indicators$: Observable<Indicator[]>;
   selectedGroup$: Observable<any>;
   dataFilterItems$: Observable<any[]>;
-  showContainer: boolean;
+  currentDataMappingContainer: string;
 
   constructor(private store: Store<State>) {
+    this.currentDataMappingContainer = 'DATA_ELEMENT_MAPPING';
     this.selectedGroup$ = this.store.pipe(
       select(getCurrentDataItemMappingGroup)
     );
     this.functionRules$ = this.store.select(getAllFunctionRules);
     this.dataFilterItems$ = this.store.pipe(select(getCurrentDataFilterItems));
     this.dataElements$ = this.store.select(getAllSystemDataElements);
-
     this.indicators$ = this.store.pipe(select(getAllIndicators));
   }
 
@@ -69,6 +69,10 @@ export class DataMappingComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSetCurrentDataMappingCOntainer(dataMappingContainer: string) {
+    this.currentDataMappingContainer = dataMappingContainer;
+  }
+
   onSelectDataMappingGroup(group) {
     this.store.dispatch(new SetCurrentDataItemMapingGroup(group));
   }
@@ -76,5 +80,7 @@ export class DataMappingComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.functionRules$ = null;
     this.dataElements$ = null;
+    this.indicators$ = null;
+    this.dataFilterItems$ = null;
   }
 }
