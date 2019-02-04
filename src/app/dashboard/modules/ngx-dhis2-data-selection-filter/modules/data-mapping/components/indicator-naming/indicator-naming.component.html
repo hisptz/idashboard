@@ -1,0 +1,8 @@
+<div class="indicator-container">
+  <div>
+    {{ indicatorLabel}}
+  </div>
+  <div>
+    <input (blur)="onUpdateIndicatorName()" type="text" class="indicator-naming-input" [(ngModel)]="indicator.name">
+  </div>
+</div>

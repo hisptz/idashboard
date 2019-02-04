@@ -1,3 +1,12 @@
 <div class="indicator-name-container">
-  selectedItems : {{selectedItems|json}}
+  <div *ngFor="let indicator of indicators">
+    <app-indicator-naming (updateIndicator)="onUpdateIndictor($event)" [indicator]="indicator"></app-indicator-naming>
+  </div>
+</div>
+
+<div class="data-filter-btns">
+  <div>
+    <button class="btn btn-outline-secondary btn-sm" (click)="onCloseIndicatorNaming($event)">Close</button>&nbsp;
+    <button class="btn btn-outline-secondary btn-sm" (click)="onSaveIndicatorNaming($event)">Save</button>
+  </div>
 </div>

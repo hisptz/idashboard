@@ -1,3 +1,13 @@
 .indicator-name-container {
-  min-width: 600px;
+  min-width: 540px;
+  max-height: 300px;
+  margin-top: 5px;
+  overflow: auto;
+}
+
+.data-filter-btns {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.2em;
+  padding-right: 5px;
 }

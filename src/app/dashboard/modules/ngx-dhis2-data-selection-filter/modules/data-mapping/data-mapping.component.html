@@ -16,6 +16,7 @@
       [dataElements]="dataElements$ |async" [selectedItems]="selectedItems" [functionRules]="functionRules$|async"></app-data-mapping-container>
   </div>
   <div *ngIf="currentDataMappingContainer === 'INDICTOR_NAMING'">
-    <app-indicator-container [selectedItems]="selectedItems" [functionRules]="functionRules$|async"></app-indicator-container>
+    <app-indicator-container [selectedItems]="selectedItems" [functionRules]="functionRules$|async"
+      (indicatorNamingClose)="onIndicatorNamingClose($event)"></app-indicator-container>
   </div>
 </div>
