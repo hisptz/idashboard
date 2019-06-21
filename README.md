@@ -3,7 +3,7 @@
 [![devDependencies Status](https://david-dm.org/hisptz/idashboard/dev-status.svg)](https://david-dm.org/hisptz/idashboard?type=dev)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dbe97dbdfbd55344c38f/maintainability)](https://codeclimate.com/github/hisptz/idashboard/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/dbe97dbdfbd55344c38f/test_coverage)](https://codeclimate.com/github/hisptz/idashboard/test_coverage)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Greenkeeper badge](https://badges.greenkeeper.io/hisptz/idashboard.svg)](https://greenkeeper.io/)
 
 # Interactive Dashboard 2
 
