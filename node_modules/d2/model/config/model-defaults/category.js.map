@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../src/model/config/model-defaults/category.js"],"names":["dataDimension"],"mappings":";;;;;;eAAe;AACXA,EAAAA,aAAa,EAAE;AADJ,C","sourcesContent":["export default {\n    dataDimension: true,\n};\n"],"file":"category.js"}
