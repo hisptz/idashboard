@@ -1,15 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
+import { containers } from './containers';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './containers/dashboard/dashboard.component';
-import { CurrentDashboardComponent } from './containers/current-dashboard/current-dashboard.component';
+import { CurrentDashboardComponent } from './pages/current-dashboard/current-dashboard.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardItemService } from './services/dashboard-item.service';
 import { DashboardPreferencesService } from './services/dashboard-preferences.service';
 import { DashboardService } from './services/dashboard.service';
-import { DashboardItemService } from './services/dashboard-item.service';
 
 @NgModule({
-  declarations: [DashboardComponent, CurrentDashboardComponent],
+  declarations: [DashboardComponent, CurrentDashboardComponent, ...containers],
   providers: [
     DashboardPreferencesService,
     DashboardService,

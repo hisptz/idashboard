@@ -1,0 +1,20 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.dashboard-menu-top,
+.dashboard-content-top {
+  grid-column: span 12;
+}
+
+.dashboard-menu-left {
+  width: 300px;
+  height: calc(100vh - 55px);
+  position: fixed;
+}
+
+.dashboard-content-left {
+  grid-column: span 12;
+  margin-left: 300px;
+}
