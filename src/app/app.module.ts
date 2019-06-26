@@ -20,6 +20,7 @@ import { RoutingModule } from './app.routes';
 import { CoreModule, RouteSerializer } from './core';
 import { effects } from './store/effects';
 import { metaReducers, reducers } from './store/reducers';
+import { NgxDhis2HttpClientModule } from '@iapps/ngx-dhis2-http-client';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -32,7 +33,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     HttpClientModule,
     RoutingModule,
-    CoreModule.forRoot({
+    NgxDhis2HttpClientModule.forRoot({
       namespace: 'iapps',
       version: 1,
       models: {
