@@ -1,6 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-
 import { DashboardItemService } from './dashboard-item.service';
+import { TestBed } from '@angular/core/testing';
 
 describe('DashboardItemService', () => {
   beforeEach(() =>

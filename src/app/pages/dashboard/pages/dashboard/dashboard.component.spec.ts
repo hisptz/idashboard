@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DashboardMenuComponent } from '../../containers/dashboard-menu/dashboard-menu.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -9,8 +12,12 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [DashboardComponent]
+      imports: [
+        RouterTestingModule,
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([])
+      ],
+      declarations: [DashboardComponent, DashboardMenuComponent]
     }).compileComponents();
   }));
 

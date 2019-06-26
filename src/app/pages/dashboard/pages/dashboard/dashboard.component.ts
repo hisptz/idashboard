@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/store/reducers';
+import { loadDashboardPreferences } from '../../store/actions/dashboard-preferences.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +13,9 @@ export class DashboardComponent implements OnInit {
     menuAlignment: 'left',
     menuType: 'default'
   };
-  constructor() {}
+  constructor(private store: Store<State>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(loadDashboardPreferences());
+  }
 }

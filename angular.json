@@ -22,7 +22,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webapp",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/dashboard-config"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
