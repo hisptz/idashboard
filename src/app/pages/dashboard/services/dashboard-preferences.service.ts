@@ -7,11 +7,13 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 const dataStoreNamespace = 'dataStore/dashboard-preferences';
 const preferenceFileLink = 'dashboard-config/dashboard-preferences.json';
 const defaultDashboardPreferences: DashboardPreferences = {
-  id: 'default',
-  namespace: 'default',
-  useDataStoreAsSource: false,
+  id: 'DEFAULT',
+  namespace: 'DEFAULT',
+  dashboardSource: 'API',
+  favoriteSource: 'API',
   menuAlignment: 'top',
-  menuType: 'standard'
+  menuType: 'standard',
+  customAttributes: []
 };
 @Injectable()
 export class DashboardPreferencesService {
