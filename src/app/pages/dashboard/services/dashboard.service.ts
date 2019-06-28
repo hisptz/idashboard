@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
+import { NgxDhis2HttpClientService, User } from '@iapps/ngx-dhis2-http-client';
 import { find, omit, pick } from 'lodash';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
