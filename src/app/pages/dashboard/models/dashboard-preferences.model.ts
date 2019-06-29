@@ -1,7 +1,9 @@
 export interface DashboardPreferences {
   id: string;
   namespace: string;
-  useDataStoreAsSource: boolean;
+  dashboardSource: string;
+  favoriteSource: string;
+  customAttributes: string[];
   menuAlignment: string;
   menuType: string;
 }

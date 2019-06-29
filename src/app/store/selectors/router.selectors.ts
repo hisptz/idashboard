@@ -7,7 +7,7 @@ export const selectRouter = createFeatureSelector<State, RouterReducerState>(
   'router'
 );
 
-const {
+export const {
   selectQueryParams: getQueryParams, // select the current route query params
   selectRouteParams: getRouteParams, // select the current route params
   selectRouteData: getRouteData, // select the current route data
