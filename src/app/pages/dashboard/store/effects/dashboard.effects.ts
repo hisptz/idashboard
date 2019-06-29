@@ -27,16 +27,17 @@ import {
   addDashboards,
   loadDashboards,
   loadDashboardsFail,
-  saveDashboard,
-  setCurrentDashboard,
-  updateDashboard,
-  saveDashboardSuccess,
-  saveDashboardFail,
   removeDashboard,
+  removeDashboardFail,
   removeDashboardSuccess,
-  removeDashboardFail
+  saveDashboard,
+  saveDashboardFail,
+  saveDashboardSuccess,
+  setCurrentDashboard
 } from '../actions/dashboard.actions';
 import { getDashboardPreferences } from '../selectors/dashboard-preferences.selectors';
+import { go } from 'src/app/store/actions';
+import { initializeDashboardItems } from '../actions/dashboard-item.actions';
 
 @Injectable()
 export class DashboardEffects {
@@ -142,6 +143,44 @@ export class DashboardEffects {
             })
           )
         )
+      ),
+    { dispatch: false }
+  );
+
+  setCurrentDashboard$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(setCurrentDashboard),
+        concatMap(action =>
+          of(action).pipe(
+            withLatestFrom(this.store.pipe(select(getCurrentUser)))
+          )
+        ),
+        tap(([{ dashboard }, { userCredentials }]) => {
+          if (
+            userCredentials &&
+            userCredentials.username &&
+            dashboard &&
+            dashboard.id
+          ) {
+            localStorage.setItem(
+              'dhis2.dashboard.current.' + userCredentials.username,
+              dashboard.id
+            );
+          }
+
+          if (dashboard && dashboard.dashboardItems) {
+            // Navigate to the respective dashboard
+            this.store.dispatch(go({ path: [`/dashboards/${dashboard.id}`] }));
+
+            // Load dashboard items for the current dashboard
+            this.store.dispatch(
+              initializeDashboardItems({
+                dashboardItems: dashboard.dashboardItems
+              })
+            );
+          }
+        })
       ),
     { dispatch: false }
   );

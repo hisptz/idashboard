@@ -1,8 +1,9 @@
-import { DashboardItemService } from './dashboard-item.service';
 import { TestBed } from '@angular/core/testing';
 import { NgxDhis2HttpClientModule } from '@iapps/ngx-dhis2-http-client';
 
-describe('DashboardItemService', () => {
+import { FavoriteService } from './favorite.service';
+
+describe('FavoriteService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [
@@ -14,12 +15,12 @@ describe('DashboardItemService', () => {
           }
         })
       ],
-      providers: [DashboardItemService]
+      providers: [FavoriteService]
     })
   );
 
   it('should be created', () => {
-    const service: DashboardItemService = TestBed.get(DashboardItemService);
+    const service: FavoriteService = TestBed.get(FavoriteService);
     expect(service).toBeTruthy();
   });
 });

@@ -9,11 +9,10 @@ import {
   addDashboards,
   loadDashboards,
   loadDashboardsFail,
-  removeDashboard,
+  removeDashboardSuccess,
   saveDashboard,
   setCurrentDashboard,
-  updateDashboard,
-  removeDashboardSuccess
+  updateDashboard
 } from '../actions/dashboard.actions';
 import {
   dashboardAdapter,
