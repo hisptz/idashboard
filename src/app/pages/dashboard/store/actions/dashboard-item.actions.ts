@@ -2,9 +2,9 @@ import { createAction, props } from '@ngrx/store';
 import { DashboardItem } from '../../models/dashboard-item.model';
 import { ErrorMessage } from 'src/app/core';
 
-export const initializeDashboardItems = createAction(
-  '[DashboardItem] Initialize dashboard items',
-  props<{ dashboardItems: DashboardItem[] }>()
+export const initializeDashboardItem = createAction(
+  '[DashboardItem] Initialize dashboard item',
+  props<{ dashboardItem: DashboardItem }>()
 );
 
 export const loadDashboardItem = createAction(

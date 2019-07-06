@@ -1,8 +1,13 @@
-import { createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import {
+  createFeatureSelector,
+  MemoizedSelector,
+  createSelector
+} from '@ngrx/store';
 import {
   DashboardItemState,
   dashboardItemAdapter
 } from '../states/dashboard-item.state';
+import { DashboardItem } from '../../models/dashboard-item.model';
 
 const getDashboardItemState: MemoizedSelector<
   object,
@@ -10,5 +15,13 @@ const getDashboardItemState: MemoizedSelector<
 > = createFeatureSelector<DashboardItemState>('dashboardItem');
 
 export const {
-  selectAll: getDashboardItems
+  selectAll: getDashboardItems,
+  selectEntities: getDashboardItemEntities
 } = dashboardItemAdapter.getSelectors(getDashboardItemState);
+
+export const getDashboardItemById = (id: string) =>
+  createSelector(
+    getDashboardItemEntities,
+    (dashboardItemEntities: { string: DashboardItem }) =>
+      dashboardItemEntities ? dashboardItemEntities[id] : null
+  );

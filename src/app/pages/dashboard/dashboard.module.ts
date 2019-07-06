@@ -9,9 +9,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { services } from './services';
 import { dashboardEffects } from './store/effects';
 import { dashboardReducers } from './store/reducers';
+import { DashboardItemComponent } from './containers/dashboard-item/dashboard-item.component';
 
 @NgModule({
-  declarations: [DashboardComponent, CurrentDashboardComponent, ...containers],
+  declarations: [DashboardComponent, CurrentDashboardComponent, ...containers, DashboardItemComponent],
   providers: [...services],
   imports: [
     CommonModule,

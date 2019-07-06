@@ -46,9 +46,9 @@ const reducer = createReducer(
     ...errorBaseState,
     error
   })),
-  on(setCurrentDashboard, (state, { dashboard }) => ({
+  on(setCurrentDashboard, (state, { id }) => ({
     ...state,
-    currentDashboard: dashboard ? dashboard.id : ''
+    currentDashboard: id
   }))
 );
 

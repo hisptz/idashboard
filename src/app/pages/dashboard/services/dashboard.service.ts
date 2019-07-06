@@ -7,6 +7,8 @@ import { map, mergeMap } from 'rxjs/operators';
 import { filterDashboardIdsByNamespace } from '../helpers/filter-dashboard-ids-by-namespace.helper';
 import { DashboardPreferences } from '../models/dashboard-preferences.model';
 import { Dashboard } from '../models/dashboard.model';
+import { standardizeDashboard } from '../helpers/standardize-dashboard.helper';
+import { standardizeDashboards } from '../helpers/standardize-dashboards.helper';
 
 const dataStoreNamespace = 'dataStore/dashboards';
 const dashboardFileLink = 'dashboard-config/dashboards.json';
@@ -17,15 +19,25 @@ const dashboardApiNamespace = 'dashboards';
 export class DashboardService {
   constructor(private httpClient: NgxDhis2HttpClientService) {}
 
-  getAll(dashboardPreferences: DashboardPreferences) {
+  getAll(dashboardPreferences: DashboardPreferences, currentUser: User) {
+    let dashboards$: Observable<Dashboard[]>;
     switch (dashboardPreferences.dashboardSource) {
       case 'DATASTORE':
-        return this._getAllFromDataStore(dashboardPreferences.namespace);
+        dashboards$ = this._getAllFromDataStore(dashboardPreferences.namespace);
+        break;
       case 'BOTH':
-        return this._getAllFromBoth(dashboardPreferences);
+        dashboards$ = this._getAllFromBoth(dashboardPreferences);
+        break;
       default:
-        return this._getAllFromApi();
+        dashboards$ = this._getAllFromApi();
+        break;
     }
+
+    return dashboards$.pipe(
+      map((dashboards: Dashboard[]) =>
+        standardizeDashboards(dashboards, currentUser)
+      )
+    );
   }
 
   getOne(id: string, dashboardPreferences: DashboardPreferences) {
@@ -139,7 +151,7 @@ export class DashboardService {
       );
   }
 
-  private _getAllFromDataStore(namespace: string) {
+  private _getAllFromDataStore(namespace: string): Observable<Dashboard[]> {
     return this.httpClient.get(dataStoreNamespace).pipe(
       mergeMap((dashboardIds: string[]) => {
         const newDashboardIds = filterDashboardIdsByNamespace(
@@ -150,25 +162,30 @@ export class DashboardService {
         if (newDashboardIds.length === 0) {
           return of([]);
         }
-        return new Observable(observer => {
-          let dashboards: Dashboard[] = [];
-          from(newDashboardIds)
-            .pipe(mergeMap(this._getOneFromDataStore, null, 10))
-            .subscribe(
-              (dashboard: Dashboard) => {
-                dashboards = [...dashboards, dashboard];
-              },
-              error => {
-                observer.error(error);
-              },
-              () => {
-                observer.next(dashboards);
-                observer.complete();
-              }
-            );
-        });
+
+        return this._getAllByPage(newDashboardIds);
       })
     );
+  }
+
+  private _getAllByPage(dashboardIds): Observable<Dashboard[]> {
+    return new Observable(observer => {
+      let dashboards: Dashboard[] = [];
+      from(dashboardIds)
+        .pipe(mergeMap(this._getOneFromDataStore, null, 10))
+        .subscribe(
+          (dashboard: Dashboard) => {
+            dashboards = [...dashboards, dashboard];
+          },
+          error => {
+            observer.error(error);
+          },
+          () => {
+            observer.next(dashboards);
+            observer.complete();
+          }
+        );
+    });
   }
 
   private _getAllFromBoth(dashboardPreferences: DashboardPreferences) {

@@ -7,16 +7,17 @@ export function standardizeDashboard(
   dashboard: any,
   currentUser: User
 ): Dashboard {
-  return dashboard
-    ? {
-        ...dashboard,
-        favorite: dashboard.hasOwnProperty('favorite')
-          ? dashboard.favorite
-          : getDashboardBookmarkStatus(
-              dashboard.favorites || dashboard.bookmarks,
-              currentUser ? currentUser.id : ''
-            ),
-        access: dashboard.access || getDashboardAccess(dashboard, currentUser)
-      }
-    : null;
+  if (!dashboard) {
+    return null;
+  }
+  return {
+    ...dashboard,
+    favorite: dashboard.hasOwnProperty('favorite')
+      ? dashboard.favorite
+      : getDashboardBookmarkStatus(
+          dashboard.favorites || dashboard.bookmarks,
+          currentUser ? currentUser.id : ''
+        ),
+    access: dashboard.access || getDashboardAccess(dashboard, currentUser)
+  };
 }

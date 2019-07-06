@@ -1,3 +1,7 @@
-<p>
-  current-dashboard works!
-</p>
+<div>
+  <!-- dashboard item list -->
+  <div *ngFor="let dashboardItem of dashboardItems$ | async">
+    <app-dashboard-item [dashboardItem]="dashboardItem"></app-dashboard-item>
+  </div>
+  <!-- end of dashboard item list -->
+</div>
