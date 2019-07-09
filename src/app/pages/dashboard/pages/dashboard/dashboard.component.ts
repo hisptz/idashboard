@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
 import { loadDashboardPreferences } from '../../store/actions/dashboard-preferences.actions';
+import { Observable } from 'rxjs';
+import { DashboardPreferences } from '../../models/dashboard-preferences.model';
+import { Dashboard } from '../../models/dashboard.model';
+import { getDashboardPreferences } from '../../store/selectors/dashboard-preferences.selectors';
+import {
+  getDashboards,
+  getCurrentDashboardId
+} from '../../store/selectors/dashboard-selectors';
+import { setCurrentDashboard } from '../../store/actions/dashboard.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,13 +18,24 @@ import { loadDashboardPreferences } from '../../store/actions/dashboard-preferen
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  preferences = {
-    menuAlignment: 'left',
-    menuType: 'default'
-  };
+  dashboardPreferences$: Observable<DashboardPreferences>;
+  dashboards$: Observable<Dashboard[]>;
+  currentDashboardId$: Observable<string>;
   constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.store.dispatch(loadDashboardPreferences());
+
+    this.dashboardPreferences$ = this.store.pipe(
+      select(getDashboardPreferences)
+    );
+
+    this.dashboards$ = this.store.pipe(select(getDashboards));
+
+    this.currentDashboardId$ = this.store.pipe(select(getCurrentDashboardId));
+  }
+
+  onSetCurrentDashboard(id: string) {
+    this.store.dispatch(setCurrentDashboard({ id }));
   }
 }

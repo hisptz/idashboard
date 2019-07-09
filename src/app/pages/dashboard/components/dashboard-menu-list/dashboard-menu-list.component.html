@@ -1,0 +1,12 @@
+<ul class="dashboard-menu-list-{{ dashboardPreferences?.menuAlignment }}">
+  <!-- dashboard menu items -->
+  <li *ngFor="let dashboard of dashboards">
+    <app-dashboard-menu-item
+      [dashboard]="dashboard"
+      [menuAlignment]="dashboardPreferences?.menuAlignment"
+      [currentDashboardId]="currentDashboardId"
+      (setDashboard)="onSetCurrentDashboard($event)"
+    ></app-dashboard-menu-item>
+  </li>
+  <!-- end of dashboard menu items -->
+</ul>

@@ -1,0 +1,24 @@
+<div class="dashboard-menu-container-{{ dashboardPreferences?.menuAlignment }}">
+  <!-- add new dashboard -->
+  <!-- end of add new dashboard -->
+
+  <!-- dashboard menu search -->
+  <div class="dashboard-menu-search">
+    <app-dashboard-menu-search></app-dashboard-menu-search>
+  </div>
+  <!-- end of dashboard menu search -->
+
+  <!-- dashboard menu list -->
+  <div class="dashboard-menu-list">
+    <app-dashboard-menu-list
+      [dashboardPreferences]="dashboardPreferences"
+      [dashboards]="dashboards"
+      [currentDashboardId]="currentDashboardId"
+      (setCurrentDashboard)="onSetCurrentDashboard($event)"
+    ></app-dashboard-menu-list>
+  </div>
+  <!-- end of dashboard menu list -->
+
+  <!-- dashboard menu settings -->
+  <!-- end of dashboard menu settings -->
+</div>

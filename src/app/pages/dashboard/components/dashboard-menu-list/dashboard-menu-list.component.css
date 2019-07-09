@@ -1,0 +1,17 @@
+.dashboard-menu-list-left,
+.dashboard-menu-list-top {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-menu-list-left > li,
+.dashboard-menu-list-top > li {
+  margin: 5px;
+}
+
+.dashboard-menu-list-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}

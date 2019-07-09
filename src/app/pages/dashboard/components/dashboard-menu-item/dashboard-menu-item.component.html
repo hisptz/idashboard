@@ -1,0 +1,11 @@
+<div
+  [ngClass]="{
+    'dashboard-menu-item': true,
+    'dashboard-menu-item-left': menuAlignment === 'left',
+    'dashboard-menu-item-top': menuAlignment === 'top',
+    'current-dashboard': isCurrent
+  }"
+  (click)="onSetDashboard($event)"
+>
+  {{ dashboard?.name }}
+</div>
