@@ -1,7 +1,23 @@
-<div>
+<div class="current-dashboard-container">
+  <!-- current dashboard header -->
+  <div class="current-dashboard-header">
+    <div class="current-dashboard-options">
+      <div class="current-dashboard-title">
+        {{ (currentDashboard$ | async)?.name }}
+      </div>
+      <div class="current-dashboard-filter">
+        <ngx-dhis2-selection-filters></ngx-dhis2-selection-filters>
+      </div>
+    </div>
+    <div class="current-dashboard-settings"></div>
+  </div>
+  <!-- end of current dashboard header -->
+
   <!-- dashboard item list -->
-  <div *ngFor="let dashboardItem of dashboardItems$ | async">
-    <app-dashboard-item [dashboardItem]="dashboardItem"></app-dashboard-item>
+  <div class="dashboard-item-list">
+    <div *ngFor="let dashboardItem of dashboardItems$ | async">
+      <app-dashboard-item [dashboardItem]="dashboardItem"></app-dashboard-item>
+    </div>
   </div>
   <!-- end of dashboard item list -->
 </div>

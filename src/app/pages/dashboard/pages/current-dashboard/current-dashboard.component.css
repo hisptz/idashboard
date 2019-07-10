@@ -1,0 +1,34 @@
+.current-dashboard-container {
+  position: relative;
+}
+
+.current-dashboard-header {
+  position: fixed;
+  top: 108px;
+  border-bottom: solid thin #dddddd;
+  background-color: #ffffff;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.dashboard-item-list {
+  margin-top: 133px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.current-dashboard-options {
+  display: flex;
+  align-items: center;
+}
+
+.current-dashboard-title {
+  font-size: 17px;
+  margin-right: 10px;
+}
