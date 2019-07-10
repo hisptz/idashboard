@@ -9,6 +9,7 @@ const preferenceFileLink = 'dashboard-config/dashboard-preferences.json';
 const defaultDashboardPreferences: DashboardPreferences = {
   id: 'DEFAULT',
   namespace: 'DEFAULT',
+  appName: 'Dashboard',
   dashboardSource: 'API',
   favoriteSource: 'API',
   menuAlignment: 'top',
