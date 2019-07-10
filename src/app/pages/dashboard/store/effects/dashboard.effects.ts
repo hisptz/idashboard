@@ -127,28 +127,26 @@ export class DashboardEffects {
     { dispatch: false }
   );
 
-  removeDashboard$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(removeDashboard),
-        concatMap(action =>
-          of(action).pipe(
-            withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
-          )
-        ),
-        mergeMap(([{ id }, dashboardPreferences]) =>
-          this.dashboardService.delete(id, dashboardPreferences).pipe(
-            tap(() => {
-              this.store.dispatch(removeDashboardSuccess({ id }));
-            }),
-            catchError(error => {
-              this.store.dispatch(removeDashboardFail({ error, id }));
-              return of(error);
-            })
-          )
+  removeDashboard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeDashboard),
+      concatMap(action =>
+        of(action).pipe(
+          withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
         )
       ),
-    { dispatch: false }
+      mergeMap(([{ id }, dashboardPreferences]) =>
+        this.dashboardService.delete(id, dashboardPreferences).pipe(
+          tap(() => {
+            this.store.dispatch(removeDashboardSuccess({ id }));
+          }),
+          catchError(error => {
+            this.store.dispatch(removeDashboardFail({ error, id }));
+            return of(error);
+          })
+        )
+      )
+    )
   );
 
   setCurrentDashboard$ = createEffect(() =>

@@ -12,7 +12,7 @@ export const loadFavoriteFail = createAction(
   props<{ error: ErrorMessage; id: string }>()
 );
 
-export const addFavorite = createAction(
-  '[Favorite] Add favorite',
+export const updateFavorite = createAction(
+  '[Favorite] Update favorite',
   props<{ favorite: Favorite }>()
 );

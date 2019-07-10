@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { camelCase, isPlainObject } from 'lodash';
 import { of } from 'rxjs';
-import { catchError, take, tap, mergeMap } from 'rxjs/operators';
+import { catchError, take, tap, mergeMap, map } from 'rxjs/operators';
 import { State } from 'src/app/store/reducers';
 
 import { DashboardItem } from '../../models/dashboard-item.model';
@@ -44,17 +44,12 @@ export class DashboardItemEffects {
         this.dashboardItemService
           .getOne(dashboardItem.id, dashboardItem.type)
           .pipe(
-            tap((dashboardItemResponse: DashboardItem) => {
-              this.store.dispatch(
-                addDashboardItem({ dashboardItem: dashboardItemResponse })
-              );
-            }),
-            catchError(error => {
-              this.store.dispatch(
-                loadDashboardItemFail({ error, id: dashboardItem.id })
-              );
-              return of(error);
-            })
+            map((dashboardItemResponse: DashboardItem) =>
+              addDashboardItem({ dashboardItem: dashboardItemResponse })
+            ),
+            catchError(error =>
+              of(loadDashboardItemFail({ error, id: dashboardItem.id }))
+            )
           )
       )
     )
