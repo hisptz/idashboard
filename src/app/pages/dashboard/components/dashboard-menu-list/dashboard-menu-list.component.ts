@@ -19,6 +19,7 @@ export class DashboardMenuListComponent implements OnInit {
   @Input() dashboards: Dashboard[];
   @Input() dashboardPreferences: DashboardPreferences;
   @Input() currentDashboardId: string;
+  searchTerm: string;
 
   @Output()
   setCurrentDashboard: EventEmitter<string> = new EventEmitter<string>();
@@ -28,5 +29,10 @@ export class DashboardMenuListComponent implements OnInit {
 
   onSetCurrentDashboard(id: string) {
     this.setCurrentDashboard.emit(id);
+  }
+
+  onSearchDashboard(e) {
+    e.stopPropagation();
+    this.searchTerm = e.target.value.trim();
   }
 }

@@ -1,4 +1,12 @@
 <div class="dashboard-container ">
+  <!-- dashboard top header -->
+  <div class="dashboard-header">
+    <div class="dashboard-brand">
+      {{ (dashboardPreferences$ | async)?.appName }}
+    </div>
+  </div>
+  <!-- end of dashboard top header -->
+
   <!-- dashboard menu -->
   <div
     class="dashboard-menu-{{ (dashboardPreferences$ | async)?.menuAlignment }}"

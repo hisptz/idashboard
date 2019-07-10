@@ -7,11 +7,55 @@
 
 .dashboard-menu-list-left > li,
 .dashboard-menu-list-top > li {
-  margin: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .dashboard-menu-list-top {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.dashboard-menu-list-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 20px 5px 15px;
+  margin-bottom: 10px;
+}
+
+.add-dashboard-btn {
+  color: #ffffff;
+  height: 34px;
+  width: 34px;
+  border-radius: 17px;
+  border: none;
+  outline: none;
+  background-color: #00796b;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-dashboard-btn:hover {
+  background-color: #1c8275;
+}
+
+.dashboard-menu-search {
+  flex: 2;
+}
+
+.dashboard-search-input {
+  display: flex;
+  height: 34px;
+  outline: none;
+  border: none;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-right: 10px;
+  font-size: 13px;
+  border-bottom: solid thin #dddddd;
+  width: 100%;
 }
