@@ -1,3 +1,4 @@
-<p>
-  dashboard-item works!
-</p>
+<div class="dashboard-item">
+  {{ dashboardItem.type }}
+  {{ visualization$ | async | json }}
+</div>

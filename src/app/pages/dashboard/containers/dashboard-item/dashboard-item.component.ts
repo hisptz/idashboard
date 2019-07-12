@@ -1,8 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { DashboardItem } from '../../models/dashboard-item.model';
-import { Store } from '@ngrx/store';
+import { Component, Input, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { camelCase, isPlainObject } from 'lodash';
 import { State } from 'src/app/store/reducers';
-import { initializeDashboardItem } from '../../store/actions/dashboard-item.actions';
+
+import { DashboardItem } from '../../models/dashboard-item.model';
+import { Visualization } from '../../modules/ngx-dhis2-visualization/models';
+import { loadFavorite } from '../../store/actions/favorite.actions';
+import { Observable } from 'rxjs';
+import { getDashboardItemVisualization } from '../../store/selectors/dashboard-selectors';
 
 @Component({
   selector: 'app-dashboard-item',
@@ -12,12 +17,32 @@ import { initializeDashboardItem } from '../../store/actions/dashboard-item.acti
 export class DashboardItemComponent implements OnInit {
   @Input()
   dashboardItem: DashboardItem;
+
+  visualization$: Observable<Visualization>;
   constructor(private store: Store<State>) {}
 
   ngOnInit() {
     if (this.dashboardItem) {
-      this.store.dispatch(
-        initializeDashboardItem({ dashboardItem: this.dashboardItem })
+      const favoriteType = camelCase(this.dashboardItem.type);
+      const favorite = this.dashboardItem[favoriteType];
+
+      if (isPlainObject(favorite)) {
+        this.store.dispatch(
+          loadFavorite({
+            favorite,
+            favoriteType,
+            dashboardItemId: this.dashboardItem.id
+          })
+        );
+      }
+
+      this.visualization$ = this.store.pipe(
+        select(
+          getDashboardItemVisualization(
+            this.dashboardItem,
+            favorite ? favorite.id : undefined
+          )
+        )
       );
     }
   }

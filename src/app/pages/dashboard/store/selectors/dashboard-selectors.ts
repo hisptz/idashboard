@@ -5,6 +5,10 @@ import {
 } from '@ngrx/store';
 import { DashboardState, dashboardAdapter } from '../states/dashboard.state';
 import { Dashboard } from '../../models/dashboard.model';
+import { DashboardItem } from '../../models/dashboard-item.model';
+import { getFavoriteEntities } from './favorite.selectors';
+import { Favorite } from '../../models/favorite.model';
+import { getVisualizationObject } from '../../helpers/get-visualization-object.helper';
 
 const getDashboardState: MemoizedSelector<
   object,
@@ -28,7 +32,22 @@ export const getCurrentDashboard = createSelector(
     dashboardEntities ? dashboardEntities[currentDashboardId] : null
 );
 
-export const getCurrentDashboardItems = createSelector(
+export const getDashboardItemsForCurrentDashboard = createSelector(
   getCurrentDashboard,
   (dashboard: Dashboard) => (dashboard ? dashboard.dashboardItems : [])
 );
+
+export const getDashboardItemVisualization = (
+  dashboardItem: DashboardItem,
+  favoriteId: string
+) =>
+  createSelector(
+    getFavoriteEntities,
+    (favoriteEntities: { string: Favorite }) => {
+      const favorite = favoriteEntities ? favoriteEntities[favoriteId] : null;
+
+      return dashboardItem && favorite
+        ? getVisualizationObject(dashboardItem, favorite)
+        : null;
+    }
+  );

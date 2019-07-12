@@ -15,7 +15,16 @@
 
   <!-- dashboard item list -->
   <div class="dashboard-item-list">
-    <div *ngFor="let dashboardItem of dashboardItems$ | async">
+    <div
+      *ngFor="
+        let dashboardItem of (currentDashboard$ | async)?.dashboardItems;
+        trackBy: trackByDashboardItemId
+      "
+      [ngStyle]="{
+        gridColumn: dashboardItem.gridColumn,
+        height: dashboardItem.height
+      }"
+    >
       <app-dashboard-item [dashboardItem]="dashboardItem"></app-dashboard-item>
     </div>
   </div>

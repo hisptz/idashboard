@@ -17,11 +17,6 @@ export const addDashboardItems = createAction(
   props<{ dashboardItems: DashboardItem[] }>()
 );
 
-export const addDashboardItem = createAction(
-  '[DashboardItem] Add dashboard item',
-  props<{ dashboardItem: DashboardItem }>()
-);
-
 export const loadDashboardItemFail = createAction(
   '[DashboardItem] Load dashboard item fail',
   props<{ error: ErrorMessage; id: string }>()
@@ -44,5 +39,5 @@ export const removeDashboardItemFail = createAction(
 
 export const updateDashboardItem = createAction(
   '[DashboardItem] Update Dashboard item',
-  props<{ id: string; changes: Partial<DashboardItem> }>()
+  props<{ dashboardItem: DashboardItem }>()
 );

@@ -4,7 +4,7 @@ import { ErrorMessage } from 'src/app/core';
 
 export const loadFavorite = createAction(
   '[Favorite] Load favorite',
-  props<{ favoriteId: string; favoriteType: string; dashboardItemId: string }>()
+  props<{ favorite: Favorite; favoriteType: string; dashboardItemId: string }>()
 );
 
 export const loadFavoriteFail = createAction(

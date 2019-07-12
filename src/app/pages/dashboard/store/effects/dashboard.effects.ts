@@ -108,19 +108,12 @@ export class DashboardEffects {
           this.dashboardService
             .save(dashboard, dashboardPreferences, action)
             .pipe(
-              tap((dashboardResponse: Dashboard) => {
-                // TODO: Add more attributes for notification
-                this.store.dispatch(
-                  saveDashboardSuccess({ dashboard: { ...dashboardResponse } })
-                );
-              }),
-              catchError(error => {
-                // TODO: Add more attributes for notification
-                this.store.dispatch(
-                  saveDashboardFail({ error, id: dashboard.id })
-                );
-                return of(error);
-              })
+              map((dashboardResponse: Dashboard) =>
+                saveDashboardSuccess({ dashboard: { ...dashboardResponse } })
+              ),
+              catchError(error =>
+                of(saveDashboardFail({ error, id: dashboard.id }))
+              )
             )
         )
       ),

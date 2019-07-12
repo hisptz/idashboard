@@ -17,10 +17,10 @@ import {
 
 const reducer = createReducer(
   initialFavoriteState,
-  on(loadFavorite, (state, { favoriteId }) =>
+  on(loadFavorite, (state, { favorite }) =>
     favoriteAdapter.addOne(
       {
-        id: favoriteId,
+        ...favorite,
         notification: loadingBaseState
       },
       state

@@ -4,11 +4,8 @@ import { Observable } from 'rxjs';
 import { State } from 'src/app/store/reducers';
 
 import { DashboardItem } from '../../models/dashboard-item.model';
-import {
-  getCurrentDashboardItems,
-  getCurrentDashboard
-} from '../../store/selectors/dashboard-selectors';
 import { Dashboard } from '../../models/dashboard.model';
+import { getCurrentDashboard } from '../../store/selectors/dashboard-selectors';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -16,13 +13,14 @@ import { Dashboard } from '../../models/dashboard.model';
   styleUrls: ['./current-dashboard.component.css']
 })
 export class CurrentDashboardComponent implements OnInit {
-  dashboardItems$: Observable<DashboardItem[]>;
   currentDashboard$: Observable<Dashboard>;
   constructor(private store: Store<State>) {}
 
   ngOnInit() {
-    this.dashboardItems$ = this.store.pipe(select(getCurrentDashboardItems));
-
     this.currentDashboard$ = this.store.pipe(select(getCurrentDashboard));
+  }
+
+  trackByDashboardItemId(index, item: DashboardItem) {
+    return item ? item.id : index;
   }
 }

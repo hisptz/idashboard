@@ -9,7 +9,7 @@ import { State } from 'src/app/store/reducers';
 import { DashboardItem } from '../../models/dashboard-item.model';
 import { DashboardItemService } from '../../services/dashboard-item.service';
 import {
-  addDashboardItem,
+  updateDashboardItem,
   initializeDashboardItem,
   loadDashboardItem,
   loadDashboardItemFail
@@ -45,7 +45,9 @@ export class DashboardItemEffects {
           .getOne(dashboardItem.id, dashboardItem.type)
           .pipe(
             map((dashboardItemResponse: DashboardItem) =>
-              addDashboardItem({ dashboardItem: dashboardItemResponse })
+              updateDashboardItem({
+                dashboardItem: dashboardItemResponse
+              })
             ),
             catchError(error =>
               of(loadDashboardItemFail({ error, id: dashboardItem.id }))
@@ -55,10 +57,10 @@ export class DashboardItemEffects {
     )
   );
 
-  addDashboardItem$ = createEffect(
+  updateDashboardItem$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(addDashboardItem),
+        ofType(updateDashboardItem),
         tap(({ dashboardItem }) => {
           const favoriteType = camelCase(dashboardItem.type);
           const favorite = dashboardItem[favoriteType];
@@ -66,8 +68,8 @@ export class DashboardItemEffects {
           if (isPlainObject(favorite)) {
             this.store.dispatch(
               loadFavorite({
-                favoriteId: favorite.id,
-                favoriteType: favoriteType,
+                favorite,
+                favoriteType,
                 dashboardItemId: dashboardItem.id
               })
             );

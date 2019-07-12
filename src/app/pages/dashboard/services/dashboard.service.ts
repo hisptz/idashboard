@@ -13,7 +13,10 @@ import { standardizeDashboards } from '../helpers/standardize-dashboards.helper'
 const dataStoreNamespace = 'dataStore/dashboards';
 const dashboardFileLink = 'dashboard-config/dashboards.json';
 const dashboardApiFields =
-  'fields=id,name,user[id,name],description,access,created,lastUpdated,favorite,dashboardItems[id,type],favorites&paging=false';
+  'fields=id,name,user[id,name],description,access,created,lastUpdated,' +
+  'favorite,dashboardItems[id,type,height,width,x,y,shape,map[id,name],' +
+  'chart[id,name],eventChart[id,name],reportTable[id,name],resources[id,name],' +
+  'reports[id,name],messages[id,name]],favorites&paging=false';
 const dashboardApiNamespace = 'dashboards';
 @Injectable()
 export class DashboardService {

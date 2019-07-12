@@ -31,13 +31,15 @@ export class FavoriteEffects {
           withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
         )
       ),
-      mergeMap(([{ favoriteId, favoriteType }, dashboardPreferences]) =>
+      mergeMap(([{ favorite, favoriteType }, dashboardPreferences]) =>
         this.favoriteService
-          .get(favoriteId, favoriteType, dashboardPreferences)
+          .get(favorite.id, favoriteType, dashboardPreferences)
           .pipe(
-            map((favorite: Favorite) => updateFavorite({ favorite })),
+            map((favoriteResponse: Favorite) =>
+              updateFavorite({ favorite: favoriteResponse })
+            ),
             catchError((error: ErrorMessage) =>
-              of(loadFavoriteFail({ error, id: favoriteId }))
+              of(loadFavoriteFail({ error, id: favorite.id }))
             )
           )
       )
