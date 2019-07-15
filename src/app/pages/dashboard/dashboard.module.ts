@@ -11,6 +11,7 @@ import { pages } from './pages';
 import { services } from './services';
 import { dashboardEffects } from './store/effects';
 import { dashboardReducers } from './store/reducers';
+import { NgxDhis2VisualizationModule } from './modules/ngx-dhis2-visualization/ngx-dhis2-visualization.module';
 
 @NgModule({
   declarations: [...pages, ...containers, ...components],
@@ -18,7 +19,8 @@ import { dashboardReducers } from './store/reducers';
   imports: [
     CommonModule,
     SharedModule,
-    NgxDhis2SelectionFiltersModule,
+    // NgxDhis2SelectionFiltersModule,
+    NgxDhis2VisualizationModule,
     DashboardRoutingModule,
     ...dashboardReducers,
     EffectsModule.forFeature(dashboardEffects)

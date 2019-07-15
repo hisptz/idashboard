@@ -11,6 +11,7 @@ import {
   getCurrentDashboardId
 } from '../../store/selectors/dashboard-selectors';
 import { setCurrentDashboard } from '../../store/actions/dashboard.actions';
+import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
 
 @Component({
   selector: 'app-dashboard',

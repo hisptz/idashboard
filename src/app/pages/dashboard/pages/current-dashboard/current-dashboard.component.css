@@ -18,13 +18,11 @@
 }
 
 .dashboard-item-list {
-  margin-top: 133px;
-  padding-left: 15px;
-  padding-right: 15px;
+  margin-top: 110px;
+  padding: 15px;
   grid-gap: 15px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  overflow: auto;
 }
 
 .current-dashboard-options {

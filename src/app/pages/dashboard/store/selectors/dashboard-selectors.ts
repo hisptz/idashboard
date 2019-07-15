@@ -44,9 +44,14 @@ export const getDashboardItemVisualization = (
   createSelector(
     getFavoriteEntities,
     (favoriteEntities: { string: Favorite }) => {
-      const favorite = favoriteEntities ? favoriteEntities[favoriteId] : null;
+      const favorite: Favorite = favoriteEntities
+        ? favoriteEntities[favoriteId]
+        : null;
 
-      return dashboardItem && favorite
+      return dashboardItem &&
+        favorite &&
+        favorite.notification &&
+        (favorite.notification.loaded || favorite.notification.hasError)
         ? getVisualizationObject(dashboardItem, favorite)
         : null;
     }

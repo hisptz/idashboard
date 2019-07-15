@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgxDhis2SelectionFiltersModule } from '@iapps/ngx-dhis2-selection-filters';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,10 +25,6 @@ import { SafePipe } from './pipes/safe';
 import { VisualizationLayerEffects } from './store/effects/visualization-layer.effects';
 import { VisualizationObjectEffects } from './store/effects/visualization-object.effects';
 import { reducers } from './store/reducers/visualization.reducer';
-import { NgxDhis2SelectionFiltersModule } from '@iapps/ngx-dhis2-selection-filters';
-
-// store
-// import { MapModule } from './modules/map/map.module';
 
 @NgModule({
   imports: [

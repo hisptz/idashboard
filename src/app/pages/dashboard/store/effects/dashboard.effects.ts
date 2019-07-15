@@ -6,13 +6,12 @@ import { of } from 'rxjs';
 import {
   catchError,
   concatMap,
+  first,
   map,
   mergeMap,
   switchMap,
-  take,
   tap,
-  withLatestFrom,
-  first
+  withLatestFrom
 } from 'rxjs/operators';
 import { go } from 'src/app/store/actions';
 import { State } from 'src/app/store/reducers';
@@ -25,7 +24,6 @@ import {
 import { getCurrentDashboardId } from '../../helpers/get-current-dashboard-id.helper';
 import { Dashboard } from '../../models/dashboard.model';
 import { DashboardService } from '../../services/dashboard.service';
-import { initializeDashboardItem } from '../actions/dashboard-item.actions';
 import { addDashboardPreferences } from '../actions/dashboard-preferences.actions';
 import {
   addDashboards,
@@ -40,6 +38,7 @@ import {
   setCurrentDashboard
 } from '../actions/dashboard.actions';
 import { getDashboardPreferences } from '../selectors/dashboard-preferences.selectors';
+import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
 
 @Injectable()
 export class DashboardEffects {
@@ -60,8 +59,10 @@ export class DashboardEffects {
           first(currentUserLoaded => currentUserLoaded),
           switchMap(() =>
             this.store.select(getCurrentUser).pipe(
-              switchMap((currentUser: User) =>
-                this.dashboardService
+              switchMap((currentUser: User) => {
+                // load data filters
+                this.store.dispatch(new LoadDataFilters(currentUser));
+                return this.dashboardService
                   .getAll(dashboardPreferences, currentUser)
                   .pipe(
                     map((dashboards: Dashboard[]) =>
@@ -71,8 +72,8 @@ export class DashboardEffects {
                       })
                     ),
                     catchError(error => of(loadDashboardsFail({ error })))
-                  )
-              )
+                  );
+              })
             )
           )
         )
