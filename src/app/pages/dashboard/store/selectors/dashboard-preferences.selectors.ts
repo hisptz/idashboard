@@ -4,6 +4,7 @@ import {
   createSelector
 } from '@ngrx/store';
 import { DashboardPreferencesState } from '../states/dashboard-preferences.state';
+import { DashboardPreferences } from '../../models/dashboard-preferences.model';
 
 const getDashboardPreferencesState: MemoizedSelector<
   object,
@@ -13,4 +14,10 @@ const getDashboardPreferencesState: MemoizedSelector<
 export const getDashboardPreferences = createSelector(
   getDashboardPreferencesState,
   (state: DashboardPreferencesState) => state.dashboardPreferences
+);
+
+export const getSelectionFilterConfig = createSelector(
+  getDashboardPreferences,
+  (dashboardPreferences: DashboardPreferences) =>
+    dashboardPreferences ? dashboardPreferences.selectionFilterConfig : null
 );

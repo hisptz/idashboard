@@ -6,7 +6,9 @@
         {{ (currentDashboard$ | async)?.name }}
       </div>
       <div class="current-dashboard-filter">
-        <!-- <ngx-dhis2-selection-filters></ngx-dhis2-selection-filters> -->
+        <ngx-dhis2-selection-filters
+          [selectionFilterConfig]="selectionFilterConfig$ | async"
+        ></ngx-dhis2-selection-filters>
       </div>
     </div>
     <div class="current-dashboard-settings"></div>

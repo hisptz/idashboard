@@ -45,18 +45,7 @@ import { getFocusedVisualization } from '../../store/selectors/visualization-ui-
 export class VisualizationComponent implements OnInit {
   @Input()
   visualizationObject: any;
-  @Input()
-  id: string;
-  @Input()
-  visualizationConfig: VisualizationConfig;
-  @Input()
-  type: string;
-  @Input()
-  visualizationLayers: VisualizationLayer[];
-  @Input()
-  name: string;
-  @Input()
-  isNewFavorite: boolean;
+
   @Input()
   dashboardId: string;
   @Input()
@@ -77,7 +66,6 @@ export class VisualizationComponent implements OnInit {
   @ViewChild(VisualizationBodySectionComponent, { static: true })
   visualizationBody: VisualizationBodySectionComponent;
 
-  private _visualizationInputs$: Subject<VisualizationInputs> = new Subject();
   visualizationObject$: Observable<Visualization>;
   visualizationLayers$: Observable<VisualizationLayer[]>;
   visualizationUiConfig$: Observable<VisualizationUiConfig>;
@@ -92,10 +80,6 @@ export class VisualizationComponent implements OnInit {
       // initialize visualization object
       this.store.dispatch(
         new InitializeVisualizationObjectAction(
-          this.visualizationObject.id,
-          this.visualizationObject.name,
-          this.visualizationObject.type,
-          this.visualizationObject.layers,
           this.visualizationObject,
           this.currentUser,
           this.systemInfo
@@ -186,7 +170,9 @@ export class VisualizationComponent implements OnInit {
 
   onLoadVisualizationAnalytics(visualizationLayer: VisualizationLayer) {
     this.store.dispatch(
-      new LoadVisualizationAnalyticsAction(this.id, [visualizationLayer])
+      new LoadVisualizationAnalyticsAction(this.visualizationObject.id, [
+        visualizationLayer
+      ])
     );
   }
 
@@ -201,7 +187,7 @@ export class VisualizationComponent implements OnInit {
   onSaveFavorite(favoriteDetails) {
     this.store.dispatch(
       new SaveVisualizationFavoriteAction(
-        this.id,
+        this.visualizationObject.id,
         favoriteDetails,
         this.dashboardId
       )
@@ -238,7 +224,7 @@ export class VisualizationComponent implements OnInit {
         });
 
         this.store.dispatch(
-          new UpdateVisualizationObjectAction(this.id, {
+          new UpdateVisualizationObjectAction(this.visualizationObject.id, {
             notification: {
               message: 'Removing dasboard item...',
               type: 'progress'

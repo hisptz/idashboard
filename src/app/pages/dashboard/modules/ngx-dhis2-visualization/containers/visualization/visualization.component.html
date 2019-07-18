@@ -22,12 +22,12 @@
     *ngIf="(visualizationUiConfig$ | async)?.showTitleBlock"
   >
     <visualization-title-section
-      [id]="id"
+      [id]="visualizationObject.id"
       [uiConfigId]="(visualizationUiConfig$ | async)?.id"
       [showBody]="(visualizationUiConfig$ | async)?.showBody"
       [fullScreen]="(visualizationUiConfig$ | async)?.fullScreen"
-      [type]="(visualizationConfig$ | async)?.currentType"
-      [name]="(visualizationConfig$ | async)?.name"
+      [type]="(visualizationObject$ | async)?.currentType"
+      [name]="(visualizationObject$ | async)?.name"
       (toggleVisualization)="onToggleVisualizationBody($event)"
     ></visualization-title-section>
   </div>
@@ -44,7 +44,7 @@
       *ngIf="!(visualizationUiConfig$ | async)?.hideHeader"
     >
       <visualization-header-section
-        [id]="id"
+        [id]="visualizationObject?.id"
         [uiConfigId]="(visualizationUiConfig$ | async)?.id"
         [showFilters]="(visualizationUiConfig$ | async)?.showFilters"
         [hideResizeButtons]="

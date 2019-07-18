@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, zip } from 'rxjs';
 import { filter, switchMap, take, tap } from 'rxjs/operators';
 
 import {
@@ -87,18 +87,16 @@ export class VisualizationLayerEffects {
                   );
 
                   forkJoin(
-                    _.map(
-                      visualizationLayers,
-                      (visualizationLayer: VisualizationLayer) => {
-                        return this.analyticsService.getAnalytics(
+                    ...visualizationLayers.map(
+                      (visualizationLayer: VisualizationLayer) =>
+                        this.analyticsService.getAnalytics(
                           visualizationLayer.dataSelections,
                           visualizationLayer.layerType,
                           {
                             ...visualizationLayer.config,
                             visualizationType: action.type
                           }
-                        );
-                      }
+                        )
                     )
                   ).subscribe(
                     analyticsResponse => {

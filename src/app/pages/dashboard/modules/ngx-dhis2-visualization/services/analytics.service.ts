@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { Observable, of, forkJoin, throwError, pipe } from 'rxjs';
+import { Observable, of, forkJoin, throwError, zip } from 'rxjs';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
 
 import { VisualizationDataSelection } from '../models';
@@ -21,7 +21,7 @@ export class AnalyticsService {
     layerType: string,
     config?: any
   ) {
-    return forkJoin(
+    return zip(
       this._getNormalAnalytics(
         this._getDataSelectionByDxType(
           dataSelections || [],

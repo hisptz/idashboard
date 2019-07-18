@@ -33,10 +33,6 @@ export class InitializeVisualizationObjectAction implements Action {
     VisualizationObjectActionTypes.INITIALIZE_VISUALIZATION_OBJECT;
 
   constructor(
-    public id: string,
-    public name: string,
-    public visualizationType: string,
-    public visualizationLayers: VisualizationLayer[],
     public visualizationObject: any,
     public currentUser: any,
     public systemInfo: any

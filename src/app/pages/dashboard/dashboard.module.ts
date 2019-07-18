@@ -19,7 +19,7 @@ import { NgxDhis2VisualizationModule } from './modules/ngx-dhis2-visualization/n
   imports: [
     CommonModule,
     SharedModule,
-    // NgxDhis2SelectionFiltersModule,
+    NgxDhis2SelectionFiltersModule,
     NgxDhis2VisualizationModule,
     DashboardRoutingModule,
     ...dashboardReducers,

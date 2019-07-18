@@ -1,3 +1,5 @@
+import { SelectionFilterConfig } from '@iapps/ngx-dhis2-selection-filters';
+
 export interface DashboardPreferences {
   id: string;
   namespace: string;
@@ -7,4 +9,5 @@ export interface DashboardPreferences {
   customAttributes: string[];
   menuAlignment: string;
   menuType: string;
+  selectionFilterConfig?: SelectionFilterConfig;
 }
