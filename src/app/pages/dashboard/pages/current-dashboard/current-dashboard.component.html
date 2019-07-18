@@ -3,15 +3,28 @@
   <div class="current-dashboard-header">
     <div class="current-dashboard-options">
       <div class="current-dashboard-title">
-        {{ (currentDashboard$ | async)?.name }}
+        <app-dashboard-title
+          [id]="(currentDashboard$ | async)?.id"
+          [dashboardMode]="dashboardMode$ | async"
+          [name]="(currentDashboard$ | async)?.name"
+          (enableEditing)="onEnableEditMode()"
+        ></app-dashboard-title>
       </div>
+
       <div class="current-dashboard-filter">
         <ngx-dhis2-selection-filters
           [selectionFilterConfig]="selectionFilterConfig$ | async"
         ></ngx-dhis2-selection-filters>
       </div>
     </div>
-    <div class="current-dashboard-settings"></div>
+    <div class="current-dashboard-settings">
+      <!-- dashboard mode -->
+      <app-dashboard-mode
+        [dashboardMode]="dashboardMode$ | async"
+        (toggleDashboardMode)="onToggleDashboardMode()"
+      ></app-dashboard-mode>
+      <!-- end of dashboard mode -->
+    </div>
   </div>
   <!-- end of current dashboard header -->
 

@@ -1,0 +1,6 @@
+<div class="dashboard-mode" (click)="onToggleMode($event)">
+  <div *ngIf="dashboardMode.isViewMode"><i class="fa fa-eye"></i> Viewing</div>
+  <div *ngIf="dashboardMode.isEditMode">
+    <i class="fa fa-pencil"></i> Editing
+  </div>
+</div>

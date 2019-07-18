@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Dashboard } from '../../models/dashboard.model';
 import { DashboardPreferences } from '../../models/dashboard-preferences.model';
+import { DashboardModeState } from '../../models/dashboard-mode.mode';
 
 @Component({
   selector: 'app-dashboard-menu-list',
@@ -19,6 +20,7 @@ export class DashboardMenuListComponent implements OnInit {
   @Input() dashboards: Dashboard[];
   @Input() dashboardPreferences: DashboardPreferences;
   @Input() currentDashboardId: string;
+  @Input() dashboardMode: DashboardModeState;
   searchTerm: string;
 
   @Output()

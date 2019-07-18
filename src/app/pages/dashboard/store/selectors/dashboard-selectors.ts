@@ -9,6 +9,7 @@ import { DashboardItem } from '../../models/dashboard-item.model';
 import { getFavoriteEntities } from './favorite.selectors';
 import { Favorite } from '../../models/favorite.model';
 import { getVisualizationObject } from '../../helpers/get-visualization-object.helper';
+import { DashboardMode } from '../../constants/dashboard-modes.constant';
 
 const getDashboardState: MemoizedSelector<
   object,
@@ -56,3 +57,14 @@ export const getDashboardItemVisualization = (
         : null;
     }
   );
+
+export const getDashboardMode = createSelector(
+  getDashboardState,
+  (state: DashboardState) => {
+    const currentMode = state.dashboardMode;
+    return {
+      isViewMode: currentMode === DashboardMode.VIEW,
+      isEditMode: currentMode === DashboardMode.EDIT
+    };
+  }
+);

@@ -12,9 +12,11 @@ import { services } from './services';
 import { dashboardEffects } from './store/effects';
 import { dashboardReducers } from './store/reducers';
 import { NgxDhis2VisualizationModule } from './modules/ngx-dhis2-visualization/ngx-dhis2-visualization.module';
+import { DashboardTitleComponent } from './components/dashboard-title/dashboard-title.component';
+import { DashboardModeComponent } from './components/dashboard-mode/dashboard-mode.component';
 
 @NgModule({
-  declarations: [...pages, ...containers, ...components],
+  declarations: [...pages, ...containers, ...components, DashboardTitleComponent, DashboardModeComponent],
   providers: [...services],
   imports: [
     CommonModule,
