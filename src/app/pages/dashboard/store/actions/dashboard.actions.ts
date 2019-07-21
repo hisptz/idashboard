@@ -20,6 +20,13 @@ export const addDashboards = createAction(
   props<{ dashboards: Dashboard[]; currentUser: User }>()
 );
 
+export const addDashboard = createAction(
+  '[Dashboard] Add Dashboard',
+  props<{ dashboard: Dashboard }>()
+);
+
+export const createDashboard = createAction('[Dashboard] Create Dashboard');
+
 export const saveDashboard = createAction(
   '[Dashboard] Save Dashboard',
   props<{ dashboard: Dashboard; action: string }>()

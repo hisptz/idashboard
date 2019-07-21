@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardMenuListComponent } from './dashboard-menu-list.component';
+import { FilterByNamePipe } from 'src/app/shared/pipes/filter-by-name.pipe';
 
 describe('DashboardMenuListComponent', () => {
   let component: DashboardMenuListComponent;
@@ -8,9 +9,8 @@ describe('DashboardMenuListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardMenuListComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardMenuListComponent, FilterByNamePipe]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

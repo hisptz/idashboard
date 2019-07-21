@@ -15,7 +15,8 @@ import {
   updateDashboard,
   toggleDashboardMode,
   enableEditMode,
-  enableViewMode
+  enableViewMode,
+  addDashboard
 } from '../actions/dashboard.actions';
 import {
   dashboardAdapter,
@@ -34,6 +35,12 @@ const reducer = createReducer(
     dashboardAdapter.addMany(dashboards, {
       ...state,
       ...loadedBaseState
+    })
+  ),
+  on(addDashboard, (state, { dashboard }) =>
+    dashboardAdapter.addOne(dashboard, {
+      ...state,
+      dashboardMode: DashboardMode.EDIT
     })
   ),
   on(saveDashboard, (state, { dashboard }) =>

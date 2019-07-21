@@ -35,10 +35,13 @@ import {
   saveDashboard,
   saveDashboardFail,
   saveDashboardSuccess,
-  setCurrentDashboard
+  setCurrentDashboard,
+  addDashboard,
+  createDashboard
 } from '../actions/dashboard.actions';
 import { getDashboardPreferences } from '../selectors/dashboard-preferences.selectors';
 import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
+import { getNewDashboard } from '../../helpers/get-new-dashboard.helper';
 
 @Injectable()
 export class DashboardEffects {
@@ -158,6 +161,32 @@ export class DashboardEffects {
         }
 
         return go({ path: [`/dashboards/${id}`] });
+      })
+    )
+  );
+
+  createDashboard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createDashboard),
+      concatMap(action =>
+        of(action).pipe(
+          withLatestFrom(
+            this.store.pipe(select(getCurrentUser)),
+            this.store.pipe(select(getDashboardPreferences))
+          )
+        )
+      ),
+      switchMap(([action, currentUser, { defaultDashboardItems }]) => {
+        const dashboard: Dashboard = getNewDashboard(
+          currentUser,
+          defaultDashboardItems
+        );
+        return [
+          addDashboard({
+            dashboard
+          }),
+          setCurrentDashboard({ id: dashboard.id })
+        ];
       })
     )
   );

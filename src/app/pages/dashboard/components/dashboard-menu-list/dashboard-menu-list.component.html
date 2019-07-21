@@ -1,7 +1,7 @@
 <ul class="dashboard-menu-list-{{ dashboardPreferences?.menuAlignment }}">
   <!-- dashboard menu search and add button -->
   <li class="dashboard-menu-list-header">
-    <button class="add-dashboard-btn">
+    <button class="add-dashboard-btn" (click)="onAddDashboard($event)">
       <i class="fa fa-plus"></i>
     </button>
     <div class="dashboard-menu-search">

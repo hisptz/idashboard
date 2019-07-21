@@ -25,6 +25,9 @@ export class DashboardMenuListComponent implements OnInit {
 
   @Output()
   setCurrentDashboard: EventEmitter<string> = new EventEmitter<string>();
+
+  @Output()
+  addDashboard: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
 
   ngOnInit() {}
@@ -36,5 +39,10 @@ export class DashboardMenuListComponent implements OnInit {
   onSearchDashboard(e) {
     e.stopPropagation();
     this.searchTerm = e.target.value.trim();
+  }
+
+  onAddDashboard(e) {
+    e.stopPropagation();
+    this.addDashboard.emit();
   }
 }
