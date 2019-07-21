@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgxDhis2HttpClientService, User } from '@iapps/ngx-dhis2-http-client';
 import { find, omit, pick } from 'lodash';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 import { filterDashboardIdsByNamespace } from '../helpers/filter-dashboard-ids-by-namespace.helper';
 import { DashboardPreferences } from '../models/dashboard-preferences.model';
@@ -167,7 +167,8 @@ export class DashboardService {
         }
 
         return this._getAllByPage(newDashboardIds);
-      })
+      }),
+      catchError(() => of([]))
     );
   }
 
