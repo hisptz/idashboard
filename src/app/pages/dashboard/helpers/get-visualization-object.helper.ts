@@ -24,6 +24,9 @@ export function getVisualizationObject(
   const favorite = getFavorite(dashboardItem);
 
   const name = getVisualizationName(dashboardItem, favorite);
+  const isNonVisualizable = checkIfVisualizationIsNonVisualizable(
+    dashboardItem.type
+  );
   return {
     id: dashboardItem.id,
     name,
@@ -33,15 +36,20 @@ export function getVisualizationObject(
     lastUpdated: dashboardItem.lastUpdated,
     favorite,
     appKey: dashboardItem.appKey,
-    isNonVisualizable: checkIfVisualizationIsNonVisualizable(
-      dashboardItem.type
-    ),
-    progress: {
-      statusCode: 200,
-      statusText: 'OK',
-      percent: 0,
-      message: `Loading Data for ${name}....`
-    },
+    isNonVisualizable,
+    progress: isNonVisualizable
+      ? {
+          statusCode: 200,
+          statusText: 'OK',
+          percent: 100,
+          message: 'Information has been loaded'
+        }
+      : {
+          statusCode: 200,
+          statusText: 'OK',
+          percent: 0,
+          message: `Loading Data for ${name}....`
+        },
     uiConfig: getStandardizedVisualizationUiConfig(dashboardItem),
     layers: getVisualizationLayers(dashboardItem)
   };

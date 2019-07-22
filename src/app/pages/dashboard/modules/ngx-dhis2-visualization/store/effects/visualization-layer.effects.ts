@@ -7,7 +7,7 @@ import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap, mergeMap } from 'rxjs/operators';
 
 import {
   checkIfVisualizationIsNonVisualizable,
@@ -24,7 +24,8 @@ import {
   LoadVisualizationAnalyticsAction,
   LoadVisualizationAnalyticsSuccessAction,
   UpdateVisualizationLayerAction,
-  VisualizationLayerActionTypes
+  VisualizationLayerActionTypes,
+  AddVisualizationLayersAction
 } from '../actions/visualization-layer.actions';
 import { UpdateVisualizationObjectAction } from '../actions/visualization-object.actions';
 import { VisualizationState } from '../reducers/visualization.reducer';
@@ -35,17 +36,22 @@ export class VisualizationLayerEffects {
   updateFavorite$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateFavorite),
-      map(({ favorite, visualizationId, visualizationType }) => {
-        const visualizationLayers = getVisualizationLayersFromFavorite(
-          favorite,
-          visualizationType
-        );
+      mergeMap(
+        ({ favorite, visualizationId, visualizationType, systemInfo }) => {
+          const visualizationLayers = getVisualizationLayersFromFavorite(
+            favorite,
+            visualizationType
+          );
 
-        return new LoadVisualizationAnalyticsAction(
-          visualizationId,
-          visualizationLayers
-        );
-      })
+          return [
+            new AddVisualizationLayersAction(visualizationLayers),
+            new LoadVisualizationAnalyticsAction(
+              visualizationId,
+              visualizationLayers
+            )
+          ];
+        }
+      )
     )
   );
 

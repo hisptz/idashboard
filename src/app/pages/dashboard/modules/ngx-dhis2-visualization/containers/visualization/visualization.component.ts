@@ -8,13 +8,12 @@ import {
   ViewChild
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
 import { VisualizationBodySectionComponent } from '../../components/visualization-body-section/visualization-body-section';
 import { LegendSet } from '../../models/legend-set.model';
 import { VisualizationConfig } from '../../models/visualization-config.model';
-import { VisualizationInputs } from '../../models/visualization-inputs.model';
 import { VisualizationLayer } from '../../models/visualization-layer.model';
 import { VisualizationProgress } from '../../models/visualization-progress.model';
 import { VisualizationUiConfig } from '../../models/visualization-ui-config.model';
@@ -27,11 +26,10 @@ import {
   UpdateVisualizationLayerAction
 } from '../../store/actions/visualization-layer.actions';
 import {
-  InitializeVisualizationObjectAction,
+  initializeVisualizationObject,
   SaveVisualizationFavoriteAction,
   ToggleVisualizationFullScreenAction,
-  UpdateVisualizationObjectAction,
-  initializeVisualizationObject
+  UpdateVisualizationObjectAction
 } from '../../store/actions/visualization-object.actions';
 import { ShowOrHideVisualizationBodyAction } from '../../store/actions/visualization-ui-configuration.actions';
 import { VisualizationState } from '../../store/reducers/visualization.reducer';
@@ -133,8 +131,10 @@ export class VisualizationComponent implements OnInit {
       )
     );
 
-    this.visualizationConfig$ = this.store.select(
-      getCurrentVisualizationConfig(visualizationObject.id)
+    this.visualizationConfig$ = this.visualizationObject$.pipe(
+      map((visualization: VisualizationVm) =>
+        visualization ? visualization.globalConfig : null
+      )
     );
 
     this.focusedVisualization$ = this.store.select(getFocusedVisualization);

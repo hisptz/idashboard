@@ -58,7 +58,8 @@ export class FavoriteEffects {
                 updateFavorite({
                   favorite: favoriteResponse,
                   visualizationId,
-                  visualizationType
+                  visualizationType,
+                  systemInfo
                 })
               ),
               catchError((error: ErrorMessage) =>

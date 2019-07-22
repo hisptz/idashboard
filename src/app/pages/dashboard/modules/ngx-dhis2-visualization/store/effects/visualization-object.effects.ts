@@ -85,7 +85,10 @@ export class VisualizationObjectEffects {
             if (!availableVisualization) {
               this.store.dispatch(
                 addVisualizationObject({
-                  visualizationObject,
+                  visualizationObject: {
+                    ...visualizationObject,
+                    globalConfig: { contextPath: systemInfo['contextPath'] }
+                  },
                   visualizationLayers,
                   systemInfo,
                   currentUser,
@@ -124,11 +127,9 @@ export class VisualizationObjectEffects {
                 })
               );
             } else {
-              // this.store.dispatch(
-              //   addVisualizationLayer({
-              //     visualizationLayers
-              //   })
-              // );
+              this.store.dispatch(
+                new AddVisualizationLayersAction(visualizationLayers)
+              );
             }
           }
         )

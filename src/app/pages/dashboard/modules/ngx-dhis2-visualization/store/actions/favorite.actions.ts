@@ -27,5 +27,6 @@ export const updateFavorite = createAction(
     favorite: Favorite;
     visualizationId: string;
     visualizationType: string;
+    systemInfo: SystemInfo;
   }>()
 );
