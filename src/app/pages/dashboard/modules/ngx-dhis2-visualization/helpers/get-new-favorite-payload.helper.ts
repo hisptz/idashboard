@@ -18,24 +18,30 @@ export function getNewFavoritePayload(payload: {
     case 'chart': {
       return {
         id,
-        rows: {
-          dimensionItem: 'dx',
-          items: []
-        },
-        columns: {
-          dimensionItem: 'ou',
-          items: getDefaultOrgUnits(currentUser)
-        },
-        filters: {
-          dimensionItem: 'pe',
-          items: systemInfo
-            ? [
-                {
-                  id: systemInfo.keyAnalysisRelativePeriod
-                }
-              ]
-            : []
-        },
+        rows: [
+          {
+            dimension: 'dx',
+            items: []
+          }
+        ],
+        columns: [
+          {
+            dimension: 'ou',
+            items: getDefaultOrgUnits(currentUser)
+          }
+        ],
+        filters: [
+          {
+            dimension: 'pe',
+            items: systemInfo
+              ? [
+                  {
+                    id: systemInfo.keyAnalysisRelativePeriod
+                  }
+                ]
+              : []
+          }
+        ],
 
         ...getFavoriteOptionsByType(config || {}, type)
       };

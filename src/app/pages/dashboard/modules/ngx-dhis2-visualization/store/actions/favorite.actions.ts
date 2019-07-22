@@ -8,7 +8,8 @@ export const loadFavorite = createAction(
   props<{
     favorite: Favorite;
     favoriteType: string;
-    dashboardItemId: string;
+    visualizationId: string;
+    visualizationType: string;
     currentUser?: User;
     systemInfo?: SystemInfo;
     isNew?: boolean;
@@ -17,10 +18,14 @@ export const loadFavorite = createAction(
 
 export const loadFavoriteFail = createAction(
   '[Favorite] Load favorite fail',
-  props<{ error: ErrorMessage; id: string }>()
+  props<{ error: ErrorMessage; id: string; visualizationId?: string }>()
 );
 
 export const updateFavorite = createAction(
   '[Favorite] Update favorite',
-  props<{ favorite: Favorite }>()
+  props<{
+    favorite: Favorite;
+    visualizationId: string;
+    visualizationType: string;
+  }>()
 );

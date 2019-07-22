@@ -116,7 +116,8 @@ export class VisualizationObjectEffects {
                 loadFavorite({
                   favorite: visualizationObject.favorite,
                   favoriteType: _.camelCase(visualizationObject.type),
-                  dashboardItemId: visualizationObject.id,
+                  visualizationId: visualizationObject.id,
+                  visualizationType: visualizationObject.type,
                   currentUser,
                   systemInfo,
                   isNew

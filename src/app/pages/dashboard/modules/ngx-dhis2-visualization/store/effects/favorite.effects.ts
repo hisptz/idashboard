@@ -33,7 +33,15 @@ export class FavoriteEffects {
       ),
       mergeMap(
         ([
-          { favorite, favoriteType, isNew, systemInfo, currentUser },
+          {
+            favorite,
+            favoriteType,
+            isNew,
+            systemInfo,
+            currentUser,
+            visualizationId,
+            visualizationType
+          },
           dashboardPreferences
         ]) =>
           this.favoriteService
@@ -47,10 +55,16 @@ export class FavoriteEffects {
             })
             .pipe(
               map((favoriteResponse: Favorite) =>
-                updateFavorite({ favorite: favoriteResponse })
+                updateFavorite({
+                  favorite: favoriteResponse,
+                  visualizationId,
+                  visualizationType
+                })
               ),
               catchError((error: ErrorMessage) =>
-                of(loadFavoriteFail({ error, id: favorite.id }))
+                of(
+                  loadFavoriteFail({ error, id: favorite.id, visualizationId })
+                )
               )
             )
       )

@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import * as _ from 'lodash';
-import { forkJoin, Observable, zip } from 'rxjs';
-import { filter, switchMap, take, tap } from 'rxjs/operators';
-
 import {
   getFunctionLoadedStatus,
   getFunctions
 } from '@iapps/ngx-dhis2-data-filter';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import * as _ from 'lodash';
+import { forkJoin, Observable } from 'rxjs';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+
 import {
   checkIfVisualizationIsNonVisualizable,
   getMergedDataSelections,
   getSanitizedAnalytics,
   getStandardizedAnalyticsObject,
+  getVisualizationLayersFromFavorite,
   prepareVisualizationLayersForAnalytics
 } from '../../helpers';
 import { VisualizationLayer } from '../../models';
 import { AnalyticsService } from '../../services/analytics.service';
+import { loadFavoriteFail, updateFavorite } from '../actions/favorite.actions';
 import {
   LoadVisualizationAnalyticsAction,
   LoadVisualizationAnalyticsSuccessAction,
@@ -30,6 +32,40 @@ import { getCombinedVisualizationObjectById } from '../selectors';
 
 @Injectable()
 export class VisualizationLayerEffects {
+  updateFavorite$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateFavorite),
+      map(({ favorite, visualizationId, visualizationType }) => {
+        const visualizationLayers = getVisualizationLayersFromFavorite(
+          favorite,
+          visualizationType
+        );
+
+        return new LoadVisualizationAnalyticsAction(
+          visualizationId,
+          visualizationLayers
+        );
+      })
+    )
+  );
+
+  loadFavoriteFails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadFavoriteFail),
+      map(
+        ({ visualizationId, error }) =>
+          new UpdateVisualizationObjectAction(visualizationId, {
+            progress: {
+              statusCode: error.statusCode || error.status,
+              statusText: 'Error',
+              percent: 100,
+              message: error.message
+            }
+          })
+      )
+    )
+  );
+
   @Effect({ dispatch: false })
   loadAnalytics$: Observable<any> = this.actions$.pipe(
     ofType(VisualizationLayerActionTypes.LOAD_VISUALIZATION_ANALYTICS),
