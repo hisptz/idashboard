@@ -3,8 +3,9 @@ import { VisualizationProgress } from './visualization-progress.model';
 import { VisualizationNotification } from './visualization-notification.model';
 import { VisualizationUiConfig } from './visualization-ui-config.model';
 import { VisualizationConfig } from './visualization-config.model';
+import { VisualizationLayer } from './visualization-layer.model';
 
-export interface Visualization {
+interface BaseVisualization {
   id: string;
   name: string;
   type?: string;
@@ -17,9 +18,16 @@ export interface Visualization {
   description?: string;
   visualizationConfigId?: string;
   progress?: VisualizationProgress;
-  layers?: Array<string>;
   isNew?: boolean;
   appKey?: string;
   notification?: VisualizationNotification;
   isNonVisualizable?: boolean;
+}
+
+export interface VisualizationVm extends BaseVisualization {
+  layers?: string[];
+}
+
+export interface Visualization extends BaseVisualization {
+  layers: VisualizationLayer[];
 }

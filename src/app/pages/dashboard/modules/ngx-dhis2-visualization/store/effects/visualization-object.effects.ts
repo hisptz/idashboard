@@ -1,30 +1,32 @@
 import { Injectable } from '@angular/core';
 import {
-  SystemInfoService,
-  NgxDhis2HttpClientService
+  NgxDhis2HttpClientService,
+  SystemInfoService
 } from '@iapps/ngx-dhis2-http-client';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
+import { Store, select } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import {
-  catchError,
-  map,
-  mergeMap,
   switchMap,
   take,
   tap,
-  withLatestFrom
+  withLatestFrom,
+  concatMap
 } from 'rxjs/operators';
+import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
 
 import {
   getSelectionDimensionsFromFavorite,
-  getStandardizedVisualizationType,
   getVisualizationLayerType
 } from '../../helpers';
 import { getDefaultVisualizationLayer } from '../../helpers/get-default-visualization-layer.helper';
 import { getFavoritePayload } from '../../helpers/get-favorite-payload.helpers';
-import { Visualization, VisualizationLayer } from '../../models';
+import {
+  Visualization,
+  VisualizationLayer,
+  VisualizationVm
+} from '../../models';
 import { FavoriteService } from '../../services/favorite.service';
 import {
   AddVisualizationLayerAction,
@@ -32,29 +34,107 @@ import {
   AddVisualizationObjectAction,
   InitializeVisualizationObjectAction,
   LoadVisualizationAnalyticsAction,
-  LoadVisualizationFavoriteAction,
   LoadVisualizationFavoriteSuccessAction,
   RemoveVisualizationConfigurationAction,
-  RemoveVisualizationFavoriteAction,
   RemoveVisualizationLayerAction,
   RemoveVisualizationObjectAction,
   RemoveVisualizationUiConfigurationAction,
   SaveVisualizationFavoriteAction,
-  SaveVisualizationFavoriteSuccessAction,
   UpdateVisualizationConfigurationAction,
-  UpdateVisualizationLayerAction,
   UpdateVisualizationObjectAction,
-  VisualizationObjectActionTypes
+  VisualizationObjectActionTypes,
+  initializeVisualizationObject,
+  addVisualizationObject,
+  addVisualizationLayer
 } from '../actions';
 import {
   getVisualizationObjectEntities,
   VisualizationState
 } from '../reducers/visualization.reducer';
 import { getCombinedVisualizationObjectById } from '../selectors';
-import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
+import { loadFavorite } from '../actions/favorite.actions';
 
 @Injectable()
 export class VisualizationObjectEffects {
+  initializeVisualization$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(initializeVisualizationObject),
+        concatMap(action =>
+          of(action).pipe(
+            withLatestFrom(
+              this.store.pipe(select(getVisualizationObjectEntities))
+            )
+          )
+        ),
+        tap(
+          ([
+            {
+              visualizationObject,
+              currentUser,
+              systemInfo,
+              visualizationLayers,
+              isNew
+            },
+            visualizationObjectEntities
+          ]) => {
+            const availableVisualization: VisualizationVm =
+              visualizationObjectEntities[visualizationObject.id];
+
+            // add visualization object if not available in store
+            if (!availableVisualization) {
+              this.store.dispatch(
+                addVisualizationObject({
+                  visualizationObject,
+                  visualizationLayers,
+                  systemInfo,
+                  currentUser,
+                  isNew
+                })
+              );
+            }
+          }
+        )
+      ),
+    { dispatch: false }
+  );
+
+  addVisualizationObject$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(addVisualizationObject),
+        tap(
+          ({
+            visualizationObject,
+            visualizationLayers,
+            isNew,
+            currentUser,
+            systemInfo
+          }) => {
+            if (visualizationObject.favorite) {
+              this.store.dispatch(
+                loadFavorite({
+                  favorite: visualizationObject.favorite,
+                  favoriteType: _.camelCase(visualizationObject.type),
+                  dashboardItemId: visualizationObject.id,
+                  currentUser,
+                  systemInfo,
+                  isNew
+                })
+              );
+            } else {
+              // this.store.dispatch(
+              //   addVisualizationLayer({
+              //     visualizationLayers
+              //   })
+              // );
+            }
+          }
+        )
+      ),
+    { dispatch: false }
+  );
+
   @Effect({ dispatch: false })
   initializeVisualizationObject$: Observable<any> = this.actions$.pipe(
     ofType(VisualizationObjectActionTypes.INITIALIZE_VISUALIZATION_OBJECT),
@@ -69,61 +149,59 @@ export class VisualizationObjectEffects {
 
         if (!visualizationObject) {
           // Set visualization object
-          this.store.dispatch(
-            new AddVisualizationObjectAction({
-              ...action.visualizationObject,
-              layers: (action.visualizationObject.layers || []).map(
-                (layer: VisualizationLayer) => layer.id
-              )
-            })
-          );
-
+          // this.store.dispatch(
+          //   new AddVisualizationObjectAction({
+          //     ...action.visualizationObject,
+          //     layers: (action.visualizationObject.layers || []).map(
+          //       (layer: VisualizationLayer) => layer.id
+          //     )
+          //   })
+          // );
           // Set visualization layers
-          this.store.dispatch(
-            new AddVisualizationLayersAction(action.visualizationObject.layers)
-          );
-
+          // this.store.dispatch(
+          //   new AddVisualizationLayersAction(action.visualizationObject.layers)
+          // );
           // Load analytics for visualization layers
-          this.store.dispatch(
-            new LoadVisualizationAnalyticsAction(
-              action.visualizationObject.id,
-              action.visualizationObject.layers
-            )
-          );
+          // this.store.dispatch(
+          //   new LoadVisualizationAnalyticsAction(
+          //     action.visualizationObject.id,
+          //     action.visualizationObject.layers
+          //   )
+          // );
         }
       }
     )
   );
 
-  @Effect()
-  loadFavorite$: Observable<any> = this.actions$.pipe(
-    ofType(VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE),
-    mergeMap((action: LoadVisualizationFavoriteAction) =>
-      this.favoriteService.getFavorite(action.visualization.favorite).pipe(
-        map(
-          (favorite: any) =>
-            new LoadVisualizationFavoriteSuccessAction(
-              action.visualization,
-              favorite,
-              action.currentUser,
-              action.systemInfo
-            )
-        ),
-        catchError(error =>
-          of(
-            new UpdateVisualizationObjectAction(action.visualization.id, {
-              progress: {
-                statusCode: error.status,
-                statusText: 'Error',
-                percent: 100,
-                message: error.message
-              }
-            })
-          )
-        )
-      )
-    )
-  );
+  // @Effect()
+  // loadFavorite$: Observable<any> = this.actions$.pipe(
+  //   ofType(VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE),
+  //   mergeMap((action: LoadVisualizationFavoriteAction) =>
+  //     this.favoriteService.getFavorite(action.visualization.favorite).pipe(
+  //       map(
+  //         (favorite: any) =>
+  //           new LoadVisualizationFavoriteSuccessAction(
+  //             action.visualization,
+  //             favorite,
+  //             action.currentUser,
+  //             action.systemInfo
+  //           )
+  //       ),
+  //       catchError(error =>
+  //         of(
+  //           new UpdateVisualizationObjectAction(action.visualization.id, {
+  //             progress: {
+  //               statusCode: error.status,
+  //               statusText: 'Error',
+  //               percent: 100,
+  //               message: error.message
+  //             }
+  //           })
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
 
   @Effect({ dispatch: false })
   loadFavoriteSuccess$: Observable<any> = this.actions$.pipe(
@@ -317,49 +395,49 @@ export class VisualizationObjectEffects {
             visualizationObject.config.currentType
           );
 
-          if (favoriteDetails) {
-            const favoritePromise =
-              visualizationObject.isNew || favoriteDetails.hasDifferentType
-                ? this.favoriteService.create(
-                    favoriteDetails.url,
-                    favoriteDetails.favorite
-                  )
-                : this.favoriteService.update(
-                    favoriteDetails.url,
-                    favoriteDetails.favorite
-                  );
+          // if (favoriteDetails) {
+          //   const favoritePromise =
+          //     visualizationObject.isNew || favoriteDetails.hasDifferentType
+          //       ? this.favoriteService.create(
+          //           favoriteDetails.url,
+          //           favoriteDetails.favorite
+          //         )
+          //       : this.favoriteService.update(
+          //           favoriteDetails.url,
+          //           favoriteDetails.favorite
+          //         );
 
-            favoritePromise.subscribe(favoriteResult => {
-              // Save favorite as dashboard item
+          //   favoritePromise.subscribe(favoriteResult => {
+          //     // Save favorite as dashboard item
 
-              this.store.dispatch(
-                new SaveVisualizationFavoriteSuccessAction(
-                  action.dashboardId,
-                  action.id,
-                  favoriteDetails.favoriteType,
-                  favoriteResult,
-                  visualizationObject.isNew ? 'ADD' : 'UPDATE'
-                )
-              );
+          //     this.store.dispatch(
+          //       new SaveVisualizationFavoriteSuccessAction(
+          //         action.dashboardId,
+          //         action.id,
+          //         favoriteDetails.favoriteType,
+          //         favoriteResult,
+          //         visualizationObject.isNew ? 'ADD' : 'UPDATE'
+          //       )
+          //     );
 
-              // Update visualization object with new favorite
-              this.store.dispatch(
-                new UpdateVisualizationObjectAction(action.id, {
-                  isNew: false
-                })
-              );
+          //     // Update visualization object with new favorite
+          //     this.store.dispatch(
+          //       new UpdateVisualizationObjectAction(action.id, {
+          //         isNew: false
+          //       })
+          //     );
 
-              // Update visualization layers in the store
-              _.each(visualizationLayers, visualizationLayer => {
-                this.store.dispatch(
-                  new UpdateVisualizationLayerAction(
-                    visualizationLayer.id,
-                    visualizationLayer
-                  )
-                );
-              });
-            });
-          }
+          //     // Update visualization layers in the store
+          //     _.each(visualizationLayers, visualizationLayer => {
+          //       this.store.dispatch(
+          //         new UpdateVisualizationLayerAction(
+          //           visualizationLayer.id,
+          //           visualizationLayer
+          //         )
+          //       );
+          //     });
+          //   });
+          // }
         });
     })
   );
@@ -374,15 +452,15 @@ export class VisualizationObjectEffects {
     ])
   );
 
-  @Effect({ dispatch: false })
-  removeVisualizationFavorite$: Observable<any> = this.actions$.pipe(
-    ofType(VisualizationObjectActionTypes.RemoveVisualizationFavorite),
-    tap((action: RemoveVisualizationFavoriteAction) => {
-      this.favoriteService
-        .delete(action.favoriteId, action.favoriteType)
-        .subscribe();
-    })
-  );
+  // @Effect({ dispatch: false })
+  // removeVisualizationFavorite$: Observable<any> = this.actions$.pipe(
+  //   ofType(VisualizationObjectActionTypes.RemoveVisualizationFavorite),
+  //   tap((action: RemoveVisualizationFavoriteAction) => {
+  //     this.favoriteService
+  //       .delete(action.favoriteId, action.favoriteType)
+  //       .subscribe();
+  //   })
+  // );
 
   constructor(
     private actions$: Actions,

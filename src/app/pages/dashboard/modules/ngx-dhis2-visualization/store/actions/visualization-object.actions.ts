@@ -1,5 +1,10 @@
-import { Action } from '@ngrx/store';
-import { Visualization, VisualizationLayer } from '../../models';
+import { Action, createAction, props } from '@ngrx/store';
+import {
+  Visualization,
+  VisualizationLayer,
+  VisualizationVm
+} from '../../models';
+import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
 
 export enum VisualizationObjectActionTypes {
   AddVisualizationObjects = '[Visualization] Add all visualization objects',
@@ -16,16 +21,37 @@ export enum VisualizationObjectActionTypes {
   ToggleFullScreen = '[Visualization] toggle full screen'
 }
 
+export const initializeVisualizationObject = createAction(
+  '[Visualization] Initialize visualization object',
+  props<{
+    visualizationObject: VisualizationVm;
+    visualizationLayers: VisualizationLayer[];
+    currentUser: User;
+    systemInfo: SystemInfo;
+    isNew: boolean;
+  }>()
+);
+
+export const addVisualizationObject = createAction(
+  '[Visualization] Add visualization object',
+  props<{
+    visualizationObject: VisualizationVm;
+    visualizationLayers: VisualizationLayer[];
+    isNew?: boolean;
+    currentUser?: User;
+    systemInfo?: SystemInfo;
+  }>()
+);
 export class AddVisualizationObjectAction implements Action {
   readonly type = VisualizationObjectActionTypes.ADD_VISUALIZATION_OBJECT;
 
-  constructor(public visualizationObject: Visualization) {}
+  constructor(public visualizationObject: VisualizationVm) {}
 }
 
 export class AddVisualizationObjectsAction implements Action {
   readonly type = VisualizationObjectActionTypes.AddVisualizationObjects;
 
-  constructor(public visualizationObjects: Visualization[]) {}
+  constructor(public visualizationObjects: VisualizationVm[]) {}
 }
 
 export class InitializeVisualizationObjectAction implements Action {
@@ -42,14 +68,14 @@ export class InitializeVisualizationObjectAction implements Action {
 export class UpdateVisualizationObjectAction implements Action {
   readonly type = VisualizationObjectActionTypes.UPDATE_VISUALIZATION_OBJECT;
 
-  constructor(public id: string, public changes: Partial<Visualization>) {}
+  constructor(public id: string, public changes: Partial<VisualizationVm>) {}
 }
 
 export class LoadVisualizationFavoriteAction implements Action {
   readonly type = VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE;
 
   constructor(
-    public visualization: Visualization,
+    public visualization: VisualizationVm,
     public currentUser: any,
     public systemInfo: any
   ) {}
@@ -60,7 +86,7 @@ export class LoadVisualizationFavoriteSuccessAction implements Action {
     VisualizationObjectActionTypes.LOAD_VISUALIZATION_FAVORITE_SUCCESS;
 
   constructor(
-    public visualization: Visualization,
+    public visualization: VisualizationVm,
     public favorite: any,
     public currentUser: any,
     public systemInfo: any

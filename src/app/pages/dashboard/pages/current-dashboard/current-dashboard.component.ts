@@ -17,6 +17,8 @@ import {
   enableViewMode
 } from '../../store/actions/dashboard.actions';
 import { DashboardModeState } from '../../models/dashboard-mode.mode';
+import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
+import { getCurrentUser, getSystemInfo } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -27,6 +29,8 @@ export class CurrentDashboardComponent implements OnInit {
   currentDashboard$: Observable<Dashboard>;
   selectionFilterConfig$: Observable<SelectionFilterConfig>;
   dashboardMode$: Observable<DashboardModeState>;
+  currentUser$: Observable<User>;
+  systemInfo$: Observable<SystemInfo>;
 
   constructor(private store: Store<State>) {}
 
@@ -36,6 +40,8 @@ export class CurrentDashboardComponent implements OnInit {
       select(getSelectionFilterConfig)
     );
     this.dashboardMode$ = this.store.pipe(select(getDashboardMode));
+    this.currentUser$ = this.store.pipe(select(getCurrentUser));
+    this.systemInfo$ = this.store.pipe(select(getSystemInfo));
   }
 
   trackByDashboardItemId(index, item: DashboardItem) {

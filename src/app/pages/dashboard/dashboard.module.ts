@@ -5,18 +5,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { components } from './components';
-import { containers } from './containers';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { NgxDhis2VisualizationModule } from './modules/ngx-dhis2-visualization/ngx-dhis2-visualization.module';
 import { pages } from './pages';
 import { services } from './services';
 import { dashboardEffects } from './store/effects';
 import { dashboardReducers } from './store/reducers';
-import { NgxDhis2VisualizationModule } from './modules/ngx-dhis2-visualization/ngx-dhis2-visualization.module';
-import { DashboardTitleComponent } from './components/dashboard-title/dashboard-title.component';
-import { DashboardModeComponent } from './components/dashboard-mode/dashboard-mode.component';
 
 @NgModule({
-  declarations: [...pages, ...containers, ...components, DashboardTitleComponent, DashboardModeComponent],
+  declarations: [...pages, ...components],
   providers: [...services],
   imports: [
     CommonModule,

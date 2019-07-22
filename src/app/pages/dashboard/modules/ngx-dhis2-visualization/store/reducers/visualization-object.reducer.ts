@@ -1,22 +1,32 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
 // models
-import { Visualization } from '../../models';
+import { Visualization, VisualizationVm } from '../../models';
 
 // actions
 import {
   VisualizationObjectAction,
-  VisualizationObjectActionTypes
+  VisualizationObjectActionTypes,
+  addVisualizationObject
 } from '../actions';
+import { createReducer, on } from '@ngrx/store';
 
-export interface VisualizationObjectState extends EntityState<Visualization> {}
+export interface VisualizationObjectState
+  extends EntityState<VisualizationVm> {}
 
 export const visualizationObjectAdapter: EntityAdapter<
-  Visualization
-> = createEntityAdapter<Visualization>();
+  VisualizationVm
+> = createEntityAdapter<VisualizationVm>();
 
 const initialState: VisualizationObjectState = visualizationObjectAdapter.getInitialState(
   {}
+);
+
+const reducer = createReducer(
+  initialState,
+  on(addVisualizationObject, (state, { visualizationObject }) =>
+    visualizationObjectAdapter.addOne(visualizationObject, state)
+  )
 );
 
 export function visualizationObjectReducer(

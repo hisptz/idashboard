@@ -29,10 +29,13 @@
   <!-- end of current dashboard header -->
 
   <!-- dashboard item list -->
-  <div class="dashboard-item-list">
+  <div
+    class="dashboard-item-list"
+    *ngIf="currentDashboard$ | async as currentDashboard"
+  >
     <div
       *ngFor="
-        let dashboardItem of (currentDashboard$ | async)?.dashboardItems;
+        let dashboardItem of currentDashboard.dashboardItems;
         trackBy: trackByDashboardItemId
       "
       [ngStyle]="{
@@ -40,7 +43,12 @@
         height: dashboardItem.height
       }"
     >
-      <app-dashboard-item [dashboardItem]="dashboardItem"></app-dashboard-item>
+      <app-dashboard-item
+        [dashboardItem]="dashboardItem"
+        [currentUser]="currentUser$ | async"
+        [systemInfo]="systemInfo$ | async"
+        [isNew]="currentDashboard.id === 'new'"
+      ></app-dashboard-item>
     </div>
   </div>
   <!-- end of dashboard item list -->

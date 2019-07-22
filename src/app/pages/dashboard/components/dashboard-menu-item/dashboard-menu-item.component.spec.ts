@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardMenuItemComponent } from './dashboard-menu-item.component';
-import { DashboardItemComponent } from '../../containers/dashboard-item/dashboard-item.component';
+import { DashboardItemComponent } from '../dashboard-item/dashboard-item.component';
 
 describe('DashboardMenuItemComponent', () => {
   let component: DashboardMenuItemComponent;

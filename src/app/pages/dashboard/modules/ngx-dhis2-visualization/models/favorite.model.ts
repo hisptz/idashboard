@@ -4,5 +4,5 @@ export interface Favorite {
   id: string;
   type?: string;
   name?: string;
-  notification: BaseState;
+  notification?: BaseState;
 }

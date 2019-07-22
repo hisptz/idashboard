@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 import { VisualizationLayer, VisualizationDataSelection } from '../../models';
 import { Update } from '@ngrx/entity';
 
@@ -14,6 +14,10 @@ export enum VisualizationLayerActionTypes {
   RemoveVisualizationLayer = '[VisualizationLayer] Remove visualization layer'
 }
 
+export const addVisualizationLayer = createAction(
+  '[VisualizationLayer] Add visualization layer',
+  props<{ visualizationLayers: VisualizationLayer[] }>()
+);
 export class AddVisualizationLayerAction implements Action {
   readonly type = VisualizationLayerActionTypes.ADD_VISUALIZATION_LAYER;
 

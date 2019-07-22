@@ -1,0 +1,11 @@
+<div
+  class="dashboard-item"
+  *ngIf="dashboardItem && dashboardItem.visualization"
+>
+  <ngx-dhis2-visualization
+    [visualizationObject]="dashboardItem.visualization"
+    [currentUser]="currentUser"
+    [systemInfo]="systemInfo"
+    [isNew]="isNew"
+  ></ngx-dhis2-visualization>
+</div>
