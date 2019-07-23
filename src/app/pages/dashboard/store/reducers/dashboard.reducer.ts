@@ -16,7 +16,9 @@ import {
   toggleDashboardMode,
   enableEditMode,
   enableViewMode,
-  addDashboard
+  addDashboard,
+  saveDashboardSuccess,
+  saveDashboardFail
 } from '../actions/dashboard.actions';
 import {
   dashboardAdapter,
@@ -43,9 +45,20 @@ const reducer = createReducer(
       dashboardMode: DashboardMode.EDIT
     })
   ),
-  on(saveDashboard, (state, { dashboard }) =>
-    dashboardAdapter.upsertOne(dashboard, state)
+  on(saveDashboard, (state, { originalId, dashboard }) =>
+    dashboardAdapter.updateOne(
+      { id: originalId, changes: dashboard },
+      { ...state, dashboardMode: DashboardMode.SAVE }
+    )
   ),
+  on(saveDashboardSuccess, state => ({
+    ...state,
+    dashboardMode: DashboardMode.VIEW
+  })),
+  on(saveDashboardFail, state => ({
+    ...state,
+    dashboardMode: DashboardMode.VIEW
+  })),
   on(updateDashboard, (state, { dashboard }) =>
     dashboardAdapter.updateOne({ id: dashboard.id, changes: dashboard }, state)
   ),

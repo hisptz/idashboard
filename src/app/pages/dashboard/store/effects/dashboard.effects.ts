@@ -37,11 +37,17 @@ import {
   saveDashboardSuccess,
   setCurrentDashboard,
   addDashboard,
-  createDashboard
+  createDashboard,
+  initializeDashboardSave,
+  updateDashboard
 } from '../actions/dashboard.actions';
 import { getDashboardPreferences } from '../selectors/dashboard-preferences.selectors';
 import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
 import { getNewDashboard } from '../../helpers/get-new-dashboard.helper';
+import { getCurrentDashboard } from '../selectors/dashboard-selectors';
+import { validateDashboard } from '../../helpers/validate-dashboard.helper';
+import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable()
 export class DashboardEffects {
@@ -97,6 +103,43 @@ export class DashboardEffects {
         });
       })
     )
+  );
+
+  initializeDashboardSave$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(initializeDashboardSave),
+        concatMap(action =>
+          of(action).pipe(
+            withLatestFrom(this.store.pipe(select(getCurrentDashboard)))
+          )
+        ),
+        tap(([action, dashboard]) => {
+          const saveAction = dashboard.id === 'new' ? 'CREATE' : 'UPDATE';
+
+          const validDashboard = validateDashboard(dashboard);
+          if (validDashboard.valid) {
+            const originalId = dashboard.id;
+
+            const newDashboard = {
+              ...dashboard,
+              id: saveAction === 'CREATE' ? generateUid() : dashboard.id
+            };
+
+            if (saveAction === 'CREATE') {
+              this.store.dispatch(setCurrentDashboard({ id: newDashboard.id }));
+            }
+            this.store.dispatch(
+              saveDashboard({
+                dashboard: newDashboard,
+                action: saveAction,
+                originalId
+              })
+            );
+          }
+        })
+      ),
+    { dispatch: false }
   );
 
   saveDashboard$ = createEffect(

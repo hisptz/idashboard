@@ -14,7 +14,9 @@ import { getSelectionFilterConfig } from '../../store/selectors/dashboard-prefer
 import {
   toggleDashboardMode,
   enableEditMode,
-  enableViewMode
+  enableViewMode,
+  updateDashboard,
+  initializeDashboardSave
 } from '../../store/actions/dashboard.actions';
 import { DashboardModeState } from '../../models/dashboard-mode.mode';
 import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
@@ -58,5 +60,13 @@ export class CurrentDashboardComponent implements OnInit {
 
   onEnableViewMode() {
     this.store.dispatch(enableViewMode());
+  }
+
+  onDashboardNameUpdate(dashboard: Dashboard) {
+    this.store.dispatch(updateDashboard({ dashboard }));
+  }
+
+  onSaveDashboard() {
+    this.store.dispatch(initializeDashboardSave());
   }
 }

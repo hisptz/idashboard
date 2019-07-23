@@ -10,6 +10,7 @@
     <input
       class="dashboard-input"
       [value]="name"
+      (change)="onUpdateName($event)"
       placeholder="Enter dashboard name"
       autofocus
       type="text"

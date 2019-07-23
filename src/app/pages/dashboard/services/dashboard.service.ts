@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgxDhis2HttpClientService, User } from '@iapps/ngx-dhis2-http-client';
 import { find, omit, pick } from 'lodash';
-import { forkJoin, from, Observable, of, throwError } from 'rxjs';
+import { forkJoin, from, Observable, of, throwError, zip } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 
 import { filterDashboardIdsByNamespace } from '../helpers/filter-dashboard-ids-by-namespace.helper';
@@ -172,24 +172,10 @@ export class DashboardService {
     );
   }
 
-  private _getAllByPage(dashboardIds): Observable<Dashboard[]> {
-    return new Observable(observer => {
-      let dashboards: Dashboard[] = [];
-      from(dashboardIds)
-        .pipe(mergeMap(this._getOneFromDataStore, null, 10))
-        .subscribe(
-          (dashboard: Dashboard) => {
-            dashboards = [...dashboards, dashboard];
-          },
-          error => {
-            observer.error(error);
-          },
-          () => {
-            observer.next(dashboards);
-            observer.complete();
-          }
-        );
-    });
+  private _getAllByPage(dashboardIds): Observable<any[]> {
+    return zip(
+      ...dashboardIds.map(dashboardId => this._getOneFromDataStore(dashboardId))
+    );
   }
 
   private _getAllFromBoth(dashboardPreferences: DashboardPreferences) {

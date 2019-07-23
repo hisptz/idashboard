@@ -27,9 +27,13 @@ export const addDashboard = createAction(
 
 export const createDashboard = createAction('[Dashboard] Create Dashboard');
 
+export const initializeDashboardSave = createAction(
+  '[Dashboard] Initialize dashboard save'
+);
+
 export const saveDashboard = createAction(
   '[Dashboard] Save Dashboard',
-  props<{ dashboard: Dashboard; action: string }>()
+  props<{ dashboard: Dashboard; action: string; originalId: string }>()
 );
 
 export const saveDashboardSuccess = createAction(

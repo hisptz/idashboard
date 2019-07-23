@@ -12,6 +12,13 @@ export class DashboardTitleComponent implements OnInit {
   @Input() dashboardMode: DashboardModeState;
 
   @Output() enableEditing: EventEmitter<any> = new EventEmitter();
+  @Output() nameUpdate: EventEmitter<{
+    id: string;
+    name: string;
+  }> = new EventEmitter<{
+    id: string;
+    name: string;
+  }>();
 
   constructor() {}
 
@@ -20,5 +27,10 @@ export class DashboardTitleComponent implements OnInit {
   onEnableInput(e) {
     e.stopPropagation();
     this.enableEditing.emit(null);
+  }
+
+  onUpdateName(e) {
+    e.stopPropagation();
+    this.nameUpdate.emit({ id: this.id, name: e.target.value });
   }
 }

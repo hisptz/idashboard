@@ -21,6 +21,9 @@ export class DashboardModeComponent implements OnInit {
   @Output() toggleDashboardMode: EventEmitter<
     DashboardModeState
   > = new EventEmitter<DashboardModeState>();
+
+  @Output() saveDashboard: EventEmitter<any> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit() {}
@@ -28,5 +31,10 @@ export class DashboardModeComponent implements OnInit {
   onToggleMode(e) {
     e.stopPropagation();
     this.toggleDashboardMode.emit(this.dashboardMode);
+  }
+
+  onSave(e) {
+    e.stopPropagation();
+    this.saveDashboard.emit();
   }
 }

@@ -8,6 +8,7 @@
           [dashboardMode]="dashboardMode$ | async"
           [name]="(currentDashboard$ | async)?.name"
           (enableEditing)="onEnableEditMode()"
+          (nameUpdate)="onDashboardNameUpdate($event)"
         ></app-dashboard-title>
       </div>
 
@@ -22,6 +23,7 @@
       <app-dashboard-mode
         [dashboardMode]="dashboardMode$ | async"
         (toggleDashboardMode)="onToggleDashboardMode()"
+        (saveDashboard)="onSaveDashboard()"
       ></app-dashboard-mode>
       <!-- end of dashboard mode -->
     </div>
