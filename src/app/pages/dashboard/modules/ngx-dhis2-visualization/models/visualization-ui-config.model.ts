@@ -13,4 +13,5 @@ export interface VisualizationUiConfig {
   hideResizeButtons?: boolean;
   showTitleBlock?: boolean;
   showBody?: boolean;
+  hideDownloadOptions?: boolean;
 }
