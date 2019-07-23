@@ -44,7 +44,8 @@ export const getDashboardMode = createSelector(
     const currentMode = state.dashboardMode;
     return {
       isViewMode: currentMode === DashboardMode.VIEW,
-      isEditMode: currentMode === DashboardMode.EDIT
+      isEditMode: currentMode === DashboardMode.EDIT,
+      isSaveMode: currentMode === DashboardMode.SAVE
     };
   }
 );

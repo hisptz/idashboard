@@ -1,8 +1,10 @@
 <div class="dashboard-title-container">
   <!-- title section -->
-  <span *ngIf="dashboardMode?.isViewMode" (dblclick)="onEnableInput($event)">{{
-    name
-  }}</span>
+  <span
+    *ngIf="dashboardMode?.isViewMode || dashboardMode?.isSaveMode"
+    (dblclick)="onEnableInput($event)"
+    >{{ name }}</span
+  >
   <!-- end of title section -->
 
   <!-- form section -->

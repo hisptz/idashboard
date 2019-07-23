@@ -142,29 +142,29 @@ export class DashboardEffects {
     { dispatch: false }
   );
 
-  saveDashboard$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(saveDashboard),
-        concatMap(action =>
-          of(action).pipe(
-            withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
-          )
-        ),
-        mergeMap(([{ dashboard, action }, dashboardPreferences]) =>
-          this.dashboardService
-            .save(dashboard, dashboardPreferences, action)
-            .pipe(
-              map((dashboardResponse: Dashboard) =>
-                saveDashboardSuccess({ dashboard: { ...dashboardResponse } })
-              ),
-              catchError(error =>
-                of(saveDashboardFail({ error, id: dashboard.id }))
-              )
-            )
+  saveDashboard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(saveDashboard),
+      concatMap(action =>
+        of(action).pipe(
+          withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
         )
       ),
-    { dispatch: false }
+      mergeMap(([{ dashboard, action }, dashboardPreferences]) =>
+        this.dashboardService
+          .save(dashboard, dashboardPreferences, action)
+          .pipe(
+            map((dashboardResponse: Dashboard) => {
+              return saveDashboardSuccess({
+                dashboard: { ...dashboardResponse }
+              });
+            }),
+            catchError(error =>
+              of(saveDashboardFail({ error, id: dashboard.id }))
+            )
+          )
+      )
+    )
   );
 
   removeDashboard$ = createEffect(() =>

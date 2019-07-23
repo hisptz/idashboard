@@ -6,10 +6,21 @@
   >
     <i class="fa fa-eye"></i> Viewing
   </button>
-  <div *ngIf="dashboardMode.isEditMode">
-    <button mat-flat-button (click)="onToggleMode($event)">Cancel</button>&nbsp;
-    <button mat-flat-button color="primary" (click)="onSave($event)">
-      Save
+  <div *ngIf="dashboardMode.isEditMode || dashboardMode.isSaveMode">
+    <button
+      mat-flat-button
+      (click)="onToggleMode($event)"
+      *ngIf="dashboardMode.isEditMode"
+    >
+      Cancel</button
+    >&nbsp;
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="onSave($event)"
+      [disabled]="dashboardMode.isSaveMode"
+    >
+      {{ dashboardMode.isEditMode ? 'Save' : 'Saving' }}
     </button>
   </div>
 </div>
