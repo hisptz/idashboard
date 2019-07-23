@@ -30,3 +30,16 @@ export const updateFavorite = createAction(
     systemInfo: SystemInfo;
   }>()
 );
+
+export const saveFavorites = createAction(
+  '[Favorite] Save favorites',
+  props<{
+    favoriteDetails: Array<{ id: string; type: string }>;
+    saveAction: string;
+  }>()
+);
+
+export const saveFavorite = createAction(
+  '[Favorite] Save favorite',
+  props<{ favorite: Favorite; favoriteType: string; saveAction: string }>()
+);

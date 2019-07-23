@@ -47,7 +47,9 @@ import { getNewDashboard } from '../../helpers/get-new-dashboard.helper';
 import { getCurrentDashboard } from '../selectors/dashboard-selectors';
 import { validateDashboard } from '../../helpers/validate-dashboard.helper';
 import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { camelCase, isPlainObject } from 'lodash';
+import { DashboardItem } from '../../models/dashboard-item.model';
+import { saveFavorites } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
 
 @Injectable()
 export class DashboardEffects {
@@ -125,6 +127,18 @@ export class DashboardEffects {
               ...dashboard,
               id: saveAction === 'CREATE' ? generateUid() : dashboard.id
             };
+
+            const favoriteDetails = dashboard.dashboardItems
+              .map((dashboardItem: DashboardItem) => {
+                const favoriteType = camelCase(dashboardItem.type);
+                const favorite = dashboardItem[favoriteType];
+                return isPlainObject(favorite)
+                  ? { id: favorite.id, type: favoriteType }
+                  : null;
+              })
+              .filter(favorite => favorite);
+
+            this.store.dispatch(saveFavorites({ favoriteDetails, saveAction }));
 
             if (saveAction === 'CREATE') {
               this.store.dispatch(setCurrentDashboard({ id: newDashboard.id }));

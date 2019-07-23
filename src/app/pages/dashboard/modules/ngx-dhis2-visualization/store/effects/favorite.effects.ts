@@ -7,7 +7,9 @@ import {
   concatMap,
   map,
   mergeMap,
-  withLatestFrom
+  withLatestFrom,
+  tap,
+  take
 } from 'rxjs/operators';
 import { ErrorMessage } from 'src/app/core';
 import { State } from 'src/app/store/reducers';
@@ -18,8 +20,12 @@ import { Favorite } from '../../models/favorite.model';
 import {
   loadFavorite,
   loadFavoriteFail,
-  updateFavorite
+  updateFavorite,
+  saveFavorites,
+  saveFavorite
 } from '../actions/favorite.actions';
+import { getFavoritesByIds } from '../selectors/favorite.selectors';
+import { find } from 'lodash';
 
 @Injectable()
 export class FavoriteEffects {
@@ -70,6 +76,57 @@ export class FavoriteEffects {
             )
       )
     )
+  );
+
+  saveFavorites$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(saveFavorites),
+        tap(({ favoriteDetails, saveAction }) => {
+          const favoriteIds = favoriteDetails.map(
+            (favoriteDetail: any) => favoriteDetail.id
+          );
+          this.store
+            .pipe(select(getFavoritesByIds(favoriteIds)))
+            .pipe(take(1))
+            .subscribe((favorites: Favorite[]) => {
+              favorites.forEach((favorite: Favorite) => {
+                const favoriteDetail = find(favoriteDetails, [
+                  'id',
+                  favorite.id
+                ]);
+                this.store.dispatch(
+                  saveFavorite({
+                    favorite,
+                    favoriteType: favoriteDetail ? favoriteDetail.type : '',
+                    saveAction
+                  })
+                );
+              });
+            });
+        })
+      ),
+    { dispatch: false }
+  );
+
+  saveFavorite$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(saveFavorite),
+        concatMap(action =>
+          of(action).pipe(
+            withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
+          )
+        ),
+        tap(
+          ([{ favorite, favoriteType, saveAction }, dashboardPreferences]) => {
+            this.favoriteService
+              .save(favorite, dashboardPreferences, favoriteType, saveAction)
+              .subscribe();
+          }
+        )
+      ),
+    { dispatch: false }
   );
 
   constructor(
