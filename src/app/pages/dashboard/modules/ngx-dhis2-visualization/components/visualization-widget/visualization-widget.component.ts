@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 import { VisualizationLayer } from '../../models';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-visualization-widget',
@@ -32,9 +33,9 @@ export class VisualizationWidgetComponent implements OnInit {
     const orgUnit = this.getDataSelectionIdsByDimension(dataSelections, 'ou');
 
     const period = this.getDataSelectionIdsByDimension(dataSelections, 'pe');
-    return `${this.contextPath}/api/apps/${
-      this.appKey
-    }/index.html?dashboardItemId=${
+    return `${
+      environment.production ? this.contextPath : '../../..'
+    }/api/apps/${this.appKey}/index.html?dashboardItemId=${
       this.visualizationId
     }&other=/#/?orgUnit=${orgUnit}&period=${period}&dashboard=${
       this.dashboardId

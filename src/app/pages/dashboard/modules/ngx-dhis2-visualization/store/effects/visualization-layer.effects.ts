@@ -88,21 +88,22 @@ export class VisualizationLayerEffects {
         .subscribe((visualizationObject: any) => {
           if (visualizationObject) {
             // Update visualization object
-            this.store.dispatch(
-              new UpdateVisualizationObjectAction(action.visualizationId, {
-                progress: {
-                  statusCode: 200,
-                  statusText: 'OK',
-                  percent: 0,
-                  message: `Loading Data for ${visualizationObject.name}`
-                }
-              })
-            );
+
             if (
               !checkIfVisualizationIsNonVisualizable(
                 visualizationObject.currentType
               )
             ) {
+              this.store.dispatch(
+                new UpdateVisualizationObjectAction(action.visualizationId, {
+                  progress: {
+                    statusCode: 200,
+                    statusText: 'OK',
+                    percent: 0,
+                    message: `Loading Data for ${visualizationObject.name}`
+                  }
+                })
+              );
               this.store
                 .select(getFunctionLoadedStatus)
                 .pipe(

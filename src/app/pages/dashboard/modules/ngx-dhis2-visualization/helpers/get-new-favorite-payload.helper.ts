@@ -73,7 +73,7 @@ function getFavoriteOptionsByType(favoriteDetails: any, favoriteType: string) {
   switch (favoriteType) {
     case 'chart': {
       return {
-        type: favoriteDetails.type || 'COLUMN',
+        type: favoriteDetails.type || 'LINE',
         name: favoriteDetails.name || 'Untitled',
         title: favoriteDetails.title || null,
         description: favoriteDetails.description || '',

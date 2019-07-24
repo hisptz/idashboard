@@ -24,6 +24,7 @@ import {
   updateFavorite,
   updateFavoriteSelections
 } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
+import { camelCase, flatten, reverse } from 'lodash';
 
 @Injectable()
 export class GlobalFilterEffects {
@@ -58,14 +59,37 @@ export class GlobalFilterEffects {
               )
             ).subscribe((visualizations: Visualization[]) => {
               visualizations.forEach((visualization: Visualization) => {
+                // TODO Logic for using child periods based on selected has to be handled by configuration
+                const dataSelectionsWithPeriodModified = dataSelections.map(
+                  (dataSelection: VisualizationDataSelection) => {
+                    if (dataSelection.dimension === 'pe') {
+                      console.log();
+
+                      return {
+                        ...dataSelection,
+                        items: flatten(
+                          dataSelection.items.map((item: any) =>
+                            reverse(
+                              item[
+                                camelCase(dataSelection.lowestPeriodType)
+                              ] || [item]
+                            )
+                          )
+                        )
+                      };
+                    }
+
+                    return dataSelection;
+                  }
+                );
                 // TODO This logic should be handled by configurations
                 const newDataSelections =
                   visualization.type === 'CHART'
-                    ? dataSelections.filter(
+                    ? dataSelectionsWithPeriodModified.filter(
                         (dataSelection: VisualizationDataSelection) =>
                           dataSelection.dimension !== 'vrg'
                       )
-                    : dataSelections;
+                    : dataSelectionsWithPeriodModified;
 
                 const groupedDataSelections = groupBy(
                   newDataSelections,

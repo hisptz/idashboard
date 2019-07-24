@@ -6,6 +6,7 @@ export interface VisualizationDataSelection {
   optionSet?: any;
   legendSet?: string;
   changed?: boolean;
+  lowestPeriodType?: string;
   items: Array<{
     id: string;
     name: string;
