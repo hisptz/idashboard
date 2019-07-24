@@ -35,10 +35,21 @@ import {
   saveDashboard,
   saveDashboardFail,
   saveDashboardSuccess,
-  setCurrentDashboard
+  setCurrentDashboard,
+  addDashboard,
+  createDashboard,
+  initializeDashboardSave,
+  updateDashboard
 } from '../actions/dashboard.actions';
 import { getDashboardPreferences } from '../selectors/dashboard-preferences.selectors';
 import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
+import { getNewDashboard } from '../../helpers/get-new-dashboard.helper';
+import { getCurrentDashboard } from '../selectors/dashboard-selectors';
+import { validateDashboard } from '../../helpers/validate-dashboard.helper';
+import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
+import { camelCase, isPlainObject, omit } from 'lodash';
+import { DashboardItem } from '../../models/dashboard-item.model';
+import { saveFavorites } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
 
 @Injectable()
 export class DashboardEffects {
@@ -96,29 +107,88 @@ export class DashboardEffects {
     )
   );
 
-  saveDashboard$ = createEffect(
+  initializeDashboardSave$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(saveDashboard),
+        ofType(initializeDashboardSave),
         concatMap(action =>
           of(action).pipe(
-            withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
+            withLatestFrom(this.store.pipe(select(getCurrentDashboard)))
           )
         ),
-        mergeMap(([{ dashboard, action }, dashboardPreferences]) =>
-          this.dashboardService
-            .save(dashboard, dashboardPreferences, action)
-            .pipe(
-              map((dashboardResponse: Dashboard) =>
-                saveDashboardSuccess({ dashboard: { ...dashboardResponse } })
-              ),
-              catchError(error =>
-                of(saveDashboardFail({ error, id: dashboard.id }))
-              )
-            )
-        )
+        tap(([action, dashboard]) => {
+          const saveAction = dashboard.id === 'new' ? 'CREATE' : 'UPDATE';
+
+          const validDashboard = validateDashboard(dashboard);
+          if (validDashboard.valid) {
+            const originalId = dashboard.id;
+
+            const newDashboard = {
+              ...dashboard,
+              id: saveAction === 'CREATE' ? generateUid() : dashboard.id
+            };
+
+            const favoriteDetails = dashboard.dashboardItems
+              .map((dashboardItem: DashboardItem) => {
+                const favoriteType = camelCase(dashboardItem.type);
+                const favorite = dashboardItem[favoriteType];
+                return isPlainObject(favorite)
+                  ? { id: favorite.id, type: favoriteType }
+                  : null;
+              })
+              .filter(favorite => favorite);
+
+            this.store.dispatch(saveFavorites({ favoriteDetails, saveAction }));
+
+            if (saveAction === 'CREATE') {
+              this.store.dispatch(setCurrentDashboard({ id: newDashboard.id }));
+            }
+            this.store.dispatch(
+              saveDashboard({
+                dashboard: newDashboard,
+                action: saveAction,
+                originalId
+              })
+            );
+          }
+        })
       ),
     { dispatch: false }
+  );
+
+  saveDashboard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(saveDashboard),
+      concatMap(action =>
+        of(action).pipe(
+          withLatestFrom(this.store.pipe(select(getDashboardPreferences)))
+        )
+      ),
+      mergeMap(([{ dashboard, action }, dashboardPreferences]) =>
+        this.dashboardService
+          .save(
+            {
+              ...dashboard,
+              dashboardItems: (dashboard.dashboardItems || []).map(
+                (dashboardItem: DashboardItem) =>
+                  omit(dashboardItem, ['visualization'])
+              )
+            },
+            dashboardPreferences,
+            action
+          )
+          .pipe(
+            map((dashboardResponse: Dashboard) => {
+              return saveDashboardSuccess({
+                dashboard: { ...dashboardResponse }
+              });
+            }),
+            catchError(error =>
+              of(saveDashboardFail({ error, id: dashboard.id }))
+            )
+          )
+      )
+    )
   );
 
   removeDashboard$ = createEffect(() =>
@@ -158,6 +228,32 @@ export class DashboardEffects {
         }
 
         return go({ path: [`/dashboards/${id}`] });
+      })
+    )
+  );
+
+  createDashboard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createDashboard),
+      concatMap(action =>
+        of(action).pipe(
+          withLatestFrom(
+            this.store.pipe(select(getCurrentUser)),
+            this.store.pipe(select(getDashboardPreferences))
+          )
+        )
+      ),
+      switchMap(([action, currentUser, { defaultDashboardItems }]) => {
+        const dashboard: Dashboard = getNewDashboard(
+          currentUser,
+          defaultDashboardItems
+        );
+        return [
+          addDashboard({
+            dashboard
+          }),
+          setCurrentDashboard({ id: dashboard.id })
+        ];
       })
     )
   );

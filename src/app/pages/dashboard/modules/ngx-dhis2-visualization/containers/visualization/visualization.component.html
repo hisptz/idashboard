@@ -45,7 +45,6 @@
     >
       <visualization-header-section
         [id]="visualizationObject?.id"
-        [uiConfigId]="(visualizationUiConfig$ | async)?.id"
         [showFilters]="(visualizationUiConfig$ | async)?.showFilters"
         [hideResizeButtons]="
           (visualizationUiConfig$ | async)?.hideResizeButtons
@@ -101,12 +100,6 @@
       </div>
       <!--end of visualization error block-->
 
-      <!-- new favorite block -->
-      <div class="new-favorite-block" *ngIf="isNewFavorite">
-        <!-- Favorite Block -->
-      </div>
-      <!-- end of new favorite block -->
-
       <!--visualization content-->
       <div
         class="visualization-content"
@@ -117,11 +110,7 @@
         "
       >
         <visualization-body-section
-          [id]="
-            (visualizationUiConfig$ | async)?.fullScreen
-              ? id + '_full_screen'
-              : id
-          "
+          [id]="(visualizationObject$ | async)?.id"
           [visualizationType]="(visualizationObject$ | async)?.currentType"
           [visualizationUiConfig]="visualizationUiConfig$ | async"
           [visualizationLayers]="visualizationLayers$ | async"

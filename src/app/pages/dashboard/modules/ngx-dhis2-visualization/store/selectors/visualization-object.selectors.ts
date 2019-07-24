@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
 
-import { Visualization } from '../../models';
 import {
   getVisualizationLayerEntities,
   getVisualizationObjectEntities
@@ -28,9 +27,9 @@ export const getCombinedVisualizationObjectById = id =>
     }
   );
 
-export const getCurrentVisualizationProgress = id =>
-  createSelector(
-    getVisualizationObjectById(id),
-    (visualizationObject: Visualization) =>
-      visualizationObject ? visualizationObject.progress : null
-  );
+// export const getCurrentVisualizationProgress = id =>
+//   createSelector(
+//     getVisualizationObjectById(id),
+//     (visualizationObject: Visualization) =>
+//       visualizationObject ? visualizationObject.progress : null
+//   );

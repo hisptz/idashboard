@@ -14,8 +14,10 @@
     <app-dashboard-menu
       [dashboardPreferences]="dashboardPreferences$ | async"
       [dashboards]="dashboards$ | async"
+      [dashboardMode]="dashboardMode$ | async"
       [currentDashboardId]="currentDashboardId$ | async"
       (setCurrentDashboard)="onSetCurrentDashboard($event)"
+      (addDashboard)="onAddDashboard()"
     ></app-dashboard-menu>
   </div>
   <!-- end of dashboard menu -->

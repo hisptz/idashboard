@@ -1,109 +1,143 @@
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash';
-import { Observable, of, forkJoin, throwError } from 'rxjs';
-import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
+import {
+  NgxDhis2HttpClientService,
+  SystemInfo,
+  User
+} from '@iapps/ngx-dhis2-http-client';
+import { omit, pick } from 'lodash';
+import { forkJoin, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-import { getFavoriteUrl } from '../helpers';
-import { map, catchError, switchMap } from 'rxjs/operators';
-import { FavoriteConfiguration } from '../models/favorite-configurations.model';
-import { HttpClient } from '@angular/common/http';
+import { getFavoriteUrl } from '../../../helpers/get-favorite-url.helper';
+import { DashboardPreferences } from '../../../models/dashboard-preferences.model';
+import { getNewFavoritePayload } from '../helpers/get-new-favorite-payload.helper';
+import { Favorite } from '../models/favorite.model';
 
-@Injectable({ providedIn: 'root' })
+const favoriteDataStoreNamespace = 'dataStore/favorites';
+
+@Injectable()
 export class FavoriteService {
-  constructor(
-    private httpClient: NgxDhis2HttpClientService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: NgxDhis2HttpClientService) {}
 
-  getAll() {
-    return this.httpClient.get('dataStore/favorites').pipe(
-      switchMap(favoriteIds =>
-        forkJoin(
-          _.map(favoriteIds, favoriteId => {
-            return this.httpClient.get(`dataStore/favorites/${favoriteId}`);
-          })
-        )
-      )
-    );
-  }
+  get(payload: {
+    id: string;
+    type: string;
+    systemInfo: SystemInfo;
+    currentUser: User;
+    dashboardPreferences: DashboardPreferences;
+    isNew?: boolean;
+  }) {
+    const {
+      id,
+      type,
+      dashboardPreferences,
+      isNew,
+      systemInfo,
+      currentUser
+    } = payload;
+    const favoriteUrl = getFavoriteUrl({ id, type });
+    if (!favoriteUrl) {
+      return of(null);
+    }
 
-  getFavorite(
-    favorite: { id: string; type: string; useTypeAsBase?: boolean },
-    configurations: FavoriteConfiguration = {
-      useDataStoreAsSource: false,
-      useBothSources: true,
-      useDataStoreForSaving: true
-    },
-    namespace: string = 'favorites'
-  ): Observable<any> {
-    return configurations.useDataStoreAsSource
-      ? this.getFromDataStore(namespace, favorite.id)
-      : configurations.useBothSources
-      ? forkJoin(
-          this.getFromApi(favorite),
-          this.getFromDataStore(namespace, favorite.id).pipe(
-            catchError((error: any) => {
-              if (error.status !== 404) {
-                return throwError(error);
-              }
+    if (isNew) {
+      return of(getNewFavoritePayload({ id, type, systemInfo, currentUser }));
+    }
 
-              return this.http.get('config/favorites.json').pipe(
-                switchMap((favorites: any[]) => {
-                  const availableFavorite = _.find(favorites, [
-                    'id',
-                    favorite.id
-                  ]);
-
-                  return availableFavorite
-                    ? this.create(
-                        '',
-                        availableFavorite,
-                        configurations,
-                        namespace
-                      )
-                    : of({});
-                }),
-                catchError(() => of({}))
-              );
-            })
-          )
+    switch (dashboardPreferences.favoriteSource) {
+      case 'DATASTORE':
+        return this._getFromDataStore(id);
+      case 'BOTH':
+        return forkJoin(
+          this._getFromApi(favoriteUrl),
+          this._getFromDataStore(id).pipe(catchError(() => of(null)))
         ).pipe(
-          map((favoriteResults: any[]) => {
-            return { ...favoriteResults[0], ...favoriteResults[1] };
+          map((res: any[]) => {
+            return { ...(res[0] || {}), ...(res[1] || {}) };
           })
-        )
-      : this.getFromApi(favorite);
+        );
+      default:
+        return this._getFromApi(favoriteUrl);
+    }
   }
 
-  getFromDataStore(namespace: string, favoriteId: string) {
-    return this.httpClient.get(`dataStore/${namespace}/${favoriteId}`);
-  }
-
-  getFromApi(favorite: any) {
-    const favoriteUrl = getFavoriteUrl(favorite);
-    return favoriteUrl !== '' ? this.httpClient.get(favoriteUrl) : of(null);
-  }
-
-  create(
-    favoriteUrl: string,
-    favorite: any,
-    configurations?: FavoriteConfiguration,
-    namespace?: string
+  save(
+    favorite: Favorite,
+    dashboardPreferences: DashboardPreferences,
+    favoriteType: string,
+    action: string
   ) {
-    return configurations && configurations.useDataStoreForSaving
-      ? this.httpClient
-          .post(`dataStore/${namespace}/${favorite.id}`, favorite)
-          .pipe(map(() => favorite))
-      : this.httpClient.post(favoriteUrl, favorite).pipe(map(() => favorite));
+    switch (dashboardPreferences.favoriteSource) {
+      case 'DATASTORE':
+        return this._saveToDataStore(favorite, action);
+      case 'BOTH':
+        return this._saveToBoth(
+          favorite,
+          dashboardPreferences,
+          favoriteType,
+          action
+        );
+      default:
+        return this._saveToApi(
+          omit(favorite, dashboardPreferences.customAttributes || []),
+          favoriteType,
+          action
+        );
+    }
   }
 
-  update(favoriteUrl: string, favorite: any) {
-    return this.httpClient
-      .put(`${favoriteUrl}/${favorite.id}`, favorite)
-      .pipe(map(() => favorite));
+  private _saveToDataStore(favorite: Favorite, action: string) {
+    if (!favorite) {
+      return throwError({
+        status: 400,
+        statusText: 'Error',
+        message: 'Favorite object could not be identified'
+      });
+    }
+    return (action === 'CREATE'
+      ? this.http.post(`${favoriteDataStoreNamespace}/${favorite.id}`, favorite)
+      : this.http.put(`${favoriteDataStoreNamespace}/${favorite.id}`, favorite)
+    ).pipe(map(() => favorite));
   }
 
-  delete(favoriteId: string, favoriteType: string) {
-    return this.httpClient.delete(`${favoriteType}s/${favoriteId}`);
+  private _saveToBoth(
+    favorite: Favorite,
+    dashboardPreferences: DashboardPreferences,
+    favoriteType: string,
+    action: string
+  ) {
+    return forkJoin(
+      this._saveToApi(
+        omit(favorite, dashboardPreferences.customAttributes || []),
+        favoriteType,
+        action
+      ),
+      this._saveToDataStore(
+        pick(favorite, dashboardPreferences.customAttributes || []),
+        action
+      )
+    ).pipe(map(() => favorite));
+  }
+
+  private _saveToApi(favorite: Favorite, type: string, action: string) {
+    if (!favorite) {
+      return throwError({
+        status: 400,
+        statusText: 'Error',
+        message: 'Favorite object could not be identified'
+      });
+    }
+    return (action === 'CREATE'
+      ? this.http.post(`${type}s.json`, favorite)
+      : this.http.put(`${type}s/${favorite.id}.json`, favorite)
+    ).pipe(map(() => favorite));
+  }
+
+  private _getFromDataStore(id: string) {
+    return this.http.get(`${favoriteDataStoreNamespace}/${id}`);
+  }
+
+  private _getFromApi(url: string) {
+    return this.http.get(url);
   }
 }

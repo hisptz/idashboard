@@ -1,25 +1,33 @@
-import { camelCase } from 'lodash';
+import { camelCase, isPlainObject, isArray } from 'lodash';
 
 import { DashboardItem } from '../models/dashboard-item.model';
 import {
   checkIfVisualizationIsNonVisualizable,
   getStandardizedVisualizationType,
-  getStandardizedVisualizationUiConfig,
-  getVisualizationLayersFromFavorite
+  getStandardizedVisualizationUiConfig
 } from '../modules/ngx-dhis2-visualization/helpers';
-import { Visualization } from '../modules/ngx-dhis2-visualization/models';
-import { getVisualizationName } from './get-visualization-name.helper';
-import { Favorite } from '../models/favorite.model';
+import {
+  Visualization,
+  VisualizationVm
+} from '../modules/ngx-dhis2-visualization/models';
+import { Favorite } from '../modules/ngx-dhis2-visualization/models/favorite.model';
+import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
+
+const defaultName = 'Untitled';
 
 export function getVisualizationObject(
-  dashboardItem: DashboardItem,
-  favorite: Favorite
+  dashboardItem: DashboardItem
 ): Visualization {
   if (!dashboardItem) {
     return null;
   }
 
+  const favorite = getFavorite(dashboardItem);
+
   const name = getVisualizationName(dashboardItem, favorite);
+  const isNonVisualizable = checkIfVisualizationIsNonVisualizable(
+    dashboardItem.type
+  );
   return {
     id: dashboardItem.id,
     name,
@@ -27,17 +35,81 @@ export function getVisualizationObject(
     currentType: getStandardizedVisualizationType(dashboardItem.type),
     created: dashboardItem.created,
     lastUpdated: dashboardItem.lastUpdated,
+    favorite,
     appKey: dashboardItem.appKey,
-    isNonVisualizable: checkIfVisualizationIsNonVisualizable(
-      dashboardItem.type
-    ),
-    progress: {
-      statusCode: 200,
-      statusText: 'OK',
-      percent: 0,
-      message: `Loading Data for ${name}....`
-    },
+    isNonVisualizable,
+    progress: isNonVisualizable
+      ? {
+          statusCode: 200,
+          statusText: 'OK',
+          percent: 100,
+          message: 'Information has been loaded'
+        }
+      : {
+          statusCode: 200,
+          statusText: 'OK',
+          percent: 0,
+          message: `Loading Data for ${name}....`
+        },
     uiConfig: getStandardizedVisualizationUiConfig(dashboardItem),
-    layers: getVisualizationLayersFromFavorite(favorite, dashboardItem.type)
+    layers: getVisualizationLayers(dashboardItem)
   };
+}
+
+function getVisualizationLayers(dashboardItem: DashboardItem) {
+  if (!dashboardItem) {
+    return [];
+  }
+
+  const favorite = dashboardItem[camelCase(dashboardItem.type)];
+
+  if (!favorite) {
+    return [
+      {
+        id: generateUid(),
+        dataSelections: dashboardItem.dataSelections || [],
+        config: null
+      }
+    ];
+  }
+
+  return isArray(favorite)
+    ? [
+        {
+          id: dashboardItem.id,
+          analytics: {
+            rows: favorite
+          }
+        }
+      ]
+    : [];
+}
+
+function getFavorite(dashboardItem: DashboardItem) {
+  const favorite = dashboardItem[camelCase(dashboardItem.type)];
+  return isPlainObject(favorite) ? favorite : null;
+}
+
+function getVisualizationName(
+  dashboardItem: DashboardItem,
+  favorite: Favorite
+) {
+  if (!dashboardItem) {
+    return defaultName;
+  }
+
+  switch (dashboardItem.type) {
+    case 'APP':
+      return dashboardItem.appKey;
+    case 'MESSAGES':
+      return 'Messages';
+    case 'RESOURCES':
+      return 'Resources';
+    case 'REPORTS':
+      return 'Reports';
+    case 'USERS':
+      return 'Users';
+    default:
+      return favorite ? favorite.name || defaultName : defaultName;
+  }
 }

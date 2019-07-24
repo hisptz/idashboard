@@ -8,10 +8,15 @@ import { Dashboard } from '../../models/dashboard.model';
 import { getDashboardPreferences } from '../../store/selectors/dashboard-preferences.selectors';
 import {
   getDashboards,
-  getCurrentDashboardId
+  getCurrentDashboardId,
+  getDashboardMode
 } from '../../store/selectors/dashboard-selectors';
-import { setCurrentDashboard } from '../../store/actions/dashboard.actions';
+import {
+  setCurrentDashboard,
+  createDashboard
+} from '../../store/actions/dashboard.actions';
 import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
+import { DashboardModeState } from '../../models/dashboard-mode.mode';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +27,7 @@ export class DashboardComponent implements OnInit {
   dashboardPreferences$: Observable<DashboardPreferences>;
   dashboards$: Observable<Dashboard[]>;
   currentDashboardId$: Observable<string>;
+  dashboardMode$: Observable<DashboardModeState>;
   constructor(private store: Store<State>) {}
 
   ngOnInit() {
@@ -34,9 +40,15 @@ export class DashboardComponent implements OnInit {
     this.dashboards$ = this.store.pipe(select(getDashboards));
 
     this.currentDashboardId$ = this.store.pipe(select(getCurrentDashboardId));
+
+    this.dashboardMode$ = this.store.pipe(select(getDashboardMode));
   }
 
   onSetCurrentDashboard(id: string) {
     this.store.dispatch(setCurrentDashboard({ id }));
+  }
+
+  onAddDashboard() {
+    this.store.dispatch(createDashboard());
   }
 }

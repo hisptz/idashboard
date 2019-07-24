@@ -8,23 +8,25 @@ import {
   ViewChild
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
 import { VisualizationBodySectionComponent } from '../../components/visualization-body-section/visualization-body-section';
 import { LegendSet } from '../../models/legend-set.model';
 import { VisualizationConfig } from '../../models/visualization-config.model';
-import { VisualizationInputs } from '../../models/visualization-inputs.model';
 import { VisualizationLayer } from '../../models/visualization-layer.model';
 import { VisualizationProgress } from '../../models/visualization-progress.model';
 import { VisualizationUiConfig } from '../../models/visualization-ui-config.model';
-import { Visualization } from '../../models/visualization.model';
+import {
+  Visualization,
+  VisualizationVm
+} from '../../models/visualization.model';
 import {
   LoadVisualizationAnalyticsAction,
   UpdateVisualizationLayerAction
 } from '../../store/actions/visualization-layer.actions';
 import {
-  InitializeVisualizationObjectAction,
+  initializeVisualizationObject,
   SaveVisualizationFavoriteAction,
   ToggleVisualizationFullScreenAction,
   UpdateVisualizationObjectAction
@@ -44,7 +46,10 @@ import { getFocusedVisualization } from '../../store/selectors/visualization-ui-
 })
 export class VisualizationComponent implements OnInit {
   @Input()
-  visualizationObject: any;
+  visualizationObject: Visualization;
+
+  @Input()
+  isNew: boolean;
 
   @Input()
   dashboardId: string;
@@ -66,7 +71,7 @@ export class VisualizationComponent implements OnInit {
   @ViewChild(VisualizationBodySectionComponent, { static: true })
   visualizationBody: VisualizationBodySectionComponent;
 
-  visualizationObject$: Observable<Visualization>;
+  visualizationObject$: Observable<VisualizationVm>;
   visualizationLayers$: Observable<VisualizationLayer[]>;
   visualizationUiConfig$: Observable<VisualizationUiConfig>;
   visualizationProgress$: Observable<VisualizationProgress>;
@@ -77,17 +82,25 @@ export class VisualizationComponent implements OnInit {
 
   ngOnInit() {
     if (this.visualizationObject) {
-      // initialize visualization object
-      this.store.dispatch(
-        new InitializeVisualizationObjectAction(
-          this.visualizationObject,
-          this.currentUser,
-          this.systemInfo
+      const visualizationObject = {
+        ...this.visualizationObject,
+        layers: (this.visualizationObject.layers || []).map(
+          (visualizationObjectLayer: any) => visualizationObjectLayer.id
         )
+      };
+
+      this.store.dispatch(
+        initializeVisualizationObject({
+          visualizationObject,
+          visualizationLayers: this.visualizationObject.layers,
+          currentUser: this.currentUser,
+          systemInfo: this.systemInfo,
+          isNew: this.isNew
+        })
       );
 
       // Set visualization selectors
-      this.setOrUpdateSelectors(this.visualizationObject);
+      this.setOrUpdateSelectors(visualizationObject);
     }
   }
 
@@ -97,7 +110,7 @@ export class VisualizationComponent implements OnInit {
     );
 
     this.visualizationLayers$ = this.visualizationObject$.pipe(
-      switchMap((visualization: Visualization) =>
+      switchMap((visualization: VisualizationVm) =>
         this.store.select(
           getCurrentVisualizationObjectLayers(
             visualization ? visualization.layers : []
@@ -107,19 +120,21 @@ export class VisualizationComponent implements OnInit {
     );
 
     this.visualizationProgress$ = this.visualizationObject$.pipe(
-      map((visualization: Visualization) =>
+      map((visualization: VisualizationVm) =>
         visualization ? visualization.progress : null
       )
     );
 
     this.visualizationUiConfig$ = this.visualizationObject$.pipe(
-      map((visualization: Visualization) =>
+      map((visualization: VisualizationVm) =>
         visualization ? visualization.uiConfig : null
       )
     );
 
-    this.visualizationConfig$ = this.store.select(
-      getCurrentVisualizationConfig(visualizationObject.id)
+    this.visualizationConfig$ = this.visualizationObject$.pipe(
+      map((visualization: VisualizationVm) =>
+        visualization ? visualization.globalConfig : null
+      )
     );
 
     this.focusedVisualization$ = this.store.select(getFocusedVisualization);
@@ -217,7 +232,7 @@ export class VisualizationComponent implements OnInit {
   onDeleteVisualizationAction(options: any) {
     this.visualizationObject$
       .pipe(take(1))
-      .subscribe((visualization: Visualization) => {
+      .subscribe((visualization: VisualizationVm) => {
         this.deleteVisualization.emit({
           visualization,
           deleteFavorite: options.deleteFavorite

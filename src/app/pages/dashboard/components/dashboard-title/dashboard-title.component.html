@@ -1,0 +1,22 @@
+<div class="dashboard-title-container">
+  <!-- title section -->
+  <span
+    *ngIf="dashboardMode?.isViewMode || dashboardMode?.isSaveMode"
+    (dblclick)="onEnableInput($event)"
+    >{{ name }}</span
+  >
+  <!-- end of title section -->
+
+  <!-- form section -->
+  <div *ngIf="dashboardMode?.isEditMode">
+    <input
+      class="dashboard-input"
+      [value]="name"
+      (change)="onUpdateName($event)"
+      placeholder="Enter dashboard name"
+      autofocus
+      type="text"
+    />
+  </div>
+  <!-- end of form section -->
+</div>

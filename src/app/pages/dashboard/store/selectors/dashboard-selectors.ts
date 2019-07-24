@@ -6,9 +6,10 @@ import {
 import { DashboardState, dashboardAdapter } from '../states/dashboard.state';
 import { Dashboard } from '../../models/dashboard.model';
 import { DashboardItem } from '../../models/dashboard-item.model';
-import { getFavoriteEntities } from './favorite.selectors';
-import { Favorite } from '../../models/favorite.model';
+import { getFavoriteEntities } from '../../modules/ngx-dhis2-visualization/store/selectors/favorite.selectors';
+import { Favorite } from '../../modules/ngx-dhis2-visualization/models/favorite.model';
 import { getVisualizationObject } from '../../helpers/get-visualization-object.helper';
+import { DashboardMode } from '../../constants/dashboard-modes.constant';
 
 const getDashboardState: MemoizedSelector<
   object,
@@ -37,22 +38,14 @@ export const getDashboardItemsForCurrentDashboard = createSelector(
   (dashboard: Dashboard) => (dashboard ? dashboard.dashboardItems : [])
 );
 
-export const getDashboardItemVisualization = (
-  dashboardItem: DashboardItem,
-  favoriteId: string
-) =>
-  createSelector(
-    getFavoriteEntities,
-    (favoriteEntities: { string: Favorite }) => {
-      const favorite: Favorite = favoriteEntities
-        ? favoriteEntities[favoriteId]
-        : null;
-
-      return dashboardItem &&
-        favorite &&
-        favorite.notification &&
-        (favorite.notification.loaded || favorite.notification.hasError)
-        ? getVisualizationObject(dashboardItem, favorite)
-        : null;
-    }
-  );
+export const getDashboardMode = createSelector(
+  getDashboardState,
+  (state: DashboardState) => {
+    const currentMode = state.dashboardMode;
+    return {
+      isViewMode: currentMode === DashboardMode.VIEW,
+      isEditMode: currentMode === DashboardMode.EDIT,
+      isSaveMode: currentMode === DashboardMode.SAVE
+    };
+  }
+);

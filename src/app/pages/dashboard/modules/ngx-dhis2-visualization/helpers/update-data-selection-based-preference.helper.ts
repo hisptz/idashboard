@@ -19,7 +19,7 @@ export function updateDataSelectionBasedOnPreferences(
 
       let dataSelectionItems = [];
       if (
-        chartPreferences.excludeOrgUnitChildren &&
+        !chartPreferences.includeOrgUnitChildren &&
         dataSelection.dimension === 'ou'
       ) {
         if (

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 import { VisualizationLayer } from '../../models';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-visualization-widget',
@@ -30,17 +31,29 @@ export class VisualizationWidgetComponent implements OnInit {
         ? this.visualizationLayers[0].dataSelections
         : [];
     const orgUnit = this.getDataSelectionIdsByDimension(dataSelections, 'ou');
+    const orgUnitLevel = (orgUnit || '')
+      .split(';')
+      .filter(ouString => ouString.indexOf('LEVEL-') !== -1)
+      .join(';');
+    const orgUnitOnly = (orgUnit || '')
+      .split(';')
+      .filter(ouString => ouString.indexOf('LEVEL-') === -1)
+      .join(';');
+    const data = this.getDataSelectionIdsByDimension(dataSelections, 'dx');
+    const validation = this.getDataSelectionIdsByDimension(
+      dataSelections,
+      'vrg'
+    );
 
     const period = this.getDataSelectionIdsByDimension(dataSelections, 'pe');
-    return `${this.contextPath}/api/apps/${
-      this.appKey
-    }/index.html?dashboardItemId=${
+
+    return `${
+      environment.production ? this.contextPath : '../../..'
+    }/api/apps/${this.appKey}/index.html?dashboardItemId=${
       this.visualizationId
-    }&other=/#/?orgUnit=${orgUnit}&period=${period}&dashboard=${
+    }&other=/#/?orgUnits=${orgUnitOnly}&orgUnitChildrenLevel=${orgUnitLevel}&periods=${period}&indicators=${data}&validationRuleGroups=${validation}&dashboard=${
       this.dashboardId
-    }&dashboardItem=${this.visualizationId}&focusedDashboardItem=${
-      this.focusedDashboardItem
-    }`;
+    }&dashboardItem=${this.visualizationId}`;
   }
 
   ngOnInit() {}

@@ -7,7 +7,7 @@ export interface Dashboard {
   created?: string;
   lastUpdated?: string;
   description?: string;
-  favorite: boolean;
+  favorite?: boolean;
   bookmarkPending?: boolean;
   supportBookmark?: boolean;
   access?: DashboardAccess;
@@ -24,11 +24,10 @@ export interface Dashboard {
   unSaved?: boolean;
   publicAccess: string;
   externalAccess: boolean;
-  userGroupAccesses: any[];
-  dashboardItems: DashboardItem[];
-  userAccesses: any[];
+  userGroupAccesses?: any[];
+  dashboardItems?: DashboardItem[];
+  userAccesses?: any[];
   user: {
     id: string;
-    name: string;
   };
 }

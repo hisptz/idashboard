@@ -3,23 +3,45 @@
   <div class="current-dashboard-header">
     <div class="current-dashboard-options">
       <div class="current-dashboard-title">
-        {{ (currentDashboard$ | async)?.name }}
+        <app-dashboard-title
+          [id]="(currentDashboard$ | async)?.id"
+          [dashboardMode]="dashboardMode$ | async"
+          [name]="(currentDashboard$ | async)?.name"
+          (enableEditing)="onEnableEditMode()"
+          (nameUpdate)="onDashboardNameUpdate($event)"
+        ></app-dashboard-title>
       </div>
-      <div class="current-dashboard-filter">
+
+      <div
+        class="current-dashboard-filter"
+        *ngIf="currentDashboard$ | async as currentDashboard"
+      >
         <ngx-dhis2-selection-filters
           [selectionFilterConfig]="selectionFilterConfig$ | async"
+          (update)="onFilterUpdate($event, currentDashboard)"
         ></ngx-dhis2-selection-filters>
       </div>
     </div>
-    <div class="current-dashboard-settings"></div>
+    <div class="current-dashboard-settings">
+      <!-- dashboard mode -->
+      <app-dashboard-mode
+        [dashboardMode]="dashboardMode$ | async"
+        (toggleDashboardMode)="onToggleDashboardMode()"
+        (saveDashboard)="onSaveDashboard()"
+      ></app-dashboard-mode>
+      <!-- end of dashboard mode -->
+    </div>
   </div>
   <!-- end of current dashboard header -->
 
   <!-- dashboard item list -->
-  <div class="dashboard-item-list">
+  <div
+    class="dashboard-item-list"
+    *ngIf="currentDashboard$ | async as currentDashboard"
+  >
     <div
       *ngFor="
-        let dashboardItem of (currentDashboard$ | async)?.dashboardItems;
+        let dashboardItem of currentDashboard.dashboardItems;
         trackBy: trackByDashboardItemId
       "
       [ngStyle]="{
@@ -27,7 +49,12 @@
         height: dashboardItem.height
       }"
     >
-      <app-dashboard-item [dashboardItem]="dashboardItem"></app-dashboard-item>
+      <app-dashboard-item
+        [dashboardItem]="dashboardItem"
+        [currentUser]="currentUser$ | async"
+        [systemInfo]="systemInfo$ | async"
+        [isNew]="currentDashboard.id === 'new'"
+      ></app-dashboard-item>
     </div>
   </div>
   <!-- end of dashboard item list -->

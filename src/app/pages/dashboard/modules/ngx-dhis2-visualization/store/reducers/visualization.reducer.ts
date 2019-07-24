@@ -4,34 +4,27 @@ import {
   createSelector,
   MemoizedSelector
 } from '@ngrx/store';
-import { Dictionary } from '@ngrx/entity/src/models';
+
 import {
-  visualizationObjectAdapter,
-  visualizationObjectReducer,
-  VisualizationObjectState
-} from './visualization-object.reducer';
+  visualizationConfigurationAdapter,
+  visualizationConfigurationReducer,
+  VisualizationConfigurationState
+} from './visualization-configuration.reducer';
 import {
   visualizationLayerAdapter,
   visualizationLayerReducer,
   VisualizationLayerState
 } from './visualization-layer.reducer';
 import {
+  visualizationObjectAdapter,
+  visualizationObjectReducer,
+  VisualizationObjectState
+} from './visualization-object.reducer';
+import {
   visualizationUiConfigurationAdapter,
   visualizationUiConfigurationReducer,
   VisualizationUiConfigurationState
 } from './visualization-ui-configuration.reducer';
-import {
-  visualizationConfigurationAdapter,
-  visualizationConfigurationReducer,
-  VisualizationConfigurationState
-} from './visualization-configuration.reducer';
-
-import {
-  Visualization,
-  VisualizationLayer,
-  VisualizationUiConfig,
-  VisualizationConfig
-} from '../../models';
 
 export interface VisualizationState {
   visualizationObject: VisualizationObjectState;
@@ -52,7 +45,10 @@ export const getVisualizationState = createFeatureSelector<VisualizationState>(
 );
 
 // General selector for visualization object
-export const getVisualizationObjectState = createSelector(
+export const getVisualizationObjectState: MemoizedSelector<
+  object,
+  VisualizationObjectState
+> = createSelector(
   getVisualizationState,
   (state: VisualizationState) => state.visualizationObject
 );

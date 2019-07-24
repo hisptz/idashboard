@@ -1,0 +1,7 @@
+.dashboard-input {
+  outline: none;
+  border: none;
+  padding-bottom: 5px;
+  border-bottom: solid thin #dddddd;
+  width: 100%;
+}

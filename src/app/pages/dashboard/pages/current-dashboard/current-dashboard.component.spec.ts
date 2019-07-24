@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CurrentDashboardComponent } from './current-dashboard.component';
-import { DashboardItemComponent } from '../../containers/dashboard-item/dashboard-item.component';
+import { DashboardItemComponent } from '../../components/dashboard-item/dashboard-item.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';

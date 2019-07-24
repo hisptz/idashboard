@@ -20,9 +20,20 @@ export const addDashboards = createAction(
   props<{ dashboards: Dashboard[]; currentUser: User }>()
 );
 
+export const addDashboard = createAction(
+  '[Dashboard] Add Dashboard',
+  props<{ dashboard: Dashboard }>()
+);
+
+export const createDashboard = createAction('[Dashboard] Create Dashboard');
+
+export const initializeDashboardSave = createAction(
+  '[Dashboard] Initialize dashboard save'
+);
+
 export const saveDashboard = createAction(
   '[Dashboard] Save Dashboard',
-  props<{ dashboard: Dashboard; action: string }>()
+  props<{ dashboard: Dashboard; action: string; originalId: string }>()
 );
 
 export const saveDashboardSuccess = createAction(
@@ -59,3 +70,11 @@ export const setCurrentDashboard = createAction(
   '[Dashboard] Set current dashboard',
   props<{ id: string }>()
 );
+
+export const toggleDashboardMode = createAction(
+  '[Dashboard] Toggle dashboard mode'
+);
+
+export const enableEditMode = createAction('[Dashboard] Enable edit mode');
+
+export const enableViewMode = createAction('[Dashboard] Enable view mode');

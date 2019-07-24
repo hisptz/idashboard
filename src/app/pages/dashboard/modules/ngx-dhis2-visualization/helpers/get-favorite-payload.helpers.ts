@@ -42,8 +42,8 @@ export function getFavoritePayload(
         standardizedType === currentType
           ? originalType
           : currentType === 'CHART'
-            ? 'CHART'
-            : 'REPORT_TABLE';
+          ? 'CHART'
+          : 'REPORT_TABLE';
 
       return favoriteArray[0]
         ? {
@@ -77,7 +77,7 @@ function getFavoriteOptionsByType(favoriteDetails: any, favoriteType: string) {
   switch (favoriteType) {
     case 'CHART': {
       return {
-        type: favoriteDetails.type || 'COLUMN',
+        type: favoriteDetails.type || 'LINE',
         name: favoriteDetails.name || 'Untitled',
         title: favoriteDetails.title || null,
         description: favoriteDetails.description || '',

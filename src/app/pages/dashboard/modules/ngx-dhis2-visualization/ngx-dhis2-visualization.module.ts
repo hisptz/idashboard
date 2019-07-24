@@ -22,9 +22,12 @@ import { NgxDhis2ChartModule } from './modules/ngx-dhis-chart/ngx-dhis2-chart.mo
 import { NgxDhis2TableModule } from './modules/ngx-dhis2-table/ngx-dhis2-table.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { SafePipe } from './pipes/safe';
+import { FavoriteEffects } from './store/effects/favorite.effects';
 import { VisualizationLayerEffects } from './store/effects/visualization-layer.effects';
 import { VisualizationObjectEffects } from './store/effects/visualization-object.effects';
+import { favoriteReducer } from './store/reducers/favorite.reducer';
 import { reducers } from './store/reducers/visualization.reducer';
+import { FavoriteService } from './services/favorite.service';
 
 @NgModule({
   imports: [
@@ -32,9 +35,11 @@ import { reducers } from './store/reducers/visualization.reducer';
     FormsModule,
     TranslateModule.forRoot(),
     StoreModule.forFeature('visualization', reducers),
+    StoreModule.forFeature('favorite', favoriteReducer),
     EffectsModule.forFeature([
       VisualizationObjectEffects,
-      VisualizationLayerEffects
+      VisualizationLayerEffects,
+      FavoriteEffects
     ]),
     NgxDhis2ChartModule,
     NgxDhis2TableModule,
@@ -57,6 +62,7 @@ import { reducers } from './store/reducers/visualization.reducer';
     VisualizationErrorNotifierComponent,
     VisualizationComponent
   ],
-  exports: [VisualizationComponent]
+  exports: [VisualizationComponent],
+  providers: [FavoriteService]
 })
 export class NgxDhis2VisualizationModule {}
