@@ -1,8 +1,8 @@
 
 {
     "version": "1.0.0-alpha.1",
-    "name": "Seed App",
-    "description": "Seed App",
+    "name": "Interactive Dashboard",
+    "description": "A dashboard with full blown interactive capabilities that lets user easily switch between multiple visualizations (tables, charts and maps), allowing user to download data for offline usage, while still shading insights into dictionary of the involved metadata. Among other interactive features includes capability to navigate through data across organisation unit hierarchy, periods and data and spark conversation on analysed data",
     "appType": "APP",
     "launch_path": "index.html",
     "icons": {
@@ -20,8 +20,5 @@
             "href": "../../../"
         }
     },
-     "authorities": [
-         "MY_APP_ADD_NEW",
-         "MY_APP_UPDATE",
-         "MY_APP_DELETE"]
+     "authorities": []
 }
