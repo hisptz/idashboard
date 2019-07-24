@@ -1,0 +1,32 @@
+{
+  "id": "dqa-dashboard",
+  "namespace": "dqa-dashboard",
+  "appName": "Data Quality Dashboard",
+  "dashboardSource": "DATASTORE",
+  "defaultDashboardItems": [
+    {
+      "type": "CHART",
+      "shape": "FULL_WIDTH"
+    },
+    {
+      "type": "APP",
+      "shape": "FULL_WIDTH",
+      "appKey": "DQA-Widget"
+    }
+  ],
+  "favoriteSource": "DATASTORE",
+  "menuAlignment": "left",
+  "menuType": "standard",
+  "selectionFilterConfig": {
+    "allowStepSelection": true,
+    "stepSelections": ["dx", "vrg", "pe"],
+    "dataFilterConfig": {
+      "singleSelection": true,
+      "showGroupingButton": false,
+      "enabledSelections": ["in"]
+    },
+    "periodFilterConfig": {
+      "singleSelection": true
+    }
+  }
+}
