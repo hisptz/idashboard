@@ -56,18 +56,18 @@ export function getVisualizationObject(
   };
 }
 
-function getVisualizationLayers(visualizationItem: any) {
-  if (!visualizationItem) {
+function getVisualizationLayers(dashboardItem: DashboardItem) {
+  if (!dashboardItem) {
     return [];
   }
 
-  const favorite = visualizationItem[camelCase(visualizationItem.type)];
+  const favorite = dashboardItem[camelCase(dashboardItem.type)];
 
   if (!favorite) {
     return [
       {
         id: generateUid(),
-        dataSelections: [],
+        dataSelections: dashboardItem.dataSelections || [],
         config: null
       }
     ];
@@ -76,7 +76,7 @@ function getVisualizationLayers(visualizationItem: any) {
   return isArray(favorite)
     ? [
         {
-          id: visualizationItem.id,
+          id: dashboardItem.id,
           analytics: {
             rows: favorite
           }

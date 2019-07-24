@@ -205,7 +205,7 @@ export class VisualizationLayerEffects {
                   action.visualizationLayers,
                   (visualizationLayer: VisualizationLayer) => {
                     return {
-                      ...visualizationLayer,
+                      id: visualizationLayer.id,
                       dataSelections: getMergedDataSelections(
                         visualizationLayer.dataSelections,
                         action.globalSelections,
@@ -214,12 +214,11 @@ export class VisualizationLayerEffects {
                     };
                   }
                 ),
-                visualizationLayer => {
+                ({ id, dataSelections }) => {
                   this.store.dispatch(
-                    new UpdateVisualizationLayerAction(
-                      visualizationLayer.id,
-                      visualizationLayer
-                    )
+                    new LoadVisualizationAnalyticsSuccessAction(id, {
+                      dataSelections
+                    })
                   );
                 }
               );

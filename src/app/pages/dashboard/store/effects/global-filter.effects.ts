@@ -25,6 +25,8 @@ import {
   updateFavoriteSelections
 } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
 import { camelCase, flatten, reverse } from 'lodash';
+import { updateDataSelectionBasedOnPreferences } from '../../modules/ngx-dhis2-visualization/helpers';
+import { updateDashboard } from '../actions/dashboard.actions';
 
 @Injectable()
 export class GlobalFilterEffects {
@@ -85,11 +87,38 @@ export class GlobalFilterEffects {
                 // TODO This logic should be handled by configurations
                 const newDataSelections =
                   visualization.type === 'CHART'
-                    ? dataSelectionsWithPeriodModified.filter(
-                        (dataSelection: VisualizationDataSelection) =>
-                          dataSelection.dimension !== 'vrg'
-                      )
+                    ? dataSelectionsWithPeriodModified
+                        .filter(
+                          (dataSelection: VisualizationDataSelection) =>
+                            dataSelection.dimension !== 'vrg'
+                        )
+                        .map(dataSelection => {
+                          return updateDataSelectionBasedOnPreferences(
+                            dataSelection,
+                            'chart',
+                            {
+                              reportTable: { includeOrgUnitChildren: true },
+                              chart: { includeOrgUnitChildren: false }
+                            }
+                          );
+                        })
                     : dataSelectionsWithPeriodModified;
+
+                this.store.dispatch(
+                  updateDashboard({
+                    dashboard: {
+                      ...dashboard,
+                      dashboardItems: (dashboard.dashboardItems || []).map(
+                        (dashboardItem: DashboardItem) => {
+                          return {
+                            ...dashboardItem,
+                            dataSelections: newDataSelections
+                          };
+                        }
+                      )
+                    }
+                  })
+                );
 
                 const groupedDataSelections = groupBy(
                   newDataSelections,
