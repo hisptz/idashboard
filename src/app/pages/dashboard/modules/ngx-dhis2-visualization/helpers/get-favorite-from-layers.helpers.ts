@@ -1,7 +1,9 @@
 import * as _ from 'lodash';
-import { VisualizationLayer } from '../models';
+import { VisualizationLayer, VisualizationDataSelection } from '../models';
 import { getStandardizedVisualizationType } from './get-standardized-visualization-type.helper';
-export function getFavoritePayload(
+import { updateDataSelectionBasedOnPreferences } from './update-data-selection-based-preference.helper';
+
+export function getFavoriteFromLayers(
   visualizationLayers: VisualizationLayer[],
   originalType: string,
   currentType: string
@@ -16,6 +18,14 @@ export function getFavoritePayload(
   switch (currentType) {
     case 'TABLE':
     case 'CHART': {
+      // Get appropriate favorite type based on current selection
+      const favoriteType =
+        standardizedType === currentType
+          ? originalType
+          : currentType === 'CHART'
+          ? 'CHART'
+          : 'REPORT_TABLE';
+
       const favoriteArray = _.map(
         visualizationLayers,
         (visualizationLayer: VisualizationLayer) => {
@@ -24,26 +34,26 @@ export function getFavoritePayload(
             'layout'
           );
           return {
-            ...getFavoriteOptionsByType(visualizationLayer.config, currentType),
+            ...getFavoriteOptionsByType(
+              visualizationLayer.config || {},
+              currentType
+            ),
             id: visualizationLayer.id,
             columns: getSanitizedDataSelections(
-              groupedDataSelections['columns']
+              groupedDataSelections['columns'],
+              favoriteType
             ),
-            rows: getSanitizedDataSelections(groupedDataSelections['rows']),
+            rows: getSanitizedDataSelections(
+              groupedDataSelections['rows'],
+              favoriteType
+            ),
             filters: getSanitizedDataSelections(
-              groupedDataSelections['filters']
+              groupedDataSelections['filters'],
+              favoriteType
             )
           };
         }
       );
-
-      // Get appropriate favorite type based on current selection
-      const favoriteType =
-        standardizedType === currentType
-          ? originalType
-          : currentType === 'CHART'
-          ? 'CHART'
-          : 'REPORT_TABLE';
 
       return favoriteArray[0]
         ? {
@@ -60,16 +70,25 @@ export function getFavoritePayload(
   }
 }
 
-function getSanitizedDataSelections(dataSelections: any[]) {
+export function getSanitizedDataSelections(
+  dataSelections: VisualizationDataSelection[],
+  favoriteType: string,
+  favoritePreferences: any = {
+    reportTable: { includeOrgUnitChildren: true },
+    chart: { includeOrgUnitChildren: false }
+  }
+) {
   return _.map(dataSelections, dataSelection => {
-    return {
-      dimension: dataSelection.dimension,
-      items: _.map(dataSelection.items || [], item => {
-        return {
-          id: item.id
-        };
-      })
-    };
+    return _.omit(
+      {
+        ...updateDataSelectionBasedOnPreferences(
+          dataSelection,
+          favoriteType,
+          favoritePreferences
+        )
+      },
+      ['changed', 'layout']
+    );
   });
 }
 
@@ -77,8 +96,8 @@ function getFavoriteOptionsByType(favoriteDetails: any, favoriteType: string) {
   switch (favoriteType) {
     case 'CHART': {
       return {
-        type: favoriteDetails.type || 'LINE',
-        name: favoriteDetails.name || 'Untitled',
+        type: favoriteDetails.type || 'COLUMN',
+        name: favoriteDetails.name || 'Bottleneck Analysis Chart',
         title: favoriteDetails.title || null,
         description: favoriteDetails.description || '',
         prototype: favoriteDetails.prototype || {},
@@ -109,7 +128,11 @@ function getFavoriteOptionsByType(favoriteDetails: any, favoriteType: string) {
       };
     }
     case 'TABLE': {
-      return favoriteDetails;
+      return {
+        ...favoriteDetails,
+        name: favoriteDetails.name || 'Bottleneck Sublevel Analysis',
+        legendSet: favoriteDetails.legendSet
+      };
     }
     default:
       return {};

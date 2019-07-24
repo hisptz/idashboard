@@ -45,6 +45,12 @@ export class VisualizationLayerEffects {
 
           return [
             new AddVisualizationLayersAction(visualizationLayers),
+            new UpdateVisualizationObjectAction(visualizationId, {
+              layers: visualizationLayers.map(
+                (visualizationLayer: VisualizationLayer) =>
+                  visualizationLayer.id
+              )
+            }),
             new LoadVisualizationAnalyticsAction(
               visualizationId,
               visualizationLayers

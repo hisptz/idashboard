@@ -21,6 +21,8 @@ import {
 import { DashboardModeState } from '../../models/dashboard-mode.mode';
 import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
 import { getCurrentUser, getSystemInfo } from 'src/app/store/selectors';
+import { VisualizationDataSelection } from '../../modules/ngx-dhis2-visualization/models';
+import { globalFilterChange } from '../../store/actions/global-filter.actions';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -68,5 +70,12 @@ export class CurrentDashboardComponent implements OnInit {
 
   onSaveDashboard() {
     this.store.dispatch(initializeDashboardSave());
+  }
+
+  onFilterUpdate(
+    dataSelections: VisualizationDataSelection[],
+    dashboard: Dashboard
+  ) {
+    this.store.dispatch(globalFilterChange({ dataSelections, dashboard }));
   }
 }

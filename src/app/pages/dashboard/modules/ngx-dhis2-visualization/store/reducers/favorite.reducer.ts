@@ -7,7 +7,8 @@ import { on, createReducer } from '@ngrx/store';
 import {
   updateFavorite,
   loadFavoriteFail,
-  loadFavorite
+  loadFavorite,
+  updateFavoriteSelections
 } from '../actions/favorite.actions';
 import {
   loadingBaseState,
@@ -45,6 +46,16 @@ const reducer = createReducer(
       {
         id: favorite.id,
         changes: { ...favorite, notification: loadedBaseState }
+      },
+      state
+    )
+  ),
+
+  on(updateFavoriteSelections, (state, { id, changes }) =>
+    favoriteAdapter.updateOne(
+      {
+        id,
+        changes
       },
       state
     )

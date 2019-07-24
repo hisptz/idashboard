@@ -47,7 +47,7 @@ import { getNewDashboard } from '../../helpers/get-new-dashboard.helper';
 import { getCurrentDashboard } from '../selectors/dashboard-selectors';
 import { validateDashboard } from '../../helpers/validate-dashboard.helper';
 import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
-import { camelCase, isPlainObject } from 'lodash';
+import { camelCase, isPlainObject, omit } from 'lodash';
 import { DashboardItem } from '../../models/dashboard-item.model';
 import { saveFavorites } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
 
@@ -166,7 +166,17 @@ export class DashboardEffects {
       ),
       mergeMap(([{ dashboard, action }, dashboardPreferences]) =>
         this.dashboardService
-          .save(dashboard, dashboardPreferences, action)
+          .save(
+            {
+              ...dashboard,
+              dashboardItems: (dashboard.dashboardItems || []).map(
+                (dashboardItem: DashboardItem) =>
+                  omit(dashboardItem, ['visualization'])
+              )
+            },
+            dashboardPreferences,
+            action
+          )
           .pipe(
             map((dashboardResponse: Dashboard) => {
               return saveDashboardSuccess({

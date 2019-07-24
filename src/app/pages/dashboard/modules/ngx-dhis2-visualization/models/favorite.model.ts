@@ -5,4 +5,7 @@ export interface Favorite {
   type?: string;
   name?: string;
   notification?: BaseState;
+  columns?: any;
+  rows?: any;
+  filters?: any;
 }

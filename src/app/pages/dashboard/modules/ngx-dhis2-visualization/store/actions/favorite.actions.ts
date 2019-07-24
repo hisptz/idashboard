@@ -31,6 +31,14 @@ export const updateFavorite = createAction(
   }>()
 );
 
+export const updateFavoriteSelections = createAction(
+  '[Favorite] Update favorite selections',
+  props<{
+    id: string;
+    changes: Partial<Favorite>;
+  }>()
+);
+
 export const saveFavorites = createAction(
   '[Favorite] Save favorites',
   props<{

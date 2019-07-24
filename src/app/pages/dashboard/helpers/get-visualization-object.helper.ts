@@ -11,6 +11,7 @@ import {
   VisualizationVm
 } from '../modules/ngx-dhis2-visualization/models';
 import { Favorite } from '../modules/ngx-dhis2-visualization/models/favorite.model';
+import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
 
 const defaultName = 'Untitled';
 
@@ -61,6 +62,16 @@ function getVisualizationLayers(visualizationItem: any) {
   }
 
   const favorite = visualizationItem[camelCase(visualizationItem.type)];
+
+  if (!favorite) {
+    return [
+      {
+        id: generateUid(),
+        dataSelections: [],
+        config: null
+      }
+    ];
+  }
 
   return isArray(favorite)
     ? [

@@ -25,7 +25,7 @@ import {
   saveFavorite
 } from '../actions/favorite.actions';
 import { getFavoritesByIds } from '../selectors/favorite.selectors';
-import { find } from 'lodash';
+import { find, omit } from 'lodash';
 
 @Injectable()
 export class FavoriteEffects {
@@ -121,7 +121,12 @@ export class FavoriteEffects {
         tap(
           ([{ favorite, favoriteType, saveAction }, dashboardPreferences]) => {
             this.favoriteService
-              .save(favorite, dashboardPreferences, favoriteType, saveAction)
+              .save(
+                omit(favorite, ['notification']),
+                dashboardPreferences,
+                favoriteType,
+                saveAction
+              )
               .subscribe();
           }
         )

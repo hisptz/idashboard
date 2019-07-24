@@ -12,9 +12,13 @@
         ></app-dashboard-title>
       </div>
 
-      <div class="current-dashboard-filter">
+      <div
+        class="current-dashboard-filter"
+        *ngIf="currentDashboard$ | async as currentDashboard"
+      >
         <ngx-dhis2-selection-filters
           [selectionFilterConfig]="selectionFilterConfig$ | async"
+          (update)="onFilterUpdate($event, currentDashboard)"
         ></ngx-dhis2-selection-filters>
       </div>
     </div>
