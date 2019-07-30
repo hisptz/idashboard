@@ -13,7 +13,8 @@ const getDashboardPreferencesState: MemoizedSelector<
 
 export const getDashboardPreferences = createSelector(
   getDashboardPreferencesState,
-  (state: DashboardPreferencesState) => state.dashboardPreferences
+  (state: DashboardPreferencesState) =>
+    state ? state.dashboardPreferences : null
 );
 
 export const getSelectionFilterConfig = createSelector(

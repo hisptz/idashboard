@@ -1,15 +1,12 @@
 import {
-  MemoizedSelector,
   createFeatureSelector,
-  createSelector
+  createSelector,
+  MemoizedSelector
 } from '@ngrx/store';
-import { DashboardState, dashboardAdapter } from '../states/dashboard.state';
-import { Dashboard } from '../../models/dashboard.model';
-import { DashboardItem } from '../../models/dashboard-item.model';
-import { getFavoriteEntities } from '../../modules/ngx-dhis2-visualization/store/selectors/favorite.selectors';
-import { Favorite } from '../../modules/ngx-dhis2-visualization/models/favorite.model';
-import { getVisualizationObject } from '../../helpers/get-visualization-object.helper';
+
 import { DashboardMode } from '../../constants/dashboard-modes.constant';
+import { Dashboard } from '../../models/dashboard.model';
+import { dashboardAdapter, DashboardState } from '../states/dashboard.state';
 
 const getDashboardState: MemoizedSelector<
   object,

@@ -9,7 +9,7 @@ describe('DashboardMenuItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardMenuItemComponent, DashboardItemComponent]
+      declarations: [DashboardMenuItemComponent]
     }).compileComponents();
   }));
 

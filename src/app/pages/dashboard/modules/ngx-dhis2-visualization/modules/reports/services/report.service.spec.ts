@@ -2,11 +2,20 @@ import { TestBed } from '@angular/core/testing';
 
 import { ReportService } from './report.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxDhis2HttpClientModule } from '@iapps/ngx-dhis2-http-client';
 
 describe('ReportService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [
+        NgxDhis2HttpClientModule.forRoot({
+          namespace: 'iapps',
+          version: 1,
+          models: {
+            users: 'id'
+          }
+        })
+      ]
     })
   );
 

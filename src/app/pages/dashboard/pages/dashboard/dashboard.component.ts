@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { State } from 'src/app/store/reducers';
-import { loadDashboardPreferences } from '../../store/actions/dashboard-preferences.actions';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { State } from 'src/app/store/reducers';
+
+import { DashboardModeState } from '../../models/dashboard-mode.mode';
 import { DashboardPreferences } from '../../models/dashboard-preferences.model';
 import { Dashboard } from '../../models/dashboard.model';
+import { loadDashboardPreferences } from '../../store/actions/dashboard-preferences.actions';
+import {
+  createDashboard,
+  setCurrentDashboard
+} from '../../store/actions/dashboard.actions';
 import { getDashboardPreferences } from '../../store/selectors/dashboard-preferences.selectors';
 import {
-  getDashboards,
   getCurrentDashboardId,
-  getDashboardMode
+  getDashboardMode,
+  getDashboards
 } from '../../store/selectors/dashboard-selectors';
-import {
-  setCurrentDashboard,
-  createDashboard
-} from '../../store/actions/dashboard.actions';
-import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
-import { DashboardModeState } from '../../models/dashboard-mode.mode';
 
 @Component({
   selector: 'app-dashboard',
