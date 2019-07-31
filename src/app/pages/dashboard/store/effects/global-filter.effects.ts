@@ -19,7 +19,6 @@ import {
 } from '../../modules/ngx-dhis2-visualization/store/selectors';
 import { LoadVisualizationAnalyticsAction } from '../../modules/ngx-dhis2-visualization/store/actions';
 import { groupBy } from 'lodash';
-import { getSanitizedDataSelections } from '../../modules/ngx-dhis2-visualization/helpers/get-favorite-from-layers.helpers';
 import {
   updateFavorite,
   updateFavoriteSelections
@@ -27,6 +26,7 @@ import {
 import { camelCase, flatten, reverse } from 'lodash';
 import { updateDataSelectionBasedOnPreferences } from '../../modules/ngx-dhis2-visualization/helpers';
 import { updateDashboard } from '../actions/dashboard.actions';
+import { getSanitizedDataSelections } from '../../modules/ngx-dhis2-visualization/helpers/get-sanitized-data-selections.helper';
 
 @Injectable()
 export class GlobalFilterEffects {
@@ -62,28 +62,22 @@ export class GlobalFilterEffects {
             ).subscribe((visualizations: Visualization[]) => {
               visualizations.forEach((visualization: Visualization) => {
                 // TODO Logic for using child periods based on selected has to be handled by configuration
-                const dataSelectionsWithPeriodModified = dataSelections.map(
-                  (dataSelection: VisualizationDataSelection) => {
-                    if (dataSelection.dimension === 'pe') {
-                      console.log();
-
-                      return {
-                        ...dataSelection,
-                        items: flatten(
-                          dataSelection.items.map((item: any) =>
-                            reverse(
-                              item[
-                                camelCase(dataSelection.lowestPeriodType)
-                              ] || [item]
-                            )
-                          )
-                        )
-                      };
+                const dataSelectionsWithPeriodModified = getSanitizedDataSelections(
+                  dataSelections,
+                  camelCase(visualization.type),
+                  {
+                    reportTable: { includeOrgUnitChildren: true },
+                    chart: {
+                      includeOrgUnitChildren: false,
+                      useLowestPeriodType: true,
+                      dimensionsToExclude: ['vrg']
+                    },
+                    app: {
+                      useLowestPeriodType: true
                     }
-
-                    return dataSelection;
                   }
                 );
+                console.log(dataSelectionsWithPeriodModified);
                 // TODO This logic should be handled by configurations
                 const newDataSelections =
                   visualization.type === 'CHART'
@@ -98,7 +92,7 @@ export class GlobalFilterEffects {
                             'chart',
                             {
                               reportTable: { includeOrgUnitChildren: true },
-                              chart: { includeOrgUnitChildren: false }
+                              chart: { excludeOrgUnitChildren: true }
                             }
                           );
                         })
@@ -112,7 +106,7 @@ export class GlobalFilterEffects {
                         (dashboardItem: DashboardItem) => {
                           return {
                             ...dashboardItem,
-                            dataSelections: newDataSelections
+                            dataSelections
                           };
                         }
                       )
@@ -130,18 +124,9 @@ export class GlobalFilterEffects {
                     updateFavoriteSelections({
                       id: visualization.favorite.id,
                       changes: {
-                        columns: getSanitizedDataSelections(
-                          groupedDataSelections['columns'],
-                          visualization.type
-                        ),
-                        rows: getSanitizedDataSelections(
-                          groupedDataSelections['rows'],
-                          visualization.type
-                        ),
-                        filters: getSanitizedDataSelections(
-                          groupedDataSelections['filters'],
-                          visualization.type
-                        )
+                        columns: groupedDataSelections['columns'],
+                        rows: groupedDataSelections['rows'],
+                        filters: groupedDataSelections['filters']
                       }
                     })
                   );
