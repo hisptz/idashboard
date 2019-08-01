@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { NgxDhis2HttpClientService, User } from '@iapps/ngx-dhis2-http-client';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/internal/operators';
-import { UserService, User } from '../../core';
 
-import { Action } from '@ngrx/store';
 import {
+  addCurrentUser,
   addSystemInfo,
   loadCurrentUser,
-  addCurrentUser,
   loadCurrentUserFail
 } from '../actions';
 
@@ -25,7 +24,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(loadCurrentUser),
       switchMap(({ systemInfo }) =>
-        this.userService.loadCurrentUser().pipe(
+        this.httpClient.me().pipe(
           map((currentUser: User) =>
             addCurrentUser({ currentUser, systemInfo })
           ),
@@ -35,5 +34,8 @@ export class UserEffects {
     )
   );
 
-  constructor(private actions$: Actions, private userService: UserService) {}
+  constructor(
+    private actions$: Actions,
+    private httpClient: NgxDhis2HttpClientService
+  ) {}
 }

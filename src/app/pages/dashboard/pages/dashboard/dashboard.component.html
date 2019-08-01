@@ -1,0 +1,34 @@
+<div class="dashboard-container ">
+  <!-- dashboard top header -->
+  <div class="dashboard-header">
+    <div class="dashboard-brand">
+      {{ (dashboardPreferences$ | async)?.appName }}
+    </div>
+  </div>
+  <!-- end of dashboard top header -->
+
+  <!-- dashboard menu -->
+  <div
+    class="dashboard-menu-{{ (dashboardPreferences$ | async)?.menuAlignment }}"
+  >
+    <app-dashboard-menu
+      [dashboardPreferences]="dashboardPreferences$ | async"
+      [dashboards]="dashboards$ | async"
+      [dashboardMode]="dashboardMode$ | async"
+      [currentDashboardId]="currentDashboardId$ | async"
+      (setCurrentDashboard)="onSetCurrentDashboard($event)"
+      (addDashboard)="onAddDashboard()"
+    ></app-dashboard-menu>
+  </div>
+  <!-- end of dashboard menu -->
+
+  <!-- dashboard content -->
+  <div
+    class="dashboard-content-{{
+      (dashboardPreferences$ | async)?.menuAlignment
+    }}"
+  >
+    <router-outlet></router-outlet>
+  </div>
+  <!-- end of dashboard content -->
+</div>
