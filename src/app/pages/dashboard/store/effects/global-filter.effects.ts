@@ -62,13 +62,13 @@ export class GlobalFilterEffects {
             ).subscribe((visualizations: Visualization[]) => {
               visualizations.forEach((visualization: Visualization) => {
                 // TODO Logic for using child periods based on selected has to be handled by configuration
-                const dataSelectionsWithPeriodModified = getSanitizedDataSelections(
+                const newDataSelections = getSanitizedDataSelections(
                   dataSelections,
                   camelCase(visualization.type),
                   {
                     reportTable: { includeOrgUnitChildren: true },
                     chart: {
-                      includeOrgUnitChildren: false,
+                      excludeOrgUnitChildren: true,
                       useLowestPeriodType: true,
                       dimensionsToExclude: ['vrg']
                     },
@@ -77,26 +77,6 @@ export class GlobalFilterEffects {
                     }
                   }
                 );
-                console.log(dataSelectionsWithPeriodModified);
-                // TODO This logic should be handled by configurations
-                const newDataSelections =
-                  visualization.type === 'CHART'
-                    ? dataSelectionsWithPeriodModified
-                        .filter(
-                          (dataSelection: VisualizationDataSelection) =>
-                            dataSelection.dimension !== 'vrg'
-                        )
-                        .map(dataSelection => {
-                          return updateDataSelectionBasedOnPreferences(
-                            dataSelection,
-                            'chart',
-                            {
-                              reportTable: { includeOrgUnitChildren: true },
-                              chart: { excludeOrgUnitChildren: true }
-                            }
-                          );
-                        })
-                    : dataSelectionsWithPeriodModified;
 
                 this.store.dispatch(
                   updateDashboard({

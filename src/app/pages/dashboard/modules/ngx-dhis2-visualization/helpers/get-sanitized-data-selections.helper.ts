@@ -1,4 +1,4 @@
-import { camelCase, flatten, some, filter, find } from 'lodash';
+import { camelCase, flatten, some, filter, find, min, map } from 'lodash';
 
 import { VisualizationDataSelection } from '../models';
 import { DataSelectionPreferences } from '../models/data-selection-preferences.model';
@@ -86,7 +86,7 @@ function getOrgUnitSanitizedDataSelection(
   if (favoritePreferences && favoritePreferences.includeOrgUnitChildren) {
     return {
       ...dataSelection,
-      items: excludeOrgUnitChildren(dataSelection.items)
+      items: includeOrgUnitChildren(dataSelection.items)
     };
   }
 
@@ -94,25 +94,60 @@ function getOrgUnitSanitizedDataSelection(
 }
 
 function excludeOrgUnitChildren(orgUnitItems: any[]) {
+  let newOrgUnitItems = [...orgUnitItems];
+
   // exclude children level if any
   if (orgUnitItemsHasLevels(orgUnitItems)) {
-    return filter(
+    newOrgUnitItems = filter(
       orgUnitItems,
       (item: any) => item.type && item.type.indexOf('LEVEL') === -1
     );
   }
 
-  // exclude user orgunit children if any
-  if (orgUnitItemsHasUserOrgUnitChildren(orgUnitItems)) {
+  // exclude user orgunit children if any but include user orgunit if not available
+  if (orgUnitItemsHasUserOrgUnitChildren(newOrgUnitItems)) {
     const userOrgUnit: OrgUnit = find(USER_ORG_UNITS, ['id', 'USER_ORGUNIT']);
 
     if (!userOrgUnit) {
-      return [];
+      newOrgUnitItems = [];
     }
+
+    newOrgUnitItems = filter(
+      newOrgUnitItems,
+      (item: any) => item.id && item.id.indexOf('CHILDREN') === -1
+    );
 
     const { id, name, type, level } = userOrgUnit;
 
-    return [{ id, name, type, level }];
+    newOrgUnitItems = [...newOrgUnitItems, { id, name, type, level }];
+  }
+
+  return newOrgUnitItems;
+}
+
+function includeOrgUnitChildren(orgUnitItems: any[]) {
+  if (
+    !orgUnitItemsHasLevels(orgUnitItems) ||
+    !orgUnitItemsHasUserOrgUnitChildren(orgUnitItems)
+  ) {
+    const lowestOrgUnitLevel = getLowestSelectedLevel(orgUnitItems);
+
+    if (lowestOrgUnitLevel) {
+      const nextOrgUnitLevel = lowestOrgUnitLevel + 1;
+      return [
+        ...orgUnitItems,
+        { id: `LEVEL-${nextOrgUnitLevel}`, name: `Level ${nextOrgUnitLevel}` }
+      ];
+    } else {
+      const userChildrenOrgUnit: OrgUnit = find(USER_ORG_UNITS, [
+        'id',
+        'USER_ORGUNIT_CHILDREN'
+      ]);
+
+      const { id, name, type, level } = userChildrenOrgUnit;
+
+      return [{ id, name, type, level }];
+    }
   }
 
   return orgUnitItems;
@@ -132,7 +167,9 @@ function orgUnitItemsHasUserOrgUnitChildren(orgUnitItems: any[]) {
   );
 }
 
-function includeOrgUnitChildren(orgUnitItems: any[]) {}
+function getLowestSelectedLevel(orgUnitItems: any[]) {
+  return min(filter(map(orgUnitItems, (item: any) => item.level)));
+}
 
 function removeExcludedDimensions(
   dataSelections: VisualizationDataSelection[],
