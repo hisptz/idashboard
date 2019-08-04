@@ -23,6 +23,7 @@ import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
 import { getCurrentUser, getSystemInfo } from 'src/app/store/selectors';
 import { VisualizationDataSelection } from '../../modules/ngx-dhis2-visualization/models';
 import { globalFilterChange } from '../../store/actions/global-filter.actions';
+import { getCurrentGlobalDataSelections } from '../../store/selectors/global-filter.selectors';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -35,6 +36,7 @@ export class CurrentDashboardComponent implements OnInit {
   dashboardMode$: Observable<DashboardModeState>;
   currentUser$: Observable<User>;
   systemInfo$: Observable<SystemInfo>;
+  globalDataSelections$: Observable<VisualizationDataSelection[]>;
 
   constructor(private store: Store<State>) {}
 
@@ -46,6 +48,9 @@ export class CurrentDashboardComponent implements OnInit {
     this.dashboardMode$ = this.store.pipe(select(getDashboardMode));
     this.currentUser$ = this.store.pipe(select(getCurrentUser));
     this.systemInfo$ = this.store.pipe(select(getSystemInfo));
+    this.globalDataSelections$ = this.store.pipe(
+      select(getCurrentGlobalDataSelections)
+    );
   }
 
   trackByDashboardItemId(index, item: DashboardItem) {

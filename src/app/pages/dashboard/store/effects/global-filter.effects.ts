@@ -1,32 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { globalFilterChange } from '../actions/global-filter.actions';
-import { tap, concatMap, withLatestFrom, take } from 'rxjs/operators';
-import {
-  VisualizationDataSelection,
-  VisualizationVm,
-  Visualization
-} from '../../modules/ngx-dhis2-visualization/models';
-import { intersection } from 'lodash';
-import { of, zip } from 'rxjs';
 import { select, Store } from '@ngrx/store';
+import { camelCase, groupBy, intersection } from 'lodash';
+import { zip } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { State } from 'src/app/store/reducers';
-import { getCurrentDashboard } from '../selectors/dashboard-selectors';
+
 import { DashboardItem } from '../../models/dashboard-item.model';
-import {
-  getVisualizationObjectById,
-  getCombinedVisualizationObjectById
-} from '../../modules/ngx-dhis2-visualization/store/selectors';
-import { LoadVisualizationAnalyticsAction } from '../../modules/ngx-dhis2-visualization/store/actions';
-import { groupBy } from 'lodash';
-import {
-  updateFavorite,
-  updateFavoriteSelections
-} from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
-import { camelCase, flatten, reverse } from 'lodash';
-import { updateDataSelectionBasedOnPreferences } from '../../modules/ngx-dhis2-visualization/helpers';
-import { updateDashboard } from '../actions/dashboard.actions';
 import { getSanitizedDataSelections } from '../../modules/ngx-dhis2-visualization/helpers/get-sanitized-data-selections.helper';
+import {
+  Visualization,
+  VisualizationDataSelection
+} from '../../modules/ngx-dhis2-visualization/models';
+import { LoadVisualizationAnalyticsAction } from '../../modules/ngx-dhis2-visualization/store/actions';
+import { updateFavoriteSelections } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
+import { getCombinedVisualizationObjectById } from '../../modules/ngx-dhis2-visualization/store/selectors';
+import { updateDashboard } from '../actions/dashboard.actions';
+import { globalFilterChange } from '../actions/global-filter.actions';
 
 @Injectable()
 export class GlobalFilterEffects {
