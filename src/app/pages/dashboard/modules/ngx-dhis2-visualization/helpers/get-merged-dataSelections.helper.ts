@@ -45,13 +45,9 @@ export function getMergedDataSelections(
         ['dimension', dataSelection.dimension]
       );
 
-      return updateDataSelectionBasedOnPreferences(
-        matchingDataSelection && matchingDataSelection.changed
-          ? _.omit({ ...dataSelection, ...matchingDataSelection }, 'changed')
-          : dataSelection,
-        visualizationType,
-        favoritePreferences
-      );
+      return matchingDataSelection && matchingDataSelection.changed
+        ? _.omit({ ...dataSelection, ...matchingDataSelection }, 'changed')
+        : dataSelection;
     }
   );
 

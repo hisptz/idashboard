@@ -20,9 +20,15 @@ import {
 } from '../../store/actions/dashboard.actions';
 import { DashboardModeState } from '../../models/dashboard-mode.mode';
 import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
-import { getCurrentUser, getSystemInfo } from 'src/app/store/selectors';
+import {
+  getCurrentUser,
+  getSystemInfo,
+  getCurrentUserManagementAuthoritiesStatus
+} from 'src/app/store/selectors';
 import { VisualizationDataSelection } from '../../modules/ngx-dhis2-visualization/models';
 import { globalFilterChange } from '../../store/actions/global-filter.actions';
+import { getCurrentGlobalDataSelections } from '../../store/selectors/global-filter.selectors';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -35,6 +41,8 @@ export class CurrentDashboardComponent implements OnInit {
   dashboardMode$: Observable<DashboardModeState>;
   currentUser$: Observable<User>;
   systemInfo$: Observable<SystemInfo>;
+  globalDataSelections$: Observable<VisualizationDataSelection[]>;
+  userIsAdmin$: Observable<boolean>;
 
   constructor(private store: Store<State>) {}
 
@@ -46,6 +54,12 @@ export class CurrentDashboardComponent implements OnInit {
     this.dashboardMode$ = this.store.pipe(select(getDashboardMode));
     this.currentUser$ = this.store.pipe(select(getCurrentUser));
     this.systemInfo$ = this.store.pipe(select(getSystemInfo));
+    this.globalDataSelections$ = this.store.pipe(
+      select(getCurrentGlobalDataSelections)
+    );
+    this.userIsAdmin$ = this.store.pipe(
+      select(getCurrentUserManagementAuthoritiesStatus)
+    );
   }
 
   trackByDashboardItemId(index, item: DashboardItem) {
@@ -72,10 +86,9 @@ export class CurrentDashboardComponent implements OnInit {
     this.store.dispatch(initializeDashboardSave());
   }
 
-  onFilterUpdate(
-    dataSelections: VisualizationDataSelection[],
-    dashboard: Dashboard
-  ) {
-    this.store.dispatch(globalFilterChange({ dataSelections, dashboard }));
+  onFilterUpdate(dataSelections: VisualizationDataSelection[]) {
+    this.currentDashboard$.pipe(take(1)).subscribe((dashboard: Dashboard) => {
+      this.store.dispatch(globalFilterChange({ dataSelections, dashboard }));
+    });
   }
 }

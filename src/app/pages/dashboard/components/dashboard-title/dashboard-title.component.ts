@@ -10,6 +10,7 @@ export class DashboardTitleComponent implements OnInit {
   @Input() id: string;
   @Input() name: string;
   @Input() dashboardMode: DashboardModeState;
+  @Input() userIsAdmin: boolean;
 
   @Output() enableEditing: EventEmitter<any> = new EventEmitter();
   @Output() nameUpdate: EventEmitter<{
@@ -26,11 +27,15 @@ export class DashboardTitleComponent implements OnInit {
 
   onEnableInput(e) {
     e.stopPropagation();
-    this.enableEditing.emit(null);
+    if (this.userIsAdmin) {
+      this.enableEditing.emit(null);
+    }
   }
 
   onUpdateName(e) {
     e.stopPropagation();
-    this.nameUpdate.emit({ id: this.id, name: e.target.value });
+    if (this.userIsAdmin) {
+      this.nameUpdate.emit({ id: this.id, name: e.target.value });
+    }
   }
 }

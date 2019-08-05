@@ -21,6 +21,7 @@ export class DashboardMenuComponent implements OnInit {
   @Input() dashboards: Dashboard[];
   @Input() currentDashboardId: string;
   @Input() dashboardMode: DashboardModeState;
+  @Input() userIsAdmin: boolean;
 
   @Output()
   setCurrentDashboard: EventEmitter<string> = new EventEmitter<string>();

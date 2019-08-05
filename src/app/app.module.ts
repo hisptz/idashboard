@@ -2,7 +2,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxDhis2HttpClientModule } from '@iapps/ngx-dhis2-http-client';
 import { NgxDhis2MenuModule } from '@iapps/ngx-dhis2-menu';
 import { EffectsModule } from '@ngrx/effects';
@@ -64,11 +63,9 @@ export function HttpLoaderFactory(http: HttpClient) {
      */
     StoreRouterConnectingModule.forRoot(),
 
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
-    })
+    !environment.production
+      ? StoreDevtoolsModule.instrument()
+      : StoreDevtoolsModule.instrument()
   ],
   providers: [{ provide: RouterStateSerializer, useClass: RouteSerializer }],
   bootstrap: [AppComponent]

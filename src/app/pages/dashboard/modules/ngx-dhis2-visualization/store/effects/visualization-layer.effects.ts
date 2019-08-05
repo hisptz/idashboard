@@ -105,12 +105,8 @@ export class VisualizationLayerEffects {
                 })
               );
               this.store
-                .select(getFunctionLoadedStatus)
-                .pipe(
-                  filter((loaded: boolean) => loaded),
-                  switchMap(() => this.store.select(getFunctions())),
-                  take(1)
-                )
+                .select(getFunctions())
+                .pipe(take(1))
                 .subscribe((functions: any[]) => {
                   const functionRules = _.flatten(
                     _.map(functions, functionObject => functionObject.items)

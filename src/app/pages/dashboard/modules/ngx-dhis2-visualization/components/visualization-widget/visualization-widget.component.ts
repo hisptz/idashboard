@@ -60,13 +60,15 @@ export class VisualizationWidgetComponent implements OnInit {
 
   getDataSelectionIdsByDimension(dataSelections: any[], dimension: string) {
     return _.join(
-      _.flatten(
-        _.map(
-          _.filter(
-            dataSelections,
-            dataSelection => dataSelection.dimension === dimension
-          ),
-          dataSelection => _.map(dataSelection.items, item => item.id)
+      _.uniq(
+        _.flatten(
+          _.map(
+            _.filter(
+              dataSelections,
+              dataSelection => dataSelection.dimension === dimension
+            ),
+            dataSelection => _.map(dataSelection.items, item => item.id)
+          )
         )
       ),
       ';'

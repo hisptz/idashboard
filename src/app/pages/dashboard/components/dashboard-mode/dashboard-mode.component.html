@@ -1,6 +1,7 @@
-<div>
-  <button mat-flat-button (click)="onToggleMode($event)" *ngIf="dashboardMode?.isViewMode">
-    <i class="fa fa-eye"></i> Viewing
+<div *ngIf="showMode">
+  <button mat-flat-button (click)="onToggleMode($event)" *ngIf="dashboardMode?.isViewMode"
+    title="Click to edit this dashboard">
+    <i class="fa fa-pencil"></i>
   </button>
   <div *ngIf="dashboardMode?.isEditMode || dashboardMode?.isSaveMode">
     <button mat-flat-button (click)="onToggleMode($event)" *ngIf="dashboardMode?.isEditMode">

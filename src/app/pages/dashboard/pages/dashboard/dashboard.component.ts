@@ -17,6 +17,7 @@ import {
   getDashboardMode,
   getDashboards
 } from '../../store/selectors/dashboard-selectors';
+import { getCurrentUserManagementAuthoritiesStatus } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit {
   dashboards$: Observable<Dashboard[]>;
   currentDashboardId$: Observable<string>;
   dashboardMode$: Observable<DashboardModeState>;
+  userIsAdmin$: Observable<boolean>;
   constructor(private store: Store<State>) {}
 
   ngOnInit() {
@@ -42,6 +44,10 @@ export class DashboardComponent implements OnInit {
     this.currentDashboardId$ = this.store.pipe(select(getCurrentDashboardId));
 
     this.dashboardMode$ = this.store.pipe(select(getDashboardMode));
+
+    this.userIsAdmin$ = this.store.pipe(
+      select(getCurrentUserManagementAuthoritiesStatus)
+    );
   }
 
   onSetCurrentDashboard(id: string) {
