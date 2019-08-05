@@ -26,7 +26,7 @@ export class GlobalFilterEffects {
         ofType(globalFilterChange),
         tap(({ dataSelections, dashboard }) => {
           // validate filter
-          // TODO Refactor this code
+          // TODO Refactor this code possibly moving the logic to its own function
           const requiredDimensions = ['dx', 'pe', 'ou', 'vrg'];
 
           const filterIntersection = intersection(
