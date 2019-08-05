@@ -20,7 +20,11 @@ import {
 } from '../../store/actions/dashboard.actions';
 import { DashboardModeState } from '../../models/dashboard-mode.mode';
 import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
-import { getCurrentUser, getSystemInfo } from 'src/app/store/selectors';
+import {
+  getCurrentUser,
+  getSystemInfo,
+  getCurrentUserManagementAuthoritiesStatus
+} from 'src/app/store/selectors';
 import { VisualizationDataSelection } from '../../modules/ngx-dhis2-visualization/models';
 import { globalFilterChange } from '../../store/actions/global-filter.actions';
 import { getCurrentGlobalDataSelections } from '../../store/selectors/global-filter.selectors';
@@ -37,6 +41,7 @@ export class CurrentDashboardComponent implements OnInit {
   currentUser$: Observable<User>;
   systemInfo$: Observable<SystemInfo>;
   globalDataSelections$: Observable<VisualizationDataSelection[]>;
+  userIsAdmin$: Observable<boolean>;
 
   constructor(private store: Store<State>) {}
 
@@ -50,6 +55,9 @@ export class CurrentDashboardComponent implements OnInit {
     this.systemInfo$ = this.store.pipe(select(getSystemInfo));
     this.globalDataSelections$ = this.store.pipe(
       select(getCurrentGlobalDataSelections)
+    );
+    this.userIsAdmin$ = this.store.pipe(
+      select(getCurrentUserManagementAuthoritiesStatus)
     );
   }
 

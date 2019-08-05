@@ -1,14 +1,9 @@
 <div class="dashboard-menu-container-{{ dashboardPreferences?.menuAlignment }}">
   <!-- dashboard menu list -->
   <div class="dashboard-menu-list">
-    <app-dashboard-menu-list
-      [dashboardPreferences]="dashboardPreferences"
-      [dashboards]="dashboards"
-      [dashboardMode]="dashboardMode"
-      [currentDashboardId]="currentDashboardId"
-      (setCurrentDashboard)="onSetCurrentDashboard($event)"
-      (addDashboard)="onAddDashboard()"
-    ></app-dashboard-menu-list>
+    <app-dashboard-menu-list [dashboardPreferences]="dashboardPreferences" [dashboards]="dashboards"
+      [dashboardMode]="dashboardMode" [userIsAdmin]="userIsAdmin" [currentDashboardId]="currentDashboardId"
+      (setCurrentDashboard)="onSetCurrentDashboard($event)" (addDashboard)="onAddDashboard()"></app-dashboard-menu-list>
   </div>
   <!-- end of dashboard menu list -->
 

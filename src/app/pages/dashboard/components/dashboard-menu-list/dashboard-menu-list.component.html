@@ -1,28 +1,21 @@
 <ul class="dashboard-menu-list-{{ dashboardPreferences?.menuAlignment }}">
   <!-- dashboard menu search and add button -->
   <li class="dashboard-menu-list-header">
-    <button class="add-dashboard-btn" (click)="onAddDashboard($event)">
+    <button class="add-dashboard-btn" (click)="onAddDashboard($event)" *ngIf="userIsAdmin">
       <i class="fa fa-plus"></i>
     </button>
     <div class="dashboard-menu-search">
-      <input
-        type="text"
-        class="dashboard-search-input"
-        placeholder="Search for dashboard"
-        (keyup)="onSearchDashboard($event)"
-      />
+      <input type="text" class="dashboard-search-input" placeholder="Search for dashboard"
+        (keyup)="onSearchDashboard($event)" />
     </div>
   </li>
   <!-- end of dashboard menu search and add button -->
 
   <!-- dashboard menu items -->
   <li *ngFor="let dashboard of dashboards | filterByName: searchTerm">
-    <app-dashboard-menu-item
-      [dashboard]="dashboard"
-      [menuAlignment]="dashboardPreferences?.menuAlignment"
-      [currentDashboardId]="currentDashboardId"
-      (setDashboard)="onSetCurrentDashboard($event)"
-    ></app-dashboard-menu-item>
+    <app-dashboard-menu-item [dashboard]="dashboard" [menuAlignment]="dashboardPreferences?.menuAlignment"
+      [currentDashboardId]="currentDashboardId" (setDashboard)="onSetCurrentDashboard($event)">
+    </app-dashboard-menu-item>
   </li>
   <!-- end of dashboard menu items -->
 </ul>

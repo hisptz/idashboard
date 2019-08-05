@@ -18,6 +18,8 @@ import { DashboardModeState } from '../../models/dashboard-mode.mode';
 export class DashboardModeComponent implements OnInit {
   @Input() dashboardMode: DashboardModeState;
 
+  @Input() showMode: boolean;
+
   @Output() toggleDashboardMode: EventEmitter<
     DashboardModeState
   > = new EventEmitter<DashboardModeState>();

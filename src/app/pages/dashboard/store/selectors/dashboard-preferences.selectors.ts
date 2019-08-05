@@ -5,6 +5,12 @@ import {
 } from '@ngrx/store';
 import { DashboardPreferencesState } from '../states/dashboard-preferences.state';
 import { DashboardPreferences } from '../../models/dashboard-preferences.model';
+import { SelectionFilterConfig } from '@iapps/ngx-dhis2-selection-filters';
+import {
+  getCurrentUser,
+  getCurrentUserManagementAuthoritiesStatus
+} from 'src/app/store/selectors';
+import { User } from '@iapps/ngx-dhis2-http-client';
 
 const getDashboardPreferencesState: MemoizedSelector<
   object,
@@ -19,6 +25,17 @@ export const getDashboardPreferences = createSelector(
 
 export const getSelectionFilterConfig = createSelector(
   getDashboardPreferences,
-  (dashboardPreferences: DashboardPreferences) =>
-    dashboardPreferences ? dashboardPreferences.selectionFilterConfig : null
+  getCurrentUserManagementAuthoritiesStatus,
+  (dashboardPreferences: DashboardPreferences, userIsAdmin: boolean) => {
+    const filterConfig: SelectionFilterConfig = dashboardPreferences
+      ? dashboardPreferences.selectionFilterConfig
+      : null;
+
+    return {
+      ...filterConfig,
+      allowStepSelection: userIsAdmin,
+      showDataFilter: userIsAdmin,
+      showValidationRuleGroupFilter: userIsAdmin
+    };
+  }
 );

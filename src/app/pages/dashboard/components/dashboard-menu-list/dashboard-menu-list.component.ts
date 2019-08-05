@@ -21,6 +21,8 @@ export class DashboardMenuListComponent implements OnInit {
   @Input() dashboardPreferences: DashboardPreferences;
   @Input() currentDashboardId: string;
   @Input() dashboardMode: DashboardModeState;
+  @Input() userIsAdmin: boolean;
+
   searchTerm: string;
 
   @Output()
