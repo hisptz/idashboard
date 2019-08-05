@@ -38,7 +38,7 @@ export class DashboardService {
 
     return dashboards$.pipe(
       map((dashboards: Dashboard[]) =>
-        standardizeDashboards(dashboards, currentUser)
+        standardizeDashboards(dashboards, dashboardPreferences, currentUser)
       )
     );
   }

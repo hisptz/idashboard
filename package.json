@@ -33,7 +33,7 @@
     "@iapps/ngx-dhis2-menu": "^1.0.1-1.beta.1",
     "@iapps/ngx-dhis2-org-unit-filter": "^1.1.20",
     "@iapps/ngx-dhis2-period-filter": "^1.0.0-beta.13",
-    "@iapps/ngx-dhis2-selection-filters": "^1.0.8-beta.4",
+    "@iapps/ngx-dhis2-selection-filters": "file:../../../Desktop/office/innovations/web/ngx-dhis2-selecton-filters-module/dist/ngx-dhis2-selection-filters/iapps-ngx-dhis2-selection-filters-1.0.8-beta.4.tgz",
     "@iapps/ngx-dhis2-validation-rule-group-filter": "^1.0.0-alpha.15",
     "@ngrx/effects": "^8.2.0",
     "@ngrx/entity": "^8.2.0",

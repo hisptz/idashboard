@@ -15,6 +15,16 @@
     }
   ],
   "favoriteSource": "DATASTORE",
+  "dataSelectionPreferences": {
+    "chart": {
+      "excludeOrgUnitChildren": true,
+      "useLowestPeriodType": true,
+      "dimensionsToExclude": ["vrg"]
+    },
+    "app": {
+      "useLowestPeriodType": true
+    }
+  },
   "menuAlignment": "left",
   "menuType": "standard",
   "selectionFilterConfig": {

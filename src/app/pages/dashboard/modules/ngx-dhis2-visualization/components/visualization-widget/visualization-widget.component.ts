@@ -47,6 +47,8 @@ export class VisualizationWidgetComponent implements OnInit {
 
     const period = this.getDataSelectionIdsByDimension(dataSelections, 'pe');
 
+    // console.log(period, dataSelections);
+
     return `${
       environment.production ? this.contextPath : '../../..'
     }/api/apps/${this.appKey}/index.html?dashboardItemId=${
