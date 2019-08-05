@@ -28,6 +28,7 @@ import {
 import { VisualizationDataSelection } from '../../modules/ngx-dhis2-visualization/models';
 import { globalFilterChange } from '../../store/actions/global-filter.actions';
 import { getCurrentGlobalDataSelections } from '../../store/selectors/global-filter.selectors';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -85,10 +86,9 @@ export class CurrentDashboardComponent implements OnInit {
     this.store.dispatch(initializeDashboardSave());
   }
 
-  onFilterUpdate(
-    dataSelections: VisualizationDataSelection[],
-    dashboard: Dashboard
-  ) {
-    this.store.dispatch(globalFilterChange({ dataSelections, dashboard }));
+  onFilterUpdate(dataSelections: VisualizationDataSelection[]) {
+    this.currentDashboard$.pipe(take(1)).subscribe((dashboard: Dashboard) => {
+      this.store.dispatch(globalFilterChange({ dataSelections, dashboard }));
+    });
   }
 }

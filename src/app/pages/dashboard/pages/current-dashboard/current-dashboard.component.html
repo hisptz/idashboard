@@ -8,9 +8,9 @@
           (enableEditing)="onEnableEditMode()" (nameUpdate)="onDashboardNameUpdate($event)"></app-dashboard-title>
       </div>
 
-      <div class="current-dashboard-filter" *ngIf="currentDashboard$ | async as currentDashboard">
+      <div class="current-dashboard-filter">
         <ngx-dhis2-selection-filters [dataSelections]="globalDataSelections$ | async"
-          [selectionFilterConfig]="selectionFilterConfig$ | async" (update)="onFilterUpdate($event, currentDashboard)">
+          [selectionFilterConfig]="selectionFilterConfig$ | async" (update)="onFilterUpdate($event)">
         </ngx-dhis2-selection-filters>
       </div>
     </div>
