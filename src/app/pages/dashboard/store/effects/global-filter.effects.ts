@@ -37,53 +37,50 @@ export class GlobalFilterEffects {
             requiredDimensions
           );
 
-          if (requiredDimensions.length === filterIntersection.length) {
-            zip(
-              ...(dashboard.dashboardItems || []).map(
-                (dashboardItem: DashboardItem) =>
-                  this.store
-                    .pipe(
-                      select(
-                        getCombinedVisualizationObjectById(dashboardItem.id)
-                      )
-                    )
-                    .pipe(take(1))
-              )
-            ).subscribe((visualizations: Visualization[]) => {
-              visualizations.forEach((visualization: Visualization) => {
-                // TODO Logic for using child periods based on selected has to be handled by configuration
-                const newDataSelections = getSanitizedDataSelections(
-                  dataSelections,
-                  camelCase(visualization.type),
-                  {
-                    reportTable: { includeOrgUnitChildren: true },
-                    chart: {
-                      excludeOrgUnitChildren: true,
-                      useLowestPeriodType: true,
-                      dimensionsToExclude: ['vrg']
-                    },
-                    app: {
-                      useLowestPeriodType: true
-                    }
+          zip(
+            ...(dashboard.dashboardItems || []).map(
+              (dashboardItem: DashboardItem) =>
+                this.store
+                  .pipe(
+                    select(getCombinedVisualizationObjectById(dashboardItem.id))
+                  )
+                  .pipe(take(1))
+            )
+          ).subscribe((visualizations: Visualization[]) => {
+            visualizations.forEach((visualization: Visualization) => {
+              const newDataSelections = getSanitizedDataSelections(
+                dataSelections,
+                camelCase(visualization.type),
+                {
+                  reportTable: { includeOrgUnitChildren: true },
+                  chart: {
+                    excludeOrgUnitChildren: true,
+                    useLowestPeriodType: true,
+                    dimensionsToExclude: ['vrg']
+                  },
+                  app: {
+                    useLowestPeriodType: true
                   }
-                );
+                }
+              );
 
-                this.store.dispatch(
-                  updateDashboard({
-                    dashboard: {
-                      ...dashboard,
-                      dashboardItems: (dashboard.dashboardItems || []).map(
-                        (dashboardItem: DashboardItem) => {
-                          return {
-                            ...dashboardItem,
-                            dataSelections
-                          };
-                        }
-                      )
-                    }
-                  })
-                );
+              this.store.dispatch(
+                updateDashboard({
+                  dashboard: {
+                    ...dashboard,
+                    dashboardItems: (dashboard.dashboardItems || []).map(
+                      (dashboardItem: DashboardItem) => {
+                        return {
+                          ...dashboardItem,
+                          dataSelections
+                        };
+                      }
+                    )
+                  }
+                })
+              );
 
+              if (requiredDimensions.length === filterIntersection.length) {
                 const groupedDataSelections = groupBy(
                   newDataSelections,
                   'layout'
@@ -109,9 +106,9 @@ export class GlobalFilterEffects {
                     newDataSelections
                   )
                 );
-              });
+              }
             });
-          }
+          });
         })
       ),
     { dispatch: false }
