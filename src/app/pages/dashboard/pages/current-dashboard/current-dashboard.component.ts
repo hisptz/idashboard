@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/store/reducers';
@@ -33,7 +33,8 @@ import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-current-dashboard',
   templateUrl: './current-dashboard.component.html',
-  styleUrls: ['./current-dashboard.component.css']
+  styleUrls: ['./current-dashboard.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurrentDashboardComponent implements OnInit {
   currentDashboard$: Observable<Dashboard>;
