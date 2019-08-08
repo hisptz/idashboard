@@ -63,9 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
      */
     StoreRouterConnectingModule.forRoot(),
 
-    !environment.production
-      ? StoreDevtoolsModule.instrument()
-      : StoreDevtoolsModule.instrument()
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [{ provide: RouterStateSerializer, useClass: RouteSerializer }],
   bootstrap: [AppComponent]

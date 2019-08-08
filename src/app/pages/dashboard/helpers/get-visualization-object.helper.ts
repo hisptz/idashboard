@@ -12,11 +12,14 @@ import {
 } from '../modules/ngx-dhis2-visualization/models';
 import { Favorite } from '../modules/ngx-dhis2-visualization/models/favorite.model';
 import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
+import { DashboardPreferences } from '../models/dashboard-preferences.model';
+import { getSanitizedDataSelections } from '../modules/ngx-dhis2-visualization/helpers/get-sanitized-data-selections.helper';
 
 const defaultName = 'Untitled';
 
 export function getVisualizationObject(
-  dashboardItem: DashboardItem
+  dashboardItem: DashboardItem,
+  dashboardPreferences: DashboardPreferences
 ): Visualization {
   if (!dashboardItem) {
     return null;
@@ -52,11 +55,19 @@ export function getVisualizationObject(
           message: `Loading Data for ${name}....`
         },
     uiConfig: getStandardizedVisualizationUiConfig(dashboardItem),
-    layers: getVisualizationLayers(dashboardItem)
+    layers: getVisualizationLayers(
+      dashboardItem,
+      dashboardItem.type,
+      dashboardPreferences
+    )
   };
 }
 
-function getVisualizationLayers(dashboardItem: DashboardItem) {
+function getVisualizationLayers(
+  dashboardItem: DashboardItem,
+  dashboardItemType: string,
+  dashboardPreferences: DashboardPreferences
+) {
   if (!dashboardItem) {
     return [];
   }
@@ -67,7 +78,13 @@ function getVisualizationLayers(dashboardItem: DashboardItem) {
     return [
       {
         id: generateUid(),
-        dataSelections: dashboardItem.dataSelections || [],
+        dataSelections: getSanitizedDataSelections(
+          dashboardItem.dataSelections || [],
+          camelCase(dashboardItemType),
+          dashboardPreferences
+            ? dashboardPreferences.dataSelectionPreferences
+            : null
+        ),
         config: null
       }
     ];

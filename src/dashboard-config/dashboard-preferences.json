@@ -6,15 +6,27 @@
   "defaultDashboardItems": [
     {
       "type": "CHART",
-      "shape": "FULL_WIDTH"
+      "shape": "FULL_WIDTH",
+      "height": "450px"
     },
     {
       "type": "APP",
       "shape": "FULL_WIDTH",
-      "appKey": "DQA-Widget"
+      "appKey": "DQA-Widget",
+      "height": "600px"
     }
   ],
   "favoriteSource": "DATASTORE",
+  "dataSelectionPreferences": {
+    "chart": {
+      "excludeOrgUnitChildren": true,
+      "useLowestPeriodType": true,
+      "dimensionsToExclude": ["vrg"]
+    },
+    "app": {
+      "useLowestPeriodType": true
+    }
+  },
   "menuAlignment": "left",
   "menuType": "standard",
   "selectionFilterConfig": {

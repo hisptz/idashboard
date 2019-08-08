@@ -9,9 +9,15 @@ export interface DashboardState extends EntityState<Dashboard>, BaseState {
   dashboardMode: string;
 }
 
+export function sortByName(a: Dashboard, b: Dashboard): number {
+  return a.name.localeCompare(b.name);
+}
+
 export const dashboardAdapter: EntityAdapter<Dashboard> = createEntityAdapter<
   Dashboard
->();
+>({
+  sortComparer: sortByName
+});
 
 export const initialDashboardState: DashboardState = dashboardAdapter.getInitialState(
   {

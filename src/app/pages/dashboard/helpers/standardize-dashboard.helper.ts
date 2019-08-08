@@ -3,9 +3,11 @@ import { getDashboardAccess } from './get-dashboard-access.helper';
 import { User } from '@iapps/ngx-dhis2-http-client';
 import { Dashboard } from '../models/dashboard.model';
 import { standardizeDashboardItem } from './standardize-dashboard-item.helper';
+import { DashboardPreferences } from '../models/dashboard-preferences.model';
 
 export function standardizeDashboard(
   dashboard: any,
+  dashboardPreferences: DashboardPreferences,
   currentUser: User
 ): Dashboard {
   if (!dashboard) {
@@ -19,8 +21,8 @@ export function standardizeDashboard(
           dashboard.favorites || dashboard.bookmarks,
           currentUser ? currentUser.id : ''
         ),
-    dashboardItems: (dashboard.dashboardItems || []).map(
-      standardizeDashboardItem
+    dashboardItems: (dashboard.dashboardItems || []).map((dashboardItem: any) =>
+      standardizeDashboardItem(dashboardItem, dashboardPreferences)
     ),
     access: dashboard.access || getDashboardAccess(dashboard, currentUser)
   };

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { camelCase, groupBy, intersection } from 'lodash';
-import { zip } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { zip, of } from 'rxjs';
+import { take, tap, concatMap, withLatestFrom } from 'rxjs/operators';
 import { State } from 'src/app/store/reducers';
 
 import { DashboardItem } from '../../models/dashboard-item.model';
@@ -17,6 +17,7 @@ import { updateFavoriteSelections } from '../../modules/ngx-dhis2-visualization/
 import { getCombinedVisualizationObjectById } from '../../modules/ngx-dhis2-visualization/store/selectors';
 import { updateDashboard } from '../actions/dashboard.actions';
 import { globalFilterChange } from '../actions/global-filter.actions';
+import { getDashboardPreferences } from '../selectors/dashboard-preferences.selectors';
 
 @Injectable()
 export class GlobalFilterEffects {
@@ -24,7 +25,12 @@ export class GlobalFilterEffects {
     () =>
       this.actions$.pipe(
         ofType(globalFilterChange),
-        tap(({ dataSelections, dashboard }) => {
+        concatMap(action =>
+          of(action).pipe(
+            withLatestFrom(this.store.select(getDashboardPreferences))
+          )
+        ),
+        tap(([{ dataSelections, dashboard }, dashboardPreferences]) => {
           // validate filter
           // TODO Refactor this code possibly moving the logic to its own function
           const requiredDimensions = ['dx', 'pe', 'ou', 'vrg'];
@@ -51,17 +57,9 @@ export class GlobalFilterEffects {
               const newDataSelections = getSanitizedDataSelections(
                 dataSelections,
                 camelCase(visualization.type),
-                {
-                  reportTable: { includeOrgUnitChildren: true },
-                  chart: {
-                    excludeOrgUnitChildren: true,
-                    useLowestPeriodType: true,
-                    dimensionsToExclude: ['vrg']
-                  },
-                  app: {
-                    useLowestPeriodType: true
-                  }
-                }
+                dashboardPreferences
+                  ? dashboardPreferences.dataSelectionPreferences
+                  : null
               );
 
               this.store.dispatch(

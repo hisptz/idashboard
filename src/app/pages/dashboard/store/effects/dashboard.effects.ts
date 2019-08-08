@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
 import { User } from '@iapps/ngx-dhis2-http-client';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
+import { camelCase, isPlainObject, omit } from 'lodash';
 import { of } from 'rxjs';
 import {
   catchError,
@@ -13,6 +15,7 @@ import {
   tap,
   withLatestFrom
 } from 'rxjs/operators';
+import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
 import { go } from 'src/app/store/actions';
 import { State } from 'src/app/store/reducers';
 import { getUrl } from 'src/app/store/selectors/router.selectors';
@@ -22,11 +25,18 @@ import {
 } from 'src/app/store/selectors/user.selectors';
 
 import { getCurrentDashboardId } from '../../helpers/get-current-dashboard-id.helper';
+import { getNewDashboard } from '../../helpers/get-new-dashboard.helper';
+import { validateDashboard } from '../../helpers/validate-dashboard.helper';
+import { DashboardItem } from '../../models/dashboard-item.model';
 import { Dashboard } from '../../models/dashboard.model';
+import { saveFavorites } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
 import { DashboardService } from '../../services/dashboard.service';
 import { addDashboardPreferences } from '../actions/dashboard-preferences.actions';
 import {
+  addDashboard,
   addDashboards,
+  createDashboard,
+  initializeDashboardSave,
   loadDashboards,
   loadDashboardsFail,
   removeDashboard,
@@ -35,21 +45,10 @@ import {
   saveDashboard,
   saveDashboardFail,
   saveDashboardSuccess,
-  setCurrentDashboard,
-  addDashboard,
-  createDashboard,
-  initializeDashboardSave,
-  updateDashboard
+  setCurrentDashboard
 } from '../actions/dashboard.actions';
 import { getDashboardPreferences } from '../selectors/dashboard-preferences.selectors';
-import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
-import { getNewDashboard } from '../../helpers/get-new-dashboard.helper';
 import { getCurrentDashboard } from '../selectors/dashboard-selectors';
-import { validateDashboard } from '../../helpers/validate-dashboard.helper';
-import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
-import { camelCase, isPlainObject, omit } from 'lodash';
-import { DashboardItem } from '../../models/dashboard-item.model';
-import { saveFavorites } from '../../modules/ngx-dhis2-visualization/store/actions/favorite.actions';
 
 @Injectable()
 export class DashboardEffects {
@@ -71,8 +70,6 @@ export class DashboardEffects {
           switchMap(() =>
             this.store.select(getCurrentUser).pipe(
               switchMap((currentUser: User) => {
-                // load data filters
-                this.store.dispatch(new LoadDataFilters(currentUser));
                 return this.dashboardService
                   .getAll(dashboardPreferences, currentUser)
                   .pipe(
