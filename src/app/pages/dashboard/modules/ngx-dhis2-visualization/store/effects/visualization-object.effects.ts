@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import {
-  NgxDhis2HttpClientService,
-  SystemInfoService
-} from '@iapps/ngx-dhis2-http-client';
-import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
+import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import {
+  concatMap,
   switchMap,
   take,
   tap,
-  withLatestFrom,
-  concatMap
+  withLatestFrom
 } from 'rxjs/operators';
 import { generateUid } from 'src/app/core/helpers/generate-uid.helper';
 
@@ -22,17 +19,12 @@ import {
 } from '../../helpers';
 import { getDefaultVisualizationLayer } from '../../helpers/get-default-visualization-layer.helper';
 import { getFavoritePayload } from '../../helpers/get-favorite-payload.helpers';
-import {
-  Visualization,
-  VisualizationLayer,
-  VisualizationVm
-} from '../../models';
-import { FavoriteService } from '../../services/favorite.service';
+import { VisualizationLayer, VisualizationVm } from '../../models';
 import {
   AddVisualizationLayerAction,
   AddVisualizationLayersAction,
-  AddVisualizationObjectAction,
-  InitializeVisualizationObjectAction,
+  addVisualizationObject,
+  initializeVisualizationObject,
   LoadVisualizationAnalyticsAction,
   LoadVisualizationFavoriteSuccessAction,
   RemoveVisualizationConfigurationAction,
@@ -42,17 +34,14 @@ import {
   SaveVisualizationFavoriteAction,
   UpdateVisualizationConfigurationAction,
   UpdateVisualizationObjectAction,
-  VisualizationObjectActionTypes,
-  initializeVisualizationObject,
-  addVisualizationObject,
-  addVisualizationLayer
+  VisualizationObjectActionTypes
 } from '../actions';
+import { loadFavorite } from '../actions/favorite.actions';
 import {
   getVisualizationObjectEntities,
   VisualizationState
 } from '../reducers/visualization.reducer';
 import { getCombinedVisualizationObjectById } from '../selectors';
-import { loadFavorite } from '../actions/favorite.actions';
 
 @Injectable()
 export class VisualizationObjectEffects {
@@ -328,50 +317,6 @@ export class VisualizationObjectEffects {
             visualizationObject.type,
             visualizationObject.config.currentType
           );
-
-          // if (favoriteDetails) {
-          //   const favoritePromise =
-          //     visualizationObject.isNew || favoriteDetails.hasDifferentType
-          //       ? this.favoriteService.create(
-          //           favoriteDetails.url,
-          //           favoriteDetails.favorite
-          //         )
-          //       : this.favoriteService.update(
-          //           favoriteDetails.url,
-          //           favoriteDetails.favorite
-          //         );
-
-          //   favoritePromise.subscribe(favoriteResult => {
-          //     // Save favorite as dashboard item
-
-          //     this.store.dispatch(
-          //       new SaveVisualizationFavoriteSuccessAction(
-          //         action.dashboardId,
-          //         action.id,
-          //         favoriteDetails.favoriteType,
-          //         favoriteResult,
-          //         visualizationObject.isNew ? 'ADD' : 'UPDATE'
-          //       )
-          //     );
-
-          //     // Update visualization object with new favorite
-          //     this.store.dispatch(
-          //       new UpdateVisualizationObjectAction(action.id, {
-          //         isNew: false
-          //       })
-          //     );
-
-          //     // Update visualization layers in the store
-          //     _.each(visualizationLayers, visualizationLayer => {
-          //       this.store.dispatch(
-          //         new UpdateVisualizationLayerAction(
-          //           visualizationLayer.id,
-          //           visualizationLayer
-          //         )
-          //       );
-          //     });
-          //   });
-          // }
         });
     })
   );
@@ -386,21 +331,9 @@ export class VisualizationObjectEffects {
     ])
   );
 
-  // @Effect({ dispatch: false })
-  // removeVisualizationFavorite$: Observable<any> = this.actions$.pipe(
-  //   ofType(VisualizationObjectActionTypes.RemoveVisualizationFavorite),
-  //   tap((action: RemoveVisualizationFavoriteAction) => {
-  //     this.favoriteService
-  //       .delete(action.favoriteId, action.favoriteType)
-  //       .subscribe();
-  //   })
-  // );
-
   constructor(
     private actions$: Actions,
     private store: Store<VisualizationState>,
-    private favoriteService: FavoriteService,
-    private systemInfoService: SystemInfoService,
     private httpClient: NgxDhis2HttpClientService
   ) {}
 }

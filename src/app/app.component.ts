@@ -29,13 +29,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // TODO Resolve manifest method from http service to avoid duplicate calls
-    this.http
-      .get('manifest.webapp', { isExternalLink: true })
-      .subscribe((manifest: Manifest) => {
-        if (manifest) {
-          this.setTitle(manifest.name);
-        }
-      });
+    this.http.manifest().subscribe((manifest: Manifest) => {
+      if (manifest) {
+        this.setTitle(manifest.name);
+      }
+    });
   }
 
   public setTitle(newTitle: string) {
