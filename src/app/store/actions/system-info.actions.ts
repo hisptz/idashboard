@@ -1,7 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-
-import { ErrorMessage } from '../../core';
-import { SystemInfo } from '@iapps/ngx-dhis2-http-client';
+import { SystemInfo, ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 
 export enum SystemInfoActionTypes {
   LoadSystemInfo = '[SystemInfo] Load System info',

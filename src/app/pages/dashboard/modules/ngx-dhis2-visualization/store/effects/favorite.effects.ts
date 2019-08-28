@@ -11,7 +11,6 @@ import {
   tap,
   take
 } from 'rxjs/operators';
-import { ErrorMessage } from 'src/app/core';
 import { State } from 'src/app/store/reducers';
 
 import { FavoriteService } from '../../services/favorite.service';
@@ -26,6 +25,7 @@ import {
 } from '../actions/favorite.actions';
 import { getFavoritesByIds } from '../selectors/favorite.selectors';
 import { find, omit } from 'lodash';
+import { ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 
 @Injectable()
 export class FavoriteEffects {

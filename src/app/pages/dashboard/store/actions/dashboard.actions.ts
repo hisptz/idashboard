@@ -1,9 +1,8 @@
+import { ErrorMessage, User } from '@iapps/ngx-dhis2-http-client';
 import { createAction, props } from '@ngrx/store';
+
 import { DashboardPreferences } from '../../models/dashboard-preferences.model';
-import { ErrorMessage } from 'src/app/core';
 import { Dashboard } from '../../models/dashboard.model';
-import { User } from '@iapps/ngx-dhis2-http-client';
-import { DashboardItem } from '../../models/dashboard-item.model';
 
 export const loadDashboards = createAction(
   '[Dashboard] Load Dashboards',
