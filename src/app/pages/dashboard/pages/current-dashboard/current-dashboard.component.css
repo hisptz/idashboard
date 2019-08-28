@@ -26,6 +26,10 @@
   grid-template-columns: repeat(12, 1fr);
 }
 
+.dashboard-loading-block {
+  margin-top: 250px;
+}
+
 .current-dashboard-options {
   display: flex;
   align-items: center;

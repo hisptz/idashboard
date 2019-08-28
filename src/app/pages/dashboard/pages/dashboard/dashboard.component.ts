@@ -11,7 +11,10 @@ import {
   createDashboard,
   setCurrentDashboard
 } from '../../store/actions/dashboard.actions';
-import { getDashboardPreferences } from '../../store/selectors/dashboard-preferences.selectors';
+import {
+  getDashboardPreferences,
+  getDashboardPreferencesLoadingStatus
+} from '../../store/selectors/dashboard-preferences.selectors';
 import {
   getCurrentDashboardId,
   getDashboardMode,
@@ -30,6 +33,7 @@ export class DashboardComponent implements OnInit {
   currentDashboardId$: Observable<string>;
   dashboardMode$: Observable<DashboardModeState>;
   userIsAdmin$: Observable<boolean>;
+  dashboardPreferencesLoading$: Observable<boolean>;
   constructor(private store: Store<State>) {}
 
   ngOnInit() {
@@ -47,6 +51,10 @@ export class DashboardComponent implements OnInit {
 
     this.userIsAdmin$ = this.store.pipe(
       select(getCurrentUserManagementAuthoritiesStatus)
+    );
+
+    this.dashboardPreferencesLoading$ = this.store.pipe(
+      select(getDashboardPreferencesLoadingStatus)
     );
   }
 

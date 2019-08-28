@@ -39,3 +39,7 @@
   grid-column: span 12;
   margin-left: 320px;
 }
+
+.dashboard-loader {
+  margin-top: 200px;
+}
