@@ -8,13 +8,13 @@
           (enableEditing)="onEnableEditMode()" (nameUpdate)="onDashboardNameUpdate($event)"></app-dashboard-title>
       </div>
 
-      <div class="current-dashboard-filter">
+      <div class="current-dashboard-filter" *ngIf="currentDashboard$ | async">
         <ngx-dhis2-selection-filters [dataSelections]="globalDataSelections$ | async"
           [selectionFilterConfig]="selectionFilterConfig$ | async" (update)="onFilterUpdate($event)">
         </ngx-dhis2-selection-filters>
       </div>
     </div>
-    <div class="current-dashboard-settings">
+    <div class="current-dashboard-settings" *ngIf="currentDashboard$ | async">
       <!-- dashboard mode -->
       <app-dashboard-mode [dashboardMode]="dashboardMode$ | async" (toggleDashboardMode)="onToggleDashboardMode()"
         (saveDashboard)="onSaveDashboard()" [showMode]="userIsAdmin$ | async"></app-dashboard-mode>
@@ -37,4 +37,10 @@
     </div>
   </div>
   <!-- end of dashboard item list -->
+
+  <!-- loading section -->
+  <div class="dashboard-loading-block" *ngIf="dashboardLoading$ | async">
+    <app-dashboard-loader [loadingText]="'Discovering Data Quality Dashboards'"></app-dashboard-loader>
+  </div>
+  <!-- end of loading section -->
 </div>

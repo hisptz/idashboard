@@ -16,10 +16,16 @@
   </div>
   <!-- end of dashboard menu -->
 
+  <!-- loading block -->
+  <div class="dashboard-content-top dashboard-loader" *ngIf="dashboardPreferencesLoading$ | async">
+    <app-dashboard-loader [loadingText]="'Discovering Data Quality Preferences'"></app-dashboard-loader>
+  </div>
+  <!-- end of loading block -->
+
   <!-- dashboard content -->
   <div class="dashboard-content-{{
       (dashboardPreferences$ | async)?.menuAlignment
-    }}">
+    }}  {{!(dashboardPreferences$ | async) ? 'dashboard-content-top' : ''}}">
     <router-outlet></router-outlet>
   </div>
   <!-- end of dashboard content -->

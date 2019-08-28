@@ -1,16 +1,13 @@
-import {
-  MemoizedSelector,
-  createFeatureSelector,
-  createSelector
-} from '@ngrx/store';
-import { DashboardPreferencesState } from '../states/dashboard-preferences.state';
-import { DashboardPreferences } from '../../models/dashboard-preferences.model';
 import { SelectionFilterConfig } from '@iapps/ngx-dhis2-selection-filters';
 import {
-  getCurrentUser,
-  getCurrentUserManagementAuthoritiesStatus
-} from 'src/app/store/selectors';
-import { User } from '@iapps/ngx-dhis2-http-client';
+  createFeatureSelector,
+  createSelector,
+  MemoizedSelector
+} from '@ngrx/store';
+import { getCurrentUserManagementAuthoritiesStatus } from 'src/app/store/selectors';
+
+import { DashboardPreferences } from '../../models/dashboard-preferences.model';
+import { DashboardPreferencesState } from '../states/dashboard-preferences.state';
 
 const getDashboardPreferencesState: MemoizedSelector<
   object,
@@ -38,4 +35,9 @@ export const getSelectionFilterConfig = createSelector(
       showValidationRuleGroupFilter: userIsAdmin
     };
   }
+);
+
+export const getDashboardPreferencesLoadingStatus = createSelector(
+  getDashboardPreferencesState,
+  (state: DashboardPreferencesState) => state.loading
 );
