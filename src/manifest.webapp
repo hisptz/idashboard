@@ -1,6 +1,6 @@
 
 {
-    "version": "1.0.0-alpha.2",
+    "version": "1.0.0-alpha.3",
     "name": "Data Quality Dashboard",
     "description": "A dashboard with full blown interactive capabilities that lets user easily switch between multiple visualizations (tables, charts and maps), allowing user to download data for offline usage, while still shading insights into dictionary of the involved metadata. Among other interactive features includes capability to navigate through data across organisation unit hierarchy, periods and data and spark conversation on analysed data",
     "appType": "APP",
