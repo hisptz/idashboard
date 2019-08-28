@@ -7,7 +7,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { defer, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { getSanitizedSystemInfo } from '../../core';
 import { addSystemInfo, loadSystemInfo, loadSystemInfoFail } from '../actions';
 
 @Injectable()

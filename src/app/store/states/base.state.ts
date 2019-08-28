@@ -1,4 +1,4 @@
-import { ErrorMessage } from '../../core/models/error-message.model';
+import { ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 
 export interface BaseState {
   loading: boolean;

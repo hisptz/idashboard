@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Favorite } from '../../models/favorite.model';
-import { ErrorMessage } from 'src/app/core';
-import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
+import { User, SystemInfo, ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 
 export const loadFavorite = createAction(
   '[Favorite] Load favorite',
