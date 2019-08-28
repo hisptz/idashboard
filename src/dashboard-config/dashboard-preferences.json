@@ -38,7 +38,8 @@
       "enabledSelections": ["in"]
     },
     "periodFilterConfig": {
-      "singleSelection": true
+      "singleSelection": true,
+      "childrenPeriodSortOrder": "ASC"
     }
   }
 }
