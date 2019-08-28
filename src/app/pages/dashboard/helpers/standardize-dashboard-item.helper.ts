@@ -13,10 +13,7 @@ export function standardizeDashboardItem(
         ...dashboardItem,
         gridColumn: getDashboardItemGridColumn(dashboardItem),
         currentType: standardizeVisualizationType(dashboardItem.type),
-        height:
-          dashboardItem.height && dashboardItem.height > 200
-            ? `${dashboardItem.height}px`
-            : '450px',
+        height: dashboardItem.height || '450px',
         visualization: getVisualizationObject(
           dashboardItem,
           dashboardPreferences
