@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DashboardPreferences } from '../../models/dashboard-preferences.model';
-import { ErrorMessage } from 'src/app/core';
+import { ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 
 export const loadDashboardPreferences = createAction(
   '[DashboardPreferences] Load Dashboard preferences'

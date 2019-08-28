@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LoadDataFilters } from '@iapps/ngx-dhis2-data-filter';
 import { User } from '@iapps/ngx-dhis2-http-client';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';

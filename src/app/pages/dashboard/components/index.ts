@@ -4,6 +4,7 @@ import { DashboardMenuComponent } from './dashboard-menu/dashboard-menu.componen
 import { DashboardItemComponent } from './dashboard-item/dashboard-item.component';
 import { DashboardTitleComponent } from './dashboard-title/dashboard-title.component';
 import { DashboardModeComponent } from './dashboard-mode/dashboard-mode.component';
+import { DashboardLoaderComponent } from './dashboard-loader/dashboard-loader.component';
 
 export const components: any[] = [
   DashboardMenuComponent,
@@ -11,5 +12,6 @@ export const components: any[] = [
   DashboardMenuItemComponent,
   DashboardItemComponent,
   DashboardTitleComponent,
-  DashboardModeComponent
+  DashboardModeComponent,
+  DashboardLoaderComponent
 ];

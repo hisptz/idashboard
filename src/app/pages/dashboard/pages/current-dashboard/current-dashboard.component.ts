@@ -1,34 +1,36 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { SystemInfo, User } from '@iapps/ngx-dhis2-http-client';
+import { SelectionFilterConfig } from '@iapps/ngx-dhis2-selection-filters';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { State } from 'src/app/store/reducers';
-
-import { DashboardItem } from '../../models/dashboard-item.model';
-import { Dashboard } from '../../models/dashboard.model';
-import {
-  getCurrentDashboard,
-  getDashboardMode
-} from '../../store/selectors/dashboard-selectors';
-import { SelectionFilterConfig } from '@iapps/ngx-dhis2-selection-filters';
-import { getSelectionFilterConfig } from '../../store/selectors/dashboard-preferences.selectors';
-import {
-  toggleDashboardMode,
-  enableEditMode,
-  enableViewMode,
-  updateDashboard,
-  initializeDashboardSave
-} from '../../store/actions/dashboard.actions';
-import { DashboardModeState } from '../../models/dashboard-mode.mode';
-import { User, SystemInfo } from '@iapps/ngx-dhis2-http-client';
 import {
   getCurrentUser,
-  getSystemInfo,
-  getCurrentUserManagementAuthoritiesStatus
+  getCurrentUserManagementAuthoritiesStatus,
+  getSystemInfo
 } from 'src/app/store/selectors';
+
+import { DashboardItem } from '../../models/dashboard-item.model';
+import { DashboardModeState } from '../../models/dashboard-mode.mode';
+import { Dashboard } from '../../models/dashboard.model';
 import { VisualizationDataSelection } from '../../modules/ngx-dhis2-visualization/models';
+import {
+  enableEditMode,
+  enableViewMode,
+  initializeDashboardSave,
+  toggleDashboardMode,
+  updateDashboard
+} from '../../store/actions/dashboard.actions';
 import { globalFilterChange } from '../../store/actions/global-filter.actions';
+import { getSelectionFilterConfig } from '../../store/selectors/dashboard-preferences.selectors';
+import {
+  getCurrentDashboard,
+  getDashboardMode,
+  getOverallDashboardLoadingStatus,
+  getDashboardLoadingStatus
+} from '../../store/selectors/dashboard-selectors';
 import { getCurrentGlobalDataSelections } from '../../store/selectors/global-filter.selectors';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-current-dashboard',
@@ -44,6 +46,7 @@ export class CurrentDashboardComponent implements OnInit {
   systemInfo$: Observable<SystemInfo>;
   globalDataSelections$: Observable<VisualizationDataSelection[]>;
   userIsAdmin$: Observable<boolean>;
+  dashboardLoading$: Observable<boolean>;
 
   constructor(private store: Store<State>) {}
 
@@ -61,6 +64,7 @@ export class CurrentDashboardComponent implements OnInit {
     this.userIsAdmin$ = this.store.pipe(
       select(getCurrentUserManagementAuthoritiesStatus)
     );
+    this.dashboardLoading$ = this.store.pipe(select(getDashboardLoadingStatus));
   }
 
   trackByDashboardItemId(index, item: DashboardItem) {

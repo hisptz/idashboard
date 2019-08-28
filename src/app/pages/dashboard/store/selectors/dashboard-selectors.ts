@@ -7,6 +7,7 @@ import {
 import { DashboardMode } from '../../constants/dashboard-modes.constant';
 import { Dashboard } from '../../models/dashboard.model';
 import { dashboardAdapter, DashboardState } from '../states/dashboard.state';
+import { getDashboardPreferencesLoadingStatus } from './dashboard-preferences.selectors';
 
 const getDashboardState: MemoizedSelector<
   object,
@@ -45,4 +46,16 @@ export const getDashboardMode = createSelector(
       isSaveMode: currentMode === DashboardMode.SAVE
     };
   }
+);
+
+export const getDashboardLoadingStatus = createSelector(
+  getDashboardState,
+  (state: DashboardState) => state.loading
+);
+
+export const getOverallDashboardLoadingStatus = createSelector(
+  getDashboardLoadingStatus,
+  getDashboardPreferencesLoadingStatus,
+  (dashboardLoading: boolean, dashboardPreferencesLoading: boolean) =>
+    dashboardLoading || dashboardPreferencesLoading
 );

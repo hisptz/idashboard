@@ -68,7 +68,7 @@ export class VisualizationLayerEffects {
         ({ visualizationId, error }) =>
           new UpdateVisualizationObjectAction(visualizationId, {
             progress: {
-              statusCode: error.statusCode || error.status,
+              statusCode: error.status,
               statusText: 'Error',
               percent: 100,
               message: error.message
